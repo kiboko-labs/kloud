@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  cli:
+    build:
+      context: .
+    volumes:
+      - ./config/memory.ini:/usr/local/etc/php/conf.d/memory.ini:ro
+      - ./:/app
