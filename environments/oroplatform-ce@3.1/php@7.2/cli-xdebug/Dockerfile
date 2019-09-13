@@ -128,9 +128,11 @@ RUN addgroup -g ${APP_GID} ${APP_USERNAME} \
 COPY config/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 COPY config/memory.ini /usr/local/etc/php/conf.d/memory.ini
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('SHA384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-    && php composer-setup.php --install-dir /usr/local/bin --filename composer\
+RUN EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)" \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && ACTUAL_SIGNATURE="$(php -r "echo hash_file('sha384', 'composer-setup.php');")" \
+    && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: Invalid installer signature'; rm composer-setup.php; exit 1; fi \
+    && php composer-setup.php --install-dir /usr/local/bin --filename composer \
     && php -r "unlink('composer-setup.php');"
 
 RUN mkdir -p /opt/docker/.npm \
