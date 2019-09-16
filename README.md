@@ -1,4 +1,4 @@
-Docker images for Oro development stacks
+Docker images for Oro and Marello development stacks
 ===
 
 * [Usage](#usage)
@@ -129,6 +129,10 @@ Tags
   * [Version 3.1](#orocrm-community-edition---version-31)
 * OroCRM Enterprise Edition
   * [Version 3.1](#orocrm-enterprise-edition---version-31)
+* Marello Community Edition
+  * [Version 2.0](#marello-community-edition---version-20)
+* Marello Enterprise Edition
+  * [Version 2.0](#marello-enterprise-edition---version-20)
 
 ### OroPlatform Community Edition - Version 3.1
 
@@ -152,7 +156,7 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-oroplatform-ce-3.1`
     * with Xdebug `7.2-fpm-xdebug-oroplatform-ce-3.1`
 
-* PHP 7.3 (not supported)
+* PHP 7.3 (not supported by Oro)
   * CLI 
     * standard `7.3-cli-oroplatform-ce-3.1`
     * with Blackfire `7.3-cli-blackfire-oroplatform-ce-3.1`
@@ -162,7 +166,7 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ce-3.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ce-3.1`
 
-* PHP 7.4RC1 (not supported, experimental)
+* PHP 7.4RC1 (not supported by Oro, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ce-3.1`
     * with Blackfire (not yet supported)
@@ -194,7 +198,7 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-oroplatform-ce-4.1`
     * with Xdebug `7.2-fpm-xdebug-oroplatform-ce-4.1`
 
-* PHP 7.3 (not supported)
+* PHP 7.3 (not supported by Oro)
   * CLI
     * standard `7.3-cli-oroplatform-ce-4.1`
     * with Blackfire `7.3-cli-blackfire-oroplatform-ce-4.1`
@@ -204,7 +208,7 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ce-4.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ce-4.1`
 
-* PHP 7.4RC1 (not supported, experimental)
+* PHP 7.4RC1 (not supported by Oro, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ce-4.1`
     * with Blackfire (not yet supported)
@@ -236,7 +240,7 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-oroplatform-ee-3.1`
     * with Xdebug `7.2-fpm-xdebug-oroplatform-ee-3.1`
 
-* PHP 7.3 (not supported)
+* PHP 7.3 (not supported by Oro)
   * CLI 
     * standard `7.3-cli-oroplatform-ee-3.1`
     * with Blackfire `7.3-cli-blackfire-oroplatform-ee-3.1`
@@ -246,7 +250,7 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ee-3.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ee-3.1`
 
-* PHP 7.4RC1 (not supported, experimental)
+* PHP 7.4RC1 (not supported by Oro, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ee-3.1`
     * with Blackfire (not yet supported)
@@ -278,7 +282,7 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-oroplatform-ee-4.1`
     * with Xdebug `7.2-fpm-xdebug-oroplatform-ee-4.1`
 
-* PHP 7.3 (not supported)
+* PHP 7.3 (not supported by Oro)
   * CLI
     * standard `7.3-cli-oroplatform-ee-4.1`
     * with Blackfire `7.3-cli-blackfire-oroplatform-ee-4.1`
@@ -288,7 +292,7 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ee-4.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ee-4.1`
 
-* PHP 7.4RC1 (not supported, experimental)
+* PHP 7.4RC1 (not supported by Oro, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ee-4.1`
     * with Blackfire (not yet supported)
@@ -397,3 +401,47 @@ Tags
     * standard `7.2-fpm-orocrm-ee-3.1`
     * with Blackfire `7.2-fpm-blackfire-orocrm-ee-3.1`
     * with Xdebug `7.2-fpm-xdebug-orocrm-ee-3.1`
+
+### Marello Community Edition - Version 2.0
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-marello-ce-3.1`
+    * with Blackfire `7.1-cli-blackfire-marello-ce-3.1`
+    * with Xdebug `7.1-cli-xdebug-marello-ce-3.1`
+  * FPM
+    * standard `7.1-fpm-marello-ce-3.1`
+    * with Blackfire `7.1-fpm-blackfire-marello-ce-3.1`
+    * with Xdebug `7.1-fpm-xdebug-marello-ce-3.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-marello-ce-3.1`
+    * with Blackfire `7.2-cli-blackfire-marello-ce-3.1`
+    * with Xdebug `7.2-cli-xdebug-marello-ce-3.1`
+  * FPM
+    * standard `7.2-fpm-marello-ce-3.1`
+    * with Blackfire `7.2-fpm-blackfire-marello-ce-3.1`
+    * with Xdebug `7.2-fpm-xdebug-marello-ce-3.1`
+
+### Marello Enterprise Edition - Version 2.0
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-marello-ee-3.1`
+    * with Blackfire `7.1-cli-blackfire-marello-ee-3.1`
+    * with Xdebug `7.1-cli-xdebug-marello-ee-3.1`
+  * FPM
+    * standard `7.1-fpm-marello-ee-3.1`
+    * with Blackfire `7.1-fpm-blackfire-marello-ee-3.1`
+    * with Xdebug `7.1-fpm-xdebug-marello-ee-3.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-marello-ee-3.1`
+    * with Blackfire `7.2-cli-blackfire-marello-ee-3.1`
+    * with Xdebug `7.2-cli-xdebug-marello-ee-3.1`
+  * FPM
+    * standard `7.2-fpm-marello-ee-3.1`
+    * with Blackfire `7.2-fpm-blackfire-marello-ee-3.1`
+    * with Xdebug `7.2-fpm-xdebug-marello-ee-3.1`
