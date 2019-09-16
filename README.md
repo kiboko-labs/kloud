@@ -114,15 +114,23 @@ services:
 Tags
 ---
 
-* [OroPlatform Community Edition](#oroplatform-community-edition)
-* [OroPlatform Enterprise Edition](#oroplatform-enterprise-edition)
-* [OroCommerce Community Edition](#orocommerce-community-edition)
-* [OroCommerce Enterprise Edition](#orocommerce-enterprise-edition)
-* [OroCRM Enterprise Edition](#orocrm-enterprise-edition)
+* OroPlatform Community Edition
+  * [Version 3.1](#oroplatform-community-edition---version-31)
+  * [Version 4.1](#oroplatform-community-edition---version-41)
+* OroPlatform Enterprise Edition
+  * [Version 3.1](#oroplatform-enterprise-edition---version-31)
+  * [Version 4.1](#oroplatform-enterprise-edition---version-41)
+* OroCommerce Enterprise Edition
+  * [Version 1.6](#orocommerce-enterprise-edition---version-16)
+  * [Version 3.1](#orocommerce-enterprise-edition---version-31)
+* OroCommerce Community Edition
+  * [Version 3.1](#orocommerce-community-edition---version-31)
+* OroCRM Community Edition
+  * [Version 3.1](#orocrm-community-edition---version-31)
+* OroCRM Enterprise Edition
+  * [Version 3.1](#orocrm-enterprise-edition---version-31)
 
-### OroPlatform Community Edition
-
-#### Version 3.1
+### OroPlatform Community Edition - Version 3.1
 
 * PHP 7.1
   * CLI 
@@ -157,14 +165,14 @@ Tags
 * PHP 7.4RC1 (not supported, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ce-3.1`
-    * with Blackfire `7.4-cli-blackfire-oroplatform-ce-3.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-cli-xdebug-oroplatform-ce-3.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ce-3.1`
-    * with Blackfire `7.4-fpm-blackfire-oroplatform-ce-3.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ce-3.1`
 
-#### Version 4.1
+### OroPlatform Community Edition - Version 4.1
 
 * PHP 7.1
   * CLI
@@ -199,16 +207,14 @@ Tags
 * PHP 7.4RC1 (not supported, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ce-4.1`
-    * with Blackfire `7.4-cli-blackfire-oroplatform-ce-4.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-cli-xdebug-oroplatform-ce-4.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ce-4.1`
-    * with Blackfire `7.4-fpm-blackfire-oroplatform-ce-4.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ce-4.1`
 
-### OroPlatform Enterprise Edition
-
-#### Version 3.1
+### OroPlatform Enterprise Edition - Version 3.1
 
 * PHP 7.1
   * CLI 
@@ -243,14 +249,14 @@ Tags
 * PHP 7.4RC1 (not supported, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ee-3.1`
-    * with Blackfire `7.4-cli-blackfire-oroplatform-ee-3.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-cli-xdebug-oroplatform-ee-3.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ee-3.1`
-    * with Blackfire `7.4-fpm-blackfire-oroplatform-ee-3.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ee-3.1`
 
-#### Version 4.1
+### OroPlatform Enterprise Edition - Version 4.1
 
 * PHP 7.1
   * CLI
@@ -285,16 +291,36 @@ Tags
 * PHP 7.4RC1 (not supported, experimental)
   * CLI
     * standard `7.4-cli-oroplatform-ee-4.1`
-    * with Blackfire `7.4-cli-blackfire-oroplatform-ee-4.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-cli-xdebug-oroplatform-ee-4.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ee-4.1`
-    * with Blackfire `7.4-fpm-blackfire-oroplatform-ee-4.1`
+    * with Blackfire (not yet supported)
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ee-4.1`
 
-### OroCommerce Enterprise Edition
+### OroCommerce Community Edition - Version 3.1
 
-#### Version 1.6
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-orocommerce-ce-3.1`
+    * with Blackfire `7.1-cli-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.1-cli-xdebug-orocommerce-ce-3.1`
+  * FPM
+    * standard `7.1-fpm-orocommerce-ce-3.1`
+    * with Blackfire `7.1-fpm-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.1-fpm-xdebug-orocommerce-ce-3.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-orocommerce-ce-3.1`
+    * with Blackfire `7.2-cli-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.2-cli-xdebug-orocommerce-ce-3.1`
+  * FPM
+    * standard `7.2-fpm-orocommerce-ce-3.1`
+    * with Blackfire `7.2-fpm-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.2-fpm-xdebug-orocommerce-ce-3.1`
+
+### OroCommerce Enterprise Edition - Version 1.6
 
 * PHP 7.1
   * CLI 
@@ -305,8 +331,8 @@ Tags
     * standard `7.1-fpm-orocommerce-ee-1.6`
     * with Blackfire `7.1-fpm-blackfire-orocommerce-ee-1.6`
     * with Xdebug `7.1-fpm-xdebug-orocommerce-ee-1.6`
-    
-#### Version 3.1
+
+### OroCommerce Enterprise Edition - Version 3.1
 
 * PHP 7.1
   * CLI 
@@ -327,10 +353,30 @@ Tags
     * standard `7.2-fpm-orocommerce-ee-3.1`
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ee-3.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ee-3.1`
-    
-### OroCRM Enterprise Edition
 
-#### Version 3.1
+### OroCRM Community Edition - Version 3.1
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-orocrm-ce-3.1`
+    * with Blackfire `7.1-cli-blackfire-orocrm-ce-3.1`
+    * with Xdebug `7.1-cli-xdebug-orocrm-ce-3.1`
+  * FPM
+    * standard `7.1-fpm-orocrm-ce-3.1`
+    * with Blackfire `7.1-fpm-blackfire-orocrm-ce-3.1`
+    * with Xdebug `7.1-fpm-xdebug-orocrm-ce-3.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-orocrm-ce-3.1`
+    * with Blackfire `7.2-cli-blackfire-orocrm-ce-3.1`
+    * with Xdebug `7.2-cli-xdebug-orocrm-ce-3.1`
+  * FPM
+    * standard `7.2-fpm-orocrm-ce-3.1`
+    * with Blackfire `7.2-fpm-blackfire-orocrm-ce-3.1`
+    * with Xdebug `7.2-fpm-xdebug-orocrm-ce-3.1`
+
+### OroCRM Enterprise Edition - Version 3.1
 
 * PHP 7.1
   * CLI 
