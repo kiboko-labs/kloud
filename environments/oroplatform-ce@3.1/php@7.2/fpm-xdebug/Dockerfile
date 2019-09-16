@@ -75,7 +75,7 @@ RUN apk add openldap \
     && apk del openldap-dev
 
 RUN docker-php-source extract \
-    && pecl install xdebug-2.6.1 \
+    && pecl install xdebug-2.7.2 \
     && docker-php-ext-enable xdebug \
     && docker-php-source delete
 

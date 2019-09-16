@@ -1,4 +1,4 @@
-FROM php:7.2-fpm-alpine
+FROM php:7.3-fpm-alpine
 
 LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 
@@ -14,6 +14,7 @@ RUN set -ex\
     && apk add \
         shadow@testing \
         ca-certificates \
+        libzip \
         wget \
         autoconf \
         bash \
@@ -28,10 +29,10 @@ RUN set -ex\
 
 RUN docker-php-ext-install opcache
 
-RUN apk add --update zlib-dev \
+RUN apk add --update libzip-dev \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip \
-    && apk del zlib-dev
+    && apk del libzip-dev
 
 RUN apk add --update libxml2-dev \
     && docker-php-ext-configure soap \
