@@ -68,7 +68,9 @@ RUN apk add tidyhtml \
 
 RUN apk add c-client \
     && apk add --update krb5-dev imap-dev \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+# IMAP with SSL is not yet supported in PHP 7.4RC1
+#    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-configure imap --with-kerberos \
     && docker-php-ext-install imap \
     && apk del krb5-dev imap-dev
 
