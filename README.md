@@ -114,25 +114,10 @@ services:
 Tags
 ---
 
-* OroPlatform Community Edition
-  * [Version 3.1](#oroplatform-community-edition---version-31)
-  * [Version 4.1](#oroplatform-community-edition---version-41)
-* OroPlatform Enterprise Edition
-  * [Version 3.1](#oroplatform-enterprise-edition---version-31)
-  * [Version 4.1](#oroplatform-enterprise-edition---version-41)
-* OroCommerce Enterprise Edition
-  * [Version 1.6](#orocommerce-enterprise-edition---version-16)
-  * [Version 3.1](#orocommerce-enterprise-edition---version-31)
-* OroCommerce Community Edition
-  * [Version 3.1](#orocommerce-community-edition---version-31)
-* OroCRM Community Edition
-  * [Version 3.1](#orocrm-community-edition---version-31)
-* OroCRM Enterprise Edition
-  * [Version 3.1](#orocrm-enterprise-edition---version-31)
-* Marello Community Edition
-  * [Version 2.0](#marello-community-edition---version-20)
-* Marello Enterprise Edition
-  * [Version 2.0](#marello-enterprise-edition---version-20)
+* OroPlatform [[CE 3.1](#oroplatform-community-edition---version-31), [CE 4.1](#oroplatform-community-edition---version-41), [EE 3.1](#oroplatform-enterprise-edition---version-31), [EE 4.1](#oroplatform-enterprise-edition---version-41)]
+* OroCommerce [[CE 3.1](#orocommerce-community-edition---version-31), [CE 4.1](#orocommerce-community-edition---version-41), [EE 1.6](#orocommerce-enterprise-edition---version-16), [EE 3.1](#orocommerce-enterprise-edition---version-31), [EE 4.1](#orocommerce-enterprise-edition---version-41)]
+* OroCRM [[CE 3.1](#orocrm-community-edition---version-31), [EE 3.1](#orocrm-enterprise-edition---version-31)]
+* Marello [[CE 2.0](#marello-community-edition---version-20), [CE 2.1](#marello-community-edition---version-21), [CE 2.2](#marello-community-edition---version-22), [EE 2.0](#marello-enterprise-edition---version-20), [EE 2.1](#marello-enterprise-edition---version-21), [EE 2.2](#marello-enterprise-edition---version-22)]
 
 ### OroPlatform Community Edition - Version 3.1
 
@@ -324,6 +309,28 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ce-3.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ce-3.1`
 
+### OroCommerce Community Edition - Version 4.1
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-orocommerce-ce-4.1`
+    * with Blackfire `7.1-cli-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.1-cli-xdebug-orocommerce-ce-4.1`
+  * FPM
+    * standard `7.1-fpm-orocommerce-ce-4.1`
+    * with Blackfire `7.1-fpm-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.1-fpm-xdebug-orocommerce-ce-4.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-orocommerce-ce-4.1`
+    * with Blackfire `7.2-cli-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.2-cli-xdebug-orocommerce-ce-4.1`
+  * FPM
+    * standard `7.2-fpm-orocommerce-ce-4.1`
+    * with Blackfire `7.2-fpm-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.2-fpm-xdebug-orocommerce-ce-4.1`
+
 ### OroCommerce Enterprise Edition - Version 1.6
 
 * PHP 7.1
@@ -357,6 +364,28 @@ Tags
     * standard `7.2-fpm-orocommerce-ee-3.1`
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ee-3.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ee-3.1`
+
+### OroCommerce Enterprise Edition - Version 4.1
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-orocommerce-ee-4.1`
+    * with Blackfire `7.1-cli-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.1-cli-xdebug-orocommerce-ee-4.1`
+  * FPM
+    * standard `7.1-fpm-orocommerce-ee-4.1`
+    * with Blackfire `7.1-fpm-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.1-fpm-xdebug-orocommerce-ee-4.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-orocommerce-ee-4.1`
+    * with Blackfire `7.2-cli-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.2-cli-xdebug-orocommerce-ee-4.1`
+  * FPM
+    * standard `7.2-fpm-orocommerce-ee-4.1`
+    * with Blackfire `7.2-fpm-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.2-fpm-xdebug-orocommerce-ee-4.1`
 
 ### OroCRM Community Edition - Version 3.1
 
@@ -406,42 +435,130 @@ Tags
 
 * PHP 7.1
   * CLI 
-    * standard `7.1-cli-marello-ce-3.1`
-    * with Blackfire `7.1-cli-blackfire-marello-ce-3.1`
-    * with Xdebug `7.1-cli-xdebug-marello-ce-3.1`
+    * standard `7.1-cli-marello-ce-2.0`
+    * with Blackfire `7.1-cli-blackfire-marello-ce-2.0`
+    * with Xdebug `7.1-cli-xdebug-marello-ce-2.0`
   * FPM
-    * standard `7.1-fpm-marello-ce-3.1`
-    * with Blackfire `7.1-fpm-blackfire-marello-ce-3.1`
-    * with Xdebug `7.1-fpm-xdebug-marello-ce-3.1`
+    * standard `7.1-fpm-marello-ce-2.0`
+    * with Blackfire `7.1-fpm-blackfire-marello-ce-2.0`
+    * with Xdebug `7.1-fpm-xdebug-marello-ce-2.0`
 
 * PHP 7.2
   * CLI 
-    * standard `7.2-cli-marello-ce-3.1`
-    * with Blackfire `7.2-cli-blackfire-marello-ce-3.1`
-    * with Xdebug `7.2-cli-xdebug-marello-ce-3.1`
+    * standard `7.2-cli-marello-ce-2.0`
+    * with Blackfire `7.2-cli-blackfire-marello-ce-2.0`
+    * with Xdebug `7.2-cli-xdebug-marello-ce-2.0`
   * FPM
-    * standard `7.2-fpm-marello-ce-3.1`
-    * with Blackfire `7.2-fpm-blackfire-marello-ce-3.1`
-    * with Xdebug `7.2-fpm-xdebug-marello-ce-3.1`
+    * standard `7.2-fpm-marello-ce-2.0`
+    * with Blackfire `7.2-fpm-blackfire-marello-ce-2.0`
+    * with Xdebug `7.2-fpm-xdebug-marello-ce-2.0`
+
+### Marello Community Edition - Version 2.1
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-marello-ce-2.1`
+    * with Blackfire `7.1-cli-blackfire-marello-ce-2.1`
+    * with Xdebug `7.1-cli-xdebug-marello-ce-2.1`
+  * FPM
+    * standard `7.1-fpm-marello-ce-2.1`
+    * with Blackfire `7.1-fpm-blackfire-marello-ce-2.1`
+    * with Xdebug `7.1-fpm-xdebug-marello-ce-2.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-marello-ce-2.1`
+    * with Blackfire `7.2-cli-blackfire-marello-ce-2.1`
+    * with Xdebug `7.2-cli-xdebug-marello-ce-2.1`
+  * FPM
+    * standard `7.2-fpm-marello-ce-2.1`
+    * with Blackfire `7.2-fpm-blackfire-marello-ce-2.1`
+    * with Xdebug `7.2-fpm-xdebug-marello-ce-2.1`
+
+### Marello Community Edition - Version 2.2
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-marello-ce-2.2`
+    * with Blackfire `7.1-cli-blackfire-marello-ce-2.2`
+    * with Xdebug `7.1-cli-xdebug-marello-ce-2.2`
+  * FPM
+    * standard `7.1-fpm-marello-ce-2.2`
+    * with Blackfire `7.1-fpm-blackfire-marello-ce-2.2`
+    * with Xdebug `7.1-fpm-xdebug-marello-ce-2.2`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-marello-ce-2.2`
+    * with Blackfire `7.2-cli-blackfire-marello-ce-2.2`
+    * with Xdebug `7.2-cli-xdebug-marello-ce-2.2`
+  * FPM
+    * standard `7.2-fpm-marello-ce-2.2`
+    * with Blackfire `7.2-fpm-blackfire-marello-ce-2.2`
+    * with Xdebug `7.2-fpm-xdebug-marello-ce-2.2`
 
 ### Marello Enterprise Edition - Version 2.0
 
 * PHP 7.1
   * CLI 
-    * standard `7.1-cli-marello-ee-3.1`
-    * with Blackfire `7.1-cli-blackfire-marello-ee-3.1`
-    * with Xdebug `7.1-cli-xdebug-marello-ee-3.1`
+    * standard `7.1-cli-marello-ee-2.0`
+    * with Blackfire `7.1-cli-blackfire-marello-ee-2.0`
+    * with Xdebug `7.1-cli-xdebug-marello-ee-2.0`
   * FPM
-    * standard `7.1-fpm-marello-ee-3.1`
-    * with Blackfire `7.1-fpm-blackfire-marello-ee-3.1`
-    * with Xdebug `7.1-fpm-xdebug-marello-ee-3.1`
+    * standard `7.1-fpm-marello-ee-2.0`
+    * with Blackfire `7.1-fpm-blackfire-marello-ee-2.0`
+    * with Xdebug `7.1-fpm-xdebug-marello-ee-2.0`
 
 * PHP 7.2
   * CLI 
-    * standard `7.2-cli-marello-ee-3.1`
-    * with Blackfire `7.2-cli-blackfire-marello-ee-3.1`
-    * with Xdebug `7.2-cli-xdebug-marello-ee-3.1`
+    * standard `7.2-cli-marello-ee-2.0`
+    * with Blackfire `7.2-cli-blackfire-marello-ee-2.0`
+    * with Xdebug `7.2-cli-xdebug-marello-ee-2.0`
   * FPM
-    * standard `7.2-fpm-marello-ee-3.1`
-    * with Blackfire `7.2-fpm-blackfire-marello-ee-3.1`
-    * with Xdebug `7.2-fpm-xdebug-marello-ee-3.1`
+    * standard `7.2-fpm-marello-ee-2.0`
+    * with Blackfire `7.2-fpm-blackfire-marello-ee-2.0`
+    * with Xdebug `7.2-fpm-xdebug-marello-ee-2.0`
+
+### Marello Enterprise Edition - Version 2.1
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-marello-ee-2.1`
+    * with Blackfire `7.1-cli-blackfire-marello-ee-2.1`
+    * with Xdebug `7.1-cli-xdebug-marello-ee-2.1`
+  * FPM
+    * standard `7.1-fpm-marello-ee-2.1`
+    * with Blackfire `7.1-fpm-blackfire-marello-ee-2.1`
+    * with Xdebug `7.1-fpm-xdebug-marello-ee-2.1`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-marello-ee-2.1`
+    * with Blackfire `7.2-cli-blackfire-marello-ee-2.1`
+    * with Xdebug `7.2-cli-xdebug-marello-ee-2.1`
+  * FPM
+    * standard `7.2-fpm-marello-ee-2.1`
+    * with Blackfire `7.2-fpm-blackfire-marello-ee-2.1`
+    * with Xdebug `7.2-fpm-xdebug-marello-ee-2.1`
+
+### Marello Enterprise Edition - Version 2.2
+
+* PHP 7.1
+  * CLI 
+    * standard `7.1-cli-marello-ee-2.2`
+    * with Blackfire `7.1-cli-blackfire-marello-ee-2.2`
+    * with Xdebug `7.1-cli-xdebug-marello-ee-2.2`
+  * FPM
+    * standard `7.1-fpm-marello-ee-2.2`
+    * with Blackfire `7.1-fpm-blackfire-marello-ee-2.2`
+    * with Xdebug `7.1-fpm-xdebug-marello-ee-2.2`
+
+* PHP 7.2
+  * CLI 
+    * standard `7.2-cli-marello-ee-2.2`
+    * with Blackfire `7.2-cli-blackfire-marello-ee-2.2`
+    * with Xdebug `7.2-cli-xdebug-marello-ee-2.2`
+  * FPM
+    * standard `7.2-fpm-marello-ee-2.2`
+    * with Blackfire `7.2-fpm-blackfire-marello-ee-2.2`
+    * with Xdebug `7.2-fpm-xdebug-marello-ee-2.2`
