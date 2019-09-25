@@ -2,13 +2,7 @@ export REPOSITORY = kiboko/php
 export VERSION = $(subst php@,,$(shell basename $(CURDIR)))
 
 .PHONY: all
-all:
-	$(MAKE) -C cli push
-	$(MAKE) -C cli-xdebug push
-	$(MAKE) -C cli-blackfire push
-	$(MAKE) -C fpm push
-	$(MAKE) -C fpm-xdebug push
-	$(MAKE) -C fpm-blackfire push
+all: cli cli-blackfire cli-xdebug fpm fpm-blackfire fpm-xdebug
 
 .PHONY: cli
 cli:
