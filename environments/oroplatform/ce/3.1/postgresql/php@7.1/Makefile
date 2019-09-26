@@ -1,13 +1,15 @@
-ifndef EDITION_VERSION
-$(error Variable $$EDITION_VERSION must be defined)
+export REPOSITORY = kiboko/php
+
+ifndef VERSION
+export VERSION = $(subst php@,,$(shell basename $(CURDIR)))
 endif
 
-REPOSITORY = kiboko/php
-VERSION = $(subst php@,,$(shell basename $(CURDIR)))
-
 .PHONY: all
-all: cli cli-blackfire cli-xdebug fpm fpm-blackfire fpm-xdebug
+all:
+	$(MAKE) -C cli push
+	$(MAKE) -C cli-xdebug push
+	$(MAKE) -C cli-blackfire push
+	$(MAKE) -C fpm push
+	$(MAKE) -C fpm-xdebug push
+	$(MAKE) -C fpm-blackfire push
 
-%:
-	docker build --build-arg FLAVOR=$@ --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION) .
-	docker push $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)
