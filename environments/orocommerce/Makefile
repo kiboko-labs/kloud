@@ -1,4 +1,6 @@
+ifndef PLATFORM
 export PLATFORM = $(subst @,-,$(shell basename $(CURDIR)))
+endif
 
 .PHONY: all
 all: ce ee
@@ -9,4 +11,4 @@ ce:
 
 .PHONY: ee
 ee:
-	$(MAKE) -C ee
+	$(MAKE) -C ce EDITION=ee
