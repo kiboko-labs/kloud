@@ -1,5 +1,3 @@
-export REPOSITORY = kiboko/php
-
 ifndef VERSION
 export VERSION = $(subst php@,,$(shell basename $(CURDIR)))
 endif
@@ -13,7 +11,6 @@ $(error Variable $$ORO_VERSION must be defined)
 endif
 
 REPOSITORY = kiboko/php
-VERSION = $(subst php@,,$(shell basename $(CURDIR)))
 
 .PHONY: all
 all: cli cli-blackfire cli-xdebug fpm fpm-blackfire fpm-xdebug

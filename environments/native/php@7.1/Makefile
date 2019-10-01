@@ -9,33 +9,33 @@ all: cli cli-blackfire cli-xdebug fpm fpm-blackfire fpm-xdebug
 
 .PHONY: cli
 cli:
-	$(MAKE) -C $@ push
+	$(MAKE) -j8 -j8 -C $@ push
 
 .PHONY: cli-blackfire
 cli-blackfire: cli
-	$(MAKE) -C $@ push
+	$(MAKE) -j8 -j8 -C $@ push
 
 .PHONY: cli-xdebug
 cli-xdebug: cli
-	$(MAKE) -C $@ push
+	$(MAKE) -j8 -j8 -C $@ push
 
 .PHONY: fpm
 fpm:
-	$(MAKE) -C $@ push
+	$(MAKE) -j8 -j8 -C $@ push
 
 .PHONY: fpm-blackfire
 fpm-blackfire: fpm
-	$(MAKE) -C $@ push
+	$(MAKE) -j8 -j8 -C $@ push
 
 .PHONY: fpm-xdebug
 fpm-xdebug: fpm
-	$(MAKE) -C $@ push
+	$(MAKE) -j8 -j8 -C $@ push
 
 .PHONY: clean
 clean:
-	$(MAKE) -C cli $@
-	$(MAKE) -C cli-blackfire $@
-	$(MAKE) -C cli-xdebug $@
-	$(MAKE) -C fpm $@
-	$(MAKE) -C fpm-blackfire $@
-	$(MAKE) -C fpm-xdebug $@
+	$(MAKE) -j8 -j8 -C cli $@
+	$(MAKE) -j8 -j8 -C cli-blackfire $@
+	$(MAKE) -j8 -j8 -C cli-xdebug $@
+	$(MAKE) -j8 -j8 -C fpm $@
+	$(MAKE) -j8 -j8 -C fpm-blackfire $@
+	$(MAKE) -j8 -C fpm-xdebug $@
