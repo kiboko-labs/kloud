@@ -1,74 +1,143 @@
-.PHONY: all
-all: oroplatform orocommerce orocrm marello
+REPOSITORY=kiboko/php
 
-.PHONY: native
-native:
-	$(MAKE) -C environments/native all
+%-cli:
+	$(call build,$@,environments/native/php@$*/cli)
+%-cli-blackfire: %-cli
+	$(call build,$@,environments/native/php@$*/cli-blackfire)
+%-cli-xdebug: %-cli
+	$(call build,$@,environments/native/php@$*/cli-xdebug)
 
-.PHONY: oroplatform
-oroplatform:
-	$(MAKE) -C environments/oroplatform all
+%-fpm:
+	$(call build,$@,environments/native/php@$*/fpm)
+%-fpm-blackfire: %-fpm
+	$(call build,$@,environments/native/php@$*/fpm-blackfire)
+%-fpm-xdebug: %-fpm
+	$(call build,$@,environments/native/php@$*/fpm-xdebug)
 
-.PHONY: orocommerce
-orocommerce: oroplatform
-	$(MAKE) -C environments/orocommerce all
+%-cli-oroplatform-ce-3.1: %-cli
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/postgresql/php@$*/cli)
+%-cli-blackfire-oroplatform-ce-3.1: %-cli-blackfire
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/postgresql/php@$*/cli-blackfire)
+%-cli-xdebug-oroplatform-ce-3.1: %-cli-xdebug
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/postgresql/php@$*/cli-xdebug)
 
-.PHONY: orocrm
-orocrm: oroplatform
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,orocrm-ce-3.1);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,orocrm-ce-3.1);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,orocrm-ce-3.1);)
+%-fpm-oroplatform-ce-3.1: %-fpm
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/postgresql/php@$*/fpm)
+%-fpm-blackfire-oroplatform-ce-3.1: %-fpm-blackfire
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/postgresql/php@$*/cli-blackfire)
+%-fpm-xdebug-oroplatform-ce-3.1: %-fpm-xdebug
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/postgresql/php@$*/cli-xdebug)
 
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,orocrm-ee-3.1);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,orocrm-ee-3.1);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,orocrm-ee-3.1);)
+%-cli-oroplatform-ee-3.1: %-cli-oroplatform-ce-3.1
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-cli-blackfire-oroplatform-ee-3.1: %-cli-blackfire-oroplatform-ce-3.1
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-cli-xdebug-oroplatform-ee-3.1: %-cli-xdebug-oroplatform-ce-3.1
+	$(call build_from,$@,$<,environments/oroplatform/ee)
 
-.PHONY: marello
-marello: oroplatform
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,marello-ce-2.0);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,marello-ce-2.0);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,marello-ce-2.0);)
+%-fpm-oroplatform-ee-3.1: %-fpm-oroplatform-ce-3.1
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-fpm-blackfire-oroplatform-ee-3.1: %-fpm-blackfire-oroplatform-ce-3.1
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-fpm-xdebug-oroplatform-ee-3.1: %-fpm-xdebug-oroplatform-ce-3.1
+	$(call build_from,$@,$<,environments/oroplatform/ee)
 
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,marello-ce-2.1);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,marello-ce-2.1);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,marello-ce-2.1);)
+%-cli-oroplatform-ce-3.1-mysql: %-cli
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/mysql/php@$*/cli)
+%-cli-blackfire-oroplatform-ce-3.1-mysql: %-cli-blackfire
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/mysql/php@$*/cli-blackfire)
+%-cli-xdebug-oroplatform-ce-3.1-mysql: %-cli-xdebug
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/mysql/php@$*/cli-xdebug)
 
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,marello-ce-2.2);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,marello-ce-2.2);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,marello-ce-2.2);)
+%-fpm-oroplatform-ce-3.1-mysql: %-fpm
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/mysql/php@$*/fpm)
+%-fpm-blackfire-oroplatform-ce-3.1-mysql: %-fpm-blackfire
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/mysql/php@$*/cli-blackfire)
+%-fpm-xdebug-oroplatform-ce-3.1-mysql: %-fpm-xdebug
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/mysql/php@$*/cli-xdebug)
 
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,marello-ee-2.0);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,marello-ee-2.0);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,marello-ee-2.0);)
+%-cli-oroplatform-ee-3.1-mysql: %-cli-oroplatform-ce-3.1-mysql
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-cli-blackfire-oroplatform-ee-3.1-mysql: %-cli-blackfire-oroplatform-ce-3.1-mysql
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-cli-xdebug-oroplatform-ee-3.1-mysql: %-cli-xdebug-oroplatform-ce-3.1-mysql
+	$(call build_from,$@,$<,environments/oroplatform/ee)
 
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,marello-ee-2.1);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,marello-ee-2.1);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,marello-ee-2.1);)
+%-fpm-oroplatform-ee-3.1-mysql: %-fpm-oroplatform-ce-3.1-mysql
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-fpm-blackfire-oroplatform-ee-3.1-mysql: %-fpm-blackfire-oroplatform-ce-3.1-mysql
+	$(call build_from,$@,$<,environments/oroplatform/ee)
+%-fpm-xdebug-oroplatform-ee-3.1-mysql: %-fpm-xdebug-oroplatform-ce-3.1-mysql
+	$(call build_from,$@,$<,environments/oroplatform/ee)
 
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_light_image,$(version),oroplatform-ce-3.1,marello-ee-2.2);)
-	$(foreach version, 7.1 7.2 7.3, $(call alias_php_blackfire_image,$(version),oroplatform-ce-3.1,marello-ee-2.2);)
-	$(foreach version, 7.1 7.2 7.3 7.4, $(call alias_php_xdebug_image,$(version),oroplatform-ce-3.1,marello-ee-2.2);)
+%-cli-orocommerce-ce-3.1: %-cli-oroplatform-ce-3.1
+	@echo $@
+%-cli-blackfire-orocommerce-ce-3.1: %-cli-blackfire-oroplatform-ce-3.1
+	@echo $@
+%-cli-xdebug-orocommerce-ce-3.1: %-cli-xdebug-oroplatform-ce-3.1
+	@echo $@
 
-define alias_php_light_image
-	$(call alias_php_image,$(1),cli,$(2),$(3))
-	$(call alias_php_image,$(1),fpm,$(2),$(3))
+%-fpm-orocommerce-ce-3.1: %-fpm-oroplatform-ce-3.1
+	@echo $@
+%-fpm-blackfire-orocommerce-ce-3.1: %-fpm-blackfire-oroplatform-ce-3.1
+	@echo $@
+%-fpm-xdebug-orocommerce-ce-3.1: %-fpm-xdebug-oroplatform-ce-3.1
+	@echo $@
+
+%-cli-orocommerce-ee-3.1: %-cli-oroplatform-ee-3.1
+	@echo $@
+%-cli-blackfire-orocommerce-ee-3.1: %-cli-blackfire-oroplatform-ee-3.1
+	@echo $@
+%-cli-xdebug-orocommerce-ee-3.1: %-cli-xdebug-oroplatform-ee-3.1
+	@echo $@
+
+%-fpm-orocommerce-ee-3.1: %-fpm-oroplatform-ee-3.1
+	@echo $@
+%-fpm-blackfire-orocommerce-ee-3.1: %-fpm-blackfire-oroplatform-ee-3.1
+	@echo $@
+%-fpm-xdebug-orocommerce-ee-3.1: %-fpm-xdebug-oroplatform-ee-3.1
+	@echo $@
+
+%-cli-orocrm-ce-3.1: %-cli-oroplatform-ce-3.1
+	@echo $@
+%-cli-blackfire-orocrm-ce-3.1: %-cli-blackfire-oroplatform-ce-3.1
+	@echo $@
+%-cli-xdebug-orocrm-ce-3.1: %-cli-xdebug-oroplatform-ce-3.1
+	@echo $@
+
+%-fpm-orocrm-ce-3.1: %-fpm-oroplatform-ce-3.1
+	@echo $@
+%-fpm-blackfire-orocrm-ce-3.1: %-fpm-blackfire-oroplatform-ce-3.1
+	@echo $@
+%-fpm-xdebug-orocrm-ce-3.1: %-fpm-xdebug-oroplatform-ce-3.1
+	@echo $@
+
+%-cli-orocrm-ee-3.1: %-cli-oroplatform-ee-3.1
+	@echo $@
+%-cli-blackfire-orocrm-ee-3.1: %-cli-blackfire-oroplatform-ee-3.1
+	@echo $@
+%-cli-xdebug-orocrm-ee-3.1: %-cli-xdebug-oroplatform-ee-3.1
+	@echo $@
+
+%-fpm-orocrm-ee-3.1: %-fpm-oroplatform-ee-3.1
+	@echo $@
+%-fpm-blackfire-orocrm-ee-3.1: %-fpm-blackfire-oroplatform-ee-3.1
+	@echo $@
+%-fpm-xdebug-orocrm-ee-3.1: %-fpm-xdebug-oroplatform-ee-3.1
+	@echo $@
+
+ifndef FORCE_BUILD
+define build
+	docker pull $(REPOSITORY):$(1) || ( docker build --tag $(REPOSITORY):$(1) $(2) && docker push $(REPOSITORY):$(1) )
 endef
-
-define alias_php_blackfire_image
-	$(call alias_php_image,$(1),cli-blackfire,$(2),$(3))
-	$(call alias_php_image,$(1),fpm-blackfire,$(2),$(3))
+define build_from
+	docker pull $(REPOSITORY):$(1) || ( docker build --build-arg SOURCE_VARIATION=$(2) --tag $(REPOSITORY):$(1) $(3) && docker push $(REPOSITORY):$(1) )
 endef
-
-define alias_php_xdebug_image
-	$(call alias_php_image,$(1),cli-xdebug,$(2),$(3))
-	$(call alias_php_image,$(1),fpm-xdebug,$(2),$(3))
+else
+define build
+	docker build --no-cache --tag $(REPOSITORY):$(1) $(2) && docker push $(REPOSITORY):$@
 endef
-
-define alias_php_image
-	$(call alias_image,php,$(1),$(2),$(3),$(4))
+define build_from
+	docker build --no-cache --build-arg SOURCE_VARIATION=$(2) --tag $(REPOSITORY):$(1) $(3) && docker push $(REPOSITORY):$@
 endef
-
-define alias_image
-	docker tag kiboko/$(1):$(2)-$(3)-$(4) kiboko/$(1):$(2)-$(3)-$(5)
-	docker push kiboko/$(1):$(2)-$(3)-$(5)
-endef
+endif
