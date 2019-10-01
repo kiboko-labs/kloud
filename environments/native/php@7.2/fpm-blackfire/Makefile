@@ -20,7 +20,11 @@ clean:
 	-rm .buildignore .pushignore
 
 .buildignore:
+ifndef FORCE_BUILD
+	docker pull $(TAG) || docker build . --tag $(TAG)
+else
 	docker build . --tag $(TAG)
+endif
 	touch $@
 
 .pushignore:
