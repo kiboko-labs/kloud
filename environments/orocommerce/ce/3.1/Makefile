@@ -15,13 +15,13 @@ all: mysql postgresql
 
 .PHONY: postgresql
 postgresql:
-	$(MAKE) -j8 -j8 -C postgresql
+	$(MAKE) -C postgresql
 
 .PHONY: mysql
 mysql:
-	$(MAKE) -j8 -j8 -C mysql
+	$(MAKE) -C mysql
 
 .PHONY: mariadb
 mariadb:
-	$(MAKE) -j8 -j8 -C mysql DATABASE=mariadb
+	$(MAKE) -C mysql DATABASE=mariadb
 

@@ -7,8 +7,8 @@ all: ce ee
 
 .PHONY: ce
 ce:
-	$(MAKE) -j8 -j8 -C ce
+	$(MAKE) -C ce
 
 .PHONY: ee
 ee:
-	$(MAKE) -j8 -j8 -C ce EDITION=ee
+	$(MAKE) -C ce EDITION=ee
