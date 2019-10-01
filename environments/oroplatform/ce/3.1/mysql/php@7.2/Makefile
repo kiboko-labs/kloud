@@ -9,5 +9,9 @@ VERSION = $(subst php@,,$(shell basename $(CURDIR)))
 all: cli cli-blackfire cli-xdebug fpm fpm-blackfire fpm-xdebug
 
 %:
-	docker build --build-arg FLAVOR=$@ --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql .
+ifndef FORCE_BUILD
+	docker pull $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql || docker build --build-arg FLAVOR=$@ --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql .
+else
+	docker build --no-cache --build-arg FLAVOR=$@ --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql .
+endif
 	docker push $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql

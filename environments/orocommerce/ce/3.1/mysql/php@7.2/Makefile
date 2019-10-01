@@ -1,7 +1,3 @@
-ifndef VERSION
-export VERSION = $(subst php@,,$(shell basename $(CURDIR)))
-endif
-
 ifndef EDITION_VERSION
 $(error Variable $$EDITION_VERSION must be defined)
 endif
@@ -11,10 +7,15 @@ $(error Variable $$ORO_VERSION must be defined)
 endif
 
 REPOSITORY = kiboko/php
+VERSION = $(subst php@,,$(shell basename $(CURDIR)))
 
 .PHONY: all
 all: cli cli-blackfire cli-xdebug fpm fpm-blackfire fpm-xdebug
 
 %:
-	docker build --build-arg FLAVOR=$@ --build-arg ORO_VERSION=$(ORO_VERSION) --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql .
+ifndef FORCE_BUILD
+	docker pull $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql || docker build --build-arg FLAVOR=$@ --build-arg ORO_VERSION=$(ORO_VERSION) --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql .
+else
+	docker build --no-cache --build-arg FLAVOR=$@ --build-arg ORO_VERSION=$(ORO_VERSION) --tag $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql .
+endif
 	docker push $(REPOSITORY):$(VERSION)-$@-$(EDITION_VERSION)-mysql
