@@ -1,6 +1,6 @@
 ARG FLAVOR
 
-FROM kiboko/php:7.3-${FLAVOR}
+FROM kiboko/php:${SOURCE_VARIATION}
 
 LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 
