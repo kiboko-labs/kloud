@@ -1,7 +1,6 @@
-ARG FLAVOR
-ARG ORO_VERSION
+ARG SOURCE_VARIATION
 
-FROM kiboko/php:7.1-${FLAVOR}-oroplatform-ce-${ORO_VERSION}
+FROM kiboko/php:${SOURCE_VARIATION}
 
 LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 

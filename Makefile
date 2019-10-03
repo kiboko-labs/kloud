@@ -97,18 +97,18 @@ marello-ee: 7.1-cli-marello-ee-3.1 7.1-cli-blackfire-marello-ee-3.1 7.1-cli-xdeb
 	$(call build_from,$@,$<,environments/oroplatform/ee)
 
 %-cli-orocommerce-ce-3.1: %-cli-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*/cli)
+	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 %-cli-blackfire-orocommerce-ce-3.1: %-cli-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*/cli-blackfire)
+	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 %-cli-xdebug-orocommerce-ce-3.1: %-cli-xdebug-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*/cli-xdebug)
+	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 
 %-fpm-orocommerce-ce-3.1: %-fpm-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*/fpm)
+	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 %-fpm-blackfire-orocommerce-ce-3.1: %-fpm-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/orocommerce/php@$*/fpm-blackfire)
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/orocommerce/php@$*)
 %-fpm-xdebug-orocommerce-ce-3.1: %-fpm-xdebug-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*/fpm-xdebug)
+	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 
 %-cli-orocommerce-ee-3.1: %-cli-oroplatform-ee-3.1
 	$(call build_from,$@,$<,environments/orocommerce/ee)
@@ -153,18 +153,18 @@ marello-ee: 7.1-cli-marello-ee-3.1 7.1-cli-blackfire-marello-ee-3.1 7.1-cli-xdeb
 	$(call build_from,$@,$<,environments/orocommerce/ee)
 
 %-cli-orocrm-ce-3.1: %-cli-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*/cli)
+	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*)
 %-cli-blackfire-orocrm-ce-3.1: %-cli-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*/cli-blackfire)
+	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*)
 %-cli-xdebug-orocrm-ce-3.1: %-cli-xdebug-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*/cli-xdebug)
+	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*)
 
 %-fpm-orocrm-ce-3.1: %-fpm-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*/fpm)
+	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*)
 %-fpm-blackfire-orocrm-ce-3.1: %-fpm-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/orocrm/php@$*/fpm-blackfire)
+	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/orocrm/php@$*)
 %-fpm-xdebug-orocrm-ce-3.1: %-fpm-xdebug-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*/fpm-xdebug)
+	$(call build_from,$@,$<,environments/orocrm/ce/3.1/postgresql/php@$*)
 
 %-cli-orocrm-ee-3.1: %-cli-oroplatform-ee-3.1
 	$(call build_from,$@,$<,environments/orocrm/ee)
@@ -209,18 +209,18 @@ marello-ee: 7.1-cli-marello-ee-3.1 7.1-cli-blackfire-marello-ee-3.1 7.1-cli-xdeb
 	$(call build_from,$@,$<,environments/orocrm/ee)
 
 %-cli-marello-ce-3.1: %-cli-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*/cli)
+	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*)
 %-cli-blackfire-marello-ce-3.1: %-cli-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*/cli-blackfire)
+	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*)
 %-cli-xdebug-marello-ce-3.1: %-cli-xdebug-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*/cli-xdebug)
+	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*)
 
 %-fpm-marello-ce-3.1: %-fpm-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*/fpm)
+	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*)
 %-fpm-blackfire-marello-ce-3.1: %-fpm-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/oroplatform/ce/3.1/marello/php@$*/fpm-blackfire)
+	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*)
 %-fpm-xdebug-marello-ce-3.1: %-fpm-xdebug-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*/fpm-xdebug)
+	$(call build_from,$@,$<,environments/marello/ce/3.1/postgresql/php@$*)
 
 %-cli-marello-ee-3.1: %-cli-oroplatform-ee-3.1
 	$(call build_from,$@,$<,environments/marello/ee)
