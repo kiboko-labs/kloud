@@ -111,6 +111,13 @@ services:
     restart: "no"
 ```
 
+Oro pre-built Docker Compose stacks
+---
+
+* OroPlatform [[CE 3.1](compose/oroplatform/ce/3.1/)]
+* OroCommerce [[EE 3.1](compose/orocommerce/ee/3.1/)]
+
+
 Tags
 ---
 
