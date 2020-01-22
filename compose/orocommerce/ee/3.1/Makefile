@@ -20,7 +20,7 @@ DOCKER-EXEC=$(DOCKER-COMPOSE) exec
 SH=$(DOCKER-EXEC) sh /bin/sh
 CONSOLE=$(DOCKER-EXEC) sh bin/console
 COMPOSER=$(DOCKER-EXEC) sh composer
-SERVICES=elasticsearch dejavu sql amqp redis http http-dev http-xdebug mail fpm fpm-xdebug sh sh-xdebug
+SERVICES=elasticsearch dejavu sql amqp redis http http-worker-prod http-worker-dev http-worker-xdebug mail fpm fpm-xdebug sh sh-xdebug
 
 .env:
 	cp .env.dist .env
