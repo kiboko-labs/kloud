@@ -1,3 +1,4 @@
 /.idea
 /environments/**/.buildignore
 /environments/**/.pushignore
+/compose/openvpn/.env

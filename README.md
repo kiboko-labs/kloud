@@ -126,6 +126,33 @@ Tags
 * OroCRM [[CE 3.1](#orocrm-community-edition---version-31), [EE 3.1](#orocrm-enterprise-edition---version-31)]
 * Marello [[CE 2.0](#marello-community-edition---version-20), [CE 2.1](#marello-community-edition---version-21), [CE 2.2](#marello-community-edition---version-22), [EE 2.0](#marello-enterprise-edition---version-20), [EE 2.1](#marello-enterprise-edition---version-21), [EE 2.2](#marello-enterprise-edition---version-22)]
 
+| Application    | Version | PHP 7.1 + PG | PHP 7.2 + PG | PHP 7.3 + PG | PHP 7.4 + PG | PHP 8.0 + PG | PHP 7.1 + My | PHP 7.2 + My | PHP 7.3 + My | PHP 7.4 + My | PHP 8.0 + My |
+| -------------- | ------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| OroPlatform CE | ^2.6.0  | ✅           | ❌           | ❌           | ❌️           | ❌           | ✅           | ❌           | ❌           | ❌️           | ❌           |
+|                | ^3.1.0  | ✅           | ✅           | ❌️           | ❌️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+|                | ^4.1.0  | ✅           | ✅           | ❌️           | ❌️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+| OroPlatform EE | ^2.6.0  | ✅           | ❌           | ❌           | ❌️           | ❌           | ✅           | ❌           | ❌           | ❌️           | ❌           |
+|                | ^3.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+|                | ^4.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+| OroCRM CE      | ^2.6.0  | ❌           | ❌           | ❌️           | ❌️           | ❌           | ❌           | ❌           | ❌️           | ❌️           | ❌           |
+|                | ^3.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+|                | ^4.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+| OroCRM EE      | ^2.6.0  | ✅           | ❌           | ❌️           | ❌️           | ❌           | ✅           | ❌           | ❌️           | ❌️           | ❌           |
+|                | ^3.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+|                | ^4.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+| OroCommerce CE | ^1.6.0  | ❌           | ❌           | ❌️           | ❌️           | ❌           | ❌           | ❌           | ❌️           | ❌️           | ❌           |
+|                | ^3.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+|                | ^4.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+| OroCommerce eE | ^1.6.0  | ✅           | ❌           | ❌️           | ❌️           | ❌           | ✅           | ❌           | ❌️           | ❌️           | ❌           |
+|                | ^3.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+|                | ^4.1.0  | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+| Marello CE     | ^1.5.0  | ❌           | ❌           | ❌️           | ❌️           | ❌           | ❌           | ❌           | ❌️           | ❌️           | ❌           |
+|                | ^2.0    | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ❌️           | ❌           | ❌           |
+|                | ^3.0    | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ❌️           | ❌️           | ❌           |
+| Marello EE     | ^1.5.0  | ✅           | ❌           | ❌️           | ❌️           | ❌           | ✅           | ❌           | ❌️           | ❌️           | ❌           |
+|                | ^2.0    | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+|                | ^3.0    | ✅           | ✅           | ⚠️           | ⚠️           | ❌           | ✅           | ✅           | ⚠️           | ⚠️           | ❌           |
+
 ### OroPlatform Community Edition - Version 3.1
 
 * PHP 7.1
@@ -158,14 +185,14 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ce-3.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ce-3.1`
 
-* PHP 7.4RC1 (not supported by Oro, experimental)
+* PHP 7.4 (not supported by Oro)
   * CLI
     * standard `7.4-cli-oroplatform-ce-3.1`
-    * with Blackfire (not yet supported)
+    * with Blackfire `7.4-cli-blackfire-ce-3.1`
     * with Xdebug `7.4-cli-xdebug-oroplatform-ce-3.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ce-3.1`
-    * with Blackfire (not yet supported)
+    * with Blackfire `7.4-fpm-blackfire-oroplatform-ce-3.1`
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ce-3.1`
 
 ### OroPlatform Community Edition - Version 4.1
@@ -200,7 +227,7 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ce-4.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ce-4.1`
 
-* PHP 7.4RC1 (not supported by Oro, experimental)
+* PHP 7.4 (not supported by Oro)
   * CLI
     * standard `7.4-cli-oroplatform-ce-4.1`
     * with Blackfire (not yet supported)
@@ -242,14 +269,14 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ee-3.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ee-3.1`
 
-* PHP 7.4RC1 (not supported by Oro, experimental)
+* PHP 7.4 (not supported by Oro)
   * CLI
     * standard `7.4-cli-oroplatform-ee-3.1`
-    * with Blackfire (not yet supported)
+    * with Blackfire `7.4-cli-blackfire-oroplatform-ee-3.1`
     * with Xdebug `7.4-cli-xdebug-oroplatform-ee-3.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ee-3.1`
-    * with Blackfire (not yet supported)
+    * with Blackfire `7.4-fpm-blackfire-oroplatform-ee-3.1`
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ee-3.1`
 
 ### OroPlatform Enterprise Edition - Version 4.1
@@ -284,14 +311,14 @@ Tags
     * with Blackfire `7.3-fpm-blackfire-oroplatform-ee-4.1`
     * with Xdebug `7.3-fpm-xdebug-oroplatform-ee-4.1`
 
-* PHP 7.4RC1 (not supported by Oro, experimental)
+* PHP 7.4 (not supported by Oro)
   * CLI
     * standard `7.4-cli-oroplatform-ee-4.1`
-    * with Blackfire (not yet supported)
+    * with Blackfire `7.4-cli-blackfire-oroplatform-ee-4.1`
     * with Xdebug `7.4-cli-xdebug-oroplatform-ee-4.1`
   * FPM
     * standard `7.4-fpm-oroplatform-ee-4.1`
-    * with Blackfire (not yet supported)
+    * with Blackfire `7.4-fpm-blackfire-oroplatform-ee-4.1`
     * with Xdebug `7.4-fpm-xdebug-oroplatform-ee-4.1`
 
 ### OroCommerce Community Edition - Version 3.1
@@ -316,10 +343,30 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ce-3.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ce-3.1`
 
+* PHP 7.3 (not supported by Oro)
+  * CLI 
+    * standard `7.3-cli-orocommerce-ce-3.1`
+    * with Blackfire `7.3-cli-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.3-cli-xdebug-orocommerce-ce-3.1`
+  * FPM 
+    * standard `7.3-fpm-orocommerce-ce-3.1`
+    * with Blackfire `7.3-fpm-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.3-fpm-xdebug-orocommerce-ce-3.1`
+
+* PHP 7.4 (not supported by Oro)
+  * CLI
+    * standard `7.4-cli-orocommerce-ce-3.1`
+    * with Blackfire `7.4-cli-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.4-cli-xdebug-orocommerce-ce-3.1`
+  * FPM
+    * standard `7.4-fpm-orocommerce-ce-3.1`
+    * with Blackfire `7.4-fpm-blackfire-orocommerce-ce-3.1`
+    * with Xdebug `7.4-fpm-xdebug-orocommerce-ce-3.1`
+
 ### OroCommerce Community Edition - Version 4.1
 
 * PHP 7.1
-  * CLI 
+  * CLI
     * standard `7.1-cli-orocommerce-ce-4.1`
     * with Blackfire `7.1-cli-blackfire-orocommerce-ce-4.1`
     * with Xdebug `7.1-cli-xdebug-orocommerce-ce-4.1`
@@ -329,7 +376,7 @@ Tags
     * with Xdebug `7.1-fpm-xdebug-orocommerce-ce-4.1`
 
 * PHP 7.2
-  * CLI 
+  * CLI
     * standard `7.2-cli-orocommerce-ce-4.1`
     * with Blackfire `7.2-cli-blackfire-orocommerce-ce-4.1`
     * with Xdebug `7.2-cli-xdebug-orocommerce-ce-4.1`
@@ -337,6 +384,26 @@ Tags
     * standard `7.2-fpm-orocommerce-ce-4.1`
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ce-4.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ce-4.1`
+
+* PHP 7.3 (not supported by Oro)
+  * CLI
+    * standard `7.3-cli-orocommerce-ce-4.1`
+    * with Blackfire `7.3-cli-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.3-cli-xdebug-orocommerce-ce-4.1`
+  * FPM
+    * standard `7.3-fpm-orocommerce-ce-4.1`
+    * with Blackfire `7.3-fpm-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.3-fpm-xdebug-orocommerce-ce-4.1`
+
+* PHP 7.4 (not supported by Oro)
+  * CLI
+    * standard `7.4-cli-orocommerce-ce-4.1`
+    * with Blackfire `7.4-cli-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.4-cli-xdebug-orocommerce-ce-4.1`
+  * FPM
+    * standard `7.4-fpm-orocommerce-ce-4.1`
+    * with Blackfire `7.4-fpm-blackfire-orocommerce-ce-4.1`
+    * with Xdebug `7.4-fpm-xdebug-orocommerce-ce-4.1`
 
 ### OroCommerce Enterprise Edition - Version 1.6
 
@@ -372,10 +439,30 @@ Tags
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ee-3.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ee-3.1`
 
+* PHP 7.3 (not supported by Oro)
+  * CLI
+    * standard `7.3-cli-orocommerce-ee-3.1`
+    * with Blackfire `7.3-cli-blackfire-orocommerce-ee-3.1`
+    * with Xdebug `7.3-cli-xdebug-orocommerce-ee-3.1`
+  * FPM
+    * standard `7.3-fpm-orocommerce-ee-3.1`
+    * with Blackfire `7.3-fpm-blackfire-orocommerce-ee-3.1`
+    * with Xdebug `7.3-fpm-xdebug-orocommerce-ee-3.1`
+
+* PHP 7.4 (not supported by Oro, experimental)
+  * CLI
+    * standard `7.4-cli-orocommerce-ee-3.1`
+    * with Blackfire `7.4-cli-blackfire-orocommerce-ee-3.1`
+    * with Xdebug `7.4-cli-xdebug-orocommerce-ee-3.1`
+  * FPM
+    * standard `7.4-fpm-orocommerce-ee-3.1`
+    * with Blackfire `7.4-fpm-blackfire-orocommerce-ee-3.1`
+    * with Xdebug `7.4-fpm-xdebug-orocommerce-ee-3.1`
+
 ### OroCommerce Enterprise Edition - Version 4.1
 
 * PHP 7.1
-  * CLI 
+  * CLI
     * standard `7.1-cli-orocommerce-ee-4.1`
     * with Blackfire `7.1-cli-blackfire-orocommerce-ee-4.1`
     * with Xdebug `7.1-cli-xdebug-orocommerce-ee-4.1`
@@ -385,7 +472,7 @@ Tags
     * with Xdebug `7.1-fpm-xdebug-orocommerce-ee-4.1`
 
 * PHP 7.2
-  * CLI 
+  * CLI
     * standard `7.2-cli-orocommerce-ee-4.1`
     * with Blackfire `7.2-cli-blackfire-orocommerce-ee-4.1`
     * with Xdebug `7.2-cli-xdebug-orocommerce-ee-4.1`
@@ -393,6 +480,26 @@ Tags
     * standard `7.2-fpm-orocommerce-ee-4.1`
     * with Blackfire `7.2-fpm-blackfire-orocommerce-ee-4.1`
     * with Xdebug `7.2-fpm-xdebug-orocommerce-ee-4.1`
+
+* PHP 7.3 (not supported by Oro)
+  * CLI
+    * standard `7.3-cli-orocommerce-ee-4.1`
+    * with Blackfire `7.3-cli-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.3-cli-xdebug-orocommerce-ee-4.1`
+  * FPM
+    * standard `7.3-fpm-orocommerce-ee-4.1`
+    * with Blackfire `7.3-fpm-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.3-fpm-xdebug-orocommerce-ee-4.1`
+
+* PHP 7.4 (not supported by Oro, experimental)
+  * CLI
+    * standard `7.4-cli-orocommerce-ee-4.1`
+    * with Blackfire `7.4-cli-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.4-cli-xdebug-orocommerce-ee-4.1`
+  * FPM
+    * standard `7.4-fpm-orocommerce-ee-4.1`
+    * with Blackfire `7.4-fpm-blackfire-orocommerce-ee-4.1`
+    * with Xdebug `7.4-fpm-xdebug-orocommerce-ee-4.1`
 
 ### OroCRM Community Edition - Version 3.1
 
