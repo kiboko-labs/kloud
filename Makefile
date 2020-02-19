@@ -249,7 +249,7 @@ marello-xdebug: 7.1-cli-xdebug-marello-ce-2.0 7.1-fpm-xdebug-marello-ce-2.0 7.1-
 %-fpm-orocommerce-ce-3.1: %-fpm-oroplatform-ce-3.1
 	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 %-fpm-blackfire-orocommerce-ce-3.1: %-fpm-blackfire-oroplatform-ce-3.1
-	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/orocommerce/php@$*)
+	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 %-fpm-xdebug-orocommerce-ce-3.1: %-fpm-xdebug-oroplatform-ce-3.1
 	$(call build_from,$@,$<,environments/orocommerce/ce/3.1/postgresql/php@$*)
 
