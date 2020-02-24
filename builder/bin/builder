@@ -1,0 +1,107 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Builder\BuildableInterface;
+use Builder\DependentTagInterface;
+use Builder\Package\PackageInterface;
+use Builder\TagInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Helper\TableRows;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+$app = new Application('Kiboko Docker Builder');
+
+$app->addCommands([
+    new class extends Symfony\Component\Console\Command\Command {
+        protected function configure()
+        {
+            $this->setName('build');
+            $this->setDescription('Build PHP Docker images');
+
+            $this->addArgument('tags', InputArgument::IS_ARRAY, 'Tags to build');
+
+            $this->addOption('force', 'f', InputOption::VALUE_NONE);
+        }
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            /** @var PackageInterface[] $packages */
+            $packages = new \CachingIterator(new ArrayIterator(require __DIR__ . '/../config/packages.php'), \CachingIterator::FULL_CACHE);
+            $format = new SymfonyStyle($input, $output);
+
+            $search = $input->getArgument('tags');
+
+            /** @var PackageInterface $package */
+            foreach ($packages as $package) {
+                $tags = new CallbackFilterIterator(new IteratorIterator($package), function (TagInterface $tag) use ($search) {
+                    return in_array((string) $tag, $search);
+                });
+
+                foreach ($tags as $tag) {
+                    if (!$tag instanceof BuildableInterface) {
+                        $format->note(strtr('The tag %tagName% is not buildable, please check your configuration.', ['%tagName%' => (string) $tag]));
+                        continue;
+                    }
+
+                    $format->comment(strtr('Building %tagName%.', ['%tagName%' => (string) $tag]));
+                    $command = $tag->build();
+
+                    $command();
+                }
+            }
+
+            return 0;
+        }
+    },
+
+    new class extends Symfony\Component\Console\Command\Command {
+        protected function configure()
+        {
+            $this->setName('list');
+            $this->setDescription('List PHP Docker images');
+
+            $this->addOption('filter', 'f', InputOption::VALUE_REQUIRED);
+        }
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            /** @var PackageInterface[] $packages */
+            $packages = new \CachingIterator(new ArrayIterator(require __DIR__ . '/../config/packages.php'), \CachingIterator::FULL_CACHE);
+            $format = new SymfonyStyle($input, $output);
+            $pattern = $input->getOption('filter');
+            $output->writeln($pattern);
+
+            $format->table(['tag', 'parent', 'path'], iterator_to_array(new TableRows(function() use ($packages, $input) {
+                /** @var PackageInterface $package */
+                foreach ($packages as $package) {
+                    $tags = new IteratorIterator($package);
+                    if (!empty($pattern = $input->getOption('filter'))) {
+                        $tags = new CallbackFilterIterator($tags, function (TagInterface $tag) use ($pattern) {
+                            return preg_match($pattern, (string)$tag) > 0;
+                        });
+                    }
+
+                    foreach ($tags as $tag) {
+                        yield [
+                            'tag' => ((string) $tag),
+                            'parent' => $tag instanceof DependentTagInterface ? $tag->parent : null,
+                            'path' => $tag instanceof BuildableInterface ? $tag->path : null,
+                        ];
+                    }
+                }
+            })));
+
+            return 0;
+        }
+    }
+]);
+
+$app->run(new ArgvInput($argv), new ConsoleOutput());

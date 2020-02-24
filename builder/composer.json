@@ -1,0 +1,17 @@
+{
+    "name": "kiboko/docker-builder",
+    "require": {
+        "symfony/console": "^5.1@dev",
+        "symfony/process": "^5.1@dev",
+        "phpspec/phpspec": "^6.1@dev"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Builder\\": "src/"
+        }
+    },
+    "require-dev": {
+        "friends-of-phpspec/phpspec-code-coverage": "^4.0@dev"
+    }
+}
