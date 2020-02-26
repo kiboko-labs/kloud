@@ -31,5 +31,6 @@ final class SequentialCommandRunner implements CommandRunnerInterface
             $section->overwrite(sprintf('Running: <info>%s</>', (string) $command));
             $command();
         }
+        $section->overwrite('Finished!');
     }
 }
