@@ -20,7 +20,7 @@ final class CommandBus implements CommandCompositeInterface, \Iterator, \Recursi
 
     public function add(CommandInterface ...$commands): void
     {
-        $this->commands = $commands;
+        array_push($this->commands, ...$commands);
         $this->iterator = new \ArrayIterator($this->commands);
     }
 

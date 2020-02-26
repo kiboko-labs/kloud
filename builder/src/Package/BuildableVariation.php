@@ -7,21 +7,22 @@ use Builder\BuildableContextInterface;
 use Builder\BuildableDependentTag;
 use Builder\Command;
 use Builder\ContextInterface;
+use Builder\PHP;
 use Builder\TagReference;
 
-final class BuildableEdition implements EditionInterface, BuildablePackageInterface, \IteratorAggregate
+final class BuildableVariation implements VariationInterface, BuildablePackageInterface, \IteratorAggregate
 {
     private RepositoryInterface $repository;
     public string $name;
     public string $path;
-    /** @var VersionInterface[] */
+    /** @var PHP\VersionInterface[] */
     public array $versions;
 
     public function __construct(
         RepositoryInterface $repository,
         string $name,
         string $path,
-        VersionInterface ...$versions
+        PHP\VersionInterface ...$versions
     ) {
         $this->repository = $repository;
         $this->name = $name;
@@ -40,7 +41,7 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\Pull(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context)
+                new TagReference('%php.version%-%php.flavor%-%package.variation%', $context)
             ));
         }
     }
@@ -51,7 +52,7 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\Push(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context)
+                new TagReference('%php.version%-%php.flavor%-%package.variation%', $context)
             ));
         }
     }
@@ -62,8 +63,8 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\BuildFrom(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context),
                 new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
+                new TagReference('%php.version%-%php.flavor%', $context),
                 (string) $context->getPath()
             ));
         }
@@ -75,9 +76,9 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             yield new BuildableDependentTag(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
+                new TagReference('%php.version%-%php.flavor%', $context),
                 (string) $context->getPath(),
-                '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
+                '%php.version%-%php.flavor%-%package.variation%',
                 $context,
             );
         }
@@ -93,7 +94,7 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
                     $context,
                     $this->path,
                     [
-                        '%package.edition%' => $this->name,
+                        '%package.variation%' => $this->name,
                     ] + $context->getArrayCopy()
                 );
             }

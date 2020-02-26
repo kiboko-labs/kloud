@@ -69,7 +69,7 @@ final class BuildableVersion implements PHP\VersionInterface, BuildableInterface
     {
         /** @var ContextInterface $context */
         foreach ($this() as $context) {
-            yield new BuildableTag($this->repository, '%php.version%-%php.flavor%', $this->path, $context);
+            yield new BuildableTag($this->repository, $this->path, '%php.version%-%php.flavor%', $context);
         }
     }
 

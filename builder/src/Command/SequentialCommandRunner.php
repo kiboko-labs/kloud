@@ -20,12 +20,13 @@ final class SequentialCommandRunner implements CommandRunnerInterface
 
     public function run(CommandCompositeInterface $commandBus)
     {
-        $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::CHILD_FIRST);
+        $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::SELF_FIRST);
 
         $progressBar = new ProgressBar($this->output, iterator_count($iterator));
 
         /** @var CommandInterface $command */
         foreach ($progressBar->iterate($iterator) as $command) {
+            $this->output->writeln(sprintf('Running: <info>%s</>', (string) $command));
             $command();
         }
     }
