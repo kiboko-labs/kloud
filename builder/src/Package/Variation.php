@@ -2,7 +2,9 @@
 
 namespace Builder\Package;
 
-use Builder\DependentTag;
+use Builder\Context;
+use Builder\ContextInterface;
+use Builder\DependentTagReference;
 use Builder\PHP;
 use Builder\TagReference;
 
@@ -20,21 +22,26 @@ final class Variation implements VariationInterface, \IteratorAggregate
 
     public function getIterator()
     {
-        foreach ($this() as $parts) {
-            yield new DependentTag(
-                strtr('%php.version%-%php.flavor%-%package.variation%', $parts),
-                new TagReference(strtr('%php.version%-%php.flavor%', $parts))
+        foreach ($this() as $context) {
+            yield new DependentTagReference(
+                new TagReference('%php.version%-%php.flavor%', $context),
+                '%php.version%-%php.flavor%-%package.variation%',
+                $context,
             );
         }
     }
 
     public function __invoke(): \Traversable
     {
+        /** @var PHP\VersionInterface $version */
         foreach ($this->versions as $version) {
-            foreach ($version() as $parts) {
-                yield $parts + [
-                    '%package.variation%' => $this->name,
-                ];
+            /** @var ContextInterface $context */
+            foreach ($version() as $context) {
+                yield new Context(
+                    [
+                        '%package.variation%' => $this->name,
+                    ] + $context->getArrayCopy()
+                );
             }
         }
     }

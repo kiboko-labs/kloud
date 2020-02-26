@@ -10,7 +10,7 @@ use Symfony\Component\Process\Process;
 final class Build implements CommandInterface
 {
     private Package\RepositoryInterface $repository;
-    private TagInterface $tag;
+    private TagInterface $package;
     private string $path;
 
     public function __construct(
@@ -19,24 +19,33 @@ final class Build implements CommandInterface
         string $path
     ) {
         $this->repository = $repository;
-        $this->tag = $tag;
+        $this->package = $tag;
         $this->path = $path;
+    }
+
+    public function __toString()
+    {
+        return sprintf('build(%s:%s)', (string) $this->repository, (string) $this->package);
     }
 
     public function __invoke(): void
     {
-        $process = new Process([
-            'docker', 'build',
-            '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->tag),
-            $this->path,
-        ]);
+        $process = new Process(
+            [
+                'docker', 'build',
+                '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
+                $this->path,
+            ],
+            null,
+            null,
+            null,
+            3600.0
+        );
 
         $process->run();
 
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-
-        echo $process->getOutput();
     }
 }

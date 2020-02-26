@@ -2,30 +2,44 @@
 
 namespace Builder;
 
-use Builder\Command\Build;
-use Builder\Command\CommandInterface;
+use Builder\Command;
 use Builder\Package\RepositoryInterface;
 
-final class BuildableTag implements TagInterface, BuildableInterface
+final class BuildableTag implements BuildableTagInterface
 {
     private RepositoryInterface $repository;
-    public string $tag;
-    public string $path;
+    private Placeholder $path;
+    private Placeholder $tag;
 
-    public function __construct(RepositoryInterface $repository, string $tag, string $path)
+    public function __construct(RepositoryInterface $repository, string $path, string $tag, ?ContextInterface $variables = null)
     {
         $this->repository = $repository;
-        $this->tag = $tag;
-        $this->path = $path;
+        $this->path = new Placeholder($path, ($variables === null ? [] : $variables->getArrayCopy()));
+        $this->tag = new Placeholder($tag, ($variables === null ? [] : $variables->getArrayCopy()));
     }
 
-    public function build(): CommandInterface
+    public function getPath(): string
     {
-        return new Build($this->repository, $this, $this->path);
+        return (string) $this->path;
+    }
+
+    public function pull(Command\CommandCompositeInterface $commands): void
+    {
+        $commands->add(new Command\Pull($this->repository, $this));
+    }
+
+    public function push(Command\CommandCompositeInterface $commands): void
+    {
+        $commands->add(new Command\Push($this->repository, $this));
+    }
+
+    public function build(Command\CommandCompositeInterface $commands): void
+    {
+        $commands->add(new Command\Build($this->repository, $this, $this->getPath()));
     }
 
     public function __toString()
     {
-        return $this->tag;
+        return (string) $this->tag;
     }
 }

@@ -12,6 +12,7 @@ extensions:
       - vendor
     whitelist:
       - src
+  Builder\PHPSpec\BuilderExtension: ~
 formatter.name: pretty
 stop_on_failure: false
 suites:

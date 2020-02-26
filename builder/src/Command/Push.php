@@ -3,24 +3,36 @@
 namespace Builder\Command;
 
 use Builder\Package;
+use Builder\TagInterface;
 use Symfony\Component\Process\Process;
 
 final class Push implements CommandInterface
 {
     private Package\RepositoryInterface $repository;
-    private Package\TagInterface $package;
+    private TagInterface $package;
 
-    public function __construct(Package\RepositoryInterface $repository, Package\TagInterface $package)
+    public function __construct(Package\RepositoryInterface $repository, TagInterface $package)
     {
         $this->repository = $repository;
         $this->package = $package;
     }
 
+    public function __toString()
+    {
+        return sprintf('push(%s:%s)', (string) $this->repository, (string) $this->package);
+    }
+
     public function __invoke(): void
     {
-        $process = new Process([
-            'docker', 'push', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
-        ]);
+        $process = new Process(
+            [
+                'docker', 'push', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
+            ],
+            null,
+            null,
+            null,
+            3600.0
+        );
 
         $process->run();
     }

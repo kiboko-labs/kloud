@@ -2,7 +2,7 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTag;
+use Builder\DependentTagReference;
 use Builder\Package\DependentPackage;
 use Builder\Package\Edition;
 use Builder\Package\EditionInterface;
@@ -50,23 +50,23 @@ class DependentPackageSpec extends ObjectBehavior
 
         $this->beConstructedWith('commerce', 'platform', $ee, $ce);
 
-        $this->shouldIterateLike(new \ArrayIterator([
-            new DependentTag('7.4-fpm-commerce-ee-3.1-postgres', new TagReference('7.4-fpm-platform-ee-3.1-postgres')),
-            new DependentTag('7.4-cli-commerce-ee-3.1-postgres', new TagReference('7.4-cli-platform-ee-3.1-postgres')),
-            new DependentTag('7.4-fpm-commerce-ee-3.1-mysql', new TagReference('7.4-fpm-platform-ee-3.1-mysql')),
-            new DependentTag('7.4-cli-commerce-ee-3.1-mysql', new TagReference('7.4-cli-platform-ee-3.1-mysql')),
-            new DependentTag('7.4-fpm-commerce-ee-4.1-postgres', new TagReference('7.4-fpm-platform-ee-4.1-postgres')),
-            new DependentTag('7.4-cli-commerce-ee-4.1-postgres', new TagReference('7.4-cli-platform-ee-4.1-postgres')),
-            new DependentTag('7.4-fpm-commerce-ee-4.1-mysql', new TagReference('7.4-fpm-platform-ee-4.1-mysql')),
-            new DependentTag('7.4-cli-commerce-ee-4.1-mysql', new TagReference('7.4-cli-platform-ee-4.1-mysql')),
-            new DependentTag('7.4-fpm-commerce-ce-3.1-postgres', new TagReference('7.4-fpm-platform-ce-3.1-postgres')),
-            new DependentTag('7.4-cli-commerce-ce-3.1-postgres', new TagReference('7.4-cli-platform-ce-3.1-postgres')),
-            new DependentTag('7.4-fpm-commerce-ce-3.1-mysql', new TagReference('7.4-fpm-platform-ce-3.1-mysql')),
-            new DependentTag('7.4-cli-commerce-ce-3.1-mysql', new TagReference('7.4-cli-platform-ce-3.1-mysql')),
-            new DependentTag('7.4-fpm-commerce-ce-4.1-postgres', new TagReference('7.4-fpm-platform-ce-4.1-postgres')),
-            new DependentTag('7.4-cli-commerce-ce-4.1-postgres', new TagReference('7.4-cli-platform-ce-4.1-postgres')),
-            new DependentTag('7.4-fpm-commerce-ce-4.1-mysql', new TagReference('7.4-fpm-platform-ce-4.1-mysql')),
-            new DependentTag('7.4-cli-commerce-ce-4.1-mysql', new TagReference('7.4-cli-platform-ce-4.1-mysql')),
+        $this->shouldIterateTagsLike(new \ArrayIterator([
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ee-3.1-postgres'), '7.4-fpm-commerce-ee-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ee-3.1-postgres'), '7.4-cli-commerce-ee-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ee-3.1-mysql'), '7.4-fpm-commerce-ee-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ee-3.1-mysql'), '7.4-cli-commerce-ee-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ee-4.1-postgres'), '7.4-fpm-commerce-ee-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ee-4.1-postgres'), '7.4-cli-commerce-ee-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ee-4.1-mysql'), '7.4-fpm-commerce-ee-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ee-4.1-mysql'), '7.4-cli-commerce-ee-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ce-3.1-postgres'), '7.4-fpm-commerce-ce-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ce-3.1-postgres'), '7.4-cli-commerce-ce-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ce-3.1-mysql'), '7.4-fpm-commerce-ce-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ce-3.1-mysql'), '7.4-cli-commerce-ce-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ce-4.1-postgres'), '7.4-fpm-commerce-ce-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ce-4.1-postgres'), '7.4-cli-commerce-ce-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-platform-ce-4.1-mysql'), '7.4-fpm-commerce-ce-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-platform-ce-4.1-mysql'), '7.4-cli-commerce-ce-4.1-mysql'),
         ]));
     }
 }

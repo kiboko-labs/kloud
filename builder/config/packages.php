@@ -32,12 +32,17 @@ return [
         'orocrm',
         'oroplatform',
         '/environments/orocrm/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
-        new Package\Edition('ce',
+        new Package\Edition(
+            'ce',
             new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
         ),
-        new Package\DependentEdition('ee', 'ce',
+        new Package\BuildableDependentEdition(
+            $repository,
+            'ee',
+            'ce',
+            '/environments/orocommerce/%package.edition%/',
             new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
@@ -49,12 +54,17 @@ return [
         'orocommerce',
         'oroplatform',
         '/environments/orocommerce/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
-        new Package\Edition('ce',
+        new Package\Edition(
+            'ce',
             new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
         ),
-        new Package\DependentEdition('ee', 'ce',
+        new Package\BuildableDependentEdition(
+            $repository,
+            'ee',
+            'ce',
+            '/environments/orocommerce/%package.edition%/',
             new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
@@ -66,14 +76,17 @@ return [
         'marello',
         'oroplatform',
         '/environments/orocommerce/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
-        new Package\Edition('ce',
-            new Package\Version('1.5', $postgres, $mysql),
-            new Package\Version('2.0', $postgres, $mysql),
-            new Package\Version('2.1', $postgres, $mysql),
-            new Package\Version('2.2', $postgres, $mysql),
-            new Package\Version('3.0', $postgres, $mysql)
+        new Package\Edition(
+            'ce',
+            new Package\Version('1.6', $postgres, $mysql),
+            new Package\Version('3.1', $postgres, $mysql),
+            new Package\Version('4.1', $postgres, $mysql)
         ),
-        new Package\DependentEdition('ee', 'ce',
+        new Package\BuildableDependentEdition(
+            $repository,
+            'ee',
+            'ce',
+            '/environments/orocommerce/%package.edition%/',
             new Package\Version('1.5', $postgres, $mysql),
             new Package\Version('2.0', $postgres, $mysql),
             new Package\Version('2.1', $postgres, $mysql),

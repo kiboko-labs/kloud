@@ -2,6 +2,7 @@
 
 namespace Builder\PHP;
 
+use Builder\Context;
 use Builder\TagReference;
 use Builder\TagRepositoryInterface;
 
@@ -16,15 +17,15 @@ class Flavor implements FlavorInterface, \IteratorAggregate
 
     public function getIterator()
     {
-        foreach ($this() as $parts) {
-            yield new TagReference(strtr('%php.flavor%', $parts));
+        foreach ($this() as $context) {
+            yield new TagReference('%php.flavor%', $context);
         }
     }
 
     public function __invoke(): \Traversable
     {
-        yield [
+        yield new Context([
             '%php.flavor%' => $this->name
-        ];
+        ]);
     }
 }

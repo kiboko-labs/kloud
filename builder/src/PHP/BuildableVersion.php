@@ -2,12 +2,16 @@
 
 namespace Builder\PHP;
 
+use Builder\BuildableContext;
 use Builder\BuildableInterface;
 use Builder\BuildableTag;
 use Builder\Command;
-use Builder\Command\CommandInterface;
+use Builder\Command\CommandCompositeInterface;
+use Builder\Context;
+use Builder\ContextInterface;
 use Builder\Package\RepositoryInterface;
 use Builder\PHP;
+use Builder\Placeholder;
 use Builder\TagInterface;
 use Builder\TagReference;
 
@@ -27,25 +31,45 @@ final class BuildableVersion implements PHP\VersionInterface, BuildableInterface
         $this->flavors = $flavors;
     }
 
-    public function build(): CommandInterface
+    public function pull(CommandCompositeInterface $commands): void
     {
-        $command = new Command\CommandQueue();
-        /** @var TagInterface $tag */
-        foreach ($this() as $parts) {
-            $command->add(new Command\Build(
+        /** @var ContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\Pull(
                 $this->repository,
-                new TagReference(strtr('%php.version%-%php.flavor%', $parts)),
-                strtr($this->path, $parts)
+                new TagReference('%php.version%-%php.flavor%', $context)
             ));
         }
+    }
 
-        return $command;
+    public function push(CommandCompositeInterface $commands): void
+    {
+        /** @var ContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\Push(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%', $context)
+            ));
+        }
+    }
+
+    public function build(CommandCompositeInterface $commands): void
+    {
+        /** @var ContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\Build(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%', $context),
+                $this->getPath()
+            ));
+        }
     }
 
     public function getIterator()
     {
-        foreach ($this() as $parts) {
-            yield new BuildableTag($this->repository, strtr('%php.version%-%php.flavor%', $parts), $this->path);
+        /** @var ContextInterface $context */
+        foreach ($this() as $context) {
+            yield new BuildableTag($this->repository, '%php.version%-%php.flavor%', $this->path, $context);
         }
     }
 
@@ -53,10 +77,15 @@ final class BuildableVersion implements PHP\VersionInterface, BuildableInterface
     {
         /** @var FlavorInterface $flavor */
         foreach ($this->flavors as $flavor) {
-            foreach ($flavor() as $parts) {
-                yield $parts + [
-                    '%php.version%' => $this->number,
-                ];
+            /** @var ContextInterface $context */
+            foreach ($flavor() as $context) {
+                yield new BuildableContext(
+                    $context,
+                    $this->path,
+                    [
+                        '%php.version%' => $this->number,
+                    ] + $context->getArrayCopy()
+                );
             }
         }
     }

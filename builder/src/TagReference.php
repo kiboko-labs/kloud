@@ -4,15 +4,15 @@ namespace Builder;
 
 final class TagReference implements TagInterface
 {
-    private string $tag;
+    private Placeholder $placeholder;
 
-    public function __construct(string $tag)
+    public function __construct(string $tag, ?ContextInterface $variables = null)
     {
-        $this->tag = $tag;
+        $this->placeholder = new Placeholder($tag, ($variables === null ? [] : $variables->getArrayCopy()));
     }
 
     public function __toString()
     {
-        return $this->tag;
+        return (string) $this->placeholder;
     }
 }

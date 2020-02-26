@@ -2,33 +2,51 @@
 
 namespace Builder;
 
-use Builder\Command\Build;
-use Builder\Command\BuildFrom;
-use Builder\Command\CommandInterface;
+use Builder\Command;
 use Builder\Package\RepositoryInterface;
 
-final class BuildableDependentTag implements DependentTagInterface, BuildableInterface
+final class BuildableDependentTag implements DependentTagInterface, BuildableTagInterface
 {
     private RepositoryInterface $repository;
-    public string $tag;
-    public TagInterface $parent;
-    public string $path;
+    private TagInterface $parent;
+    private Placeholder $path;
+    private Placeholder $tag;
 
-    public function __construct(RepositoryInterface $repository, string $tag, TagInterface $parent, string $path)
+    public function __construct(RepositoryInterface $repository, TagInterface $parent, string $path, string $tag, ?ContextInterface $variables = null)
     {
         $this->repository = $repository;
-        $this->tag = $tag;
         $this->parent = $parent;
-        $this->path = $path;
+        $this->path = new Placeholder($path, ($variables === null ? [] : $variables->getArrayCopy()));
+        $this->tag = new Placeholder($tag,($variables === null ? [] : $variables->getArrayCopy()));
     }
 
-    public function build(): CommandInterface
+    public function getParent(): TagInterface
     {
-        return new BuildFrom($this->repository, $this, $this->parent, $this->path);
+        return $this->parent;
+    }
+
+    public function getPath(): string
+    {
+        return (string) $this->path;
+    }
+
+    public function pull(Command\CommandCompositeInterface $commands): void
+    {
+        $commands->add(new Command\Pull($this->repository, $this));
+    }
+
+    public function push(Command\CommandCompositeInterface $commands): void
+    {
+        $commands->add(new Command\Push($this->repository, $this));
+    }
+
+    public function build(Command\CommandCompositeInterface $commands): void
+    {
+        $commands->add(new Command\BuildFrom($this->repository, $this, $this->parent, $this->getPath()));
     }
 
     public function __toString()
     {
-        return $this->tag;
+        return (string) $this->tag;
     }
 }

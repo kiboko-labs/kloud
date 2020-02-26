@@ -2,7 +2,9 @@
 
 namespace Builder\Package;
 
-use Builder\DependentTag;
+use Builder\Context;
+use Builder\ContextInterface;
+use Builder\DependentTagReference;
 use Builder\TagReference;
 
 final class DependentEdition implements DependentEditionInterface, \IteratorAggregate
@@ -21,23 +23,30 @@ final class DependentEdition implements DependentEditionInterface, \IteratorAggr
 
     public function getIterator()
     {
-        foreach ($this() as $parts) {
-            yield new DependentTag(
-                strtr('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $parts),
-                new TagReference(strtr('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', [
-                    '%package.edition%' => $this->parent,
-                ] + $parts))
+        /** @var ContextInterface $context */
+        foreach ($this() as $context) {
+            yield new DependentTagReference(
+                new TagReference(
+                    '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
+                    new Context(['%package.edition%' => $this->parent] + $context->getArrayCopy())
+                ),
+                '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
+                $context,
             );
         }
     }
 
     public function __invoke(): \Traversable
     {
+        /** @var VersionInterface $version */
         foreach ($this->versions as $version) {
-            foreach ($version() as $parts) {
-                yield $parts + [
-                    '%package.edition%' => $this->name,
-                ];
+            /** @var ContextInterface $context */
+            foreach ($version() as $context) {
+                yield new Context(
+                    [
+                        '%package.edition%' => $this->name,
+                    ] + $context->getArrayCopy()
+                );
             }
         }
     }

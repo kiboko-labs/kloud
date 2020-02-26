@@ -2,7 +2,7 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTag;
+use Builder\DependentTagReference;
 use Builder\Package\Variation;
 use Builder\Package\VariationInterface;
 use Builder\PHP;
@@ -26,11 +26,11 @@ class VariationSpec extends ObjectBehavior
 
         $this->beConstructedWith('postgres', $php73, $php74);
 
-        $this->shouldIterateLike(new \ArrayIterator([
-            new DependentTag('7.3-fpm-postgres', new TagReference('7.3-fpm')),
-            new DependentTag('7.3-cli-postgres', new TagReference('7.3-cli')),
-            new DependentTag('7.4-fpm-postgres', new TagReference('7.4-fpm')),
-            new DependentTag('7.4-cli-postgres', new TagReference('7.4-cli')),
+        $this->shouldIterateTagsLike(new \ArrayIterator([
+            new DependentTagReference(new TagReference('7.3-fpm'), '7.3-fpm-postgres'),
+            new DependentTagReference(new TagReference('7.3-cli'), '7.3-cli-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm'), '7.4-fpm-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli'), '7.4-cli-postgres'),
         ]));
     }
 }

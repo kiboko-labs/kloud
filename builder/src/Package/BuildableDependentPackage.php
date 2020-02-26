@@ -2,14 +2,15 @@
 
 namespace Builder\Package;
 
+use Builder\BuildableContext;
+use Builder\BuildableContextInterface;
 use Builder\BuildableDependentTag;
-use Builder\BuildableInterface;
 use Builder\Command;
-use Builder\Command\CommandInterface;
-use Builder\TagInterface;
+use Builder\Context;
+use Builder\ContextInterface;
 use Builder\TagReference;
 
-final class BuildableDependentPackage implements DependentPackageInterface, BuildableInterface, \IteratorAggregate
+final class BuildableDependentPackage implements DependentPackageInterface, BuildablePackageInterface, \IteratorAggregate
 {
     private RepositoryInterface $repository;
     public string $name;
@@ -32,41 +33,79 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
         $this->editions = $editions;
     }
 
-    public function build(): CommandInterface
+    public function buildPath(array $variables)
     {
-        $command = new Command\CommandQueue();
-        /** @var TagInterface $tag */
-        foreach ($this() as $parts) {
-            $command->add(new Command\BuildFrom(
+        return strtr($this->path, $variables);
+    }
+
+    public function pull(Command\CommandCompositeInterface $commands): void
+    {
+        /** @var BuildableContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\Pull(
                 $this->repository,
-                new TagReference(strtr('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $parts)),
-                new TagReference(strtr('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', ['%package.name%' => $this->parent] + $parts)),
-                strtr($this->path, $parts)
+                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context)
             ));
         }
+    }
 
-        return $command;
+    public function push(Command\CommandCompositeInterface $commands): void
+    {
+        /** @var BuildableContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\Push(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context)
+            ));
+        }
+    }
+
+    public function build(Command\CommandCompositeInterface $commands): void
+    {
+        /** @var BuildableContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\BuildFrom(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context),
+                new TagReference(
+                    '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
+                    new Context(['%package.name%' => $this->parent] + $context->getArrayCopy())
+                ),
+                (string) $context->getPath()
+            ));
+        }
     }
 
     public function getIterator()
     {
-        foreach ($this() as $parts) {
+        /** @var BuildableContextInterface $context */
+        foreach ($this() as $context) {
             yield new BuildableDependentTag(
                 $this->repository,
-                strtr('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $parts),
-                new TagReference(strtr('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', ['%package.name%' => $this->parent] + $parts)),
-                strtr($this->path, $parts)
+                new TagReference(
+                    '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
+                    new Context(['%package.name%' => $this->parent] + $context->getArrayCopy())
+                ),
+                (string) $context->getPath(),
+                '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
+                $context,
             );
         }
     }
 
     public function __invoke(): \Traversable
     {
+        /** @var EditionInterface $edition */
         foreach ($this->editions as $edition) {
-            foreach ($edition() as $parts) {
-                yield $parts + [
-                    '%package.name%' => $this->name,
-                ];
+            /** @var ContextInterface $context */
+            foreach ($edition() as $context) {
+                yield new BuildableContext(
+                    $context,
+                    $this->path,
+                    [
+                        '%package.name%' => $this->name,
+                    ] + $context->getArrayCopy()
+                );
             }
         }
     }

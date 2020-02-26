@@ -4,4 +4,5 @@ namespace Builder;
 
 interface DependentTagInterface extends TagInterface
 {
+    public function getParent(): TagInterface;
 }

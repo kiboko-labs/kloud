@@ -6,27 +6,31 @@ use Builder\BuildableContext;
 use Builder\BuildableContextInterface;
 use Builder\BuildableDependentTag;
 use Builder\Command;
+use Builder\Context;
 use Builder\ContextInterface;
 use Builder\TagReference;
 
-final class BuildablePackage implements PackageInterface, BuildablePackageInterface, \IteratorAggregate
+final class BuildableDependentEdition implements DependentEditionInterface, BuildablePackageInterface, \IteratorAggregate
 {
     private RepositoryInterface $repository;
     public string $name;
+    public string $parent;
     public string $path;
-    /** @var EditionInterface[] */
-    public array $editions;
+    /** @var VersionInterface[] */
+    public array $versions;
 
     public function __construct(
         RepositoryInterface $repository,
         string $name,
+        string $parent,
         string $path,
-        EditionInterface ...$editions
+        VersionInterface ...$versions
     ) {
         $this->repository = $repository;
         $this->name = $name;
+        $this->parent = $parent;
         $this->path = $path;
-        $this->editions = $editions;
+        $this->versions = $versions;
     }
 
     public function buildPath(array $variables)
@@ -40,7 +44,7 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\Pull(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context)
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context)
             ));
         }
     }
@@ -51,7 +55,7 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\Push(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context)
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context)
             ));
         }
     }
@@ -62,8 +66,11 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\BuildFrom(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context),
-                new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context),
+                new TagReference(
+                    '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
+                    new Context(['%package.edition%' => $this->parent] + $context->getArrayCopy())
+                ),
                 (string) $context->getPath()
             ));
         }
@@ -75,9 +82,12 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             yield new BuildableDependentTag(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
+                new TagReference(
+                    '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
+                    new Context(['%package.edition%' => $this->parent] + $context->getArrayCopy())
+                ),
                 (string) $context->getPath(),
-                '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
+                '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
                 $context,
             );
         }
@@ -85,15 +95,15 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
 
     public function __invoke(): \Traversable
     {
-        /** @var EditionInterface $edition */
-        foreach ($this->editions as $edition) {
+        /** @var VersionInterface $version */
+        foreach ($this->versions as $version) {
             /** @var ContextInterface $context */
-            foreach ($edition() as $context) {
+            foreach ($version() as $context) {
                 yield new BuildableContext(
                     $context,
                     $this->path,
                     [
-                        '%package.name%' => $this->name,
+                        '%package.edition%' => $this->name,
                     ] + $context->getArrayCopy()
                 );
             }

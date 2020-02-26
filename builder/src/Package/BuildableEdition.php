@@ -7,26 +7,27 @@ use Builder\BuildableContextInterface;
 use Builder\BuildableDependentTag;
 use Builder\Command;
 use Builder\ContextInterface;
+use Builder\TagInterface;
 use Builder\TagReference;
 
-final class BuildablePackage implements PackageInterface, BuildablePackageInterface, \IteratorAggregate
+final class BuildableEdition implements EditionInterface, BuildablePackageInterface, \IteratorAggregate
 {
     private RepositoryInterface $repository;
     public string $name;
     public string $path;
-    /** @var EditionInterface[] */
-    public array $editions;
+    /** @var VersionInterface[] */
+    public array $versions;
 
     public function __construct(
         RepositoryInterface $repository,
         string $name,
         string $path,
-        EditionInterface ...$editions
+        VersionInterface ...$versions
     ) {
         $this->repository = $repository;
         $this->name = $name;
         $this->path = $path;
-        $this->editions = $editions;
+        $this->versions = $versions;
     }
 
     public function buildPath(array $variables)
@@ -40,7 +41,7 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\Pull(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context)
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context)
             ));
         }
     }
@@ -51,7 +52,7 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\Push(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context)
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context)
             ));
         }
     }
@@ -62,7 +63,7 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
         foreach ($this() as $context) {
             $commands->add(new Command\BuildFrom(
                 $this->repository,
-                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context),
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context),
                 new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
                 (string) $context->getPath()
             ));
@@ -77,7 +78,7 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
                 $this->repository,
                 new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
                 (string) $context->getPath(),
-                '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
+                '%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%',
                 $context,
             );
         }
@@ -85,15 +86,15 @@ final class BuildablePackage implements PackageInterface, BuildablePackageInterf
 
     public function __invoke(): \Traversable
     {
-        /** @var EditionInterface $edition */
-        foreach ($this->editions as $edition) {
+        /** @var VersionInterface $version */
+        foreach ($this->versions as $version) {
             /** @var ContextInterface $context */
-            foreach ($edition() as $context) {
+            foreach ($version() as $context) {
                 yield new BuildableContext(
                     $context,
                     $this->path,
                     [
-                        '%package.name%' => $this->name,
+                        '%package.edition%' => $this->name,
                     ] + $context->getArrayCopy()
                 );
             }

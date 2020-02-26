@@ -9,7 +9,7 @@ use Builder\PHP\VersionInterface;
 use Builder\TagReference;
 use PhpSpec\ObjectBehavior;
 
-class VersionSpec extends ObjectBehavior
+class VersionReferenceSpec extends ObjectBehavior
 {
     function it_is_initializable(FlavorInterface $flavor)
     {
@@ -26,7 +26,7 @@ class VersionSpec extends ObjectBehavior
 
         $this->beConstructedWith('7.4', $fpm, $cli);
 
-        $this->shouldIterateLike(new \ArrayIterator([
+        $this->shouldIterateTagsLike(new \ArrayIterator([
             new TagReference('7.4-fpm'),
             new TagReference('7.4-cli'),
         ]));

@@ -2,6 +2,8 @@
 
 namespace Builder\PHP;
 
+use Builder\Context;
+use Builder\ContextInterface;
 use Builder\TagReference;
 
 class VersionReference implements VersionInterface, \IteratorAggregate
@@ -18,8 +20,8 @@ class VersionReference implements VersionInterface, \IteratorAggregate
 
     public function getIterator()
     {
-        foreach ($this() as $parts) {
-            yield new TagReference(strtr('%php.version%-%php.flavor%', $parts));
+        foreach ($this() as $context) {
+            yield new TagReference('%php.version%-%php.flavor%', $context);
         }
     }
 
@@ -27,10 +29,13 @@ class VersionReference implements VersionInterface, \IteratorAggregate
     {
         /** @var FlavorInterface $flavor */
         foreach ($this->flavors as $flavor) {
-            foreach ($flavor() as $parts) {
-                yield $parts + [
-                    '%php.version%' => $this->number,
-                ];
+            /** @var ContextInterface $context */
+            foreach ($flavor() as $context) {
+                yield new Context(
+                    [
+                        '%php.version%' => $this->number,
+                    ] + $context->getArrayCopy()
+                );
             }
         }
     }

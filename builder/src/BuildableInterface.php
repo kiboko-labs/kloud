@@ -2,12 +2,14 @@
 
 namespace Builder;
 
-use Builder\Command\CommandInterface;
+use Builder\Command;
 
 /**
  * @property-read string $path
  */
 interface BuildableInterface
 {
-    public function build(): CommandInterface;
+    public function pull(Command\CommandCompositeInterface $commands): void;
+    public function push(Command\CommandCompositeInterface $commands): void;
+    public function build(Command\CommandCompositeInterface $commands): void;
 }

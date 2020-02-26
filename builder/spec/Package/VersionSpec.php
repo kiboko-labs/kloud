@@ -2,7 +2,7 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTag;
+use Builder\DependentTagReference;
 use Builder\Package\Variation;
 use Builder\Package\VariationInterface;
 use Builder\Package\Version;
@@ -28,11 +28,11 @@ class VersionSpec extends ObjectBehavior
 
         $this->beConstructedWith('4.1', $postgres, $mysql);
 
-        $this->shouldIterateLike(new \ArrayIterator([
-            new DependentTag('7.4-fpm-4.1-postgres', new TagReference('7.4-fpm-postgres')),
-            new DependentTag('7.4-cli-4.1-postgres', new TagReference('7.4-cli-postgres')),
-            new DependentTag('7.4-fpm-4.1-mysql', new TagReference('7.4-fpm-mysql')),
-            new DependentTag('7.4-cli-4.1-mysql', new TagReference('7.4-cli-mysql')),
+        $this->shouldIterateTagsLike(new \ArrayIterator([
+            new DependentTagReference(new TagReference('7.4-fpm-postgres'), '7.4-fpm-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-postgres'), '7.4-cli-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-mysql'), '7.4-fpm-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-mysql'), '7.4-cli-4.1-mysql'),
         ]));
     }
 }

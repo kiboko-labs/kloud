@@ -2,7 +2,7 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTag;
+use Builder\DependentTagReference;
 use Builder\Package\Edition;
 use Builder\Package\EditionInterface;
 use Builder\Package\Package;
@@ -46,23 +46,23 @@ class PackageSpec extends ObjectBehavior
 
         $this->beConstructedWith('platform', $ce, $ee);
 
-        $this->shouldIterateLike(new \ArrayIterator([
-            new DependentTag('7.4-fpm-platform-ce-3.1-postgres', new TagReference('7.4-fpm-postgres')),
-            new DependentTag('7.4-cli-platform-ce-3.1-postgres', new TagReference('7.4-cli-postgres')),
-            new DependentTag('7.4-fpm-platform-ce-3.1-mysql', new TagReference('7.4-fpm-mysql')),
-            new DependentTag('7.4-cli-platform-ce-3.1-mysql', new TagReference('7.4-cli-mysql')),
-            new DependentTag('7.4-fpm-platform-ce-4.1-postgres', new TagReference('7.4-fpm-postgres')),
-            new DependentTag('7.4-cli-platform-ce-4.1-postgres', new TagReference('7.4-cli-postgres')),
-            new DependentTag('7.4-fpm-platform-ce-4.1-mysql', new TagReference('7.4-fpm-mysql')),
-            new DependentTag('7.4-cli-platform-ce-4.1-mysql', new TagReference('7.4-cli-mysql')),
-            new DependentTag('7.4-fpm-platform-ee-3.1-postgres', new TagReference('7.4-fpm-postgres')),
-            new DependentTag('7.4-cli-platform-ee-3.1-postgres', new TagReference('7.4-cli-postgres')),
-            new DependentTag('7.4-fpm-platform-ee-3.1-mysql', new TagReference('7.4-fpm-mysql')),
-            new DependentTag('7.4-cli-platform-ee-3.1-mysql', new TagReference('7.4-cli-mysql')),
-            new DependentTag('7.4-fpm-platform-ee-4.1-postgres', new TagReference('7.4-fpm-postgres')),
-            new DependentTag('7.4-cli-platform-ee-4.1-postgres', new TagReference('7.4-cli-postgres')),
-            new DependentTag('7.4-fpm-platform-ee-4.1-mysql', new TagReference('7.4-fpm-mysql')),
-            new DependentTag('7.4-cli-platform-ee-4.1-mysql', new TagReference('7.4-cli-mysql')),
+        $this->shouldIterateTagsLike(new \ArrayIterator([
+            new DependentTagReference(new TagReference('7.4-fpm-postgres'), '7.4-fpm-platform-ce-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-postgres'), '7.4-cli-platform-ce-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-mysql'), '7.4-fpm-platform-ce-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-mysql'), '7.4-cli-platform-ce-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-postgres'), '7.4-fpm-platform-ce-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-postgres'), '7.4-cli-platform-ce-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-mysql'), '7.4-fpm-platform-ce-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-mysql'), '7.4-cli-platform-ce-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-postgres'), '7.4-fpm-platform-ee-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-postgres'), '7.4-cli-platform-ee-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-mysql'), '7.4-fpm-platform-ee-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-mysql'), '7.4-cli-platform-ee-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-postgres'), '7.4-fpm-platform-ee-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-postgres'), '7.4-cli-platform-ee-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-mysql'), '7.4-fpm-platform-ee-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-mysql'), '7.4-cli-platform-ee-4.1-mysql'),
         ]));
     }
 }

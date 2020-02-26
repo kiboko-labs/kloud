@@ -2,7 +2,7 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTag;
+use Builder\DependentTagReference;
 use Builder\Package\DependentEdition;
 use Builder\Package\EditionInterface;
 use Builder\Package\Variation;
@@ -35,15 +35,15 @@ class DependentEditionSpec extends ObjectBehavior
 
         $this->beConstructedWith('ee', 'ce', $v31, $v41);
 
-        $this->shouldIterateLike(new \ArrayIterator([
-            new DependentTag('7.4-fpm-ee-3.1-postgres', new TagReference('7.4-fpm-ce-3.1-postgres')),
-            new DependentTag('7.4-cli-ee-3.1-postgres', new TagReference('7.4-cli-ce-3.1-postgres')),
-            new DependentTag('7.4-fpm-ee-3.1-mysql', new TagReference('7.4-fpm-ce-3.1-mysql')),
-            new DependentTag('7.4-cli-ee-3.1-mysql', new TagReference('7.4-cli-ce-3.1-mysql')),
-            new DependentTag('7.4-fpm-ee-4.1-postgres', new TagReference('7.4-fpm-ce-4.1-postgres')),
-            new DependentTag('7.4-cli-ee-4.1-postgres', new TagReference('7.4-cli-ce-4.1-postgres')),
-            new DependentTag('7.4-fpm-ee-4.1-mysql', new TagReference('7.4-fpm-ce-4.1-mysql')),
-            new DependentTag('7.4-cli-ee-4.1-mysql', new TagReference('7.4-cli-ce-4.1-mysql')),
+        $this->shouldIterateTagsLike(new \ArrayIterator([
+            new DependentTagReference(new TagReference('7.4-fpm-ce-3.1-postgres'), '7.4-fpm-ee-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-ce-3.1-postgres'), '7.4-cli-ee-3.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-ce-3.1-mysql'), '7.4-fpm-ee-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-ce-3.1-mysql'), '7.4-cli-ee-3.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-fpm-ce-4.1-postgres'), '7.4-fpm-ee-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-cli-ce-4.1-postgres'), '7.4-cli-ee-4.1-postgres'),
+            new DependentTagReference(new TagReference('7.4-fpm-ce-4.1-mysql'), '7.4-fpm-ee-4.1-mysql'),
+            new DependentTagReference(new TagReference('7.4-cli-ce-4.1-mysql'), '7.4-cli-ee-4.1-mysql'),
         ]));
     }
 }

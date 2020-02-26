@@ -4,6 +4,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Builder\BuildableInterface;
+use Builder\Command\CommandBus;
+use Builder\Command\SequentialCommandRunner;
 use Builder\DependentTagInterface;
 use Builder\Package\PackageInterface;
 use Builder\TagInterface;
@@ -34,11 +36,15 @@ $app->addCommands([
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             /** @var PackageInterface[] $packages */
-            $packages = new \CachingIterator(new ArrayIterator(require __DIR__ . '/../config/packages.php'), \CachingIterator::FULL_CACHE);
+            $packages = new \CachingIterator(new ArrayIterator(array_merge(
+                    require __DIR__ . '/../config/versions.php',
+                    require __DIR__ . '/../config/packages.php'
+            )), \CachingIterator::FULL_CACHE);
             $format = new SymfonyStyle($input, $output);
 
             $search = $input->getArgument('tags');
 
+            $commandBus = new CommandBus();
             /** @var PackageInterface $package */
             foreach ($packages as $package) {
                 $tags = new CallbackFilterIterator(new IteratorIterator($package), function (TagInterface $tag) use ($search) {
@@ -50,13 +56,13 @@ $app->addCommands([
                         $format->note(strtr('The tag %tagName% is not buildable, please check your configuration.', ['%tagName%' => (string) $tag]));
                         continue;
                     }
+//                    $format->comment(strtr('Building %tagName%.', ['%tagName%' => (string) $tag]));
 
-                    $format->comment(strtr('Building %tagName%.', ['%tagName%' => (string) $tag]));
-                    $command = $tag->build();
-
-                    $command();
+                    $tag->build($commandBus);
                 }
             }
+
+            (new SequentialCommandRunner($input, $output->section()))->run($commandBus);
 
             return 0;
         }
@@ -74,7 +80,10 @@ $app->addCommands([
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             /** @var PackageInterface[] $packages */
-            $packages = new \CachingIterator(new ArrayIterator(require __DIR__ . '/../config/packages.php'), \CachingIterator::FULL_CACHE);
+            $packages = new \CachingIterator(new ArrayIterator(array_merge(
+                require __DIR__ . '/../config/versions.php',
+                require __DIR__ . '/../config/packages.php'
+            )), \CachingIterator::FULL_CACHE);
             $format = new SymfonyStyle($input, $output);
             $pattern = $input->getOption('filter');
             $output->writeln($pattern);
