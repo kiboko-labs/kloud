@@ -171,7 +171,7 @@ $app->addCommands([
                 $pattern = sprintf('/^%s-(cli|fpm)%s-%s-%s-%s-%s$/', preg_quote($phpVersion), $variations, $application, $enterpriseEdition ? 'ee' : 'ce', preg_quote($applicationVersion), $dbms);
             }
 
-            $format->warning($pattern);
+            $format->note(sprintf('Building all images matching the following pattern: %s', $pattern));
 
             /** @var PackageInterface[] $packages */
             $packages = new \CachingIterator(new ArrayIterator(array_merge(
