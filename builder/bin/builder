@@ -203,7 +203,7 @@ $app->addCommands([
                 $node->build($commandBus);
             }
 
-            (new SequentialCommandRunner($input, $output->section()))->run($commandBus);
+            (new SequentialCommandRunner($input, $output))->run($commandBus);
 
             return 0;
         }

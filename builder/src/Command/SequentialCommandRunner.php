@@ -4,7 +4,7 @@ namespace Builder\Command;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class SequentialCommandRunner implements CommandRunnerInterface
@@ -22,11 +22,13 @@ final class SequentialCommandRunner implements CommandRunnerInterface
     {
         $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::SELF_FIRST);
 
-        $progressBar = new ProgressBar($this->output, iterator_count($iterator));
+        /** @var ConsoleSectionOutput $section */
+        $progressBar = new ProgressBar($this->output->section(), iterator_count($iterator));
+        $section = $this->output->section();
 
         /** @var CommandInterface $command */
         foreach ($progressBar->iterate($iterator) as $command) {
-            $this->output->writeln(sprintf('Running: <info>%s</>', (string) $command));
+            $section->overwrite(sprintf('Running: <info>%s</>', (string) $command));
             $command();
         }
     }

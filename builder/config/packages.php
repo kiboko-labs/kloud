@@ -23,7 +23,11 @@ return [
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
         ),
-        new Package\DependentEdition('ee', 'ce',
+        new Package\BuildableDependentEdition(
+            $repository,
+            'ee',
+            'ce',
+            '/environments/oroplatform/%package.edition%/',
 //            new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
