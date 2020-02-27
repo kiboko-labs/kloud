@@ -2,6 +2,7 @@
 
 namespace Builder\Console\Command;
 
+use Builder\Console\Wizard;
 use Builder\DependencyTree\NodeInterface;
 use Builder\DependencyTree\TreeBuilder;
 use Builder\Package\PackageInterface;

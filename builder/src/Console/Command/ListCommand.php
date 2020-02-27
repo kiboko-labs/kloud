@@ -26,7 +26,7 @@ final class ListCommand extends Command
 
     protected function configure()
     {
-        $this->setName('list');
+        $this->setName('which');
         $this->setDescription('List PHP Docker images');
 
         $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);

@@ -42,17 +42,15 @@ RUN set -ex \
         isl \
         libatomic \
         libbz2 \
-        libc-dev \
         libffi \
         libgcc \
         libgomp \
         libldap \
         libltdl \
         libmagic \
-        libstdc++ \
         libtool \
         mpc1 \
-        mpfr3 \
+
         musl-dev \
         perl \
         pkgconf \

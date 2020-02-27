@@ -38,9 +38,9 @@ RUN set -ex\
     && pecl install xdebug-2.9.0 \
     && docker-php-ext-enable xdebug \
     && docker-php-source delete \
-    && apk del icu-dev \
+    && apk del icu-dev
     && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted \
-    && apk del \
+RUN apk del \
         .build-deps \
         gdbm \
         gmp \
@@ -49,15 +49,10 @@ RUN set -ex\
         libbz2 \
         libc-dev \
         libffi \
-        libgcc \
         libgomp \
-        libldap \
         libltdl \
-        libmagic \
-        libstdc++ \
         libtool \
         mpc1 \
-        mpfr3 \
         musl-dev \
         perl \
         pkgconf \

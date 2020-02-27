@@ -15,7 +15,7 @@ $app = new Application('Kiboko Docker Builder');
 $app->addCommands([
     new BuildCommand('build', __DIR__ . '/../config/'),
 
-    new ListCommand('list', __DIR__ . '/../config/'),
+    new ListCommand('which', __DIR__ . '/../config/'),
 
     new TreeCommand('tree', __DIR__ . '/../config/'),
 ]);
