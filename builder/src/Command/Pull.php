@@ -19,12 +19,12 @@ final class Pull implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('pull(%s:%s)', (string) $this->repository, (string) $this->package);
+        return sprintf('pull( %s:%s )', (string) $this->repository, (string) $this->package);
     }
 
-    public function __invoke(): void
+    public function __invoke(): Process
     {
-        $process = new Process(
+        return new Process(
             [
                 'docker', 'pull', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
             ],
@@ -33,7 +33,5 @@ final class Pull implements CommandInterface
             null,
             3600.0
         );
-
-        $process->run();
     }
 }

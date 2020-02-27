@@ -35,9 +35,24 @@ final class Node implements NodeInterface, \IteratorAggregate
         return new \ArrayIterator($this->edges);
     }
 
-    public function build(Command\CommandCompositeInterface $commands): void
+    public function pull(Command\CommandBusInterface $commands): void
+    {
+        $this->tag->pull($commands);
+    }
+
+    public function push(Command\CommandBusInterface $commands): void
+    {
+        $this->tag->push($commands);
+    }
+
+    public function build(Command\CommandBusInterface $commands): void
     {
         $this->tag->build($commands);
+    }
+
+    public function forceBuild(Command\CommandBusInterface $commands): void
+    {
+        $this->tag->forceBuild($commands);
     }
 
     public function add(NodeInterface ...$edges)

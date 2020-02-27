@@ -2,7 +2,7 @@
 
 namespace Builder\Command;
 
-final class CommandBus implements CommandCompositeInterface, \Iterator, \RecursiveIterator
+final class CommandBus implements CommandBusInterface, \Iterator, \RecursiveIterator
 {
     private array $commands;
     private \Iterator $iterator;
@@ -15,7 +15,7 @@ final class CommandBus implements CommandCompositeInterface, \Iterator, \Recursi
 
     public function __toString()
     {
-        return sprintf('commandBus(%d)', count($this));
+        return sprintf('command bus( %d )', count($this));
     }
 
     public function add(CommandInterface ...$commands): void
@@ -63,12 +63,12 @@ final class CommandBus implements CommandCompositeInterface, \Iterator, \Recursi
 
     public function hasChildren()
     {
-        return $this->iterator->current() instanceof CommandCompositeInterface;
+        return $this->iterator->current() instanceof CommandBusInterface;
     }
 
     public function getChildren()
     {
-        if ($this->iterator->current() instanceof CommandCompositeInterface) {
+        if ($this->iterator->current() instanceof CommandBusInterface) {
             return $this->iterator->current();
         }
 

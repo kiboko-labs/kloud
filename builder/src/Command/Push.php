@@ -19,12 +19,12 @@ final class Push implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('push(%s:%s)', (string) $this->repository, (string) $this->package);
+        return sprintf('push( %s:%s )', (string) $this->repository, (string) $this->package);
     }
 
-    public function __invoke(): void
+    public function __invoke(): Process
     {
-        $process = new Process(
+        return new Process(
             [
                 'docker', 'push', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
             ],
@@ -33,7 +33,5 @@ final class Push implements CommandInterface
             null,
             3600.0
         );
-
-        $process->run();
     }
 }

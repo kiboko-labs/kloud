@@ -34,7 +34,7 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         return strtr($this->path, $variables);
     }
 
-    public function pull(Command\CommandCompositeInterface $commands): void
+    public function pull(Command\CommandBusInterface $commands): void
     {
         /** @var BuildableContextInterface $context */
         foreach ($this() as $context) {
@@ -45,7 +45,7 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         }
     }
 
-    public function push(Command\CommandCompositeInterface $commands): void
+    public function push(Command\CommandBusInterface $commands): void
     {
         /** @var BuildableContextInterface $context */
         foreach ($this() as $context) {
@@ -56,11 +56,24 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
         }
     }
 
-    public function build(Command\CommandCompositeInterface $commands): void
+    public function build(Command\CommandBusInterface $commands): void
     {
         /** @var BuildableContextInterface $context */
         foreach ($this() as $context) {
             $commands->add(new Command\BuildFrom(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context),
+                new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),
+                (string) $context->getPath()
+            ));
+        }
+    }
+
+    public function forceBuild(Command\CommandBusInterface $commands): void
+    {
+        /** @var BuildableContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\ForceBuildFrom(
                 $this->repository,
                 new TagReference('%php.version%-%php.flavor%-%package.edition%-%package.version%-%package.variation%', $context),
                 new TagReference('%php.version%-%php.flavor%-%package.variation%', $context),

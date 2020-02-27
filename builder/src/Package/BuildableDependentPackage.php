@@ -38,7 +38,7 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
         return strtr($this->path, $variables);
     }
 
-    public function pull(Command\CommandCompositeInterface $commands): void
+    public function pull(Command\CommandBusInterface $commands): void
     {
         /** @var BuildableContextInterface $context */
         foreach ($this() as $context) {
@@ -49,7 +49,7 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
         }
     }
 
-    public function push(Command\CommandCompositeInterface $commands): void
+    public function push(Command\CommandBusInterface $commands): void
     {
         /** @var BuildableContextInterface $context */
         foreach ($this() as $context) {
@@ -60,11 +60,27 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
         }
     }
 
-    public function build(Command\CommandCompositeInterface $commands): void
+    public function build(Command\CommandBusInterface $commands): void
     {
         /** @var BuildableContextInterface $context */
         foreach ($this() as $context) {
             $commands->add(new Command\BuildFrom(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context),
+                new TagReference(
+                    '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
+                    new Context(['%package.name%' => $this->parent] + $context->getArrayCopy())
+                ),
+                (string) $context->getPath()
+            ));
+        }
+    }
+
+    public function forceBuild(Command\CommandBusInterface $commands): void
+    {
+        /** @var BuildableContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\ForceBuildFrom(
                 $this->repository,
                 new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $context),
                 new TagReference(

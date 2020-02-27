@@ -6,7 +6,7 @@ use Builder\BuildableContext;
 use Builder\BuildableInterface;
 use Builder\BuildableTag;
 use Builder\Command;
-use Builder\Command\CommandCompositeInterface;
+use Builder\Command\CommandBusInterface;
 use Builder\Context;
 use Builder\ContextInterface;
 use Builder\Package\RepositoryInterface;
@@ -31,7 +31,7 @@ final class BuildableVersion implements PHP\VersionInterface, BuildableInterface
         $this->flavors = $flavors;
     }
 
-    public function pull(CommandCompositeInterface $commands): void
+    public function pull(CommandBusInterface $commands): void
     {
         /** @var ContextInterface $context */
         foreach ($this() as $context) {
@@ -42,7 +42,7 @@ final class BuildableVersion implements PHP\VersionInterface, BuildableInterface
         }
     }
 
-    public function push(CommandCompositeInterface $commands): void
+    public function push(CommandBusInterface $commands): void
     {
         /** @var ContextInterface $context */
         foreach ($this() as $context) {
@@ -53,11 +53,23 @@ final class BuildableVersion implements PHP\VersionInterface, BuildableInterface
         }
     }
 
-    public function build(CommandCompositeInterface $commands): void
+    public function build(CommandBusInterface $commands): void
     {
         /** @var ContextInterface $context */
         foreach ($this() as $context) {
             $commands->add(new Command\Build(
+                $this->repository,
+                new TagReference('%php.version%-%php.flavor%', $context),
+                $this->getPath()
+            ));
+        }
+    }
+
+    public function forceBuild(CommandBusInterface $commands): void
+    {
+        /** @var ContextInterface $context */
+        foreach ($this() as $context) {
+            $commands->add(new Command\ForceBuild(
                 $this->repository,
                 new TagReference('%php.version%-%php.flavor%', $context),
                 $this->getPath()

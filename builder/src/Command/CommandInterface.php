@@ -7,5 +7,5 @@ use Symfony\Component\Process\Process;
 interface CommandInterface
 {
     public function __toString();
-    public function __invoke(): void;
+    public function __invoke(): Process;
 }

@@ -9,7 +9,8 @@ use Builder\Command;
  */
 interface BuildableInterface
 {
-    public function pull(Command\CommandCompositeInterface $commands): void;
-    public function push(Command\CommandCompositeInterface $commands): void;
-    public function build(Command\CommandCompositeInterface $commands): void;
+    public function pull(Command\CommandBusInterface $commands): void;
+    public function push(Command\CommandBusInterface $commands): void;
+    public function build(Command\CommandBusInterface $commands): void;
+    public function forceBuild(Command\CommandBusInterface $commands): void;
 }

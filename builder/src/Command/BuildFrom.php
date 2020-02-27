@@ -28,12 +28,12 @@ final class BuildFrom implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('build(%1$s:%2$s from %1$s:%3$s)', (string) $this->repository, (string) $this->package, (string) $this->source);
+        return sprintf('build( %1$s:%2$s from %1$s:%3$s )', (string) $this->repository, (string) $this->package, (string) $this->source);
     }
 
-    public function __invoke(): void
+    public function __invoke(): Process
     {
-        $process = new Process(
+        return new Process(
             [
                 'docker', 'build',
                 '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
@@ -45,11 +45,5 @@ final class BuildFrom implements CommandInterface
             null,
             3600.0
         );
-
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
     }
 }

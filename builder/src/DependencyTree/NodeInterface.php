@@ -2,13 +2,11 @@
 
 namespace Builder\DependencyTree;
 
-use Builder\Command;
+use Builder\BuildableInterface;
 
-interface NodeInterface extends \Countable, \Traversable
+interface NodeInterface extends BuildableInterface, \Countable, \Traversable
 {
     public function __toString();
-
-    public function build(Command\CommandCompositeInterface $commands): void;
 
     public function add(NodeInterface ...$edges);
     public function resolve(ResolutionInterface $resolved, ResolutionInterface $processed): void;

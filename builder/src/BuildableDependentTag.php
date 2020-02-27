@@ -30,19 +30,24 @@ final class BuildableDependentTag implements DependentTagInterface, BuildableTag
         return (string) $this->path;
     }
 
-    public function pull(Command\CommandCompositeInterface $commands): void
+    public function pull(Command\CommandBusInterface $commands): void
     {
         $commands->add(new Command\Pull($this->repository, $this));
     }
 
-    public function push(Command\CommandCompositeInterface $commands): void
+    public function push(Command\CommandBusInterface $commands): void
     {
         $commands->add(new Command\Push($this->repository, $this));
     }
 
-    public function build(Command\CommandCompositeInterface $commands): void
+    public function build(Command\CommandBusInterface $commands): void
     {
         $commands->add(new Command\BuildFrom($this->repository, $this, $this->parent, $this->getPath()));
+    }
+
+    public function forceBuild(Command\CommandBusInterface $commands): void
+    {
+        $commands->add(new Command\ForceBuildFrom($this->repository, $this, $this->parent, $this->getPath()));
     }
 
     public function __toString()

@@ -23,19 +23,24 @@ final class BuildableTag implements BuildableTagInterface
         return (string) $this->path;
     }
 
-    public function pull(Command\CommandCompositeInterface $commands): void
+    public function pull(Command\CommandBusInterface $commands): void
     {
         $commands->add(new Command\Pull($this->repository, $this));
     }
 
-    public function push(Command\CommandCompositeInterface $commands): void
+    public function push(Command\CommandBusInterface $commands): void
     {
         $commands->add(new Command\Push($this->repository, $this));
     }
 
-    public function build(Command\CommandCompositeInterface $commands): void
+    public function build(Command\CommandBusInterface $commands): void
     {
         $commands->add(new Command\Build($this->repository, $this, $this->getPath()));
+    }
+
+    public function forceBuild(Command\CommandBusInterface $commands): void
+    {
+        $commands->add(new Command\ForceBuild($this->repository, $this, $this->getPath()));
     }
 
     public function __toString()

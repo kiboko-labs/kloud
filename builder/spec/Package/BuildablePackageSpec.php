@@ -6,7 +6,7 @@ use Builder\BuildableContext;
 use Builder\BuildableDependentTag;
 use Builder\BuildableInterface;
 use Builder\Command\BuildFrom;
-use Builder\Command\CommandCompositeInterface;
+use Builder\Command\CommandBusInterface;
 use Builder\Package\BuildablePackage;
 use Builder\Package\BuildablePackageInterface;
 use Builder\Package\Edition;
@@ -76,7 +76,7 @@ class BuildablePackageSpec extends ObjectBehavior
         ]));
     }
 
-    function it_is_buildable(CommandCompositeInterface $commandBus)
+    function it_is_buildable(CommandBusInterface $commandBus)
     {
         $repository = new Repository('kiboko/php');
         $ce = new Edition('ce', new Version('3.1', new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm')))));

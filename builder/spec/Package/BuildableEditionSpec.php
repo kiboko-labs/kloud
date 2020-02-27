@@ -6,7 +6,7 @@ use Builder\BuildableContext;
 use Builder\BuildableDependentTag;
 use Builder\BuildableInterface;
 use Builder\Command\BuildFrom;
-use Builder\Command\CommandCompositeInterface;
+use Builder\Command\CommandBusInterface;
 use Builder\Package\BuildableEdition;
 use Builder\Package\EditionInterface;
 use Builder\Package\Repository;
@@ -55,7 +55,7 @@ class BuildableEditionSpec extends ObjectBehavior
         ]));
     }
 
-    function it_is_buildable(CommandCompositeInterface $commandBus)
+    function it_is_buildable(CommandBusInterface $commandBus)
     {
         $repository = new Repository('kiboko/php');
         $v31 = new Version('3.1',

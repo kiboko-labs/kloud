@@ -3,6 +3,7 @@
 namespace Builder\Console\Command;
 
 use Builder\Command\CommandBus;
+use Builder\Command\ParallelCommandRunner;
 use Builder\Command\SequentialCommandRunner;
 use Builder\Console\Wizard;
 use Builder\DependencyTree\NodeInterface;
@@ -32,7 +33,9 @@ final class BuildCommand extends Command
 
         $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
 
-        $this->addOption('force', 'f', InputOption::VALUE_NONE);
+        $this->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the build for matching images only.');
+        $this->addOption('force-all', 'a', InputOption::VALUE_NONE, 'Force the build for all matching images and dependencies.');
+        $this->addOption('parallel', 'p', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the build commands in parallel', 'no');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -51,31 +54,51 @@ final class BuildCommand extends Command
             require $this->configPath . '/packages.php',
         )), \CachingIterator::FULL_CACHE);
 
-        $builder = new TreeBuilder();
+        $tree = new TreeBuilder();
 
         /** @var PackageInterface $package */
         foreach ($packages as $package) {
-            $builder->build(...$package);
+            $tree->build(...$package);
         }
 
-        $nodes = new \IteratorIterator($builder);
+        $nodes = new \IteratorIterator($tree);
         if (!empty($pattern)) {
             $nodes = new \CallbackFilterIterator($nodes, function (NodeInterface $node) use ($pattern) {
                 return preg_match($pattern, (string)$node) > 0;
             });
         }
 
+        $force = ((bool) $input->getOption('force')) ?? false;
+        $forceAll = ((bool) $input->getOption('force-all')) ?? false;
+
         $commandBus = new CommandBus();
         /** @var NodeInterface $node */
-        foreach ($builder->resolve(...$nodes) as $node) {
-            if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-                $format->writeln(strtr('Found <info>%tagName%</>.', ['%tagName%' => (string)$node]));
+        foreach ($tree->resolve(...$nodes) as $node) {
+
+            if ($force && preg_match($pattern, (string)$node) > 0 || $forceAll) {
+                if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                    $format->writeln(strtr('Found <info>%tagName%</> (<fg=blue>force build</>).', ['%tagName%' => (string)$node]));
+                }
+
+                $node->forceBuild($commandBus);
+            } else {
+                if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                    $format->writeln(strtr('Found <info>%tagName%</>.', ['%tagName%' => (string)$node]));
+                }
+
+                $node->pull($commandBus);
+                $node->build($commandBus);
             }
 
-            $node->build($commandBus);
+            $node->push($commandBus);
         }
 
-        (new SequentialCommandRunner($input, $output))->run($commandBus);
+        if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
+            (new SequentialCommandRunner($input, $output))->run($commandBus);
+        } else {
+            $parallel = (int) $input->getOption('parallel');
+            (new ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus);
+        }
 
         return 0;
     }

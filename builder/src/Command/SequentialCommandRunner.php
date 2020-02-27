@@ -6,6 +6,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 final class SequentialCommandRunner implements CommandRunnerInterface
 {
@@ -18,7 +19,7 @@ final class SequentialCommandRunner implements CommandRunnerInterface
         $this->output = $output;
     }
 
-    public function run(CommandCompositeInterface $commandBus)
+    public function run(CommandBusInterface $commandBus)
     {
         $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::SELF_FIRST);
 
@@ -29,7 +30,13 @@ final class SequentialCommandRunner implements CommandRunnerInterface
         /** @var CommandInterface $command */
         foreach ($progressBar->iterate($iterator) as $command) {
             $section->overwrite(sprintf('Running: <info>%s</>', (string) $command));
-            $command();
+            $process = $command();
+
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new ProcessFailedException($process);
+            }
         }
         $section->overwrite('Finished!');
     }

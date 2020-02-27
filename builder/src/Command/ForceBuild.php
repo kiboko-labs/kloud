@@ -7,7 +7,7 @@ use Builder\TagInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-final class Build implements CommandInterface
+final class ForceBuild implements CommandInterface
 {
     private Package\RepositoryInterface $repository;
     private TagInterface $package;
@@ -25,7 +25,7 @@ final class Build implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('build( %s:%s )', (string) $this->repository, (string) $this->package);
+        return sprintf('force build( %s:%s )', (string) $this->repository, (string) $this->package);
     }
 
     public function __invoke(): Process
@@ -33,6 +33,7 @@ final class Build implements CommandInterface
         return new Process(
             [
                 'docker', 'build',
+                '--no-cache',
                 '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
                 $this->path,
             ],

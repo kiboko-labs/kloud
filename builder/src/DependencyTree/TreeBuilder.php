@@ -4,7 +4,6 @@ namespace Builder\DependencyTree;
 
 use Builder\BuildableTagInterface;
 use Builder\DependentTagInterface;
-use Traversable;
 
 final class TreeBuilder implements \IteratorAggregate
 {
