@@ -4,11 +4,10 @@ namespace Builder\PHP;
 
 use Builder\Context;
 use Builder\TagReference;
-use Builder\TagRepositoryInterface;
 
 class Flavor implements FlavorInterface, \IteratorAggregate
 {
-    public string $name;
+    private string $name;
 
     public function __construct(string $name)
     {

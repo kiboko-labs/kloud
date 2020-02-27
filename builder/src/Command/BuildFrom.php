@@ -28,7 +28,7 @@ final class BuildFrom implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('build( %1$s:%2$s from %1$s:%3$s )', (string) $this->repository, (string) $this->package, (string) $this->source);
+        return sprintf('BUILD %1$s:%2$s FROM %1$s:%3$s', (string) $this->repository, (string) $this->package, (string) $this->source);
     }
 
     public function __invoke(): Process

@@ -7,8 +7,18 @@ $versions = require 'versions.php';
 
 $repository = new Repository('kiboko/php');
 
-$postgres = new Package\BuildableVariation( $repository, 'postgres', '/environments/%package.variation%/', ...$versions);
-$mysql = new Package\BuildableVariation($repository, 'mysql', '/environments/%package.variation%/', ...$versions);
+$postgres = new Package\BuildableVariation(
+    $repository,
+    'postgresql',
+    '/environments/%package.variation%/',
+    ...$versions
+);
+$mysql = new Package\BuildableVariation(
+    $repository,
+    'mysql',
+    '/environments/%package.variation%/',
+    ...$versions
+);
 
 return [
     $postgres,

@@ -28,7 +28,7 @@ final class ForceBuildFrom implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('force build( %1$s:%2$s from %1$s:%3$s )', (string) $this->repository, (string) $this->package, (string) $this->source);
+        return sprintf('FORCE BUILD %1$s:%2$s FROM %1$s:%3$s', (string) $this->repository, (string) $this->package, (string) $this->source);
     }
 
     public function __invoke(): Process

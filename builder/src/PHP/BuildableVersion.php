@@ -7,12 +7,9 @@ use Builder\BuildableInterface;
 use Builder\BuildableTag;
 use Builder\Command;
 use Builder\Command\CommandBusInterface;
-use Builder\Context;
 use Builder\ContextInterface;
 use Builder\Package\RepositoryInterface;
 use Builder\PHP;
-use Builder\Placeholder;
-use Builder\TagInterface;
 use Builder\TagReference;
 
 final class BuildableVersion implements PHP\VersionInterface, BuildableInterface, \IteratorAggregate

@@ -3,7 +3,8 @@
     "require": {
         "symfony/console": "^5.1@dev",
         "symfony/process": "^5.1@dev",
-        "phpspec/phpspec": "^6.1@dev"
+        "phpspec/phpspec": "^6.1@dev",
+        "composer/semver": "^1.0@dev"
     },
     "minimum-stability": "dev",
     "autoload": {

@@ -25,7 +25,7 @@ final class Build implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('build( %s:%s )', (string) $this->repository, (string) $this->package);
+        return sprintf('BUILD %s:%s', (string) $this->repository, (string) $this->package);
     }
 
     public function __invoke(): Process

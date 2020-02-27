@@ -19,7 +19,7 @@ final class Push implements CommandInterface
 
     public function __toString()
     {
-        return sprintf('push( %s:%s )', (string) $this->repository, (string) $this->package);
+        return sprintf('PUSH %s:%s', (string) $this->repository, (string) $this->package);
     }
 
     public function __invoke(): Process

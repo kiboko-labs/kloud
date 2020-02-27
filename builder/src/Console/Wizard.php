@@ -47,11 +47,11 @@ final class Wizard
                 (new ConfirmationQuestion('Is it for Enterprise Edition?', false))
             );
             $dbms = $format->askQuestion(
-                (new ChoiceQuestion('Which database engine are you using?', ['mysql', 'postgres'], $enterpriseEdition ? 'postgres' : 'mysql'))
+                (new ChoiceQuestion('Which database engine are you using?', ['mysql', 'postgresql'], $enterpriseEdition ? 'postgresql' : 'mysql'))
             );
         } else {
             $dbms = $format->askQuestion(
-                (new ChoiceQuestion('Which database engine are you using? (leave empty for none)', ['mysql', 'postgres', ''], ''))
+                (new ChoiceQuestion('Which database engine are you using? (leave empty for none)', ['mysql', 'postgresql', ''], ''))
             );
         }
 

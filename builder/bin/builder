@@ -3,9 +3,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Builder\Console\Command\ListCommand;
-use Builder\Console\Command\TreeCommand;
-use Builder\Console\Command\BuildCommand;
+use Builder\Console\Command;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -13,11 +11,13 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 $app = new Application('Kiboko Docker Builder');
 
 $app->addCommands([
-    new BuildCommand('build', __DIR__ . '/../config/'),
+    new Command\BuildCommand('build', __DIR__ . '/../config/'),
 
-    new ListCommand('which', __DIR__ . '/../config/'),
+    new Command\ListCommand('which', __DIR__ . '/../config/'),
 
-    new TreeCommand('tree', __DIR__ . '/../config/'),
+    new Command\TreeCommand('tree', __DIR__ . '/../config/'),
+
+    new Command\TestCommand('test', __DIR__ . '/../config/'),
 ]);
 
 $app->run(new ArgvInput($argv), new ConsoleOutput());
