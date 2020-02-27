@@ -33,6 +33,7 @@ final class Build implements CommandInterface
         return new Process(
             [
                 'docker', 'build',
+                '--pull',
                 '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
                 $this->path,
             ],

@@ -87,7 +87,6 @@ final class BuildCommand extends Command
                     $format->writeln(strtr('Found <info>%tagName%</>.', ['%tagName%' => (string)$node]));
                 }
 
-                $node->pull($commandBus);
                 $node->build($commandBus);
             }
 

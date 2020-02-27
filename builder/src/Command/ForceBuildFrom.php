@@ -36,6 +36,7 @@ final class ForceBuildFrom implements CommandInterface
         return new Process(
             [
                 'docker', 'build',
+                '--pull',
                 '--no-cache',
                 '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
                 '--build-arg', sprintf('SOURCE_VARIATION=%s', (string) $this->source),
