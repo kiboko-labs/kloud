@@ -92,7 +92,7 @@ final class Wizard
                 return sprintf('/^%s-(?:cli|fpm)%s-%s$/', preg_quote($phpVersion), $variations, $dbms);
             }
         } else {
-            return sprintf('/^%s-(cli|fpm)%s-%s-%s-%s-%s$/', preg_quote($phpVersion), $variations, $application, $enterpriseEdition ? 'ee' : 'ce', preg_quote($applicationVersion), $dbms);
+            return sprintf('/^%s-(?:cli|fpm)%s-%s-%s-%s-%s$/', preg_quote($phpVersion), $variations, $application, $enterpriseEdition ? 'ee' : 'ce', preg_quote($applicationVersion), $dbms);
         }
     }
 }

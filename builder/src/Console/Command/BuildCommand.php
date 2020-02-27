@@ -35,7 +35,8 @@ final class BuildCommand extends Command
 
         $this->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the build for matching images only.');
         $this->addOption('force-all', 'a', InputOption::VALUE_NONE, 'Force the build for all matching images and dependencies.');
-        $this->addOption('parallel', 'p', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the build commands in parallel', 'no');
+        $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the build commands in parallel', 'no');
+        $this->addOption('push', 'p', InputOption::VALUE_NONE, 'Push images to Docker Hub (requires authentication).');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -90,7 +91,9 @@ final class BuildCommand extends Command
                 $node->build($commandBus);
             }
 
-            $node->push($commandBus);
+            if ($input->getOption('push')) {
+                $node->push($commandBus);
+            }
         }
 
         if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
