@@ -2,6 +2,7 @@
 
 namespace Builder\Console;
 
+use Composer\Semver\Semver;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
@@ -24,21 +25,70 @@ final class Wizard
 
         $applicationVersion = '';
         if ($application === 'orocommerce') {
-            $applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which OroCommerce version are you using?', ['1.6', '3.1', '4.1'], '3.1'))
-            );
+            if (Semver::satisfies($phpVersion, '>=7.0 <7.2')) {
+                $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 1.6.</>');
+                $applicationVersion = '1.6';
+            } else if (Semver::satisfies($phpVersion, '>=7.1 <7.3')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which OroCommerce version are you using?', ['1.6', '3.1'], '3.1'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.2 <7.4')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which OroCommerce version are you using?', ['3.1', '4.1'], '3.1'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.4')) {
+                $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 4.1.</>');
+                $applicationVersion = '4.1';
+            }
         } else if ($application === 'oroplatform') {
-            $applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which OroPlatform version are you using?', ['2.6', '3.1', '4.1'], '3.1'))
-            );
+            if (Semver::satisfies($phpVersion, '>=7.0 <7.2')) {
+                $format->writeln(' <fg=green>Choosing automaticallly OroPlatform version 2.6.</>');
+                $applicationVersion = '2.6';
+            } else if (Semver::satisfies($phpVersion, '>=7.1 <7.3')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which OroPlatform version are you using?', ['2.6', '3.1'], '3.1'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.2 <7.4')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which OroPlatform version are you using?', ['3.1', '4.1'], '3.1'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.4')) {
+                $format->writeln(' <fg=green>Choosing automaticallly OroPlatform version 4.1.</>');
+                $applicationVersion = '4.1';
+            }
         } else if ($application === 'orocrm') {
-            $applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which OroCRM version are you using?', ['2.6', '3.1', '4.1'], '3.1'))
-            );
+            if (Semver::satisfies($phpVersion, '>=7.0 <7.2')) {
+                $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 2.6.</>');
+                $applicationVersion = '2.6';
+            } else if (Semver::satisfies($phpVersion, '>=7.1 <7.3')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which OroCRM version are you using?', ['2.6', '3.1'], '3.1'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.2 <7.4')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which OroCRM version are you using?', ['3.1', '4.1'], '3.1'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.4')) {
+                $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 4.1.</>');
+                $applicationVersion = '4.1';
+            }
         } else if ($application === 'marello') {
-            $applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which Marello version are you using?', ['1.6', '2.0', '2.1', '2.2', '3.0'], '2.2'))
-            );
+            if (Semver::satisfies($phpVersion, '>=7.0 <7.2')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6'], '1.6'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.1 <7.3')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6', '2.0', '2.1', '2.2'], '2.2'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.2 <7.4')) {
+                $applicationVersion = $format->askQuestion(
+                    (new ChoiceQuestion('Which Marello version are you using?', ['2.0', '2.1', '2.2', '3.0'], '2.2'))
+                );
+            } else if (Semver::satisfies($phpVersion, '>=7.4')) {
+                $format->writeln(' <fg=green>Choosing automaticallly Marello version 3.0.</>');
+                $applicationVersion = '3.0';
+            }
         }
 
         $enterpriseEdition = false;
