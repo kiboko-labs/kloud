@@ -40,4 +40,6 @@ return [
     new Assert\PHPExtensionVersion($repository, 'zip', '*', '/-[ce]e-\d+\.\d+-/'),
     new Assert\PHPExtensionVersion($repository, 'imap', '*', '/-[ce]e-\d+\.\d+-/'),
 
+    new Assert\ICUVersion($repository, '>=4.4', '/-[ce]e-\d+\.\d+-/'),
+
 ];
