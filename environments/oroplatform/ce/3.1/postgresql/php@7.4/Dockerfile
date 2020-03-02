@@ -28,7 +28,7 @@ RUN set -ex\
         libpng \
         libjpeg-turbo \
         c-client \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-png \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip \
