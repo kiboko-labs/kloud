@@ -15,7 +15,7 @@ $app->addCommands([
 
     new Command\PushCommand('push', __DIR__ . '/../config/'),
 
-    new Command\PushCommand('pull', __DIR__ . '/../config/'),
+    new Command\PullCommand('pull', __DIR__ . '/../config/'),
 
     new Command\ListCommand('which', __DIR__ . '/../config/'),
 
