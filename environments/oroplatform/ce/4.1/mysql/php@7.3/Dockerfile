@@ -18,7 +18,10 @@ RUN set -ex\
         libpng-dev \
         libjpeg-turbo-dev \
         freetype-dev \
-        zlib-dev \
+        libzip-dev \
+        krb5-dev \
+        imap-dev \
+        openssl-dev \
         mysql-dev \
     && apk add --update \
         freetype \

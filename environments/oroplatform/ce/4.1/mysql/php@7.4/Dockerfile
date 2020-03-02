@@ -22,7 +22,7 @@ RUN set -ex\
         krb5-dev \
         imap-dev \
         openssl-dev \
-        postgresql-dev \
+        mysql-dev \
     && apk add --update \
         freetype \
         libpng \
@@ -34,7 +34,9 @@ RUN set -ex\
     && docker-php-ext-install zip \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap \
-    && docker-php-ext-configure pdo_pgsql \
-    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-configure pdo_mysql \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-configure mysqli \
+    && docker-php-ext-install mysqli \
     && apk del .build-deps \
     && rm -rf /tmp/* /var/cache/apk/*
