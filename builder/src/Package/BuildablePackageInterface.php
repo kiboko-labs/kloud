@@ -6,5 +6,4 @@ use Builder\BuildableInterface;
 
 interface BuildablePackageInterface extends BuildableInterface
 {
-    public function buildPath(array $variables);
 }

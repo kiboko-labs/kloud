@@ -24,11 +24,11 @@ final class SequentialCommandRunner implements CommandRunnerInterface
         $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::SELF_FIRST);
 
         /** @var ConsoleSectionOutput $section */
-        $progressBar = new ProgressBar($this->output->section(), iterator_count($iterator));
+        $progressBar = new ProgressBar($this->output->section());
         $section = $this->output->section();
 
         /** @var CommandInterface $command */
-        foreach ($progressBar->iterate($iterator) as $command) {
+        foreach ($progressBar->iterate($iterator, iterator_count($iterator)) as $command) {
             $section->overwrite(sprintf('Running: <info>%s</>', (string) $command));
             $process = $command();
 

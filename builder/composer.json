@@ -4,7 +4,8 @@
         "symfony/console": "^5.1@dev",
         "symfony/process": "^5.1@dev",
         "phpspec/phpspec": "^6.1@dev",
-        "composer/semver": "^1.0@dev"
+        "composer/semver": "^1.0@dev",
+        "psr/log": "^1.1@dev"
     },
     "minimum-stability": "dev",
     "autoload": {
@@ -13,6 +14,7 @@
         }
     },
     "require-dev": {
-        "friends-of-phpspec/phpspec-code-coverage": "^4.0@dev"
+        "friends-of-phpspec/phpspec-code-coverage": "^4.0@dev",
+        "monolog/monolog": "^2.0@dev"
     }
 }

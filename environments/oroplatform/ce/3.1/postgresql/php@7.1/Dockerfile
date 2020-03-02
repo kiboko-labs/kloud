@@ -19,6 +19,9 @@ RUN set -ex\
         libjpeg-turbo-dev \
         freetype-dev \
         zlib-dev \
+        krb5-dev \
+        imap-dev \
+        openssl-dev \
         postgresql-dev \
     && apk add --update \
         freetype \
@@ -29,6 +32,8 @@ RUN set -ex\
     && docker-php-ext-install gd \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap \
     && docker-php-ext-configure pdo_pgsql \
     && docker-php-ext-install pdo_pgsql \
     && apk del .build-deps \

@@ -4,6 +4,5 @@ namespace Builder\Assert;
 
 interface AssertionInterface
 {
-    public function __toString();
-    public function __invoke(): bool;
+    public function __invoke(): Result\AssertionResultInterface;
 }

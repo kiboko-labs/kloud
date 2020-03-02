@@ -4,10 +4,14 @@ namespace Builder\Command;
 
 use Builder\Package;
 use Builder\TagInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Process\Process;
 
-final class Push implements CommandInterface
+final class Push implements CommandInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     private Package\RepositoryInterface $repository;
     private TagInterface $package;
 

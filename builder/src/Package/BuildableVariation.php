@@ -14,25 +14,20 @@ final class BuildableVariation implements VariationInterface, BuildablePackageIn
 {
     private RepositoryInterface $repository;
     public string $name;
-    public string $path;
+    public ?string $path;
     /** @var PHP\VersionInterface[] */
     public array $versions;
 
     public function __construct(
         RepositoryInterface $repository,
         string $name,
-        string $path,
+        ?string $path,
         PHP\VersionInterface ...$versions
     ) {
         $this->repository = $repository;
         $this->name = $name;
         $this->path = $path;
         $this->versions = $versions;
-    }
-
-    public function buildPath(array $variables)
-    {
-        return strtr($this->path, $variables);
     }
 
     public function pull(Command\CommandBusInterface $commands): void

@@ -32,7 +32,7 @@ RUN set -ex\
     && docker-php-ext-install gd \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip \
-    && docker-php-ext-configure imap --with-kerberos \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap \
     && docker-php-ext-configure pdo_pgsql \
     && docker-php-ext-install pdo_pgsql \

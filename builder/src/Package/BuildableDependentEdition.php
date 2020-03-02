@@ -15,7 +15,7 @@ final class BuildableDependentEdition implements DependentEditionInterface, Buil
     private RepositoryInterface $repository;
     public string $name;
     public string $parent;
-    public string $path;
+    public ?string $path;
     /** @var VersionInterface[] */
     public array $versions;
 
@@ -23,7 +23,7 @@ final class BuildableDependentEdition implements DependentEditionInterface, Buil
         RepositoryInterface $repository,
         string $name,
         string $parent,
-        string $path,
+        ?string $path,
         VersionInterface ...$versions
     ) {
         $this->repository = $repository;
@@ -31,11 +31,6 @@ final class BuildableDependentEdition implements DependentEditionInterface, Buil
         $this->parent = $parent;
         $this->path = $path;
         $this->versions = $versions;
-    }
-
-    public function buildPath(array $variables)
-    {
-        return strtr($this->path, $variables);
     }
 
     public function pull(Command\CommandBusInterface $commands): void

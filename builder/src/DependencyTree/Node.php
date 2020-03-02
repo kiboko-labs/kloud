@@ -25,6 +25,11 @@ final class Node implements NodeInterface, \IteratorAggregate
         return (string) $this->tag;
     }
 
+    public function getPath(): string
+    {
+        return $this->tag->getPath();
+    }
+
     public function count()
     {
         return count($this->edges);

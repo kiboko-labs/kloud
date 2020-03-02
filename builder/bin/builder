@@ -13,6 +13,8 @@ $app = new Application('Kiboko Docker Builder');
 $app->addCommands([
     new Command\BuildCommand('build', __DIR__ . '/../config/'),
 
+    new Command\PushCommand('push', __DIR__ . '/../config/'),
+
     new Command\ListCommand('which', __DIR__ . '/../config/'),
 
     new Command\TreeCommand('tree', __DIR__ . '/../config/'),

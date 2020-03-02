@@ -8,7 +8,7 @@ use Composer\Semver\Semver;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-final class BlackfireVersionConstraint implements AssertionInterface
+final class ComposerVersionConstraint implements AssertionInterface
 {
     private RepositoryInterface $repository;
     private TagInterface $tag;
@@ -25,7 +25,7 @@ final class BlackfireVersionConstraint implements AssertionInterface
     {
         $process = new Process([
             'docker', 'run', '--rm', '-i', sprintf('%s:%s', (string)$this->repository, (string)$this->tag),
-            'blackfire', 'version',
+            'composer', '--version',
         ]);
 
         $version = null;
@@ -35,22 +35,22 @@ final class BlackfireVersionConstraint implements AssertionInterface
                     throw new ProcessFailedException($process);
                 }
 
-                if (preg_match('/^blackfire\s+(\d+\.\d+\.\d+(?:[\.-](?:alpha|beta|rc)\d+)?)/i', $buffer, $matches)) {
+                if (preg_match('/^Composer\s+version\s+(\d+\.\d+\.\d+(?:[\.-](?:alpha|beta|rc)\d+)?)/i', $buffer, $matches)) {
                     $version = $matches[1];
                 }
             });
         } catch (ProcessFailedException $exception) {
-            return new Result\BlackfireMissingOrBroken($this->tag);
+            return new Result\ComposerMissingOrBroken($this->tag);
         }
 
         if (!is_string($version)) {
-            return new Result\BlackfireMissingOrBroken($this->tag);
+            return new Result\ComposerMissingOrBroken($this->tag);
         }
 
         if (Semver::satisfies($version, $this->constraint)) {
-            return new Result\BlackfireVersionMatches($this->tag, $version, $this->constraint);
+            return new Result\ComposerVersionMatches($this->tag, $version, $this->constraint);
         }
 
-        return new Result\BlackfireVersionInvalid($this->tag, $version, $this->constraint);
+        return new Result\ComposerVersionInvalid($this->tag, $version, $this->constraint);
     }
 }

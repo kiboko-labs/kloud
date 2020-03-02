@@ -6,9 +6,15 @@ final class BuildableContext extends \ArrayObject implements BuildableContextInt
 {
     private Placeholder $path;
 
-    public function __construct(?ContextInterface $parent, string $path, array $variables)
+    public function __construct(?ContextInterface $parent, ?string $path, array $variables)
     {
-        $this->path = $parent instanceof BuildableContextInterface ? $parent->getPath() : new Placeholder($path, $variables);
+        if ($path === null && !$parent instanceof BuildableContextInterface) {
+            throw new \RuntimeException('Could not determine path from parent context.');
+        }
+
+        $this->path = ($path === null && $parent instanceof BuildableContextInterface)
+            ? $parent->getPath()->reset($variables)
+            : new Placeholder($path, $variables);
 
         parent::__construct($variables);
     }

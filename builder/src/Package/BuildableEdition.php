@@ -13,25 +13,20 @@ final class BuildableEdition implements EditionInterface, BuildablePackageInterf
 {
     private RepositoryInterface $repository;
     public string $name;
-    public string $path;
+    public ?string $path;
     /** @var VersionInterface[] */
     public array $versions;
 
     public function __construct(
         RepositoryInterface $repository,
         string $name,
-        string $path,
+        ?string $path,
         VersionInterface ...$versions
     ) {
         $this->repository = $repository;
         $this->name = $name;
         $this->path = $path;
         $this->versions = $versions;
-    }
-
-    public function buildPath(array $variables)
-    {
-        return strtr($this->path, $variables);
     }
 
     public function pull(Command\CommandBusInterface $commands): void

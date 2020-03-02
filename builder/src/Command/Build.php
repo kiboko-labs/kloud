@@ -4,11 +4,14 @@ namespace Builder\Command;
 
 use Builder\Package;
 use Builder\TagInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Process\Process;
 
-final class Build implements CommandInterface
+final class Build implements CommandInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     private Package\RepositoryInterface $repository;
     private TagInterface $package;
     private string $path;
@@ -33,7 +36,7 @@ final class Build implements CommandInterface
         return new Process(
             [
                 'docker', 'build',
-                '--pull',
+//                '--pull',
                 '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
                 $this->path,
             ],
@@ -43,4 +46,4 @@ final class Build implements CommandInterface
             3600.0
         );
     }
-}
+}//Running: BUILD kiboko/php:7.2-cli-oroplatform-ce-3.1-mysql FROM kiboko/php:7.2-cli-mysql

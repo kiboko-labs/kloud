@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class BuildCommand extends Command
+final class PushCommand extends Command
 {
     private string $configPath;
 
@@ -27,16 +27,12 @@ final class BuildCommand extends Command
 
     protected function configure()
     {
-        $this->setName('build');
-        $this->setDescription('Build PHP Docker images, with an interactive wizard');
-        $this->setAliases(['wizard']);
+        $this->setName('push');
+        $this->setDescription('Push PHP Docker images, with an interactive wizard');
 
         $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
 
-        $this->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the build for matching images only.');
-        $this->addOption('force-all', 'a', InputOption::VALUE_NONE, 'Force the build for all matching images and dependencies.');
         $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the build commands in parallel', 'no');
-        $this->addOption('push', 'p', InputOption::VALUE_NONE, 'Push images to Docker Hub (requires authentication).');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -47,7 +43,7 @@ final class BuildCommand extends Command
 
         $format = new SymfonyStyle($input, $output);
 
-        $format->note(sprintf('Building all images matching the following pattern: %s', $pattern));
+        $format->note(sprintf('Pushing all images matching the following pattern: %s', $pattern));
 
         /** @var PackageInterface[] $packages */
         $packages = new \CachingIterator(new \ArrayIterator(array_merge(
@@ -69,34 +65,15 @@ final class BuildCommand extends Command
             });
         }
 
-        $force = ((bool) $input->getOption('force')) ?? false;
-        $forceAll = ((bool) $input->getOption('force-all')) ?? false;
-
         $commandBus = new CommandBus();
         /** @var NodeInterface $node */
         foreach ($tree->resolve(...$nodes) as $node) {
 
-            if ($force && preg_match($pattern, (string)$node) > 0 || $forceAll) {
-                if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-                    $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</>, at path <fg=yellow>%path%</> (<fg=blue>force build</>).', ['%tagName%' => (string)$node, '%path%' => $node->getPath()]));
-                } else if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-                    $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</> (<fg=blue>force build</>).', ['%tagName%' => (string)$node]));
-                }
-
-                $node->forceBuild($commandBus);
-            } else {
-                if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-                    $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</>, at path <fg=yellow>%path%</>.', ['%tagName%' => (string)$node, '%path%' => $node->getPath()]));
-                } else if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-                    $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</>.', ['%tagName%' => (string)$node]));
-                }
-
-                $node->build($commandBus);
+            if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                $format->writeln(strtr('Found <info>%tagName%</>.', ['%tagName%' => (string)$node]));
             }
 
-            if ($input->getOption('push')) {
-                $node->push($commandBus);
-            }
+            $node->push($commandBus);
         }
 
         if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {

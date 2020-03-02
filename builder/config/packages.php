@@ -27,8 +27,11 @@ return [
     new Package\BuildablePackage(
         $repository,
         'oroplatform',
-        '/environments/oroplatform/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
-        new Package\Edition('ce',
+        null,
+        new Package\BuildableEdition(
+            $repository,
+            'ce',
+            '/environments/oroplatform/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
 //            new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)
@@ -70,9 +73,11 @@ return [
         $repository,
         'orocommerce',
         'oroplatform',
-        '/environments/orocommerce/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
-        new Package\Edition(
+        null,
+        new Package\BuildableEdition(
+            $repository,
             'ce',
+            '/environments/orocommerce/%package.edition%/%package.version%/%package.variation%/php@%php.version%/',
 //            new Package\Version('1.6', $postgres, $mysql),
             new Package\Version('3.1', $postgres, $mysql),
             new Package\Version('4.1', $postgres, $mysql)

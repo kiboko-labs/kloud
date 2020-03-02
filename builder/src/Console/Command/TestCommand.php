@@ -4,6 +4,7 @@ namespace Builder\Console\Command;
 
 use Builder\Assert\AssertionInterface;
 use Builder\Assert\ConstraintInterface;
+use Builder\Assert\Result\AssertionFailureInterface;
 use Builder\BuildableTagInterface;
 use Builder\Console\Wizard;
 use Builder\DependencyTree\NodeInterface;
@@ -53,6 +54,7 @@ final class TestCommand extends Command
 
         $constraints = new \ArrayIterator(require $this->configPath . '/constraints.php');
 
+        $errorCount = 0;
         /** @var PackageInterface $package */
         foreach ($packages as $package) {
             $tags = new \IteratorIterator($package);
@@ -68,12 +70,22 @@ final class TestCommand extends Command
             foreach ($constraints as $constraint) {
                 /** @var AssertionInterface $assertion */
                 foreach ($constraint->apply($tags) as $assertion) {
-                    if (!$assertion()) {
-                        $format->error((string) $assertion);
+                    $result = $assertion();
+                    if ($result instanceof AssertionFailureInterface) {
+                        $errorCount++;
+                        $format->error((string) $result);
+                    } else if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                        $format->comment((string) $result);
                     }
                 }
             }
         }
+
+        if ($errorCount > 0) {
+            $format->error(sprintf('Found %d errors, please check logs.', $errorCount));
+            return 1;
+        }
+        $format->success('All checks passed!');
 
         return 0;
     }

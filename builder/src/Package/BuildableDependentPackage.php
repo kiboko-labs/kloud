@@ -15,7 +15,7 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
     private RepositoryInterface $repository;
     public string $name;
     public string $parent;
-    public string $path;
+    public ?string $path;
     /** @var EditionInterface[] */
     public array $editions;
 
@@ -23,7 +23,7 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
         RepositoryInterface $repository,
         string $name,
         string $parent,
-        string $path,
+        ?string $path,
         EditionInterface ...$editions
     ) {
         $this->repository = $repository;
@@ -31,11 +31,6 @@ final class BuildableDependentPackage implements DependentPackageInterface, Buil
         $this->parent = $parent;
         $this->path = $path;
         $this->editions = $editions;
-    }
-
-    public function buildPath(array $variables)
-    {
-        return strtr($this->path, $variables);
     }
 
     public function pull(Command\CommandBusInterface $commands): void

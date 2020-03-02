@@ -4,7 +4,7 @@ namespace Builder\Assert;
 
 use Builder\Package\RepositoryInterface;
 
-final class XdebugVersion implements ConstraintInterface
+final class ComposerVersion implements ConstraintInterface
 {
     private RepositoryInterface $repository;
     private string $constraint;
@@ -18,11 +18,11 @@ final class XdebugVersion implements ConstraintInterface
     public function apply(\Traversable $tagRepository): \Traversable
     {
         foreach ($tagRepository as $tag) {
-            if (!preg_match('/-xdebug(-|$)/', (string)$tag)) {
+            if (!preg_match('/-cli(-|$)/', (string)$tag)) {
                 continue;
             }
 
-            yield new XdebugVersionConstraint($this->repository, $tag, $this->constraint);
+            yield new ComposerVersionConstraint($this->repository, $tag, $this->constraint);
         }
     }
 }

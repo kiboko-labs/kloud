@@ -32,7 +32,6 @@ final class ParallelCommandRunner implements CommandRunnerInterface
 
         /** @var ConsoleSectionOutput $section */
         $progressBar = new ProgressBar($this->output->section(), iterator_count($iterator));
-        $section = $this->output->section();
 
         // do not modify the object pointers in the argument, copy to local working variable
         $processes = new \SplObjectStorage();

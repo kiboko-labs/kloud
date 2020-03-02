@@ -18,7 +18,7 @@ final class BlackfireVersion implements ConstraintInterface
     public function apply(\Traversable $tagRepository): \Traversable
     {
         foreach ($tagRepository as $tag) {
-            if (!preg_match('/-blackfire(-|$)/', (string)$tag)) {
+            if (!preg_match('/-cli-blackfire(-|$)/', (string)$tag)) {
                 continue;
             }
 

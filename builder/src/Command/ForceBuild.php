@@ -4,11 +4,14 @@ namespace Builder\Command;
 
 use Builder\Package;
 use Builder\TagInterface;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Process\Process;
 
-final class ForceBuild implements CommandInterface
+final class ForceBuild implements CommandInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     private Package\RepositoryInterface $repository;
     private TagInterface $package;
     private string $path;
@@ -33,7 +36,7 @@ final class ForceBuild implements CommandInterface
         return new Process(
             [
                 'docker', 'build',
-                '--pull',
+//                '--pull',
                 '--no-cache',
                 '--tag', sprintf('%s:%s', (string) $this->repository, (string) $this->package),
                 $this->path,

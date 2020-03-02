@@ -19,6 +19,9 @@ RUN set -ex\
         libjpeg-turbo-dev \
         freetype-dev \
         zlib-dev \
+        krb5-dev \
+        imap-dev \
+        openssl-dev \
         mysql-dev \
     && apk add --update \
         freetype \
