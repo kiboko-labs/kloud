@@ -25,4 +25,19 @@ return [
     new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.3', '/^7\.3-.*-mysql(?:$|-)/'),
     new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.4', '/^7\.4-.*-mysql(?:$|-)/'),
 
+    new Assert\PHPExtensionVersion($repository, 'ctype', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'curl', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'fileinfo', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'gd', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'intl', '*', '/-[ce]e-\d+\.\d+-/'), // (ICU library 4.4 and above)
+    new Assert\PHPExtensionVersion($repository, 'json', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'mbstring', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'openssl', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'pcre', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'simplexml', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'tokenizer', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'xml', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'zip', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'imap', '*', '/-[ce]e-\d+\.\d+-/'),
+
 ];
