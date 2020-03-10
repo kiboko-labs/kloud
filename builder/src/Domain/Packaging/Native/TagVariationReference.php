@@ -5,7 +5,7 @@ namespace Builder\Domain\Packaging\Native;
 use Builder\Domain\Packaging;
 use Builder\Domain\Packaging\Tag\TagInterface;
 
-final class TagVariationReference implements Packaging\Tag\TagReferenceInterface, Packaging\Tag\DependentTagInterface
+final class TagVariationReference implements Packaging\Tag\TagReferenceInterface
 {
     private Packaging\RepositoryInterface $repository;
     private Packaging\Placeholder $name;
@@ -33,10 +33,5 @@ final class TagVariationReference implements Packaging\Tag\TagReferenceInterface
     public function getRepository(): Packaging\RepositoryInterface
     {
         return $this->repository;
-    }
-
-    public function getParent(): TagInterface
-    {
-        return new TagReference($this->repository, $this->context);
     }
 }

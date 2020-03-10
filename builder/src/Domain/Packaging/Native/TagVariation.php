@@ -4,7 +4,7 @@ namespace Builder\Domain\Packaging\Native;
 
 use Builder\Domain\Packaging;
 
-final class TagVariation implements Packaging\Tag\TagBuildInterface
+final class TagVariation implements Packaging\Tag\TagBuildInterface, Packaging\Tag\DependentTagInterface
 {
     private Packaging\RepositoryInterface $repository;
     private Packaging\Placeholder $name;
