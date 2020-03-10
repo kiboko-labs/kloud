@@ -73,7 +73,7 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         /** @var Packaging\Context\BuildableContextInterface $context */
         foreach ($this() as $context) {
             if (!$context->hasParent()) {
-                yield new Tag($this->repository, new Native\TagReference($this->repository, $context), $context);
+                yield new Tag($this->repository, new Native\TagVariationReference($this->repository, $context), $context);
             } else {
                 yield new Tag($this->repository, new TagReference($this->repository, $context->getParent()), $context);
             }
