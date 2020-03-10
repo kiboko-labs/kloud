@@ -10,4 +10,5 @@ services:
       - ../environments:/environments
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - 'PHP_IDE_CONFIG="serverName=Docker"'
+      - 'PHP_IDE_CONFIG=serverName=Docker'
+    command: [ "sleep", "31536000" ]

@@ -15,6 +15,7 @@
     },
     "require-dev": {
         "friends-of-phpspec/phpspec-code-coverage": "^4.0@dev",
-        "monolog/monolog": "^2.0@dev"
+        "monolog/monolog": "^2.0@dev",
+        "friendsofphp/php-cs-fixer": "^3.0"
     }
 }

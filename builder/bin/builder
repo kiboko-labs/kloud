@@ -3,7 +3,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Builder\Console\Command;
+use Builder\Platform\Console\Command;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -17,7 +17,7 @@ $app->addCommands([
 
     new Command\PullCommand('pull', __DIR__ . '/../config/'),
 
-    new Command\ListCommand('which', __DIR__ . '/../config/'),
+    new Command\WhichCommand('which', __DIR__ . '/../config/'),
 
     new Command\TreeCommand('tree', __DIR__ . '/../config/'),
 

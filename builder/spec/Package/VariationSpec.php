@@ -2,16 +2,16 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTagReference;
 use Builder\Package\Variation;
 use Builder\Package\VariationInterface;
 use Builder\PHP;
-use Builder\TagReference;
+use Builder\Tag\DependentTagReference;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 
 class VariationSpec extends ObjectBehavior
 {
-    function it_is_initializable(PHP\VersionInterface $version)
+    public function it_is_initializable(PHP\VersionInterface $version)
     {
         $this->beConstructedWith('postgres', $version);
 
@@ -19,10 +19,10 @@ class VariationSpec extends ObjectBehavior
         $this->shouldHaveType(VariationInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
-        $php73 = new PHP\VersionReference('7.3', new PHP\Flavor('fpm'), new PHP\Flavor('cli'));
-        $php74 = new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'));
+        $php73 = new PHP\Version('7.3', new PHP\Flavor('fpm'), new PHP\Flavor('cli'));
+        $php74 = new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'));
 
         $this->beConstructedWith('postgres', $php73, $php74);
 

@@ -2,49 +2,49 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTagReference;
-use Builder\Package\DependentPackage;
+use Builder\Package\PackageWithDependency;
 use Builder\Package\Edition;
 use Builder\Package\EditionInterface;
 use Builder\Package\PackageInterface;
 use Builder\Package\Variation;
 use Builder\Package\Version;
 use Builder\PHP;
-use Builder\TagReference;
+use Builder\Tag\DependentTagReference;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 
 class DependentPackageSpec extends ObjectBehavior
 {
-    function it_is_initializable(EditionInterface $edition)
+    public function it_is_initializable(EditionInterface $edition)
     {
         $this->beConstructedWith('commerce', 'platform', $edition);
 
-        $this->shouldHaveType(DependentPackage::class);
+        $this->shouldHaveType(PackageWithDependency::class);
         $this->shouldHaveType(PackageInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
         $ee = new Edition(
             'ee',
             new Version('3.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
             ),
             new Version('4.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
             )
         );
         $ce = new Edition(
             'ce',
             new Version('3.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
             ),
             new Version('4.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
             )
         );
 

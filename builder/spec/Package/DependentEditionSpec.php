@@ -2,35 +2,35 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTagReference;
-use Builder\Package\DependentEdition;
+use Builder\Package\EditionWithDependency;
 use Builder\Package\EditionInterface;
 use Builder\Package\Variation;
 use Builder\Package\Version;
 use Builder\Package\VersionInterface;
 use Builder\PHP;
-use Builder\TagReference;
+use Builder\Tag\DependentTagReference;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 
 class DependentEditionSpec extends ObjectBehavior
 {
-    function it_is_initializable(VersionInterface $version)
+    public function it_is_initializable(VersionInterface $version)
     {
         $this->beConstructedWith('ee', 'ce', $version);
 
-        $this->shouldHaveType(DependentEdition::class);
+        $this->shouldHaveType(EditionWithDependency::class);
         $this->shouldHaveType(EditionInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
         $v31 = new Version('3.1',
-            new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-            new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
         );
         $v41 = new Version('4.1',
-            new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-            new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
         );
 
         $this->beConstructedWith('ee', 'ce', $v31, $v41);

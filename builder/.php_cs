@@ -15,7 +15,7 @@ return PhpCsFixer\Config::create()
             'syntax' => 'short',
         ],
         'pow_to_exponentiation' => true,
-        'pre_increment' => true,
+//        'pre_increment' => true,
         'protected_to_private' => true,
         'psr4' => true,
         'phpdoc_var_without_name' => true,

@@ -4,22 +4,22 @@ namespace spec\Builder\PHP;
 
 use Builder\PHP\Flavor;
 use Builder\PHP\FlavorInterface;
-use Builder\PHP\VersionReference;
 use Builder\PHP\VersionInterface;
-use Builder\TagReference;
+use Builder\PHP\Version;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 
 class VersionReferenceSpec extends ObjectBehavior
 {
-    function it_is_initializable(FlavorInterface $flavor)
+    public function it_is_initializable(FlavorInterface $flavor)
     {
         $this->beConstructedWith('7.4', $flavor);
 
-        $this->shouldHaveType(VersionReference::class);
+        $this->shouldHaveType(Version::class);
         $this->shouldHaveType(VersionInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
         $fpm = new Flavor('fpm');
         $cli = new Flavor('cli');

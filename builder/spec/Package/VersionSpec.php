@@ -2,18 +2,18 @@
 
 namespace spec\Builder\Package;
 
-use Builder\DependentTagReference;
 use Builder\Package\Variation;
 use Builder\Package\VariationInterface;
 use Builder\Package\Version;
 use Builder\Package\VersionInterface;
 use Builder\PHP;
-use Builder\TagReference;
+use Builder\Tag\DependentTagReference;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 
 class VersionSpec extends ObjectBehavior
 {
-    function it_is_initializable(VariationInterface $variation)
+    public function it_is_initializable(VariationInterface $variation)
     {
         $this->beConstructedWith('4.1', $variation);
 
@@ -21,10 +21,10 @@ class VersionSpec extends ObjectBehavior
         $this->shouldHaveType(VersionInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
-        $postgres = new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli')));
-        $mysql = new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli')));
+        $postgres = new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli')));
+        $mysql = new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli')));
 
         $this->beConstructedWith('4.1', $postgres, $mysql);
 

@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Builder\PHPSpec\Matcher\Iterate;
 
 use Builder\BuildableInterface;
-use Builder\DependentTagInterface;
+use Builder\Tag\DependentTagInterface;
 use PhpSpec\Formatter\Presenter\Presenter;
-use PhpSpec\Matcher\Iterate;
+use PhpSpec\Matcher\Iterate as StandardIterate;
 
 final class IterableBuildableTagsMatcher
 {
@@ -21,9 +23,9 @@ final class IterableBuildableTagsMatcher
      * @param array|\Traversable $expected
      *
      * @throws \InvalidArgumentException
-     * @throws Iterate\SubjectElementDoesNotMatchException
-     * @throws Iterate\SubjectHasFewerElementsException
-     * @throws Iterate\SubjectHasMoreElementsException
+     * @throws StandardIterate\SubjectElementDoesNotMatchException
+     * @throws StandardIterate\SubjectHasFewerElementsException
+     * @throws StandardIterate\SubjectHasMoreElementsException
      */
     public function match($subject, $expected): void
     {
@@ -40,17 +42,19 @@ final class IterableBuildableTagsMatcher
         $count = 0;
         foreach ($subject as $subjectKey => $subjectValue) {
             if (!$expectedIterator->valid()) {
-                throw new Iterate\SubjectHasMoreElementsException();
+                throw new StandardIterate\SubjectHasMoreElementsException();
             }
 
-            if ($subjectKey !== $expectedIterator->key() || !$this->valueIsEqual($subjectValue, $expectedIterator->current())) {
-                throw new Iterate\SubjectElementDoesNotMatchException(
-                    $count,
-                    $this->presenter->presentValue($subjectKey),
-                    $this->presenter->presentValue($subjectValue),
-                    $this->presenter->presentValue($expectedIterator->key()),
-                    $this->presenter->presentValue($expectedIterator->current())
-                );
+            if ($subjectKey !== $expectedIterator->key() || !$this->pathIsEqual($subjectValue, $expectedIterator->current())) {
+                throw new SubjectElementPathDoesNotMatchException($count, $this->presenter->presentValue($subjectKey), $this->presenter->presentValue($subjectValue->getPath()), $this->presenter->presentValue($expectedIterator->key()), $this->presenter->presentValue($expectedIterator->current()->getPath()));
+            }
+
+            if ($subjectKey !== $expectedIterator->key() || !$this->tagIsEqual($subjectValue, $expectedIterator->current())) {
+                throw new SubjectElementTagDoesNotMatchException($count, $this->presenter->presentValue($subjectKey), $this->presenter->presentValue((string) $subjectValue), $this->presenter->presentValue($expectedIterator->key()), $this->presenter->presentValue((string) $expectedIterator->current()));
+            }
+
+            if ($subjectKey !== $expectedIterator->key() || !$this->parentIsEqual($subjectValue, $expectedIterator->current())) {
+                throw new SubjectElementParentTagDoesNotMatchException($count, $this->presenter->presentValue($subjectKey), $this->presenter->presentValue((string) $subjectValue->getParent()), $this->presenter->presentValue($expectedIterator->key()), $this->presenter->presentValue((string) $expectedIterator->current()->getParent()));
             }
 
             $expectedIterator->next();
@@ -58,14 +62,12 @@ final class IterableBuildableTagsMatcher
         }
 
         if ($expectedIterator->valid()) {
-            throw new Iterate\SubjectHasFewerElementsException();
+            throw new StandardIterate\SubjectHasFewerElementsException();
         }
     }
 
     /**
      * @param mixed $variable
-     *
-     * @return bool
      */
     private function isIterable($variable): bool
     {
@@ -74,8 +76,6 @@ final class IterableBuildableTagsMatcher
 
     /**
      * @param array|\Traversable $iterable
-     *
-     * @return \Iterator
      */
     private function createIteratorFromIterable($iterable): \Iterator
     {
@@ -89,7 +89,7 @@ final class IterableBuildableTagsMatcher
         return $iterator;
     }
 
-    private function valueIsEqual($expected, $value): bool
+    private function pathIsEqual($expected, $value): bool
     {
         if (!$value instanceof BuildableInterface) {
             throw new \InvalidArgumentException('Subject item should implement BuildableInterface.');
@@ -112,8 +112,48 @@ final class IterableBuildableTagsMatcher
             throw new \InvalidArgumentException('Subject item should implement DependentTagInterface.');
         }
 
-        return (string) $expected === (string) $value
-            && $expected->getPath() === $value->getPath()
-            && (string) $expected->getParent() === (string) $value->getParent();
+        return $expected->getPath() === $value->getPath();
+    }
+
+    private function parentIsEqual($expected, $value): bool
+    {
+        if (!$expected instanceof DependentTagInterface) {
+            if ($value instanceof DependentTagInterface) {
+                throw new \InvalidArgumentException('Subject item should not implement DependentTagInterface.');
+            }
+
+            return true;
+        }
+
+        if (!$value instanceof DependentTagInterface) {
+            throw new \InvalidArgumentException('Subject item should implement DependentTagInterface.');
+        }
+
+        return (string) $expected->getParent() === (string) $value->getParent();
+    }
+
+    private function tagIsEqual($expected, $value): bool
+    {
+        if (!$value instanceof BuildableInterface) {
+            throw new \InvalidArgumentException('Subject item should implement BuildableInterface.');
+        }
+
+        if (!$expected instanceof BuildableInterface) {
+            throw new \InvalidArgumentException('Expected item should implement BuildableInterface.');
+        }
+
+        if (!$expected instanceof DependentTagInterface) {
+            if ($value instanceof DependentTagInterface) {
+                throw new \InvalidArgumentException('Subject item should not implement DependentTagInterface.');
+            }
+
+            return (string) $expected === (string) $value;
+        }
+
+        if (!$value instanceof DependentTagInterface) {
+            throw new \InvalidArgumentException('Subject item should implement DependentTagInterface.');
+        }
+
+        return (string) $expected === (string) $value;
     }
 }

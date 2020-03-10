@@ -1,17 +1,17 @@
 extensions:
-  FriendsOfPhpSpec\PhpSpec\CodeCoverage\CodeCoverageExtension:
-    format:
-      - html
-      - clover
-      - xml
-    output:
-      html: reports/phpspec-coverage-html
-      clover: reports/phpspec-coverage-clover/coverage.xml
-      xml: reports/phpspec-coverage-xml
-    blacklist:
-      - vendor
-    whitelist:
-      - src
+#  FriendsOfPhpSpec\PhpSpec\CodeCoverage\CodeCoverageExtension:
+#    format:
+#      - html
+##      - clover
+##      - xml
+#    output:
+#      html: reports/phpspec-coverage-html
+##      clover: reports/phpspec-coverage-clover/coverage.xml
+##      xml: reports/phpspec-coverage-xml
+#    blacklist:
+#      - vendor
+#    whitelist:
+#      - src
   Builder\PHPSpec\BuilderExtension: ~
 formatter.name: pretty
 stop_on_failure: false

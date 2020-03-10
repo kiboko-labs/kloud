@@ -2,11 +2,10 @@
 
 namespace spec\Builder\Package;
 
-use Builder\BuildableContext;
-use Builder\BuildableDependentTag;
 use Builder\BuildableInterface;
 use Builder\Command\BuildFrom;
 use Builder\Command\CommandBusInterface;
+use Builder\Context\BuildableContext;
 use Builder\Package\BuildableEdition;
 use Builder\Package\EditionInterface;
 use Builder\Package\Repository;
@@ -14,13 +13,14 @@ use Builder\Package\Variation;
 use Builder\Package\Version;
 use Builder\Package\VersionInterface;
 use Builder\PHP;
-use Builder\TagReference;
+use Builder\Tag\BuildableDependentTag;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class BuildableEditionSpec extends ObjectBehavior
 {
-    function it_is_initializable(VersionInterface $version)
+    public function it_is_initializable(VersionInterface $version)
     {
         $this->beConstructedWith(new Repository('kiboko/php'), 'ee', '/path/to/dockerfile', $version);
 
@@ -29,16 +29,16 @@ class BuildableEditionSpec extends ObjectBehavior
         $this->shouldHaveType(BuildableInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
         $repository = new Repository('kiboko/php');
         $v31 = new Version('3.1',
-            new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-            new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
         );
         $v41 = new Version('4.1',
-            new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-            new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
         );
 
         $this->beConstructedWith($repository, 'ee', '/path/to/dockerfile/%package.edition%/', $v31, $v41);
@@ -55,11 +55,11 @@ class BuildableEditionSpec extends ObjectBehavior
         ]));
     }
 
-    function it_is_buildable(CommandBusInterface $commandBus)
+    public function it_is_buildable(CommandBusInterface $commandBus)
     {
         $repository = new Repository('kiboko/php');
         $v31 = new Version('3.1',
-            new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'))),
+            new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'))),
         );
 
         $this->beConstructedWith($repository, 'ee', '/path/to/dockerfile/%package.edition%/', $v31);

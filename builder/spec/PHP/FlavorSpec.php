@@ -2,15 +2,13 @@
 
 namespace spec\Builder\PHP;
 
-use Builder\Context;
 use Builder\PHP;
-use Builder\TagReference;
-use Builder\TagInterface;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 
 class FlavorSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->beConstructedWith('fpm');
 
@@ -18,12 +16,12 @@ class FlavorSpec extends ObjectBehavior
         $this->shouldHaveType(PHP\FlavorInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
         $this->beConstructedWith('fpm');
 
         $this->shouldIterateTagsLike(new \ArrayIterator([
-            new TagReference('fpm')
+            new TagReference('fpm'),
         ]));
     }
 }

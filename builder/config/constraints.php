@@ -1,12 +1,11 @@
 <?php
 
-use Builder\Assert;
-use Builder\Package\Repository;
+use Builder\Domain\Assert;
+use Builder\Domain\Packaging;
 
-$repository = new Repository('kiboko/php');
+$repository = new Packaging\Repository('kiboko/php');
 
 return [
-
     new Assert\ComposerVersion($repository, '^1.9'),
 
     new Assert\BlackfireVersion($repository, '^1.32'),
@@ -41,5 +40,4 @@ return [
     new Assert\PHPExtensionVersion($repository, 'imap', '*', '/-[ce]e-\d+\.\d+-/'),
 
     new Assert\ICUVersion($repository, '>=4.4', '/-[ce]e-\d+\.\d+-/'),
-
 ];

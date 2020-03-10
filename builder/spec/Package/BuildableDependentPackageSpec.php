@@ -2,12 +2,11 @@
 
 namespace spec\Builder\Package;
 
-use Builder\BuildableContext;
-use Builder\BuildableDependentTag;
 use Builder\BuildableInterface;
 use Builder\Command\BuildFrom;
 use Builder\Command\CommandBusInterface;
-use Builder\Context;
+use Builder\Context\BuildableContext;
+use Builder\Context\Context;
 use Builder\Package\BuildableDependentPackage;
 use Builder\Package\BuildableEdition;
 use Builder\Package\BuildablePackageInterface;
@@ -18,14 +17,14 @@ use Builder\Package\Repository;
 use Builder\Package\Variation;
 use Builder\Package\Version;
 use Builder\PHP;
-use Builder\TagReference;
+use Builder\Tag\BuildableDependentTag;
+use Builder\Tag\TagReference;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use SebastianBergmann\CodeCoverage\TestFixture\C;
 
 class BuildableDependentPackageSpec extends ObjectBehavior
 {
-    function it_is_initializable(EditionInterface $edition)
+    public function it_is_initializable(EditionInterface $edition)
     {
         $this->beConstructedWith(new Repository('kiboko/php'), 'commerce', 'platform', '/path/to/dockerfile', $edition);
 
@@ -35,25 +34,25 @@ class BuildableDependentPackageSpec extends ObjectBehavior
         $this->shouldHaveType(BuildablePackageInterface::class);
     }
 
-    function it_is_iterable()
+    public function it_is_iterable()
     {
         $repository = new Repository('kiboko/php');
         $ce = new Edition('ce',
             new Version('3.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-            ),new Version('4.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            ), new Version('4.1',
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
             ),
         );
         $ee = new Edition('ee',
             new Version('3.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-            ),new Version('4.1',
-                new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
-                new Variation('mysql', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+            ), new Version('4.1',
+                new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
+                new Variation('mysql', new PHP\Version('7.4', new PHP\Flavor('fpm'), new PHP\Flavor('cli'))),
             ),
         );
 
@@ -79,10 +78,10 @@ class BuildableDependentPackageSpec extends ObjectBehavior
         ]));
     }
 
-    function it_is_buildable(CommandBusInterface $commandBus)
+    public function it_is_buildable(CommandBusInterface $commandBus)
     {
         $repository = new Repository('kiboko/php');
-        $ce = new Edition('ce', new Version('3.1', new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm')))));
+        $ce = new Edition('ce', new Version('3.1', new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm')))));
 
         $this->beConstructedWith($repository, 'commerce', 'platform', '/path/to/dockerfile/%package.name%/%package.edition%/', $ce);
 
@@ -104,7 +103,7 @@ class BuildableDependentPackageSpec extends ObjectBehavior
             new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $variables),
             new TagReference(
                 '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
-                new Context(['%package.name%' => 'platform'] + $variables->getArrayCopy())
+                new Context($variables, ['%package.name%' => 'platform'] + $variables->getArrayCopy())
             ),
             '/path/to/dockerfile/commerce/ce/'
         )))->shouldBeCalled();
@@ -112,21 +111,21 @@ class BuildableDependentPackageSpec extends ObjectBehavior
         $this->build($commandBus);
     }
 
-    function it_follows_child_path(CommandBusInterface $commandBus)
+    public function it_follows_child_path(CommandBusInterface $commandBus)
     {
         $repository = new Repository('kiboko/php');
         $ce = new BuildableEdition(
             $repository,
             'ce',
             '/path/to/dockerfile/%package.name%/%package.edition%/',
-            new Version('3.1', new Variation('postgres', new PHP\VersionReference('7.4', new PHP\Flavor('fpm'))))
+            new Version('3.1', new Variation('postgres', new PHP\Version('7.4', new PHP\Flavor('fpm'))))
         );
 
         $this->beConstructedWith(
             $repository,
             'commerce',
             'platform',
-            '/path/to/dockerfile/%package.name%/%package.edition%/%package.version%/php@%php.version%/%php.flavor%',
+            null,
             $ce
         );
 
@@ -148,7 +147,7 @@ class BuildableDependentPackageSpec extends ObjectBehavior
             new TagReference('%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%', $variables),
             new TagReference(
                 '%php.version%-%php.flavor%-%package.name%-%package.edition%-%package.version%-%package.variation%',
-                new Context(['%package.name%' => 'platform'] + $variables->getArrayCopy())
+                new Context($variables, ['%package.name%' => 'platform'] + $variables->getArrayCopy())
             ),
             '/path/to/dockerfile/commerce/ce/'
         )))->shouldBeCalled();

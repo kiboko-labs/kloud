@@ -1,10 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Builder\PHPSpec\Matcher\Iterate;
 
-use Builder\DependentTagInterface;
+use Builder\Tag\DependentTagInterface;
 use PhpSpec\Formatter\Presenter\Presenter;
-use PhpSpec\Matcher\Iterate;
+use PhpSpec\Matcher\Iterate as StandardIterate;
 
 final class IterableTagsMatcher
 {
@@ -39,17 +41,15 @@ final class IterableTagsMatcher
         $count = 0;
         foreach ($subject as $subjectKey => $subjectValue) {
             if (!$expectedIterator->valid()) {
-                throw new Iterate\SubjectHasMoreElementsException();
+                throw new StandardIterate\SubjectHasMoreElementsException();
             }
 
-            if ($subjectKey !== $expectedIterator->key() || !$this->valueIsEqual($subjectValue, $expectedIterator->current())) {
-                throw new Iterate\SubjectElementDoesNotMatchException(
-                    $count,
-                    $this->presenter->presentValue($subjectKey),
-                    $this->presenter->presentValue($subjectValue),
-                    $this->presenter->presentValue($expectedIterator->key()),
-                    $this->presenter->presentValue($expectedIterator->current())
-                );
+            if ($subjectKey !== $expectedIterator->key() || !$this->tagIsEqual($subjectValue, $expectedIterator->current())) {
+                throw new SubjectElementTagDoesNotMatchException($count, $this->presenter->presentValue($subjectKey), $this->presenter->presentValue((string) $subjectValue), $this->presenter->presentValue($expectedIterator->key()), $this->presenter->presentValue((string) $expectedIterator->current()));
+            }
+
+            if ($subjectKey !== $expectedIterator->key() || !$this->parentIsEqual($subjectValue, $expectedIterator->current())) {
+                throw new SubjectElementParentTagDoesNotMatchException($count, $this->presenter->presentValue($subjectKey), $this->presenter->presentValue((string) $subjectValue->getParent()), $this->presenter->presentValue($expectedIterator->key()), $this->presenter->presentValue((string) $expectedIterator->current()->getParent()));
             }
 
             $expectedIterator->next();
@@ -57,14 +57,12 @@ final class IterableTagsMatcher
         }
 
         if ($expectedIterator->valid()) {
-            throw new Iterate\SubjectHasFewerElementsException();
+            throw new StandardIterate\SubjectHasFewerElementsException();
         }
     }
 
     /**
      * @param mixed $variable
-     *
-     * @return bool
      */
     private function isIterable($variable): bool
     {
@@ -73,8 +71,6 @@ final class IterableTagsMatcher
 
     /**
      * @param array|\Traversable $iterable
-     *
-     * @return \Iterator
      */
     private function createIteratorFromIterable($iterable): \Iterator
     {
@@ -88,7 +84,24 @@ final class IterableTagsMatcher
         return $iterator;
     }
 
-    private function valueIsEqual($expected, $value): bool
+    private function parentIsEqual($expected, $value): bool
+    {
+        if (!$expected instanceof DependentTagInterface) {
+            if ($value instanceof DependentTagInterface) {
+                throw new \InvalidArgumentException('Subject item should not implement DependentTagInterface.');
+            }
+
+            return true;
+        }
+
+        if (!$value instanceof DependentTagInterface) {
+            throw new \InvalidArgumentException('Subject item should implement DependentTagInterface.');
+        }
+
+        return (string) $expected->getParent() === (string) $value->getParent();
+    }
+
+    private function tagIsEqual($expected, $value): bool
     {
         if (!$expected instanceof DependentTagInterface) {
             if ($value instanceof DependentTagInterface) {
@@ -102,7 +115,6 @@ final class IterableTagsMatcher
             throw new \InvalidArgumentException('Subject item should implement DependentTagInterface.');
         }
 
-        return (string) $expected === (string) $value
-            && (string) $expected->getParent() === (string) $value->getParent();
+        return (string) $expected === (string) $value;
     }
 }

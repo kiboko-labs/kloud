@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Builder\PHPSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\Presenter;
+use Builder\PHPSpec\Matcher\Iterate\IterableBuildableTagsMatcher;
 use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Formatter\Presenter\Presenter;
 use PhpSpec\Matcher\Iterate;
 use PhpSpec\Matcher\Matcher;
 use PhpSpec\Wrapper\DelayedCall;
-use Builder\PHPSpec\Matcher\Iterate\IterableBuildableTagsMatcher;
 
 final class ShouldIterateWithBuildableTagsLike implements Matcher
 {
@@ -27,7 +29,7 @@ final class ShouldIterateWithBuildableTagsLike implements Matcher
         ;
     }
 
-    public function positiveMatch(string $name, $subject, array $arguments) : ?DelayedCall
+    public function positiveMatch(string $name, $subject, array $arguments): ?DelayedCall
     {
         try {
             $this->iterablesMatcher->match($subject, $arguments[0]);
@@ -43,7 +45,7 @@ final class ShouldIterateWithBuildableTagsLike implements Matcher
     /**
      * {@inheritdoc}
      */
-    public function negativeMatch(string $name, $subject, array $arguments) : ?DelayedCall
+    public function negativeMatch(string $name, $subject, array $arguments): ?DelayedCall
     {
         try {
             $this->positiveMatch($name, $subject, $arguments);
