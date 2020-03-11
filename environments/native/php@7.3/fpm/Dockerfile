@@ -1,4 +1,4 @@
-FROM php:7.3-cli-alpine
+FROM php:7.3-fpm-alpine
 
 LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 

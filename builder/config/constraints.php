@@ -6,23 +6,36 @@ use Builder\Domain\Packaging;
 $repository = new Packaging\Repository('kiboko/php');
 
 return [
-    new Assert\ComposerVersion($repository, '^1.9'),
+    new Assert\CLI($repository),
+    new Assert\FPM($repository),
 
-    new Assert\BlackfireVersion($repository, '^1.32'),
+    new Assert\ComposerVersion($repository, '~1.9'),
+
+    new Assert\BlackfireVersion($repository, '~1.32'),
+
+    new Assert\CSFixerVersion($repository, '~2.16', '/cli(?:$|-)/'),
+
+    new Assert\PHPUnitVersion($repository, '~7.5', '/^7\.1-cli(?:$|-)/'),
+    new Assert\PHPUnitVersion($repository, '~8.5', '/^7\.[234]-cli(?:$|-)/'),
+
+    new Assert\PHPSpecVersion($repository, '~5.1', '/^7\.1-cli(?:$|-)/'),
+    new Assert\PHPSpecVersion($repository, '~6.1', '/^7\.[234]-cli(?:$|-)/'),
+
+    new Assert\InfectionVersion($repository, '~0.13', '/cli(?:$|-)/'),
 
     new Assert\PHPExtensionVersion($repository, 'blackfire', '^1.31', '/-blackfire(?:$|-)/'),
 
     new Assert\PHPExtensionVersion($repository, 'xdebug', '^2.9', '/-xdebug(?:$|-)/'),
 
-    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.1', '/^7\.1-.*-postgresql(?:$|-)/'),
-    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.2', '/^7\.2-.*-postgresql(?:$|-)/'),
-    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.3', '/^7\.3-.*-postgresql(?:$|-)/'),
-    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.4', '/^7\.4-.*-postgresql(?:$|-)/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.1', '/^7\.1-.*-postgresql$/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.2', '/^7\.2-.*-postgresql$/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.3', '/^7\.3-.*-postgresql$/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_pgsql', '^7.4', '/^7\.4-.*-postgresql$/'),
 
-    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.1', '/^7\.1-.*-mysql(?:$|-)/'),
-    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.2', '/^7\.2-.*-mysql(?:$|-)/'),
-    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.3', '/^7\.3-.*-mysql(?:$|-)/'),
-    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.4', '/^7\.4-.*-mysql(?:$|-)/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.1', '/^7\.1-.*-mysql$/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.2', '/^7\.2-.*-mysql$/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.3', '/^7\.3-.*-mysql$/'),
+    new Assert\PHPExtensionVersion($repository, 'pdo_mysql', '^7.4', '/^7\.4-.*-mysql$/'),
 
     new Assert\PHPExtensionVersion($repository, 'ctype', '*', '/-[ce]e-\d+\.\d+-/'),
     new Assert\PHPExtensionVersion($repository, 'curl', '*', '/-[ce]e-\d+\.\d+-/'),

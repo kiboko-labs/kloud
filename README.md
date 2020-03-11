@@ -122,8 +122,8 @@ Tags
 ---
 
 * OroPlatform [[CE 3.1](#oroplatform-community-edition---version-31), [CE 4.1](#oroplatform-community-edition---version-41), [EE 3.1](#oroplatform-enterprise-edition---version-31), [EE 4.1](#oroplatform-enterprise-edition---version-41)]
-* OroCommerce [[CE 3.1](#orocommerce-community-edition---version-31), [CE 4.1](#orocommerce-community-edition---version-41), [EE 1.6](#orocommerce-enterprise-edition---version-16), [EE 3.1](#orocommerce-enterprise-edition---version-31), [EE 4.1](#orocommerce-enterprise-edition---version-41)]
-* OroCRM [[CE 3.1](#orocrm-community-edition---version-31), [EE 3.1](#orocrm-enterprise-edition---version-31)], [[CE 4.1](#orocrm-community-edition---version-41), [EE 4.1](#orocrm-enterprise-edition---version-41)]
+* OroCommerce [[CE 3.1](#orocommerce-community-edition---version-31), [CE 4.1](#orocommerce-community-edition---version-41), [EE 3.1](#orocommerce-enterprise-edition---version-31), [EE 4.1](#orocommerce-enterprise-edition---version-41)]
+* OroCRM [[CE 3.1](#orocrm-community-edition---version-31), [EE 3.1](#orocrm-enterprise-edition---version-31), [CE 4.1](#orocrm-community-edition---version-41), [EE 4.1](#orocrm-enterprise-edition---version-41)]
 * Marello [[CE 2.0](#marello-community-edition---version-20), [CE 2.1](#marello-community-edition---version-21), [CE 2.2](#marello-community-edition---version-22), [EE 2.0](#marello-enterprise-edition---version-20), [EE 2.1](#marello-enterprise-edition---version-21), [EE 2.2](#marello-enterprise-edition---version-22)]
 
 | Application    | Version | PHP 7.1 + PG | PHP 7.2 + PG | PHP 7.3 + PG | PHP 7.4 + PG | PHP 8.0 + PG | PHP 7.1 + My | PHP 7.2 + My | PHP 7.3 + My | PHP 7.4 + My | PHP 8.0 + My |
@@ -131,7 +131,7 @@ Tags
 | OroPlatform CE | ^2.6.0  | discontinued | ❌           | ❌           | ❌️           | ❌           | discontinued | ❌           | ❌           | ❌️           | ❌           |
 |                | ^3.1.0  | ✅           | ✅           | ⚠️ experim.  | ⚠️ experim.  | ❌           | ✅           | ✅           | ⚠️ experim.  | ⚠️ experim.  | ❌           |
 |                | ^4.1.0  | ❌           | ❌           | ⚠️ experim.  | ⚠️ experim.  | ❌           | ❌           | ❌           | ✅️           | ✅️           | ❌           |
-| OroPlatform EE | ^2.6.0  | discontinued | ❌           | ✅           | ✅️           | ❌           | discontinued | ❌           | ❌           | ❌️           | ❌           |
+| OroPlatform EE | ^2.6.0  | discontinued | ❌           | ❌           | ❌️           | ❌           | discontinued | ❌           | ❌           | ❌️           | ❌           |
 |                | ^3.1.0  | ✅           | ✅           | ⚠️ experim.  | ⚠️ experim.  | ❌           | ✅           | ✅           | ⚠️ experim.  | ⚠️ experim.  | ❌           |
 |                | ^4.1.0  | ❌           | ❌           | ⚠️ experim.  | ⚠️ experim.  | ❌           | ❌           | ❌           | ✅️           | ✅️           | ❌           |
 | OroCRM CE      | ^2.6.0  | discontinued | ❌           | ❌️           | ❌️           | ❌           | discontinued | ❌           | ❌️           | ❌️           | ❌           |

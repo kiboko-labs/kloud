@@ -66,7 +66,14 @@ RUN set -ex \
     && php composer-setup.php --install-dir /usr/local/bin --filename composer \
     && php -r "unlink('composer-setup.php');" \
     && mkdir -p /opt/docker/.npm \
-    && chown docker:docker /opt/docker/.npm
+    && chown docker:docker /opt/docker/.npm \
+    && composer global require \
+        friendsofphp/php-cs-fixer \
+        phpunit/phpunit \
+        phpspec/phpspec \
+        infection/infection
+
+ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
