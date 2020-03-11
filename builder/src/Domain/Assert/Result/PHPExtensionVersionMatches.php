@@ -21,6 +21,11 @@ final class PHPExtensionVersionMatches implements AssertionSuccessInterface
         $this->constraint = $constraint;
     }
 
+    public function is(Packaging\Tag\TagInterface $tag): bool
+    {
+        return (string) $tag === (string) $this->tag;
+    }
+
     public function __toString()
     {
         return sprintf('%s: Version for PHP extension %s does match constraint "%s", found %s.', $this->tag, $this->extension, $this->constraint, $this->version);

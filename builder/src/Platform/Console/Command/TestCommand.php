@@ -7,6 +7,8 @@ namespace Builder\Platform\Console\Command;
 use Builder\Domain\Assert\AssertionInterface;
 use Builder\Domain\Assert\ConstraintInterface;
 use Builder\Domain\Assert\Result\AssertionFailureInterface;
+use Builder\Domain\Assert\Result\AssertionSuccessInterface;
+use Builder\Domain\Assert\ResultBucket;
 use Builder\Platform\Console\Wizard;
 use Builder\Domain\Packaging;
 use Symfony\Component\Console\Command\Command;
@@ -51,6 +53,7 @@ final class TestCommand extends Command
         $constraints = new \ArrayIterator(require $this->configPath.'/constraints.php');
 
         $errorCount = 0;
+        $bucket = new ResultBucket();
         /** @var Packaging\PackageInterface $package */
         foreach ($packages as $package) {
             $tags = new \IteratorIterator($package);
@@ -69,20 +72,77 @@ final class TestCommand extends Command
                     $result = $assertion();
                     if ($result instanceof AssertionFailureInterface) {
                         ++$errorCount;
-                        $format->error((string) $result);
-                    } elseif ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-                        $format->comment((string) $result);
+                        $bucket->failure($result);
+                        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+                            $format->error((string) $result);
+                        }
+                    } else if ($result instanceof AssertionSuccessInterface) {
+                        $bucket->success($result);
+                        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+                            $format->comment((string) $result);
+                        }
+                    } else {
+                        $format->warning((string) $result);
                     }
                 }
             }
         }
 
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
+            $rows = [];
+            foreach ($packages as $package) {
+                $tags = new \IteratorIterator($package);
+                if (!empty($pattern)) {
+                    $tags = new \CallbackFilterIterator($tags, function (Packaging\Tag\TagInterface $tag) use ($pattern) {
+                        return preg_match($pattern, (string) $tag) > 0;
+                    });
+                }
+
+                $tags = new \ArrayIterator(iterator_to_array($tags));
+
+                foreach ($tags as $tag) {
+                    $rows[] = [
+                        (string)$tag,
+                        implode(PHP_EOL, array_map(function (AssertionSuccessInterface $success) {
+                            return (string)$success;
+                        }, $bucket->getSuccessesFor($tag))) ?: '❗️ Image may be broken or no checks were provided',
+                    ];
+                }
+            }
+            $format->table(['Tag', 'Message'], $rows);
+        }
+
+        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $rows = [];
+            foreach ($packages as $package) {
+                $tags = new \IteratorIterator($package);
+                if (!empty($pattern)) {
+                    $tags = new \CallbackFilterIterator($tags, function (Packaging\Tag\TagInterface $tag) use ($pattern) {
+                        return preg_match($pattern, (string)$tag) > 0;
+                    });
+                }
+
+                $tags = new \ArrayIterator(iterator_to_array($tags));
+
+                foreach ($tags as $tag) {
+                    $rows[] = [
+                        (string)$tag,
+                        implode(PHP_EOL, array_map(function (AssertionFailureInterface $failure) {
+                            return (string)$failure;
+                        }, $bucket->getFailuresFor($tag))) ?: '✔️ All checks passed',
+                    ];
+                }
+            }
+            $format->table(['Tag', 'Message'], $rows);
+        }
+
         if ($errorCount > 0) {
-            $format->error(sprintf('Found %d errors, please check logs.', $errorCount));
+            $format->error(sprintf('❌ Found %d errors, please check logs.', $errorCount));
 
             return 1;
         }
-        $format->success('All checks passed!');
+
+        $format->success('✔️ All checks passed!');
 
         return 0;
     }

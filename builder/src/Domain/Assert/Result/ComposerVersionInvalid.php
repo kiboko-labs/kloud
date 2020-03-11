@@ -19,6 +19,11 @@ final class ComposerVersionInvalid implements AssertionFailureInterface
         $this->constraint = $constraint;
     }
 
+    public function is(Packaging\Tag\TagInterface $tag): bool
+    {
+        return (string) $tag === (string) $this->tag;
+    }
+
     public function __toString()
     {
         return sprintf('%s: Version for Composer command does not match constraint "%s", found %s.', $this->tag, $this->constraint, $this->version);

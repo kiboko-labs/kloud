@@ -15,6 +15,11 @@ final class ComposerMissingOrBroken implements AssertionFailureInterface
         $this->tag = $tag;
     }
 
+    public function is(Packaging\Tag\TagInterface $tag): bool
+    {
+        return (string) $tag === (string) $this->tag;
+    }
+
     public function __toString()
     {
         return sprintf('%s: The Composer command is missing or broken.', $this->tag);

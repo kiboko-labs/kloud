@@ -19,6 +19,11 @@ final class ICUVersionInvalid implements AssertionFailureInterface
         $this->constraint = $constraint;
     }
 
+    public function is(Packaging\Tag\TagInterface $tag): bool
+    {
+        return (string) $tag === (string) $this->tag;
+    }
+
     public function __toString()
     {
         return sprintf('%s: Version for ICU library does not match constraint "%s", found %s.', $this->tag, $this->constraint, $this->version);
