@@ -40,7 +40,7 @@ RUN set -ex\
     && docker-php-source delete \
     && apk del icu-dev \
     && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted \
-RUN apk del \
+    && apk del \
         .build-deps \
         gdbm \
         gmp \
