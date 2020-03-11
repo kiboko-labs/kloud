@@ -9,55 +9,6 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
 {
     public function getIterator()
     {
-        // Uses Marello CE 1.2
-        yield new EditionDependency(
-            'marello',
-            '1.0',
-            'ee',
-            new Edition(
-                'oroplatform',
-                '2.5',
-                'ee'
-            )
-        );
-
-        // Uses Marello CE 1.3
-        yield new EditionDependency(
-            'marello',
-            '1.1',
-            'ee',
-            new Edition(
-                'oroplatform',
-                '2.5',
-                'ee'
-            )
-        );
-
-        // Uses Marello CE 1.4
-        yield new EditionDependency(
-            'marello',
-            '1.2',
-            'ee',
-            new Edition(
-                'oroplatform',
-                '2.6',
-                'ee'
-            )
-        );
-
-        // Uses Marello CE 1.5
-        yield new EditionDependency(
-            'marello',
-            '1.3',
-            'ee',
-            new Edition(
-                'oroplatform',
-                '2.6',
-                'ee'
-            )
-        );
-
-        // Uses Marello CE 2.0
         yield new EditionDependency(
             'marello',
             '2.0',
@@ -69,7 +20,6 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             )
         );
 
-        // Uses Marello CE 2.1
         yield new EditionDependency(
             'marello',
             '2.1',
@@ -81,7 +31,6 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             )
         );
 
-        // Uses Marello CE 2.2
         yield new EditionDependency(
             'marello',
             '2.2',
@@ -93,7 +42,6 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             )
         );
 
-        // Uses Marello CE 3.0
         yield new EditionDependency(
             'marello',
             '3.0',
