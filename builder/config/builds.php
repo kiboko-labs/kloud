@@ -223,4 +223,148 @@ return [
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
     ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.1',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.2',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.3',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.4',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.1',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.2',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.3',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.4',
+        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.1',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.2',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.3',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.4',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/%package.variation%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.1',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.2',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.3',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '7.4',
+        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
+    ),
 ];

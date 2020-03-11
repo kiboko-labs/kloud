@@ -5,13 +5,13 @@ namespace Builder\Domain\Packaging\Platform\Edition;
 use Exception;
 use Traversable;
 
-final class OroCRMEditionRepository implements EditionRepositoryInterface, \IteratorAggregate
+final class OroCRMCommunityEditionRepository implements EditionRepositoryInterface, \IteratorAggregate
 {
     public function getIterator()
     {
-        yield $parent = new EditionDependency(
+        yield new EditionDependency(
             'orocrm',
-            '1.6',
+            '2.6',
             'ce',
             new Edition(
                 'oroplatform',
@@ -19,14 +19,8 @@ final class OroCRMEditionRepository implements EditionRepositoryInterface, \Iter
                 'ce'
             )
         );
-        yield new EditionDependency(
-            'orocrm',
-            '1.6',
-            'ee',
-            $parent
-        );
 
-        yield $parent = new EditionDependency(
+        yield new EditionDependency(
             'orocrm',
             '3.1',
             'ce',
@@ -36,14 +30,8 @@ final class OroCRMEditionRepository implements EditionRepositoryInterface, \Iter
                 'ce'
             )
         );
-        yield new EditionDependency(
-            'orocrm',
-            '3.1',
-            'ee',
-            $parent
-        );
 
-        yield $parent = new EditionDependency(
+        yield new EditionDependency(
             'orocrm',
             '4.1',
             'ce',
@@ -52,12 +40,6 @@ final class OroCRMEditionRepository implements EditionRepositoryInterface, \Iter
                 '4.1',
                 'ce'
             )
-        );
-        yield new EditionDependency(
-            'orocrm',
-            '4.1',
-            'ee',
-            $parent
         );
     }
 }
