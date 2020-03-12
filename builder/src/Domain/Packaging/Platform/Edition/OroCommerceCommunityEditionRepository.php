@@ -11,17 +11,6 @@ final class OroCommerceCommunityEditionRepository implements EditionRepositoryIn
     {
         yield new EditionDependency(
             'orocommerce',
-            '1.6',
-            'ce',
-            new Edition(
-                'oroplatform',
-                '2.6',
-                'ce'
-            )
-        );
-
-        yield new EditionDependency(
-            'orocommerce',
             '3.1',
             'ce',
             new Edition(

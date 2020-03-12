@@ -11,17 +11,6 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
     {
         yield new EditionDependency(
             'orocrm',
-            '2.6',
-            'ee',
-            new Edition(
-                'oroplatform',
-                '2.6',
-                'ee'
-            )
-        );
-
-        yield new EditionDependency(
-            'orocrm',
             '3.1',
             'ee',
             new Edition(

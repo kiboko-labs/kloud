@@ -11,17 +11,6 @@ final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryI
     {
         yield new EditionDependency(
             'orocommerce',
-            '1.6',
-            'ee',
-            new Edition(
-                'orocommerce',
-                '1.6',
-                'ce'
-            )
-        );
-
-        yield new EditionDependency(
-            'orocommerce',
             '3.1',
             'ee',
             new Edition(
