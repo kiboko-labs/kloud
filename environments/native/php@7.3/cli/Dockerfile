@@ -18,6 +18,7 @@ RUN set -ex \
         git \
         nodejs \
         npm \
+        patch \
     && update-ca-certificates \
     && apk add --virtual .build-deps \
         autoconf \
