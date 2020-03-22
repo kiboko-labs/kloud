@@ -7,7 +7,6 @@ namespace Builder\Domain\Packaging\DependencyTree;
 use Builder\Domain\Packaging\CommandBus;
 use Builder\Domain\Packaging;
 use Builder\Domain\Packaging\Placeholder;
-use phpDocumentor\Reflection\Types\String_;
 
 final class Node implements NodeInterface, \IteratorAggregate
 {

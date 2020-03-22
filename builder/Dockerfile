@@ -68,6 +68,9 @@ RUN set -ex\
     && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: Invalid installer signature'; rm composer-setup.php; exit 1; fi \
     && php composer-setup.php --install-dir /usr/local/bin --filename composer \
     && php -r "unlink('composer-setup.php');" \
+    && curl -LSs https://box-project.github.io/box2/installer.php | php \
+    && mv box.phar /usr/local/bin/box \
+    && chmod +x /usr/local/bin/box \
     && mkdir -p /opt/docker/.npm \
     && chown docker:docker /opt/docker/.npm
 

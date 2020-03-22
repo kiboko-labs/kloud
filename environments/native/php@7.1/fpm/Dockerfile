@@ -39,7 +39,7 @@ RUN set -ex \
         isl \
         libatomic \
         libbz2 \
- libffi \
+        libffi \
         libgcc \
         libgomp \
         libldap \

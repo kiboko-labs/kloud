@@ -6,8 +6,7 @@ namespace Builder\Domain\Assert\Result;
 
 use Builder\Domain\Packaging\Tag\TagInterface;
 
-interface AssertionResultInterface
+interface AssertionResultInterface extends \Stringable
 {
     public function is(TagInterface $tag): bool;
-    public function __toString();
 }

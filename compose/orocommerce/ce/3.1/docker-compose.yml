@@ -1,0 +1,182 @@
+version: '2'
+
+services:
+  mail:
+    image: schickling/mailcatcher:latest
+    ports:
+      - ${MAILCATCHER_PORT}:1080
+
+  sql:
+    image: postgres:9.6-alpine
+    ports:
+      - ${SQL_PORT}:5432
+    environment:
+      - "POSTGRES_USER=kiboko"
+      - "POSTGRES_DB=kiboko"
+      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_ROOT_PASSWORD=password"
+    volumes:
+      - ./.docker/postgres@9.6/sql/uuid-ossp.sql:/docker-entrypoint-initdb.d/00-uuid-ossp.sql:ro
+      - ./.docker/postgres@9.6/custom-sql/:/docker-entrypoint-initdb.d/custom-sql/
+      - database:/var/lib/postgresql/data
+    restart: on-failure
+
+  http:
+    image: nginx:alpine
+    volumes:
+      - ./.docker/nginx@1.15/config/options.conf:/etc/nginx/conf.d/000-options.conf
+      - ./.docker/nginx@1.15/config/reverse-proxy.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache:ro
+      - assets:/var/www/html/public/bundles:ro
+    restart: on-failure
+    ports:
+      - ${HTTP_PORT}:80
+    depends_on:
+      - http-worker-prod
+      - http-worker-dev
+      - http-worker-xdebug
+
+  http-worker-prod:
+    image: nginx:alpine
+    volumes:
+      - ./.docker/nginx@1.15/config/options.conf:/etc/nginx/conf.d/000-options.conf
+      - ./.docker/nginx@1.15/config/vhost-prod.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache:delegated
+      - assets:/var/www/html/public/bundles:delegated
+    restart: on-failure
+    depends_on:
+      - fpm
+
+  http-worker-dev:
+    image: nginx:alpine
+    volumes:
+      - ./.docker/nginx@1.15/config/options.conf:/etc/nginx/conf.d/000-options.conf
+      - ./.docker/nginx@1.15/config/vhost-dev.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache:ro
+      - assets:/var/www/html/public/bundles:ro
+    restart: on-failure
+    depends_on:
+      - fpm
+
+  http-worker-xdebug:
+    image: nginx:alpine
+    volumes:
+      - ./.docker/nginx@1.15/config/options.conf:/etc/nginx/conf.d/000-options.conf
+      - ./.docker/nginx@1.15/config/vhost-xdebug.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache:ro
+      - assets:/var/www/html/public/bundles:ro
+    restart: on-failure
+    depends_on:
+      - fpm-xdebug
+
+  fpm:
+    image: kiboko/php:7.2-fpm-blackfire-oroplatform-ce-3.1
+    user: docker:docker
+    volumes:
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache
+      - assets:/var/www/html/public/bundles
+    environment:
+      - "I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK="
+      - BLACKFIRE_CLIENT_ID
+      - BLACKFIRE_CLIENT_TOKEN
+    restart: on-failure
+
+  fpm-xdebug:
+    image: kiboko/php:7.2-fpm-xdebug-orocommerce-ce-3.1
+    user: docker:docker
+    volumes:
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache
+      - assets:/var/www/html/public/bundles
+    environment:
+      - "I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK="
+    restart: on-failure
+
+  blackfire:
+    image: blackfire/blackfire
+    environment:
+      - BLACKFIRE_SERVER_ID
+      - BLACKFIRE_SERVER_TOKEN
+
+  sh:
+    image: kiboko/php:7.2-cli-blackfire-orocommerce-ce-3.1
+    user: docker:docker
+    volumes:
+      - $HOME/.ssh:/opt/docker/.ssh:cached
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache
+      - assets:/var/www/html/public/bundles
+      - composer:/opt/docker/.composer/:cached
+    environment:
+      - COMPOSER_AUTH
+      - COMPOSER_PROCESS_TIMEOUT
+      - BLACKFIRE_CLIENT_ID
+      - BLACKFIRE_CLIENT_TOKEN
+    command: [ "sleep", "31536000" ]
+    restart: "always"
+
+  sh-xdebug:
+    image: kiboko/php:7.2-cli-xdebug-orocommerce-ce-3.1
+    user: docker:docker
+    volumes:
+      - $HOME/.ssh:/opt/docker/.ssh:cached
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache
+      - assets:/var/www/html/public/bundles
+      - composer:/opt/docker/.composer/
+    environment:
+      - COMPOSER_AUTH
+      - COMPOSER_PROCESS_TIMEOUT
+    command: [ "sleep", "31536000" ]
+    restart: "always"
+
+  mq:
+    image: kiboko/php:7.1-cli-blackfire-orocommerce-ce-3.1
+    user: docker:docker
+    volumes:
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache
+      - assets:/var/www/html/public/bundles
+    command: [ "bin/console", "oro:message-queue:consume", "--env=prod", "-vv" ]
+    restart: "always"
+
+  ws:
+    image: kiboko/php:7.1-cli-blackfire-orocommerce-ce-3.1
+    user: docker:docker
+    volumes:
+      - ./:/var/www/html
+      - cache:/var/www/html/var/cache
+      - assets:/var/www/html/public/bundles
+    command: [ "bin/console", "gos:websocket:server", "--env=prod", "-vv" ]
+    ports:
+      - ${WEBSOCKET_PORT}:8080
+    restart: "always"
+
+volumes:
+  database:
+    driver: local
+  elasticsearch:
+    driver: local
+  composer:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=2048m,uid=1000,gid=1000"
+  assets:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=2048m,uid=1000,gid=1000"
+  cache:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=2048m,uid=1000,gid=1000"

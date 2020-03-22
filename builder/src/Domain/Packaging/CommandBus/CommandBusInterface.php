@@ -6,10 +6,8 @@ namespace Builder\Domain\Packaging\CommandBus;
 
 use Builder\Domain\Packaging;
 
-interface CommandBusInterface extends \Traversable, \Countable
+interface CommandBusInterface extends \Traversable, \Countable, \Stringable
 {
-    public function __toString();
-
     public function __invoke(): void;
 
     public function add(Packaging\Command\CommandInterface ...$command): void;

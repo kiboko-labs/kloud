@@ -2,7 +2,7 @@
 
 namespace Builder\Domain\Packaging;
 
-final class Placeholder
+final class Placeholder implements \Stringable
 {
     private string $pattern;
     /** @var array<string,string> */

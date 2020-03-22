@@ -6,9 +6,7 @@ namespace Builder\Domain\Packaging\Command;
 
 use Symfony\Component\Process\Process;
 
-interface CommandInterface
+interface CommandInterface extends \Stringable
 {
-    public function __toString();
-
     public function __invoke(): Process;
 }

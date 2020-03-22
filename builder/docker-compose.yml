@@ -6,8 +6,10 @@ services:
       context: .
     volumes:
       - ./config/memory.ini:/usr/local/etc/php/conf.d/memory.ini:ro
+      - ./config/phar.ini:/usr/local/etc/php/conf.d/phar.ini:ro
       - ./:/app
       - ../environments:/environments
+      - ../compose:/compose
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - 'PHP_IDE_CONFIG=serverName=Docker'

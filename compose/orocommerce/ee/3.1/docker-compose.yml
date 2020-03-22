@@ -11,9 +11,9 @@ services:
       context: .docker/rabbitmq@3.6
     ports:
       - ${RABBITMQ_PORT}:15672
-#    environment:
-#      - RABBITMQ_DEFAULT_USER=kiboko
-#      - RABBITMQ_DEFAULT_PASS=pssword
+    environment:
+      - RABBITMQ_DEFAULT_USER=kiboko
+      - RABBITMQ_DEFAULT_PASS=password
     restart: on-failure
 
   redis:
@@ -98,7 +98,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
       - http.port=9200
-      - http.cors.allow-origin=http://localhost:${DEJAVU_PORT},http://127.0.0.1:${DEJAVU_PORT},http://192.168.64.4:${DEJAVU_PORT},http://dejavu:${DEJAVU_PORT},http://host.docker.internal:${DEJAVU_PORT}
+      - http.cors.allow-origin=http://${APPLICATION_DOMAIN}:${DEJAVU_PORT}
       - http.cors.enabled=true
       - http.cors.allow-headers=X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
       - http.cors.allow-credentials=true

@@ -1,11 +1,19 @@
 {
     "name": "kiboko/docker-builder",
     "require": {
+        "php": "^7.4",
+        "ext-json": "*",
         "symfony/console": "^5.1@dev",
         "symfony/process": "^5.1@dev",
         "phpspec/phpspec": "^6.1@dev",
         "composer/semver": "^1.0@dev",
-        "psr/log": "^1.1@dev"
+        "psr/log": "^1.1@dev",
+        "padraic/phar-updater": "^1.0@dev",
+        "symfony/serializer": "^5.1@dev",
+        "symfony/property-access": "^5.1@dev",
+        "sebastian/diff": "^3.0",
+        "sebastian/comparator": "^3.0",
+        "symfony/finder": "^5.1@dev"
     },
     "minimum-stability": "dev",
     "autoload": {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Builder\Domain\Packaging;
 
-final class Repository implements RepositoryInterface
+final class Repository implements \Stringable, RepositoryInterface
 {
     public string $name;
 
