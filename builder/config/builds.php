@@ -7,6 +7,13 @@ $repository = new Packaging\Repository('kiboko/php');
 return [
     new Packaging\Native\Package(
         $repository,
+        '5.6',
+        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository()
+    ),
+
+    new Packaging\Native\Package(
+        $repository,
         '7.1',
         new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository()
@@ -38,6 +45,14 @@ return [
         '8.0',
         new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\ExperimentalFlavorRepository()
+    ),
+
+    new Packaging\Native\PackageVariation(
+        $repository,
+        '5.6',
+        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository()
     ),
 
     new Packaging\Native\PackageVariation(
@@ -82,6 +97,15 @@ return [
 
     new Packaging\Platform\Package(
         $repository,
+        '5.6',
+        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
         '7.1',
         new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
@@ -114,6 +138,15 @@ return [
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
+    ),
+
+    new Packaging\Platform\Package(
+        $repository,
+        '5.6',
+        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
     ),
 
     new Packaging\Platform\Package(

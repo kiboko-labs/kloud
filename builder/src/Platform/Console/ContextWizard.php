@@ -52,24 +52,30 @@ final class ContextWizard
                 new Guesser\OroPlatformCommunity('oro/platform'),
             );
 
-            $context = $guesser->guess($json['packages'] ?? []);
+            try {
+                $context = $guesser->guess($json['packages'] ?? []);
 
-            if ($context->application === 'orocommerce' && $context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>OroCommerce Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'orocommerce' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>OroCommerce Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'orocrm' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>OroCRM Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'orocrm' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>OroCRM Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'marello' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>Marello Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'marello' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>Marello Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'oroplatform' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>OroPlatform Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-            } else if ($context->application === 'oroplatform' && !$context->isEnterpriseEdition) {
-                $format->writeln(strtr('Found <fg=yellow>OroPlatform Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                if ($context->application === 'orocommerce' && $context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>OroCommerce Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'orocommerce' && !$context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>OroCommerce Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'orocrm' && $context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>OroCRM Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'orocrm' && !$context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>OroCRM Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'marello' && $context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>Marello Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'marello' && !$context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>Marello Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'oroplatform' && $context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>OroPlatform Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                } else if ($context->application === 'oroplatform' && !$context->isEnterpriseEdition) {
+                    $format->writeln(strtr('Found <fg=yellow>OroPlatform Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                }
+            } catch (NoPossibleGuess $exception) {
+                $format->warning('Could not guess any known application type.');
+
+                return null;
             }
 
             return $context;
@@ -82,7 +88,7 @@ final class ContextWizard
     {
         $context = new Stack\DTO\Context(
             $format->askQuestion(
-                (new ChoiceQuestion('Which PHP version are you using?', ['7.1', '7.2', '7.3', '7.4', '8.0'], '7.2'))
+                (new ChoiceQuestion('Which PHP version are you using?', ['5.6', '7.1', '7.2', '7.3', '7.4', '8.0'], '7.2'))
             ),
             $format->askQuestion(
                 (new ChoiceQuestion('Which application are you using? (leave empty for native image)', ['orocommerce', 'oroplatform', 'orocrm', 'marello', ''], ''))
@@ -93,63 +99,63 @@ final class ContextWizard
 
         $context->applicationVersion = '';
         if ('orocommerce' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=7.0 <7.2')) {
+            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
                 $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 1.6.</>');
                 $context->applicationVersion = '1.6';
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which OroCommerce version are you using?', ['1.6', '3.1'], '3.1'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which OroCommerce version are you using?', ['3.1', '4.1'], '3.1'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
                 $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 4.1.</>');
                 $context->applicationVersion = '4.1';
             }
         } elseif ('oroplatform' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=7.0 <7.2')) {
+            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
                 $format->writeln(' <fg=green>Choosing automaticallly OroPlatform version 2.6.</>');
                 $context->applicationVersion = '2.6';
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which OroPlatform version are you using?', ['2.6', '3.1'], '3.1'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which OroPlatform version are you using?', ['3.1', '4.1'], '3.1'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
                 $format->writeln(' <fg=green>Choosing automaticallly OroPlatform version 4.1.</>');
                 $context->applicationVersion = '4.1';
             }
         } elseif ('orocrm' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=7.0 <7.2')) {
+            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
                 $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 2.6.</>');
                 $context->applicationVersion = '2.6';
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which OroCRM version are you using?', ['2.6', '3.1'], '3.1'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which OroCRM version are you using?', ['3.1', '4.1'], '3.1'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
                 $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 4.1.</>');
                 $context->applicationVersion = '4.1';
             }
         } elseif ('marello' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=7.0 <7.2')) {
+            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6'], '1.6'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6', '2.0', '2.1', '2.2'], '2.2'))
                 );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
+            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
                 $context->applicationVersion = $format->askQuestion(
                     (new ChoiceQuestion('Which Marello version are you using?', ['2.0', '2.1', '2.2', '3.0'], '2.2'))
                 );

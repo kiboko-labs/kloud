@@ -52,6 +52,26 @@ final class PushCommand extends Command
             require $this->configPath.'/builds.php',
         )), \CachingIterator::FULL_CACHE);
 
+        $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
+            /** @var Packaging\PackageInterface $package */
+            foreach ($packages as $package) {
+                $tags = new \IteratorIterator($package);
+                if (!empty($pattern)) {
+                    $tags = new \CallbackFilterIterator($tags, function (Packaging\Tag\TagInterface $tag) use ($pattern) {
+                        return preg_match($pattern, (string) $tag) > 0;
+                    });
+                }
+
+                foreach ($tags as $tag) {
+                    yield [
+                        'tag' => !empty($pattern) ? preg_replace($pattern, '<comment>\0</>', (string) $tag) : (string) $tag,
+                        'parent' => $tag instanceof Packaging\Tag\DependentTagInterface ? $tag->getParent() : null,
+                        'path' => ($context = $tag->getContext()) instanceof Packaging\Context\BuildableContextInterface ? $context->getPath() : null,
+                    ];
+                }
+            }
+        })()));
+
         $tree = new Packaging\DependencyTree\TreeBuilder();
 
         /** @var Packaging\PackageInterface $package */

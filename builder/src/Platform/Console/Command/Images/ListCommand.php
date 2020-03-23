@@ -41,11 +41,12 @@ final class ListCommand extends Command
             $pattern = (new ContextWizard($workingDirectory))($input, $output)->getImagesRegex();
         }
 
+        $format = new SymfonyStyle($input, $output);
+
         /** @var Packaging\PackageInterface[] $packages */
         $packages = new \CachingIterator(new \ArrayIterator(array_merge(
             require $this->configPath.'/builds.php',
         )), \CachingIterator::FULL_CACHE);
-        $format = new SymfonyStyle($input, $output);
 
         $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
             /** @var Packaging\PackageInterface $package */

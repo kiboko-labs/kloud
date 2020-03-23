@@ -11,6 +11,28 @@ final class OroPlatformEnterpriseEditionRepository implements EditionRepositoryI
     {
         yield new EditionDependency(
             'oroplatform',
+            '1.8',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '1.8',
+                'ce'
+            )
+        );
+
+        yield new EditionDependency(
+            'oroplatform',
+            '2.6',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '2.6',
+                'ce'
+            )
+        );
+
+        yield new EditionDependency(
+            'oroplatform',
             '3.1',
             'ee',
             new Edition(
