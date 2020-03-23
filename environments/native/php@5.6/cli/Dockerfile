@@ -71,8 +71,7 @@ RUN set -ex \
     && composer global require \
         friendsofphp/php-cs-fixer \
         phpunit/phpunit \
-        phpspec/phpspec \
-        infection/infection
+        phpspec/phpspec
 
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
