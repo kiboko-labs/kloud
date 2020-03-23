@@ -74,7 +74,10 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 WORKDIR /app
 
-COPY kloud.phar /app/kloud.phar
-COPY kloud.phar.pubkey /app/kloud.phar.pubkey
+COPY kloud.phar /opt/kloud/kloud.phar
+COPY kloud.phar.pubkey /opt/kloud/kloud.phar.pubkey
+
+RUN ln -s /opt/kloud/kloud.phar /usr/local/bin/kloud
+    && ln -s /opt/kloud/kloud.phar.pubkey /usr/local/bin/kloud.pubkey
 
 ENTRYPOINT [ "/app/kloud.phar" ]
