@@ -17,6 +17,12 @@ final class OroPlatformCommunityEditionRepository implements EditionRepositoryIn
 
         yield new Edition(
             'oroplatform',
+            '1.10',
+            'ce'
+        );
+
+        yield new Edition(
+            'oroplatform',
             '2.6',
             'ce'
         );

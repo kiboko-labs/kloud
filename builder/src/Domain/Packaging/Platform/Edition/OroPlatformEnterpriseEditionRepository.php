@@ -11,11 +11,11 @@ final class OroPlatformEnterpriseEditionRepository implements EditionRepositoryI
     {
         yield new EditionDependency(
             'oroplatform',
-            '1.8',
+            '1.12',
             'ee',
             new Edition(
                 'oroplatform',
-                '1.8',
+                '1.10',
                 'ce'
             )
         );
