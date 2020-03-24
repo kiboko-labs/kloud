@@ -8,6 +8,7 @@ use Kiboko\Cloud\Domain\Assert\AssertionInterface;
 use Kiboko\Cloud\Domain\Assert\ConstraintInterface;
 use Kiboko\Cloud\Domain\Assert\Result\AssertionFailureInterface;
 use Kiboko\Cloud\Domain\Assert\Result\AssertionSuccessInterface;
+use Kiboko\Cloud\Domain\Assert\Result\AssertionUnprocessableInterface;
 use Kiboko\Cloud\Domain\Assert\ResultBucket;
 use Kiboko\Cloud\Platform\Console\ContextWizard;
 use Kiboko\Cloud\Domain\Packaging;
@@ -78,6 +79,7 @@ final class TestCommand extends Command
         $constraints = new \ArrayIterator(require $this->configPath.'/constraints.php');
 
         $errorCount = 0;
+        $warningCount = 0;
         $bucket = new ResultBucket();
         /** @var Packaging\PackageInterface $package */
         foreach ($packages as $package) {
@@ -95,19 +97,25 @@ final class TestCommand extends Command
                 /** @var AssertionInterface $assertion */
                 foreach ($constraint->apply($tags) as $assertion) {
                     $result = $assertion();
-                    if ($result instanceof AssertionFailureInterface) {
+                    if ($result instanceof AssertionUnprocessableInterface) {
+                        ++$warningCount;
+                        $bucket->failure($result);
+                        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
+                            $format->warning(sprintf("Tag %s:%s\n%s", $assertion->repository, $assertion->tag, (string)$result));
+                        }
+                    } else if ($result instanceof AssertionFailureInterface) {
                         ++$errorCount;
                         $bucket->failure($result);
                         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_NORMAL) {
-                            $format->error((string) $result);
+                            $format->error(sprintf("Tag %s:%s\n%s", $assertion->repository, $assertion->tag, (string)$result));
                         }
                     } else if ($result instanceof AssertionSuccessInterface) {
                         $bucket->success($result);
                         if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-                            $format->comment((string) $result);
+                            $format->success(sprintf("Tag %s:%s\n%s", $assertion->repository, $assertion->tag, (string)$result));
                         }
                     } else {
-                        $format->warning((string) $result);
+                        $format->note(sprintf("Tag %s:%s\n%s", $assertion->repository, $assertion->tag, (string)$result));
                     }
                 }
             }
@@ -153,7 +161,7 @@ final class TestCommand extends Command
                     $rows[] = [
                         (string)$tag,
                         implode(PHP_EOL, array_map(function (AssertionFailureInterface $failure) {
-                            return (string)$failure;
+                            return sprintf($failure instanceof AssertionUnprocessableInterface ? '❗ %s' : '❌ %s', (string)$failure);
                         }, $bucket->getFailuresFor($tag))) ?: '✔️ All checks passed',
                     ];
                 }
@@ -161,8 +169,16 @@ final class TestCommand extends Command
             $format->table(['Tag', 'Message'], $rows);
         }
 
-        if ($errorCount > 0) {
-            $format->error(sprintf('❌ Found %d errors, please check logs.', $errorCount));
+        if ($errorCount <= 0 && $warningCount > 0) {
+            $format->warning(sprintf('❗ Found %d warnings, please check your logs.', $warningCount));
+
+            return 0;
+        } else if ($errorCount > 0 && $warningCount <= 0) {
+            $format->error(sprintf('❌ Found %d errors, please check your logs.', $errorCount));
+
+            return 1;
+        } else if ($errorCount > 0 && $warningCount > 0) {
+            $format->error(sprintf('❌ Found %d errors and %d warnings, please check your logs.', $errorCount, $warningCount));
 
             return 1;
         }

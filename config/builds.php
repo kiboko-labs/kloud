@@ -1,6 +1,6 @@
 <?php
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 $repository = new Packaging\Repository('kiboko/php');
 

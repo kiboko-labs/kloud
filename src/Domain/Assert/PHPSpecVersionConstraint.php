@@ -11,8 +11,8 @@ use Symfony\Component\Process\Process;
 
 final class PHPSpecVersionConstraint implements AssertionInterface
 {
-    private Packaging\RepositoryInterface $repository;
-    private Packaging\Tag\TagInterface $tag;
+    public Packaging\RepositoryInterface $repository;
+    public Packaging\Tag\TagInterface $tag;
     private string $constraint;
 
     public function __construct(

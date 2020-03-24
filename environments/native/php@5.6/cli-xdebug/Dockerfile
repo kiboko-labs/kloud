@@ -1,4 +1,4 @@
-FROM php:5.6-cli-alpine
+FROM kiboko/php:5.6-cli
 
 LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 

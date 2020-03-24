@@ -1,7 +1,7 @@
 <?php
 
-use Builder\Domain\Assert;
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Assert;
+use Kiboko\Cloud\Domain\Packaging;
 
 $repository = new Packaging\Repository('kiboko/php');
 

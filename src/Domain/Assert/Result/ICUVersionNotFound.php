@@ -6,7 +6,7 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class ICUVersionNotFound implements AssertionFailureInterface
+final class ICUVersionNotFound implements AssertionUnprocessableInterface
 {
     private Packaging\Tag\TagInterface $tag;
 

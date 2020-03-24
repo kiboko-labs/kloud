@@ -11,8 +11,8 @@ use Symfony\Component\Process\Process;
 
 final class CLIConstraint implements AssertionInterface
 {
-    private Packaging\RepositoryInterface $repository;
-    private Packaging\Tag\TagInterface $tag;
+    public Packaging\RepositoryInterface $repository;
+    public Packaging\Tag\TagInterface $tag;
 
     public function __construct(
         Packaging\RepositoryInterface $repository,

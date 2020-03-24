@@ -6,7 +6,7 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class BlackfireVersionNotfound implements AssertionFailureInterface
+final class BlackfireVersionNotFound implements AssertionUnprocessableInterface
 {
     private Packaging\Tag\TagInterface $tag;
 

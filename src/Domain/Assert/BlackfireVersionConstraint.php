@@ -11,8 +11,8 @@ use Symfony\Component\Process\Process;
 
 final class BlackfireVersionConstraint implements AssertionInterface
 {
-    private Packaging\RepositoryInterface $repository;
-    private Packaging\Tag\TagInterface $tag;
+    public Packaging\RepositoryInterface $repository;
+    public Packaging\Tag\TagInterface $tag;
     private string $constraint;
 
     public function __construct(
@@ -48,7 +48,7 @@ final class BlackfireVersionConstraint implements AssertionInterface
         }
 
         if (!is_string($version)) {
-            return new Result\BlackfireVersionNotfound($this->tag);
+            return new Result\BlackfireVersionNotFound($this->tag);
         }
 
         if (Semver::satisfies($version, $this->constraint)) {

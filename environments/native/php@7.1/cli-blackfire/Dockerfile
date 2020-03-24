@@ -1,4 +1,4 @@
-FROM kiboko/php:5.6-cli
+FROM kiboko/php:7.1-cli
 
 LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 

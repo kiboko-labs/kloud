@@ -6,7 +6,7 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class PHPToolingVersionNotFound implements AssertionFailureInterface
+final class PHPToolingVersionNotFound implements AssertionUnprocessableInterface
 {
     private string $toolName;
     private Packaging\Tag\TagInterface $tag;

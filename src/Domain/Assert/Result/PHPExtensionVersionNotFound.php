@@ -6,7 +6,7 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class PHPExtensionVersionNotFound implements AssertionFailureInterface
+final class PHPExtensionVersionNotFound implements AssertionUnprocessableInterface
 {
     private Packaging\Tag\TagInterface $tag;
     private string $extension;

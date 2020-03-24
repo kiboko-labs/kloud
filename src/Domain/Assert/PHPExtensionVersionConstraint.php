@@ -11,8 +11,8 @@ use Symfony\Component\Process\Process;
 
 final class PHPExtensionVersionConstraint implements AssertionInterface
 {
-    private Packaging\RepositoryInterface $repository;
-    private Packaging\Tag\TagInterface $tag;
+    public Packaging\RepositoryInterface $repository;
+    public Packaging\Tag\TagInterface $tag;
     private string $extension;
     private string $constraint;
 
@@ -30,14 +30,9 @@ final class PHPExtensionVersionConstraint implements AssertionInterface
 
     public function __invoke(): Result\AssertionResultInterface
     {
-        $php =<<<SOURCE
-        echo (new ReflectionExtension("%s"))
-            ->getVersion();
-        SOURCE;
-
         $process = new Process([
             'docker', 'run', '--rm', '-i', sprintf('%s:%s', (string) $this->repository, (string) $this->tag),
-            'php', '-r', sprintf('echo (new ReflectionExtension("%s"))->getVersion();', $this->extension),
+            'php', '-r', sprintf('echo (new ReflectionExtension("%1$s"))->getVersion() ?: phpversion("%1$s");', $this->extension),
         ]);
 
         $version = null;
@@ -50,8 +45,6 @@ final class PHPExtensionVersionConstraint implements AssertionInterface
 
             if (preg_match('/^(\d+\.\d+(?:\.\d+)?(?:[\.-](?:alpha|beta|rc)\d*)?)/i', $buffer = $process->getOutput(), $matches)) {
                 $version = $matches[1];
-            } else {
-                var_dump($buffer);
             }
 
             if (!$process->isSuccessful()) {
@@ -62,6 +55,9 @@ final class PHPExtensionVersionConstraint implements AssertionInterface
         }
 
         if (!is_string($version)) {
+            if ($this->constraint === '*') {
+                return new Result\PHPExtensionFound($this->tag, $this->extension);
+            }
             return new Result\PHPExtensionVersionNotFound($this->tag, $this->extension);
         }
 
