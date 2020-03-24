@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Native\Flavor;
+namespace Kiboko\Cloud\Domain\Packaging\Native\Flavor;
 
 use Exception;
 use Traversable;

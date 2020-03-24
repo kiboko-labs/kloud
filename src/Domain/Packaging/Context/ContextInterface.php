@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Context;
+namespace Kiboko\Cloud\Domain\Packaging\Context;
 
 interface ContextInterface extends \ArrayAccess, \Countable, \Traversable
 {

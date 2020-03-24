@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\OroPlatform\Service\PHP;
+namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service\PHP;
 
-use Builder\Domain\Stack\Compose\EnvironmentVariable;
-use Builder\Domain\Stack\Compose\PortMapping;
-use Builder\Domain\Stack\Compose\Service;
-use Builder\Domain\Stack\Compose\Variable;
-use Builder\Domain\Stack\DTO;
-use Builder\Domain\Stack\OroPlatform\FilesAwareTrait;
-use Builder\Domain\Stack\ServiceBuilderInterface;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\Service;
+use Kiboko\Cloud\Domain\Stack\Compose\Variable;
+use Kiboko\Cloud\Domain\Stack\DTO;
+use Kiboko\Cloud\Domain\Stack\OroPlatform\FilesAwareTrait;
+use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class Websocket implements ServiceBuilderInterface
 {

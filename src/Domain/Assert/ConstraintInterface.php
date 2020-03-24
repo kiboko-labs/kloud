@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Assert;
+namespace Kiboko\Cloud\Domain\Assert;
 
 interface ConstraintInterface
 {

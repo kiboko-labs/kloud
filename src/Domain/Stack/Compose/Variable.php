@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Compose;
+namespace Kiboko\Cloud\Domain\Stack\Compose;
 
-use Builder\Domain\Stack\StringableInterface;
+use Kiboko\Cloud\Domain\Stack\StringableInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Compose\Normalizer;
+namespace Kiboko\Cloud\Domain\Stack\Compose\Normalizer;
 
-use Builder\Domain\Stack\Compose;
-use Builder\Domain\Stack\Compose\Service;
-use Builder\Domain\Stack\Compose\Volume;
+use Kiboko\Cloud\Domain\Stack\Compose;
+use Kiboko\Cloud\Domain\Stack\Compose\Service;
+use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Tag;
+namespace Kiboko\Cloud\Domain\Packaging\Tag;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 interface TagInterface extends \Stringable
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Compose;
+namespace Kiboko\Cloud\Domain\Stack\Compose;
 
 final class VolumeMapping implements \Stringable
 {

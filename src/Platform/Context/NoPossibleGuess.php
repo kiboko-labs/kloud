@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Platform\Context;
+namespace Kiboko\Cloud\Platform\Context;
 
 final class NoPossibleGuess extends \RuntimeException
 {

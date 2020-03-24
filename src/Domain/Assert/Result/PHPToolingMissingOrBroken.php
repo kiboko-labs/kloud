@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Assert\Result;
+namespace Kiboko\Cloud\Domain\Assert\Result;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 final class PHPToolingMissingOrBroken implements AssertionFailureInterface
 {

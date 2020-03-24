@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Command;
+namespace Kiboko\Cloud\Domain\Packaging\Command;
 
 use Symfony\Component\Process\Process;
 

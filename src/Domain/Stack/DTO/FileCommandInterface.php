@@ -1,6 +1,6 @@
 <?php
 
-namespace Builder\Domain\Stack\DTO;
+namespace Kiboko\Cloud\Domain\Stack\DTO;
 
 interface FileCommandInterface
 {

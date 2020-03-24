@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Assert\Result;
+namespace Kiboko\Cloud\Domain\Assert\Result;
 
-use Builder\Domain\Packaging\Tag\TagInterface;
+use Kiboko\Cloud\Domain\Packaging\Tag\TagInterface;
 
 interface AssertionResultInterface extends \Stringable
 {

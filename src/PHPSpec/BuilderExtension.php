@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\PHPSpec;
+namespace Kiboko\Cloud\PHPSpec;
 
 use PhpSpec\Extension;
 use PhpSpec\ServiceContainer;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Context;
+namespace Kiboko\Cloud\Domain\Packaging\Context;
 
-use Builder\Domain\Packaging\Placeholder;
+use Kiboko\Cloud\Domain\Packaging\Placeholder;
 
 interface BuildableContextInterface extends ContextInterface
 {

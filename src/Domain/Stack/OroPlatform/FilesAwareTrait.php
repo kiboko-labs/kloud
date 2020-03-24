@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\OroPlatform;
+namespace Kiboko\Cloud\Domain\Stack\OroPlatform;
 
-use Builder\Domain\Stack\DTO;
-use Builder\Domain\Stack\Resource;
+use Kiboko\Cloud\Domain\Stack\DTO;
+use Kiboko\Cloud\Domain\Stack\Resource;
 use Composer\Semver\Semver;
 use Symfony\Component\Finder\Finder;
 

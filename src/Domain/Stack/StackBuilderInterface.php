@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack;
+namespace Kiboko\Cloud\Domain\Stack;
 
-use Builder\Domain\Stack\DTO;
+use Kiboko\Cloud\Domain\Stack\DTO;
 
 interface StackBuilderInterface
 {

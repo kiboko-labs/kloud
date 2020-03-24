@@ -1,6 +1,6 @@
 <?php
 
-namespace Builder\Domain\Stack\Compose;
+namespace Kiboko\Cloud\Domain\Stack\Compose;
 
 interface EnvironmentVariableInterface
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\CommandBus;
+namespace Kiboko\Cloud\Domain\Packaging\CommandBus;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 interface CommandBusInterface extends \Traversable, \Countable, \Stringable
 {

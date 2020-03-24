@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack;
+namespace Kiboko\Cloud\Domain\Stack;
 
-use Builder\Domain\Stack\DTO\Context;
+use Kiboko\Cloud\Domain\Stack\DTO\Context;
 
 final class StackBuilder implements StackBuilderInterface
 {

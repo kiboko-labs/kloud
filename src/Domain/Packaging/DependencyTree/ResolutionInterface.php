@@ -1,6 +1,6 @@
 <?php
 
-namespace Builder\Domain\Packaging\DependencyTree;
+namespace Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
 interface ResolutionInterface extends \Traversable
 {

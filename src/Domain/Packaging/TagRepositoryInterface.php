@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging;
+namespace Kiboko\Cloud\Domain\Packaging;
 
 interface TagRepositoryInterface extends \Traversable
 {

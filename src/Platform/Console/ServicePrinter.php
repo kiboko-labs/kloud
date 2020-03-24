@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Platform\Console;
+namespace Kiboko\Cloud\Platform\Console;
 
-use Builder\Domain\Stack\Compose\EnvironmentVariableInterface;
-use Builder\Domain\Stack\Compose\PortMapping;
-use Builder\Domain\Stack\Compose\Service;
-use Builder\Domain\Stack\Compose\ValuedEnvironmentVariableInterface;
-use Builder\Domain\Stack\Compose\VolumeMapping;
-use Builder\Domain\Stack\Diff\ServiceDiff;
-use Builder\Domain\Stack\Diff\UnifiedDiffOutputBuilder;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariableInterface;
+use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\Service;
+use Kiboko\Cloud\Domain\Stack\Compose\ValuedEnvironmentVariableInterface;
+use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
+use Kiboko\Cloud\Domain\Stack\Diff\ServiceDiff;
+use Kiboko\Cloud\Domain\Stack\Diff\UnifiedDiffOutputBuilder;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

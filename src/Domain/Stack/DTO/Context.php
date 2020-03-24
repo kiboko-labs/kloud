@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\DTO;
+namespace Kiboko\Cloud\Domain\Stack\DTO;
 
 final class Context
 {

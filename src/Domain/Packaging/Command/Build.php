@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Command;
+namespace Kiboko\Cloud\Domain\Packaging\Command;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Process\Process;

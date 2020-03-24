@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Platform\Context\Guesser;
+namespace Kiboko\Cloud\Platform\Context\Guesser;
 
-use Builder\Domain\Stack;
-use Builder\Platform\Context\ContextGuesserInterface;
-use Builder\Platform\Context\NoPossibleGuess;
+use Kiboko\Cloud\Domain\Stack;
+use Kiboko\Cloud\Platform\Context\ContextGuesserInterface;
+use Kiboko\Cloud\Platform\Context\NoPossibleGuess;
 use Composer\Semver\Semver;
 
 final class OroCRMCommunity implements ContextGuesserInterface

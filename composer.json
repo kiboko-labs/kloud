@@ -1,29 +1,34 @@
 {
-    "name": "kiboko/docker-builder",
+    "name": "kiboko/kloud",
     "require": {
         "php": "^7.4",
         "ext-json": "*",
-        "symfony/console": "^5.1@dev",
-        "symfony/process": "^5.1@dev",
-        "phpspec/phpspec": "^6.1@dev",
-        "composer/semver": "^1.0@dev",
-        "psr/log": "^1.1@dev",
-        "padraic/phar-updater": "^1.0@dev",
-        "symfony/serializer": "^5.1@dev",
-        "symfony/property-access": "^5.1@dev",
-        "sebastian/diff": "^3.0",
+        "composer/semver": "^1.0",
+        "psr/log": "^1.1",
+        "padraic/phar-updater": "^1.0",
         "sebastian/comparator": "^3.0",
-        "symfony/finder": "^5.1@dev"
-    },
-    "minimum-stability": "dev",
-    "autoload": {
-        "psr-4": {
-            "Builder\\": "src/"
-        }
+        "sebastian/diff": "^3.0",
+        "symfony/console": "^5.1",
+        "symfony/finder": "^5.1",
+        "symfony/process": "^5.1",
+        "symfony/property-access": "^5.1",
+        "symfony/serializer": "^5.1"
     },
     "require-dev": {
-        "friends-of-phpspec/phpspec-code-coverage": "^4.0@dev",
-        "monolog/monolog": "^2.0@dev",
-        "friendsofphp/php-cs-fixer": "^3.0"
+        "friends-of-phpspec/phpspec-code-coverage": "^4.0",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "monolog/monolog": "^2.0",
+        "phpspec/phpspec": "^6.1"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Kiboko\\Cloud\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }

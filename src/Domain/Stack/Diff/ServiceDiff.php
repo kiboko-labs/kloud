@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Diff;
+namespace Kiboko\Cloud\Domain\Stack\Diff;
 
-use Builder\Domain\Stack\Compose;
+use Kiboko\Cloud\Domain\Stack\Compose;
 use SebastianBergmann\Diff\Diff;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;

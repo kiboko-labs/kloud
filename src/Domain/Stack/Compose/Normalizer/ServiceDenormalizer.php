@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Compose\Normalizer;
+namespace Kiboko\Cloud\Domain\Stack\Compose\Normalizer;
 
-use Builder\Domain\Stack\Compose\EnvironmentVariable;
-use Builder\Domain\Stack\Compose\InheritedEnvironmentVariable;
-use Builder\Domain\Stack\Compose\PortMapping;
-use Builder\Domain\Stack\Compose\Service;
-use Builder\Domain\Stack\Compose\Variable;
-use Builder\Domain\Stack\Compose\VolumeMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\InheritedEnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\Service;
+use Kiboko\Cloud\Domain\Stack\Compose\Variable;
+use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 final class ServiceDenormalizer implements DenormalizerInterface

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Native;
+namespace Kiboko\Cloud\Domain\Packaging\Native;
 
-use Builder\Domain\Packaging;
-use Builder\Domain\Packaging\Tag\TagInterface;
+use Kiboko\Cloud\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging\Tag\TagInterface;
 
 final class TagVariationReference implements Packaging\Tag\TagReferenceInterface
 {

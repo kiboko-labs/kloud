@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Resource;
+namespace Kiboko\Cloud\Domain\Stack\Resource;
 
 interface FileInterface
 {

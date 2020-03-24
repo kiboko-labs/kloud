@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\PHPSpec\Matcher\Iterate;
+namespace Kiboko\Cloud\PHPSpec\Matcher\Iterate;
 
 use PhpSpec\Exception\Example\FailureException;
 

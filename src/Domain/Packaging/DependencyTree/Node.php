@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\DependencyTree;
+namespace Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
-use Builder\Domain\Packaging\CommandBus;
-use Builder\Domain\Packaging;
-use Builder\Domain\Packaging\Placeholder;
+use Kiboko\Cloud\Domain\Packaging\CommandBus;
+use Kiboko\Cloud\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging\Placeholder;
 
 final class Node implements NodeInterface, \IteratorAggregate
 {

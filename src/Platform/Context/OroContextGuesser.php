@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Platform\Context;
+namespace Kiboko\Cloud\Platform\Context;
 
-use Builder\Domain\Stack;
+use Kiboko\Cloud\Domain\Stack;
 
 final class OroContextGuesser implements ContextGuesserInterface
 {

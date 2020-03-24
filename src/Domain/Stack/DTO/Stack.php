@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\DTO;
+namespace Kiboko\Cloud\Domain\Stack\DTO;
 
-use Builder\Domain\Stack\Compose;
-use Builder\Domain\Stack\Diff\StackDiff;
+use Kiboko\Cloud\Domain\Stack\Compose;
+use Kiboko\Cloud\Domain\Stack\Diff\StackDiff;
 use SebastianBergmann\Comparator\Factory;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;

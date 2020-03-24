@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Builder\Platform\Console;
+namespace Kiboko\Cloud\Platform\Console;
 
-use Builder\Domain\Stack;
-use Builder\Platform\Context\ContextGuesser;
-use Builder\Platform\Context\Guesser;
-use Builder\Platform\Context\NoPossibleGuess;
+use Kiboko\Cloud\Domain\Stack;
+use Kiboko\Cloud\Platform\Context\ContextGuesser;
+use Kiboko\Cloud\Platform\Context\Guesser;
+use Kiboko\Cloud\Platform\Context\NoPossibleGuess;
 use Composer\Semver\Semver;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

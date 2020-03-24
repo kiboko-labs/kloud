@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\DependencyTree;
+namespace Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 final class TreeBuilder implements \IteratorAggregate
 {

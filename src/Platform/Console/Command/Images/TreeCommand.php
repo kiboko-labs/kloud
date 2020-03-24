@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Platform\Console\Command\Images;
+namespace Kiboko\Cloud\Platform\Console\Command\Images;
 
-use Builder\Domain\Packaging;
-use Builder\Platform\Console\ContextWizard;
+use Kiboko\Cloud\Domain\Packaging;
+use Kiboko\Cloud\Platform\Console\ContextWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

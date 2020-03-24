@@ -1,6 +1,6 @@
 <?php
 
-namespace Builder\Domain\Packaging\CommandBus;
+namespace Kiboko\Cloud\Domain\Packaging\CommandBus;
 
 interface CommandRunnerInterface
 {

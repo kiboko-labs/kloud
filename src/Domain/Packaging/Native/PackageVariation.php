@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Native;
+namespace Kiboko\Cloud\Domain\Packaging\Native;
 
-use Builder\Domain\Packaging;
-use Builder\Domain\Packaging\Native;
-use Builder\PHP\FlavorInterface;
+use Kiboko\Cloud\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging\Native;
+use Kiboko\Cloud\PHP\FlavorInterface;
 
 final class PackageVariation implements \IteratorAggregate, Packaging\PackageInterface, Packaging\BuildableInterface
 {

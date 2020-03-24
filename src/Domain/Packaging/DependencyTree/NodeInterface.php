@@ -1,10 +1,10 @@
 <?php
 
-namespace Builder\DependencyTree;
+namespace Kiboko\Cloud\DependencyTree;
 
-namespace Builder\Domain\Packaging\DependencyTree;
+namespace Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 interface NodeInterface extends Packaging\BuildableInterface, \Countable, \Traversable, \Stringable
 {

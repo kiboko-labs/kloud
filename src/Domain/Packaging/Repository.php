@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging;
+namespace Kiboko\Cloud\Domain\Packaging;
 
 final class Repository implements \Stringable, RepositoryInterface
 {

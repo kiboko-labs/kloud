@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Tag;
+namespace Kiboko\Cloud\Domain\Packaging\Tag;
 
 interface DependentTagInterface extends TagInterface
 {

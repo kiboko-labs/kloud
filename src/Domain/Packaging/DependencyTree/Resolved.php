@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\DependencyTree;
+namespace Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
 final class Resolved implements ResolutionInterface, \IteratorAggregate
 {

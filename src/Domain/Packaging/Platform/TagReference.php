@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Platform;
+namespace Kiboko\Cloud\Domain\Packaging\Platform;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 final class TagReference implements Packaging\Tag\TagReferenceInterface
 {

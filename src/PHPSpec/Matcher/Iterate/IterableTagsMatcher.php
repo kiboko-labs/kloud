@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\PHPSpec\Matcher\Iterate;
+namespace Kiboko\Cloud\PHPSpec\Matcher\Iterate;
 
-use Builder\Tag\DependentTagInterface;
+use Kiboko\Cloud\Tag\DependentTagInterface;
 use PhpSpec\Formatter\Presenter\Presenter;
 use PhpSpec\Matcher\Iterate as StandardIterate;
 

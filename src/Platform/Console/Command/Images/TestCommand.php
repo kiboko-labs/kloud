@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Builder\Platform\Console\Command\Images;
+namespace Kiboko\Cloud\Platform\Console\Command\Images;
 
-use Builder\Domain\Assert\AssertionInterface;
-use Builder\Domain\Assert\ConstraintInterface;
-use Builder\Domain\Assert\Result\AssertionFailureInterface;
-use Builder\Domain\Assert\Result\AssertionSuccessInterface;
-use Builder\Domain\Assert\ResultBucket;
-use Builder\Platform\Console\ContextWizard;
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Assert\AssertionInterface;
+use Kiboko\Cloud\Domain\Assert\ConstraintInterface;
+use Kiboko\Cloud\Domain\Assert\Result\AssertionFailureInterface;
+use Kiboko\Cloud\Domain\Assert\Result\AssertionSuccessInterface;
+use Kiboko\Cloud\Domain\Assert\ResultBucket;
+use Kiboko\Cloud\Platform\Console\ContextWizard;
+use Kiboko\Cloud\Domain\Packaging;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

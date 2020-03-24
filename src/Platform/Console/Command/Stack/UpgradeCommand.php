@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Platform\Console\Command\Stack;
+namespace Kiboko\Cloud\Platform\Console\Command\Stack;
 
-use Builder\Domain\Stack\DTO\Context;
-use Builder\Domain\Stack\OroPlatform;
-use Builder\Domain\Stack\StackBuilder;
-use Builder\Platform\Console\ServicePrinter;
-use Builder\Platform\Console\ContextWizard;
-use Builder\Platform\Console\VolumePrinter;
+use Kiboko\Cloud\Domain\Stack\DTO\Context;
+use Kiboko\Cloud\Domain\Stack\OroPlatform;
+use Kiboko\Cloud\Domain\Stack\StackBuilder;
+use Kiboko\Cloud\Platform\Console\ServicePrinter;
+use Kiboko\Cloud\Platform\Console\ContextWizard;
+use Kiboko\Cloud\Platform\Console\VolumePrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

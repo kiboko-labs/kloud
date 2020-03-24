@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Native;
+namespace Kiboko\Cloud\Domain\Packaging\Native;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 
 final class Tag implements Packaging\Tag\TagBuildInterface
 {

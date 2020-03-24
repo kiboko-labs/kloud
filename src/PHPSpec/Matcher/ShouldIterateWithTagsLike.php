@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\PHPSpec\Matcher;
+namespace Kiboko\Cloud\PHPSpec\Matcher;
 
-use Builder\PHPSPec\Matcher\Iterate\IterableTagsMatcher;
+use Kiboko\Cloud\PHPSPec\Matcher\Iterate\IterableTagsMatcher;
 use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Formatter\Presenter\Presenter;
 use PhpSpec\Matcher\Iterate;

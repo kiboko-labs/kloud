@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\Platform\Edition;
+namespace Kiboko\Cloud\Domain\Packaging\Platform\Edition;
 
 use Exception;
 use Traversable;

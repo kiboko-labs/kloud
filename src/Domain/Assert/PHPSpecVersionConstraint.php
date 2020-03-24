@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Assert;
+namespace Kiboko\Cloud\Domain\Assert;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 use Composer\Semver\Semver;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;

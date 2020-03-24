@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\OroPlatform;
+namespace Kiboko\Cloud\Domain\Stack\OroPlatform;
 
-use Builder\Domain\Stack\Compose\EnvironmentVariable;
-use Builder\Domain\Stack\Compose\Stack;
-use Builder\Domain\Stack\Compose\Variable;
-use Builder\Domain\Stack\DelegatedStackBuilderInterface;
-use Builder\Domain\Stack\DTO;
-use Builder\Domain\Stack\OroPlatform\Service;
-use Builder\Domain\Stack\ServiceBuilderInterface;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\Stack;
+use Kiboko\Cloud\Domain\Stack\Compose\Variable;
+use Kiboko\Cloud\Domain\Stack\DelegatedStackBuilderInterface;
+use Kiboko\Cloud\Domain\Stack\DTO;
+use Kiboko\Cloud\Domain\Stack\OroPlatform\Service;
+use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class Builder implements DelegatedStackBuilderInterface
 {

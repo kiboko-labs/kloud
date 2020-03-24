@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Assert\Result;
+namespace Kiboko\Cloud\Domain\Assert\Result;
 
 interface AssertionFailureInterface extends AssertionResultInterface
 {

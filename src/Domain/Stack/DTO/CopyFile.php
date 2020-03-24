@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\DTO;
+namespace Kiboko\Cloud\Domain\Stack\DTO;
 
-use Builder\Domain\Stack\Resource\FileInterface;
+use Kiboko\Cloud\Domain\Stack\Resource\FileInterface;
 
 final class CopyFile implements FileCommandInterface
 {

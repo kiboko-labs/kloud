@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Builder\Domain\Stack\Diff;
+namespace Kiboko\Cloud\Domain\Stack\Diff;
 
 use SebastianBergmann\Diff\Differ;
 use SebastianBergmann\Diff\Output\AbstractChunkOutputBuilder;

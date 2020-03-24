@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Builder\Domain\Packaging\CommandBus;
+namespace Kiboko\Cloud\Domain\Packaging\CommandBus;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
