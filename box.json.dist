@@ -1,7 +1,7 @@
 {
     "chmod": "0755",
-    "main": "bin/bisous",
-    "output": "build/bisous.phar",
+    "main": "bin/kloud",
+    "output": "build/kloud.phar",
     "directories": ["src"],
     "finder": [
         {
@@ -15,6 +15,6 @@
         }
     ],
     "algorithm": "OPENSSL",
-    "key": "bisous-phar-private-nopassphrase.pem",
+    "key": "kloud-private-nopassphrase.pem",
     "stub": true
 }
