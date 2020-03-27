@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Domain\Packaging\Platform;
 
+use Composer\Semver\Semver;
 use Kiboko\Cloud\Domain\Packaging;
 use Kiboko\Cloud\Domain\Packaging\Native;
 
@@ -36,6 +37,10 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
             foreach ($this->variations as $variation) {
                 /** @var Packaging\Platform\Edition\Edition $edition */
                 foreach ($this->editions as $edition) {
+                    if (!Semver::satisfies($this->number, $edition->getPhpConstraint())) {
+                        continue;
+                    }
+
                     $parent = null;
                     if ($edition instanceof Packaging\Platform\Edition\EditionDependency) {
                         $parent = new Packaging\Context\Context(
@@ -44,9 +49,9 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
                                 '%php.version%' => $this->number,
                                 '%php.flavor%' => $flavor,
                                 '%package.variation%' => $variation,
-                                '%package.name%' => $edition->parent->package,
-                                '%package.edition%' => $edition->parent->edition,
-                                '%package.version%' => $edition->parent->version,
+                                '%package.name%' => $edition->getParentPackage(),
+                                '%package.edition%' => $edition->getParentEdition(),
+                                '%package.version%' => $edition->getParentVersion(),
                             ]
                         );
                     }
@@ -58,9 +63,9 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
                             '%php.version%' => $this->number,
                             '%php.flavor%' => $flavor,
                             '%package.variation%' => $variation,
-                            '%package.name%' => $edition->package,
-                            '%package.edition%' => $edition->edition,
-                            '%package.version%' => $edition->version,
+                            '%package.name%' => $edition->getPackage(),
+                            '%package.edition%' => $edition->getEdition(),
+                            '%package.version%' => $edition->getVersion(),
                         ]
                     );
                 }

@@ -2,9 +2,6 @@
 
 namespace Kiboko\Cloud\Domain\Packaging\Platform\Edition;
 
-use Exception;
-use Traversable;
-
 final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryInterface, \IteratorAggregate
 {
     public function getIterator()
@@ -16,7 +13,8 @@ final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryI
             new Edition(
                 'orocommerce',
                 '3.1',
-                'ce'
+                'ce',
+                '>=7.1 <8.0'
             )
         );
 
@@ -27,7 +25,8 @@ final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryI
             new Edition(
                 'orocommerce',
                 '4.1',
-                'ce'
+                'ce',
+                '>=7.3 <8.0'
             )
         );
     }

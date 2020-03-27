@@ -2,13 +2,33 @@
 
 namespace Kiboko\Cloud\Domain\Packaging\Platform\Edition;
 
-use Exception;
-use Traversable;
-
 final class MarelloEnterpriseEditionRepository implements EditionRepositoryInterface, \IteratorAggregate
 {
     public function getIterator()
     {
+        yield new EditionDependency(
+            'marello',
+            '1.5',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '2.6',
+                'ee',
+                '>=5.6 <7.2'
+            )
+        );
+        yield new EditionDependency(
+            'marello',
+            '1.6',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '2.6',
+                'ee',
+                '>=5.6 <7.2'
+            )
+        );
+
         yield new EditionDependency(
             'marello',
             '2.0',
@@ -16,7 +36,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             new Edition(
                 'oroplatform',
                 '3.1',
-                'ee'
+                'ee',
+                '>=7.1 <8.0'
             )
         );
 
@@ -27,7 +48,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             new Edition(
                 'oroplatform',
                 '3.1',
-                'ee'
+                'ee',
+                '>=7.1 <8.0'
             )
         );
 
@@ -38,7 +60,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             new Edition(
                 'oroplatform',
                 '3.1',
-                'ee'
+                'ee',
+                '>=7.1 <8.0'
             )
         );
 
@@ -49,7 +72,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             new Edition(
                 'oroplatform',
                 '4.1',
-                'ee'
+                'ee',
+                '>=7.3 <8.0'
             )
         );
     }

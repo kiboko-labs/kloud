@@ -2,6 +2,6 @@
 
 namespace Kiboko\Cloud\Domain\Packaging\Platform\Edition;
 
-interface EditionRepositoryInterface
+interface EditionRepositoryInterface extends \Traversable
 {
 }
