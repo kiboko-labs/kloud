@@ -22,6 +22,6 @@ final class CLIMissingOrBroken implements AssertionFailureInterface
 
     public function __toString()
     {
-        return 'The PHP CLI command is missing or broken.';
+        return 'The PHP-CLI command is missing or broken.';
     }
 }

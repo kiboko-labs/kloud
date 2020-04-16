@@ -4,13 +4,10 @@ namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service\PHP;
 
 use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\DTO;
-use Kiboko\Cloud\Domain\Stack\OroPlatform\FilesAwareTrait;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class MessageQueue implements ServiceBuilderInterface
 {
-    use FilesAwareTrait;
-
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;

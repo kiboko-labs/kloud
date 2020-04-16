@@ -13,17 +13,20 @@ $app = new Application('Kiboko Docker Builder');
 $app->addCommands([
     (new Command\Images\BuildCommand(
         Command\Images\BuildCommand::$defaultName,
-        __DIR__ . '/../config/'
+        __DIR__ . '/../config/',
+        __DIR__ . '/../environments'
     ))->setAliases(['build', 'wizard']),
 
     (new Command\Images\PushCommand(
         Command\Images\PushCommand::$defaultName,
-        __DIR__ . '/../config/'
+        __DIR__ . '/../config/',
+        __DIR__ . '/../environments'
     ))->setAliases(['push']),
 
     (new Command\Images\PullCommand(
         Command\Images\PullCommand::$defaultName,
-        __DIR__ . '/../config/'
+        __DIR__ . '/../config/',
+        __DIR__ . '/../environments'
     ))->setAliases(['pull']),
 
     (new Command\Images\ListCommand(

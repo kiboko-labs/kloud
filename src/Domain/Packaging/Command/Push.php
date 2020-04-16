@@ -25,7 +25,7 @@ final class Push implements CommandInterface, LoggerAwareInterface
         return sprintf('PUSH %s:%s', (string) $this->tag->getRepository(), (string) $this->tag);
     }
 
-    public function __invoke(): Process
+    public function __invoke(string $rootPath): Process
     {
         return new Process(
             [

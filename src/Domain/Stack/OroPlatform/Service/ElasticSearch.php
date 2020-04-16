@@ -9,14 +9,12 @@ use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use Kiboko\Cloud\Domain\Stack\DTO;
-use Kiboko\Cloud\Domain\Stack\OroPlatform\FilesAwareTrait;
+use Kiboko\Cloud\Domain\Stack\Resource;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 use Composer\Semver\Semver;
 
 final class ElasticSearch implements ServiceBuilderInterface
 {
-    use FilesAwareTrait;
-
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;
@@ -74,7 +72,18 @@ final class ElasticSearch implements ServiceBuilderInterface
         ;
 
         $stack->addFiles(
-            $this->findFilesToCopy($context, '.docker/elasticsearch/elasticsearch.yml'),
+            new Resource\InMemory('.docker/elasticsearch/elasticsearch.yml', <<<EOF
+                http.host: 0.0.0.0
+
+                # Uncomment the following lines for a production cluster deployment
+                #transport.host: 0.0.0.0
+                #discovery.zen.minimum_master_nodes: 1
+                http.cors.enabled : true
+                http.cors.allow-origin : "*"
+                http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
+                http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
+                cluster.routing.allocation.disk.threshold_enabled: false
+                EOF),
         );
 
         $stack->addEnvironmentVariables(

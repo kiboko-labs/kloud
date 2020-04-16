@@ -6,7 +6,7 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class FPMMissingOrBroken implements AssertionFailureInterface
+final class NodeJSVersionNotFound implements AssertionUnprocessableInterface
 {
     private Packaging\Tag\TagInterface $tag;
 
@@ -22,6 +22,6 @@ final class FPMMissingOrBroken implements AssertionFailureInterface
 
     public function __toString()
     {
-        return 'The PHP-FPM command is missing or broken.';
+        return 'Could not determine the NodeJS command version, although the command was found.';
     }
 }

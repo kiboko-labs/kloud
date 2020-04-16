@@ -22,6 +22,6 @@ final class FPMVersionNotFound implements AssertionUnprocessableInterface
 
     public function __toString()
     {
-        return 'Could not determine the PHP FPM command version, although the command was found.';
+        return 'Could not determine the PHP-FPM command version, although the command was found.';
     }
 }

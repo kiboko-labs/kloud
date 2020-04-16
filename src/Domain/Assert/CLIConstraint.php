@@ -13,13 +13,16 @@ final class CLIConstraint implements AssertionInterface
 {
     public Packaging\RepositoryInterface $repository;
     public Packaging\Tag\TagInterface $tag;
+    private string $constraint;
 
     public function __construct(
         Packaging\RepositoryInterface $repository,
-        Packaging\Tag\TagInterface $tag
+        Packaging\Tag\TagInterface $tag,
+        string $constraint
     ) {
         $this->repository = $repository;
         $this->tag = $tag;
+        $this->constraint = $constraint;
     }
 
     public function __invoke(): Result\AssertionResultInterface
@@ -41,13 +44,17 @@ final class CLIConstraint implements AssertionInterface
                 }
             });
         } catch (ProcessFailedException $exception) {
-            return new Result\CLIVersionNotFound($this->tag);
-        }
-
-        if (!is_string($version)) {
             return new Result\CLIMissingOrBroken($this->tag);
         }
 
-        return new Result\CLIFound($this->tag, $version);
+        if (!is_string($version)) {
+            return new Result\CLIVersionNotFound($this->tag);
+        }
+
+        if (Semver::satisfies($version, $this->constraint)) {
+            return new Result\CLIVersionMatches($this->tag, $version, $this->constraint);
+        }
+
+        return new Result\CLIVersionInvalid($this->tag, $version, $this->constraint);
     }
 }

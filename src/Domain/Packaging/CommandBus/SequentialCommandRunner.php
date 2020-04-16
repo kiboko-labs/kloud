@@ -22,7 +22,7 @@ final class SequentialCommandRunner implements CommandRunnerInterface
         $this->output = $output;
     }
 
-    public function run(CommandBusInterface $commandBus)
+    public function run(CommandBusInterface $commandBus, string $rootPath)
     {
         $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::SELF_FIRST);
 
@@ -33,7 +33,7 @@ final class SequentialCommandRunner implements CommandRunnerInterface
         /** @var Packaging\Command\CommandInterface $command */
         foreach ($progressBar->iterate($iterator, iterator_count($iterator)) as $command) {
             $section->overwrite(sprintf('Running: <info>%s</>', (string) $command));
-            $process = $command();
+            $process = $command($rootPath);
 
             $process->run();
 

@@ -6,7 +6,7 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class CLIFound implements AssertionSuccessInterface
+final class NodeJSVersionMatches implements AssertionSuccessInterface
 {
     private Packaging\Tag\TagInterface $tag;
     private string $version;
@@ -24,6 +24,6 @@ final class CLIFound implements AssertionSuccessInterface
 
     public function __toString()
     {
-        return sprintf('The PHP command was found in version %s.', $this->version);
+        return sprintf('The NodeJS command was found in version %s.', $this->version);
     }
 }

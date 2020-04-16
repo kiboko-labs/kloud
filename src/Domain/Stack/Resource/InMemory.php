@@ -4,10 +4,12 @@ namespace Kiboko\Cloud\Domain\Stack\Resource;
 
 final class InMemory implements FileInterface
 {
+    private string $path;
     private string $content;
 
-    public function __construct(string $content)
+    public function __construct(string $path, string $content)
     {
+        $this->path = $path;
         $this->content = $content;
     }
 
@@ -18,5 +20,15 @@ final class InMemory implements FileInterface
         fseek($stream, 0, SEEK_SET);
 
         return $stream;
+    }
+
+    public function asBlob(): string
+    {
+        return $this->content;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 }

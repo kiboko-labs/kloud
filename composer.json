@@ -13,7 +13,8 @@
         "symfony/process": "^5.0",
         "symfony/polyfill-php80": "@dev",
         "symfony/property-access": "^5.0",
-        "symfony/serializer": "^5.0"
+        "symfony/serializer": "^5.0",
+        "splitbrain/php-archive": "^1.1"
     },
     "require-dev": {
         "friends-of-phpspec/phpspec-code-coverage": "^4.0",

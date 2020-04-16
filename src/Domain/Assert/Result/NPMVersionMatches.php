@@ -6,13 +6,15 @@ namespace Kiboko\Cloud\Domain\Assert\Result;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class FPMMissingOrBroken implements AssertionFailureInterface
+final class NPMVersionMatches implements AssertionSuccessInterface
 {
     private Packaging\Tag\TagInterface $tag;
+    private string $version;
 
-    public function __construct(Packaging\Tag\TagInterface $tag)
+    public function __construct(Packaging\Tag\TagInterface $tag, string $version)
     {
         $this->tag = $tag;
+        $this->version = $version;
     }
 
     public function is(Packaging\Tag\TagInterface $tag): bool
@@ -22,6 +24,6 @@ final class FPMMissingOrBroken implements AssertionFailureInterface
 
     public function __toString()
     {
-        return 'The PHP-FPM command is missing or broken.';
+        return sprintf('The NPM command was found in version %s.', $this->version);
     }
 }

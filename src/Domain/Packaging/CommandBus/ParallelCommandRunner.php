@@ -29,7 +29,7 @@ final class ParallelCommandRunner implements CommandRunnerInterface
         $this->poll = $poll;
     }
 
-    public function run(CommandBusInterface $commandBus)
+    public function run(CommandBusInterface $commandBus, string $rootPath)
     {
         $iterator = new \RecursiveIteratorIterator($commandBus, \RecursiveIteratorIterator::SELF_FIRST);
 
@@ -38,8 +38,8 @@ final class ParallelCommandRunner implements CommandRunnerInterface
 
         // do not modify the object pointers in the argument, copy to local working variable
         $processes = new \SplObjectStorage();
-        $processesQueue = array_map(function (Packaging\Command\CommandInterface $command) use ($processes): Process {
-            $process = $command();
+        $processesQueue = array_map(function (Packaging\Command\CommandInterface $command) use ($processes, $rootPath): Process {
+            $process = $command($rootPath);
             $processes[$process] = $command;
 
             return $process;

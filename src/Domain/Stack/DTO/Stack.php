@@ -4,7 +4,9 @@ namespace Kiboko\Cloud\Domain\Stack\DTO;
 
 use Kiboko\Cloud\Domain\Stack\Compose;
 use Kiboko\Cloud\Domain\Stack\Diff\StackDiff;
-use SebastianBergmann\Comparator\Factory;
+use Kiboko\Cloud\Domain\Stack\Resource\FileInterface;
+use Kiboko\Cloud\Domain\Stack\Resource\InMemory;
+use splitbrain\PHPArchive\Tar;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
@@ -16,12 +18,12 @@ final class Stack
 {
     public Context $context;
     public Compose\Stack $stack;
-    /** @var iterable|FileCommandInterface[] */
+    /** @var iterable|FileInterface[] */
     public iterable $files;
     /** @var iterable|Compose\ValuedEnvironmentVariableInterface[] */
     public iterable $environment;
 
-    public function __construct(Context $context, Compose\Stack $stack, FileCommandInterface ...$files)
+    public function __construct(Context $context, Compose\Stack $stack, FileInterface ...$files)
     {
         $this->context = $context;
         $this->stack = $stack;
@@ -29,7 +31,7 @@ final class Stack
         $this->environment = [];
     }
 
-    public function addFiles(FileCommandInterface ...$files): self
+    public function addFiles(FileInterface ...$files): self
     {
         array_push($this->files, ...$files);
 
@@ -150,7 +152,7 @@ final class Stack
         );
 
         foreach ($this->files as $file) {
-            $file->saveTo($path);
+            file_put_contents($file->getPath(), $file->asBlob());
         }
 
         $stream = fopen($path . '.env.dist', 'w');

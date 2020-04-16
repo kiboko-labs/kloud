@@ -29,19 +29,21 @@ final class ForceBuild implements CommandInterface, LoggerAwareInterface
         return sprintf('FORCE BUILD %s:%s', (string) $this->tag->getRepository(), (string) $this->tag);
     }
 
-    public function __invoke(): Process
+    public function __invoke(string $rootPath): Process
     {
+        $archiver = new Packaging\Archiver();
+        $archiver->addPath($rootPath . '/' . $this->context->getPath());
+
         return new Process(
             [
-                'docker', 'build',
-//                '--pull',
+                'docker', 'build', '--rm',
                 '--no-cache',
                 '--tag', sprintf('%s:%s', (string) $this->tag->getRepository(), (string) $this->tag),
-                $this->context->getPath(),
+                '-',
             ],
             null,
             null,
-            null,
+            (string) $archiver,
             3600.0
         );
     }

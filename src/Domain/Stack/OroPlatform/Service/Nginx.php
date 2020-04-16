@@ -8,13 +8,11 @@ use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use Kiboko\Cloud\Domain\Stack\DTO;
-use Kiboko\Cloud\Domain\Stack\OroPlatform\FilesAwareTrait;
+use Kiboko\Cloud\Domain\Stack\Resource;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class Nginx implements ServiceBuilderInterface
 {
-    use FilesAwareTrait;
-
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;
@@ -75,10 +73,115 @@ final class Nginx implements ServiceBuilderInterface
             );
 
         $stack->addFiles(
-            $this->findFilesToCopy($context, '.docker/nginx@1.15/config/options.conf'),
-            $this->findFilesToCopy($context, '.docker/nginx@1.15/config/reverse-proxy.conf'),
-            $this->findFilesToCopy($context, '.docker/nginx@1.15/config/vhost-prod.conf'),
-            $this->findFilesToCopy($context, '.docker/nginx@1.15/config/vhost-dev.conf'),
+            new Resource\InMemory('.docker/nginx@1.15/config/options.conf', <<<EOF
+                client_header_timeout 10m;
+                client_body_timeout 10m;
+                send_timeout 10m;
+                real_ip_header X-Forwarded-For;
+                EOF),
+            new Resource\InMemory('.docker/nginx@1.15/config/reverse-proxy.conf', <<<EOF
+                upstream prod-app {
+                    server http-worker-prod:80;
+                }
+                
+                upstream dev-app {
+                    server http-worker-dev:80;
+                }
+                
+                upstream xdebug-app {
+                    server http-worker-xdebug:80;
+                }
+                
+                map \$http_x_symfony_env \$pool {
+                     default "dev-app";
+                     prod "prod-app";
+                     dev "dev-app";
+                     xdebug "xdebug-app";
+                }
+                
+                server {
+                     listen 80;
+                     server_name _;
+                     location / {
+                          proxy_pass http://\$pool;
+                
+                          #standard proxy settings
+                          proxy_set_header X-Real-IP \$remote_addr;
+                          proxy_redirect off;
+                          proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                          proxy_set_header Host \$http_host;
+                          proxy_redirect off;
+                          proxy_set_header X-Forwarded-Proto \$scheme;
+                          proxy_set_header X-NginX-Proxy true;
+                          proxy_connect_timeout 600;
+                          proxy_send_timeout 600;
+                          proxy_read_timeout 600;
+                          send_timeout 600;
+                     }
+                }
+                EOF),
+            new Resource\InMemory('.docker/nginx@1.15/config/vhost-dev.conf', <<<EOF
+                server {
+                    server_name _;
+                    root /var/www/html/public;
+                
+                    index index_dev.php;
+                
+                    access_log /var/log/nginx/access_log;
+                    error_log /var/log/nginx/error_log info;
+                
+                    try_files \$uri \$uri/ @rewrite;
+                
+                    location @rewrite {
+                        rewrite ^/(.*)$ /index_dev.php/$1;
+                    }
+                
+                    location ~ [^/].php(/|$) {
+                        fastcgi_split_path_info ^(.+?.php)(/.*)$;
+                
+                        if (!-f \$document_root\$fastcgi_script_name) {
+                            return 404;
+                        }
+                
+                        fastcgi_index index_dev.php;
+                        fastcgi_read_timeout 10m;
+                        fastcgi_pass fpm:9000;
+                        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+                        include fastcgi_params;
+                    }
+                }
+                EOF),
+            new Resource\InMemory('.docker/nginx@1.15/config/vhost-prod.conf', <<<EOF
+                server {
+                    server_name _;
+                    root /var/www/html/public;
+                
+                    index index.php;
+                
+                    access_log /var/log/nginx/access_log;
+                    error_log /var/log/nginx/error_log info;
+                
+                    try_files \$uri \$uri/ @rewrite;
+                
+                    location @rewrite {
+                        rewrite ^/(.*)$ /index.php/$1;
+                    }
+                
+                    location ~ [^/].php(/|$) {
+                        fastcgi_split_path_info ^(.+?.php)(/.*)$;
+                
+                        if (!-f \$document_root\$fastcgi_script_name) {
+                            return 404;
+                        }
+                
+                        fastcgi_index index.php;
+                        fastcgi_read_timeout 10m;
+                        fastcgi_pass fpm:9000;
+                        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+                        include fastcgi_params;
+                    }
+                }
+                EOF),
         );
 
         $stack->addEnvironmentVariables(
@@ -107,7 +210,37 @@ final class Nginx implements ServiceBuilderInterface
                 new EnvironmentVariable(new Variable('HTTP_XDEBUG_PORT')),
             );
             $stack->addFiles(
-                $this->findFilesToCopy($context, '.docker/nginx@1.15/config/vhost-xdebug.conf'),
+                new Resource\InMemory('.docker/nginx@1.15/config/vhost-xdebug.conf', <<<EOF
+                    server {
+                        server_name _;
+                        root /var/www/html/public;
+                    
+                        index index_dev.php;
+                    
+                        access_log /var/log/nginx/access_log;
+                        error_log /var/log/nginx/error_log info;
+                    
+                        try_files \$uri \$uri/ @rewrite;
+                    
+                        location @rewrite {
+                            rewrite ^/(.*)$ /index_dev.php/$1;
+                        }
+                    
+                        location ~ [^/].php(/|$) {
+                            fastcgi_split_path_info ^(.+?.php)(/.*)$;
+                    
+                            if (!-f \$document_root\$fastcgi_script_name) {
+                                return 404;
+                            }
+                    
+                            fastcgi_index index_dev.php;
+                            fastcgi_read_timeout 10m;
+                            fastcgi_pass fpm-xdebug:9000;
+                            fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+                            include fastcgi_params;
+                        }
+                    }
+                    EOF),
             );
         }
 

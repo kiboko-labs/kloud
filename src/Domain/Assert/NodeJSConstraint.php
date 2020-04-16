@@ -9,7 +9,7 @@ use Composer\Semver\Semver;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-final class FPMConstraint implements AssertionInterface
+final class NodeJSConstraint implements AssertionInterface
 {
     public Packaging\RepositoryInterface $repository;
     public Packaging\Tag\TagInterface $tag;
@@ -29,7 +29,7 @@ final class FPMConstraint implements AssertionInterface
     {
         $process = new Process([
             'docker', 'run', '--rm', '-i', sprintf('%s:%s', (string) $this->repository, (string) $this->tag),
-            'php-fpm', '-v',
+            'node', '-v',
         ]);
 
         $version = null;
@@ -39,22 +39,22 @@ final class FPMConstraint implements AssertionInterface
                     throw new ProcessFailedException($process);
                 }
 
-                if (preg_match('/^PHP\s+(\d+\.\d+\.\d+(?:[\.-](?:alpha|beta|rc)\d+)?) \(fpm-fcgi\)/i', $buffer, $matches)) {
+                if (preg_match('/^v?(\d+\.\d+\.\d+(?:[\.-](?:alpha|beta|rc)\d+)?)\s+/i', $buffer, $matches)) {
                     $version = $matches[1];
                 }
             });
         } catch (ProcessFailedException $exception) {
-            return new Result\FPMMissingOrBroken($this->tag);
+            return new Result\NodeJSMissingOrBroken($this->tag);
         }
 
         if (!is_string($version)) {
-            return new Result\FPMVersionNotFound($this->tag);
+                return new Result\NodeJSVersionNotFound($this->tag);
         }
 
         if (Semver::satisfies($version, $this->constraint)) {
-            return new Result\FPMVersionMatches($this->tag, $version, $this->constraint);
+            return new Result\NodeJSVersionMatches($this->tag, $version);
         }
 
-        return new Result\FPMVersionInvalid($this->tag, $version, $this->constraint);
+        return new Result\NodeJSVersionInvalid($this->tag, $version, $this->constraint);
     }
 }

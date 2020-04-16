@@ -7,13 +7,10 @@ use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use Kiboko\Cloud\Domain\Stack\DTO;
 use Kiboko\Cloud\Domain\Stack\DTO\Context;
-use Kiboko\Cloud\Domain\Stack\OroPlatform\FilesAwareTrait;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class PHP implements ServiceBuilderInterface
 {
-    use FilesAwareTrait;
-
     /** @var iterable|ServiceBuilderInterface[] */
     private iterable $delegated;
     private string $stacksPath;

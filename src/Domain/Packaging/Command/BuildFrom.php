@@ -32,19 +32,21 @@ final class BuildFrom implements CommandInterface, LoggerAwareInterface
         return sprintf('BUILD %1$s:%2$s FROM %1$s:%3$s', (string) $this->tag->getRepository(), (string) $this->tag, (string) $this->source);
     }
 
-    public function __invoke(): Process
+    public function __invoke(string $rootPath): Process
     {
+        $archiver = new Packaging\Archiver();
+        $archiver->addPath($rootPath . '/' . $this->context->getPath());
+
         return new Process(
             [
-                'docker', 'build',
-//                '--pull',
+                'docker', 'build', '--rm',
                 '--tag', sprintf('%s:%s', (string) $this->tag->getRepository(), (string) $this->tag),
                 '--build-arg', sprintf('SOURCE_VARIATION=%s', (string) $this->source),
-                $this->context->getPath(),
+                '-',
             ],
             null,
             null,
-            null,
+            (string) $archiver,
             3600.0
         );
     }

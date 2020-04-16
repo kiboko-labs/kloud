@@ -28,10 +28,10 @@ final class CommandBus implements CommandBusInterface, \Iterator, \RecursiveIter
         $this->iterator = new \ArrayIterator($this->commands);
     }
 
-    public function __invoke(): void
+    public function __invoke(string $rootPath): void
     {
         foreach ($this->commands as $command) {
-            $command();
+            $command($rootPath);
         }
     }
 

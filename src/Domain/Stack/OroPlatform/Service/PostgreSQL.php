@@ -9,13 +9,11 @@ use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use Kiboko\Cloud\Domain\Stack\DTO;
-use Kiboko\Cloud\Domain\Stack\OroPlatform\FilesAwareTrait;
+use Kiboko\Cloud\Domain\Stack\Resource;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class PostgreSQL implements ServiceBuilderInterface
 {
-    use FilesAwareTrait;
-
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;
@@ -51,7 +49,9 @@ final class PostgreSQL implements ServiceBuilderInterface
         ;
 
         $stack->addFiles(
-            $this->findFilesToCopy($context, '.docker/postgres@9.6/sql/uuid-ossp.sql')
+            new Resource\InMemory('./docker/postgres@9.6/sql/uuid-ossp.sql', <<<EOF
+                CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+                EOF),
         );
 
         $stack->addEnvironmentVariables(

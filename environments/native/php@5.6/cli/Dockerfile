@@ -73,10 +73,11 @@ RUN set -ex \
         phpunit/phpunit \
         phpspec/phpspec
 
-ENV PATH="/root/.composer/vendor/bin:${PATH}"
+ENV PATH="/opt/docker/.composer/vendor/bin:${PATH}"
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 COPY config/memory.ini /usr/local/etc/php/conf.d/memory.ini
+COPY config/timezone.ini /usr/local/etc/php/conf.d/timezone.ini
 
 WORKDIR /var/www/html

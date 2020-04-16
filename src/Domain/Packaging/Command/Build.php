@@ -7,6 +7,7 @@ namespace Kiboko\Cloud\Domain\Packaging\Command;
 use Kiboko\Cloud\Domain\Packaging;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use splitbrain\PHPArchive\Tar;
 use Symfony\Component\Process\Process;
 
 final class Build implements CommandInterface, LoggerAwareInterface
@@ -29,18 +30,20 @@ final class Build implements CommandInterface, LoggerAwareInterface
         return sprintf('BUILD %s:%s', (string) $this->tag->getRepository(), (string) $this->tag);
     }
 
-    public function __invoke(): Process
+    public function __invoke(string $rootPath): Process
     {
+        $archiver = new Packaging\Archiver();
+        $archiver->addPath($rootPath . '/' . $this->context->getPath());
+
         return new Process(
             [
-                'docker', 'build',
-//                '--pull',
+                'docker', 'build', '--rm',
                 '--tag', sprintf('%s:%s', (string) $this->tag->getRepository(), (string) $this->tag),
-                $this->context->getPath(),
+                '-',
             ],
             null,
             null,
-            null,
+            (string) $archiver,
             3600.0
         );
     }

@@ -9,7 +9,6 @@ use Kiboko\Cloud\Domain\Packaging;
 final class CLI implements ConstraintInterface
 {
     private Packaging\RepositoryInterface $repository;
-    private string $constraint;
 
     public function __construct(
         Packaging\RepositoryInterface $repository
@@ -20,11 +19,13 @@ final class CLI implements ConstraintInterface
     public function apply(\Traversable $tagRepository): \Traversable
     {
         foreach ($tagRepository as $tag) {
-            if (!preg_match('/-cli(-|$)/', (string) $tag)) {
+            if (!preg_match('/^(\d+\.\d+)-cli(?:-|$)/', (string) $tag, $matches)) {
                 continue;
             }
 
-            yield new CLIConstraint($this->repository, $tag);
+            $constraint = sprintf('^%s', $matches[1]);
+
+            yield new CLIConstraint($this->repository, $tag, $constraint);
         }
     }
 }

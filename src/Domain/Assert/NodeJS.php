@@ -6,26 +6,30 @@ namespace Kiboko\Cloud\Domain\Assert;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-final class FPM implements ConstraintInterface
+final class NodeJS implements ConstraintInterface
 {
     private Packaging\RepositoryInterface $repository;
+    private string $constraint;
+    private string $regex;
 
     public function __construct(
-        Packaging\RepositoryInterface $repository
+        Packaging\RepositoryInterface $repository,
+        string $constraint,
+        string $regex
     ) {
         $this->repository = $repository;
+        $this->constraint = $constraint;
+        $this->regex = $regex;
     }
 
     public function apply(\Traversable $tagRepository): \Traversable
     {
         foreach ($tagRepository as $tag) {
-            if (!preg_match('/^(\d+\.\d+)-fpm(?:-|$)/', (string) $tag, $matches)) {
+            if (!preg_match($this->regex, (string) $tag)) {
                 continue;
             }
 
-            $constraint = sprintf('^%s', $matches[1]);
-
-            yield new FPMConstraint($this->repository, $tag, $constraint);
+            yield new NodeJSConstraint($this->repository, $tag, $this->constraint);
         }
     }
 }

@@ -22,6 +22,6 @@ final class CLIVersionNotFound implements AssertionUnprocessableInterface
 
     public function __toString()
     {
-        return 'Could not determine the CLI command version, although the command was found.';
+        return 'Could not determine the PHP-CLI command version, although the command was found.';
     }
 }

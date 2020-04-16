@@ -8,7 +8,7 @@ use Kiboko\Cloud\Domain\Packaging;
 
 interface CommandBusInterface extends \Traversable, \Countable, \Stringable
 {
-    public function __invoke(): void;
+    public function __invoke(string $rootPath): void;
 
     public function add(Packaging\Command\CommandInterface ...$command): void;
 }

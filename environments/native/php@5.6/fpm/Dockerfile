@@ -61,5 +61,6 @@ ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 COPY config/pool.ini /usr/local/etc/php/pool.d/default.ini
 COPY config/memory.ini /usr/local/etc/php/conf.d/memory.ini
+COPY config/timezone.ini /usr/local/etc/php/conf.d/timezone.ini
 
 WORKDIR /var/www/html

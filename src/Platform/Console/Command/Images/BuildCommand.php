@@ -17,11 +17,13 @@ final class BuildCommand extends Command
     public static $defaultName = 'images:build';
 
     private string $configPath;
+    private string $environmentsPath;
 
-    public function __construct(?string $name, string $configPath)
+    public function __construct(?string $name, string $configPath, string $environmentsPath)
     {
         parent::__construct($name);
         $this->configPath = $configPath;
+        $this->environmentsPath = $environmentsPath;
     }
 
     protected function configure()
@@ -119,10 +121,10 @@ final class BuildCommand extends Command
         }
 
         if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
-            (new Packaging\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus);
+            (new Packaging\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus, $this->environmentsPath);
         } else {
             $parallel = (int) $input->getOption('parallel');
-            (new Packaging\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus);
+            (new Packaging\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus, $this->environmentsPath);
         }
 
         return 0;
