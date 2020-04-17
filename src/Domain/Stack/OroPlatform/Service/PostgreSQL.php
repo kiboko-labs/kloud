@@ -49,7 +49,7 @@ final class PostgreSQL implements ServiceBuilderInterface
         ;
 
         $stack->addFiles(
-            new Resource\InMemory('./docker/postgres@9.6/sql/uuid-ossp.sql', <<<EOF
+            new Resource\InMemory('./.docker/postgres@9.6/sql/uuid-ossp.sql', <<<EOF
                 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
                 EOF),
         );

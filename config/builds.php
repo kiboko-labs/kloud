@@ -8,49 +8,49 @@ return [
     new Packaging\Native\Package(
         $repository,
         '5.6',
-        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository()
     ),
 
     new Packaging\Native\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository()
     ),
 
     new Packaging\Native\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository()
     ),
 
     new Packaging\Native\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository()
     ),
 
     new Packaging\Native\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository()
     ),
 
     new Packaging\Native\Package(
         $repository,
         '8.0',
-        new Packaging\Placeholder('/environments/native/php@%php.version%/%php.flavor%/'),
+        new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
         new Packaging\Native\Flavor\ExperimentalFlavorRepository()
     ),
 
     new Packaging\Native\PackageVariation(
         $repository,
         '5.6',
-        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository()
     ),
@@ -58,7 +58,7 @@ return [
     new Packaging\Native\PackageVariation(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository()
     ),
@@ -66,7 +66,7 @@ return [
     new Packaging\Native\PackageVariation(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository()
     ),
@@ -74,7 +74,7 @@ return [
     new Packaging\Native\PackageVariation(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository()
     ),
@@ -82,7 +82,7 @@ return [
     new Packaging\Native\PackageVariation(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository()
     ),
@@ -90,7 +90,7 @@ return [
     new Packaging\Native\PackageVariation(
         $repository,
         '8.0',
-        new Packaging\Placeholder('/environments/%package.variation%/'),
+        new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\ExperimentalFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository()
     ),
@@ -98,7 +98,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '5.6',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
@@ -107,7 +107,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
@@ -116,7 +116,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
@@ -125,7 +125,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
@@ -134,7 +134,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
@@ -143,7 +143,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '5.6',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
@@ -152,7 +152,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
@@ -161,7 +161,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
@@ -170,7 +170,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
@@ -179,7 +179,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/oroplatform/%package.edition%/'),
+        new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
@@ -188,7 +188,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
@@ -197,7 +197,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
@@ -206,7 +206,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
@@ -215,7 +215,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
@@ -224,7 +224,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
@@ -233,7 +233,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
@@ -242,7 +242,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
@@ -251,7 +251,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/orocommerce/%package.edition%/'),
+        new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
@@ -260,7 +260,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
@@ -269,7 +269,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
@@ -278,7 +278,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
@@ -287,7 +287,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
@@ -296,7 +296,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
@@ -305,7 +305,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
@@ -314,7 +314,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
@@ -323,7 +323,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/orocrm/%package.edition%/'),
+        new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
@@ -332,7 +332,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
@@ -341,7 +341,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
@@ -350,7 +350,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
@@ -359,7 +359,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
@@ -368,7 +368,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.1',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
@@ -377,7 +377,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.2',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
@@ -386,7 +386,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.3',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
@@ -395,7 +395,7 @@ return [
     new Packaging\Platform\Package(
         $repository,
         '7.4',
-        new Packaging\Placeholder('/environments/marello/%package.edition%/'),
+        new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()

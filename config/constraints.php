@@ -9,11 +9,18 @@ return [
     new Assert\CLI($repository),
     new Assert\FPM($repository),
 
+    new Assert\NodeJS($repository, '^8.14', '/^5\.\d+-cli(?:$|-)/'),
+    new Assert\NodeJS($repository, '^10.19', '/^7\.1-cli(?:$|-)/'),
+    new Assert\NodeJS($repository, '^12.15', '/^7\.[234]-cli(?:$|-)/'),
+
+    new Assert\NPM($repository, '^6.4', '/^5\.\d+-cli(?:$|-)/'),
+    new Assert\NPM($repository, '^6.13', '/^7\.[1234]-cli(?:$|-)/'),
+
     new Assert\ComposerVersion($repository, '~1.9'),
 
     new Assert\BlackfireVersion($repository, '~1.32'),
 
-    new Assert\CSFixerVersion($repository, '~2.16', '/cli(?:$|-)/'),
+    new Assert\CSFixerVersion($repository, '~2.16', '/-cli(?:$|-)/'),
 
     new Assert\PHPUnitVersion($repository, '~7.5', '/^7\.1-cli(?:$|-)/'),
     new Assert\PHPUnitVersion($repository, '~8.5', '/^7\.[234]-cli(?:$|-)/'),
@@ -52,6 +59,7 @@ return [
     new Assert\PHPExtensionVersion($repository, 'xml', '*', '/-[ce]e-\d+\.\d+-/'),
     new Assert\PHPExtensionVersion($repository, 'zip', '*', '/-[ce]e-\d+\.\d+-/'),
     new Assert\PHPExtensionVersion($repository, 'imap', '*', '/-[ce]e-\d+\.\d+-/'),
+    new Assert\PHPExtensionVersion($repository, 'pcntl', '*', '/(?:(?:oroplatform|orocommerce|orocrm)-[ce]e-4\.\d+-|marello-[ce]e-3\.\d+)/'),
 
     new Assert\ICUVersion($repository, '>=4.4', '/-[ce]e-\d+\.\d+-/'),
 ];
