@@ -74,7 +74,7 @@ RUN set -ex \
         phpspec/phpspec \
         infection/infection
 
-ENV PATH="/opt/docker/.composer/vendor/bin:${PATH}"
+ENV PATH="/opt/${APP_USERNAME}/.composer/vendor/bin:${PATH}"
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 

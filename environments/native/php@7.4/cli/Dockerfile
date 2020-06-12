@@ -7,9 +7,6 @@ ARG APP_GID=1000
 ARG APP_USERNAME=docker
 ARG APP_GROUPNAME=docker
 
-ENV PHP_EXTRA_CONFIGURE_ARGS="--enable-fpm --with-fpm-user=${APP_USERNAME} --with-fpm-group=${APP_GROUPNAME} --disable-cgi"
-ENV HOME=/opt/${APP_USERNAME}
-
 RUN set -ex \
     && addgroup -g ${APP_GID} ${APP_USERNAME} \
     && adduser -u ${APP_UID} -h /opt/${APP_USERNAME} -H -G ${APP_GROUPNAME} -s /sbin/nologin -D ${APP_USERNAME} \
@@ -68,7 +65,7 @@ RUN set -ex \
         phpspec/phpspec \
         infection/infection
 
-ENV PATH="/opt/docker/.composer/vendor/bin:${PATH}"
+ENV PATH="/opt/${APP_USERNAME}/.composer/vendor/bin:${PATH}"
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
