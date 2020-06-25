@@ -29,7 +29,7 @@ final class Pull implements CommandInterface, LoggerAwareInterface
     {
         return new Process(
             [
-                'docker', 'pull', sprintf('%s:%s', (string) $this->tag->getRepository(), (string) $this->package),
+                'docker', 'pull', sprintf('%s:%s', (string) $this->tag->getRepository(), (string) $this->tag),
             ],
             null,
             null,
