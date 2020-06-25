@@ -20,7 +20,7 @@ final class FPMWithXdebug implements ServiceBuilderInterface
 
     public function matches(DTO\Context $context): bool
     {
-        return $context->withXdebug;
+        return $context->withXdebug === true;
     }
 
     private function buildImageTag(DTO\Context $context): string

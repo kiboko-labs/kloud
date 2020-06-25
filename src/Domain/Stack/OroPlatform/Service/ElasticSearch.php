@@ -15,6 +15,8 @@ use Composer\Semver\Semver;
 
 final class ElasticSearch implements ServiceBuilderInterface
 {
+    private string $stacksPath;
+
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;

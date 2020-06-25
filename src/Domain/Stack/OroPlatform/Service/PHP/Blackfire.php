@@ -19,7 +19,7 @@ final class Blackfire implements ServiceBuilderInterface
 
     public function matches(DTO\Context $context): bool
     {
-        return $context->withBlackfire;
+        return $context->withBlackfire === true;
     }
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack

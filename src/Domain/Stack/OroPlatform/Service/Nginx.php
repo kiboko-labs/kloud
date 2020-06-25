@@ -13,6 +13,8 @@ use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class Nginx implements ServiceBuilderInterface
 {
+    private string $stacksPath;
+
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;
