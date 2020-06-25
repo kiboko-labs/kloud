@@ -10,6 +10,8 @@ use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class Blackfire implements ServiceBuilderInterface
 {
+    private string $stacksPath;
+
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;
@@ -17,7 +19,7 @@ final class Blackfire implements ServiceBuilderInterface
 
     public function matches(DTO\Context $context): bool
     {
-        return true;
+        return $context->withBlackfire;
     }
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack

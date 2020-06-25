@@ -35,6 +35,10 @@ final class PHP implements ServiceBuilderInterface
     public function build(DTO\Stack $stack, Context $context): DTO\Stack
     {
         foreach ($this->delegated as $delegated) {
+            if (!$delegated->matches($context)) {
+                continue;
+            }
+
             $delegated->build($stack, $context);
         }
 

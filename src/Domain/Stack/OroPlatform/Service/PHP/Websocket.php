@@ -11,6 +11,8 @@ use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class Websocket implements ServiceBuilderInterface
 {
+    private string $stacksPath;
+
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;

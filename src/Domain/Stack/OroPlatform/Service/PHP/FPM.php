@@ -12,6 +12,8 @@ use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class FPM implements ServiceBuilderInterface
 {
+    private string $stacksPath;
+
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;

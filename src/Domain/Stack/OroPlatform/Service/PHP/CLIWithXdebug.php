@@ -11,6 +11,8 @@ use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class CLIWithXdebug implements ServiceBuilderInterface
 {
+    private string $stacksPath;
+
     public function __construct(string $stacksPath)
     {
         $this->stacksPath = $stacksPath;
@@ -18,6 +20,7 @@ final class CLIWithXdebug implements ServiceBuilderInterface
 
     public function matches(DTO\Context $context): bool
     {
+        var_dump($context);
         return $context->withXdebug;
     }
 
