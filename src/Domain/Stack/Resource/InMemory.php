@@ -31,4 +31,9 @@ final class InMemory implements FileInterface
     {
         return $this->path;
     }
+
+    public function getDirectory(): string
+    {
+        return dirname($this->path);
+    }
 }

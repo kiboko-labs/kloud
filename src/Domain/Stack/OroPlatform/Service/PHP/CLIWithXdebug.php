@@ -20,7 +20,6 @@ final class CLIWithXdebug implements ServiceBuilderInterface
 
     public function matches(DTO\Context $context): bool
     {
-        var_dump($context);
         return $context->withXdebug;
     }
 

@@ -152,6 +152,9 @@ final class Stack
         );
 
         foreach ($this->files as $file) {
+            if (!file_exists($file->getDirectory())) {
+                mkdir($file->getDirectory(), 0755, true);
+            }
             file_put_contents($file->getPath(), $file->asBlob());
         }
 

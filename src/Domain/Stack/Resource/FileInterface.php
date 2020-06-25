@@ -12,4 +12,6 @@ interface FileInterface
     public function asBlob(): string;
 
     public function getPath(): string;
+
+    public function getDirectory(): string;
 }
