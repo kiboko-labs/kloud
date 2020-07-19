@@ -8,4 +8,5 @@ interface EditionInterface
     public function getVersion(): string;
     public function getEdition(): string;
     public function getPhpConstraint(): string;
+    public function getPhpExperimentalConstraint(): string;
 }

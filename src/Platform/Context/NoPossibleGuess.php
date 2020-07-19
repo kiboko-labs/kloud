@@ -4,6 +4,11 @@ namespace Kiboko\Cloud\Platform\Context;
 
 final class NoPossibleGuess extends \RuntimeException
 {
+    public static function noGuesserMatching()
+    {
+        return new self('No gessable context.');
+    }
+
     public static function noVersionMatching()
     {
         return new self('No gessable version matching for a new application context.');

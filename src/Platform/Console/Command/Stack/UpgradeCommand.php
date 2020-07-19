@@ -25,19 +25,21 @@ final class UpgradeCommand extends Command
 
     private string $configPath;
     private string $stacksPath;
+    private ContextWizard $wizard;
 
     public function __construct(?string $name, string $configPath, string $stacksPath)
     {
-        parent::__construct($name);
         $this->configPath = $configPath;
         $this->stacksPath = $stacksPath;
+        $this->wizard = new ContextWizard();
+        parent::__construct($name);
     }
 
     protected function configure()
     {
         $this->setDescription('Initialize the Docker stack in a project without Docker stack');
 
-        $this->addOption('working-directory', 'd', InputOption::VALUE_OPTIONAL);
+        $this->wizard->configureConsoleCommand($this);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -75,7 +77,7 @@ final class UpgradeCommand extends Command
         }
 
         if (empty($context)) {
-            $context = (new ContextWizard($workingDirectory))($input, $output);
+            $context = ($this->wizard)($input, $output, $workingDirectory);
 
             $format->note('Writing a new .kloud.yaml file.');
             file_put_contents($workingDirectory . '/.kloud.yaml', $serializer->serialize($context, 'yaml'));

@@ -8,7 +8,7 @@ class EditionDependency extends Edition implements EditionDependencyInterface
 
     public function __construct(string $package, string $version, string $edition, Edition $parent)
     {
-        parent::__construct($package, $version, $edition, $parent->getPhpConstraint());
+        parent::__construct($package, $version, $edition, $parent->getPhpConstraint(), $parent->getPhpExperimentalConstraint());
         $this->parent = $parent;
     }
 

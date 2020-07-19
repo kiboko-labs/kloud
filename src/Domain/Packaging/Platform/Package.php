@@ -14,6 +14,7 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
     private Native\Flavor\FlavorRepositoryInterface $flavors;
     private Native\Variation\PackageVariationInterface $variations;
     private Edition\EditionRepositoryInterface $editions;
+    private bool $withExperimental;
 
     public function __construct(
         Packaging\RepositoryInterface $repository,
@@ -21,7 +22,8 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         Packaging\Placeholder $path,
         Native\Flavor\FlavorRepositoryInterface $flavors,
         Native\Variation\PackageVariationInterface $variations,
-        Edition\EditionRepositoryInterface $editions
+        Edition\EditionRepositoryInterface $editions,
+        bool $withExperimental = false
     ) {
         $this->repository = $repository;
         $this->number = $number;
@@ -29,6 +31,7 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         $this->flavors = $flavors;
         $this->variations = $variations;
         $this->editions = $editions;
+        $this->withExperimental = $withExperimental;
     }
 
     public function __invoke(): \Traversable
@@ -37,7 +40,9 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
             foreach ($this->variations as $variation) {
                 /** @var Packaging\Platform\Edition\Edition $edition */
                 foreach ($this->editions as $edition) {
-                    if (!Semver::satisfies($this->number, $edition->getPhpConstraint())) {
+                    if ((!$this->withExperimental && !Semver::satisfies($this->number, $edition->getPhpConstraint()))
+                        || ($this->withExperimental && !Semver::satisfies($this->number, $edition->getPhpExperimentalConstraint()))
+                    ) {
                         continue;
                     }
 
@@ -85,35 +90,43 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         }
     }
 
-    public function pull(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function pull(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->pull($commands);
+            $tag->pull($task);
         }
+
+        return $task;
     }
 
-    public function push(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function push(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->push($commands);
+            $tag->push($task);
         }
+
+        return $task;
     }
 
-    public function build(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function build(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->build($commands);
+            $tag->build($task);
         }
+
+        return $task;
     }
 
-    public function forceBuild(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function forceBuild(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->forceBuild($commands);
+            $tag->forceBuild($task);
         }
+
+        return $task;
     }
 }

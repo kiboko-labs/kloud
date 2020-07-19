@@ -17,6 +17,7 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 '>=5.6 <7.2'
             )
         );
+
         yield new EditionDependency(
             'marello',
             '1.3',
@@ -37,7 +38,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 'oroplatform',
                 '3.1',
                 'ee',
-                '>=7.1 <8.1'
+                '>=7.1 <7.3',
+                '>=7.1 <=8.0'
             )
         );
 
@@ -49,7 +51,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 'oroplatform',
                 '3.1',
                 'ee',
-                '>=7.1 <8.1'
+                '>=7.1 <7.3',
+                '>=7.1 <=8.0'
             )
         );
 
@@ -61,7 +64,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 'oroplatform',
                 '3.1',
                 'ee',
-                '>=7.1 <8.1'
+                '>=7.1 <7.3',
+                '>=7.1 <=8.0'
             )
         );
 
@@ -73,7 +77,8 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 'oroplatform',
                 '4.1',
                 'ee',
-                '>=7.3 <9.0'
+                '>=7.3 <8.0',
+                '>=7.3 <=8.0'
             )
         );
     }

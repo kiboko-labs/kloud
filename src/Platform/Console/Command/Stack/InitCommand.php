@@ -2,7 +2,6 @@
 
 namespace Kiboko\Cloud\Platform\Console\Command\Stack;
 
-use Kiboko\Cloud\Domain\Stack\DTO\Context;
 use Kiboko\Cloud\Domain\Stack\OroPlatform;
 use Kiboko\Cloud\Domain\Stack\StackBuilder;
 use Kiboko\Cloud\Platform\Console\ContextWizard;
@@ -18,19 +17,21 @@ final class InitCommand extends Command
 
     private string $configPath;
     private string $stacksPath;
+    private ContextWizard $wizard;
 
     public function __construct(?string $name, string $configPath, string $stacksPath)
     {
-        parent::__construct($name);
         $this->configPath = $configPath;
         $this->stacksPath = $stacksPath;
+        $this->wizard = new ContextWizard();
+        parent::__construct($name);
     }
 
     protected function configure()
     {
         $this->setDescription('Initialize the Docker stack in a project without Docker stack');
 
-        $this->addOption('working-directory', 'd', InputOption::VALUE_OPTIONAL);
+        $this->wizard->configureConsoleCommand($this);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,7 +45,7 @@ final class InitCommand extends Command
             return 0;
         }
 
-        $context = (new ContextWizard($workingDirectory))($input, $output);
+        $context = ($this->wizard)($input, $output, $workingDirectory);
 
         $builder = new StackBuilder(
             new OroPlatform\Builder($this->stacksPath),

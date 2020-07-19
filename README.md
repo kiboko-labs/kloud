@@ -7,7 +7,12 @@ This project aims at building your Docker stack for [OroCommerce](https://oroinc
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Tags](#tags)
+* [Supported versions and flavors](#supported-versions-and-flavours)
+  * [OroPlatform](#oroplatform)
+  * [OroCRM](#orocrm)
+  * [OroCommerce](#orocommerce)
+  * [Marello](#marello)
+  * [Middleware](#middleware)
 
 Installation
 ---
@@ -17,8 +22,8 @@ Installation
 While installing system-wide, you will need administrator privilleges to install the command inside `/usr/local/bin/` directory.
 
 ```
-sudo curl -o /usr/local/bin/kloud https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar
-sudo curl -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar.pubkey
+sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar
+sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar.pubkey
 sudo chmod +x /usr/local/bin/kloud
 ```
 
@@ -27,8 +32,8 @@ sudo chmod +x /usr/local/bin/kloud
 While installing in your project, no administrator privilege is required, the phar package will be available in the `bin/` directory.
 
 ```
-curl -o bin/kloud.phar https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar
-curl -o bin/kloud.phar.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar.pubkey
+curl -L -o bin/kloud.phar https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar
+curl -L -o bin/kloud.phar.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar.pubkey
 chmod +x bin/kloud.phar
 ```
 
@@ -38,7 +43,12 @@ We also recommend to add both files to your `.gitignore` file.
 
 If you do not want to install the command on your machine, a Docker image is ready for one-shot usages and can be executed this way:
 
-`docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.docker:/opt/docker/.docker -v $PWD:/app kiboko/kloud <command>`
+```
+docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
+    -v $HOME/.docker:/opt/docker/.docker \
+    -v $PWD:/app \
+    kiboko/kloud <command>
+```
 
 Usage
 ---
@@ -72,70 +82,97 @@ If you need to test if the images you are using are following every constraint y
 Supported versions and flavours
 ---
 
-### With MySQL database backend
+### OroPlatform
 
-| Application    | Version | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
-| -------------- | ------- | --------------- | ------------ | --------------- | --------------- | --------------- |
-| OroPlatform CE | ^2.6.0  | ⚠️ discontinued | ❌           | ❌              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroPlatform EE | ^2.6.0  | ⚠️ discontinued | ❌           | ❌              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCRM CE      | ^2.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCRM EE      | ^2.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCommerce CE | ^1.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCommerce EE | ^1.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| Marello CE     | ^1.5.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^1.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^2.0    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.1    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.2    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^3.0    | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| Marello EE     | ^1.3.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^2.0    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.1    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.2    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^3.0    | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+#### Community Edition
 
-### With PostgreSQL database backend
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.8    | 🌅️ discontinued | ❌              | ❌           | ❌              | ❌️              | ❌              |
+| ^1.10   | 🌅️ discontinued | ❌              | ❌           | ❌              | ❌️              | ❌              |
+| ^2.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌              | ❌️              | ❌              |
+| ^3.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^4.1    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
 
-| Application    | Version | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
-| -------------- | ------- | --------------- | ------------ | --------------- | --------------- | --------------- |
-| OroPlatform CE | ^2.6.0  | ⚠️ discontinued | ❌           | ❌              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-| OroPlatform EE | ^2.6.0  | ⚠️ discontinued | ❌           | ❌              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCRM CE      | ^2.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCRM EE      | ^2.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCommerce CE | ^1.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| OroCommerce EE | ^1.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^3.1.0  | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^4.1.0  | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| Marello CE     | ^1.5.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^1.6.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^2.0    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.1    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.2    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^3.0    | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
-| Marello EE     | ^1.3.0  | ⚠️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
-|                | ^2.0    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.1    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^2.2    | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
-|                | ^3.0    | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+#### Enterprise Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.12   | 🌅️ discontinued | ❌              | ❌           | ❌              | ❌️              | ❌              |
+| ^2.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌              | ❌️              | ❌              |
+| ^3.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^4.1    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+### OroCRM
+
+#### Community Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^2.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^3.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^4.1    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+#### Enterprise Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^2.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^3.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^4.1    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+### OroCommerce
+
+#### Community Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^3.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^4.1    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+#### Enterprise Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^3.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^4.1    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+### Marello
+
+#### Community Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.5    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^1.6    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^2.0    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^2.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^2.2    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^3.0    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+#### Enterprise Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.2    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^1.3    | 🌅️ discontinued | 🌅️ discontinued | ❌           | ❌️              | ❌️              | ❌              |
+| ^2.0    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^2.1    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^2.2    | ❌              | ✅              | ✅           | ⚠️ experimental | ⚠️ experimental | ⚠️ experimental |
+| ^3.0    | ❌              | ❌              | ❌           | ✅️              | ✅️              | ⚠️ experimental |
+
+### Middleware
+
+#### Community Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.0    | ❌              | ❌              | ❌           | ❌️              | ✅️              | ⚠️ experimental |
+
+#### Enterprise Edition
+
+| Version | PHP 5.6         | PHP 7.1         | PHP 7.2      | PHP 7.3         | PHP 7.4         | PHP 8.0         |
+| ------- | --------------- | --------------- | ------------ | --------------- | --------------- | --------------- |
+| ^1.0    | ❌              | ❌              | ❌           | ❌️              | ✅️              | ⚠️ experimental |

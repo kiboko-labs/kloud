@@ -18,12 +18,14 @@ final class BuildCommand extends Command
 
     private string $configPath;
     private string $environmentsPath;
+    private ContextWizard $wizard;
 
     public function __construct(?string $name, string $configPath, string $environmentsPath)
     {
-        parent::__construct($name);
         $this->configPath = $configPath;
         $this->environmentsPath = $environmentsPath;
+        $this->wizard = new ContextWizard();
+        parent::__construct($name);
     }
 
     protected function configure()
@@ -34,28 +36,25 @@ final class BuildCommand extends Command
 
         $this->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the build for matching images only.');
         $this->addOption('force-all', 'a', InputOption::VALUE_NONE, 'Force the build for all matching images and dependencies.');
-        $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the build commands in parallel', 'no');
+        $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the Docker commands in parallel', 'no');
         $this->addOption('push', 'p', InputOption::VALUE_NONE, 'Push images to Docker Hub (requires authentication).');
 
-        $this->addOption('working-directory', 'd', InputOption::VALUE_OPTIONAL);
+        $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
+
+        $this->wizard->configureConsoleCommand($this);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $workingDirectory = $input->getOption('working-directory') ?: getcwd();
-
         if (empty($pattern = $input->getOption('regex'))) {
-            $pattern = (new ContextWizard($workingDirectory))($input, $output)->getImagesRegex();
+            $pattern = ($this->wizard)($input, $output)->getImagesRegex();
         }
 
         $format = new SymfonyStyle($input, $output);
 
         $format->note(sprintf('Building all images matching the following pattern: %s', $pattern));
 
-        /** @var Packaging\PackageInterface[] $packages */
-        $packages = new \CachingIterator(new \ArrayIterator(array_merge(
-            require $this->configPath.'/builds.php',
-        )), \CachingIterator::FULL_CACHE);
+        $packages = Packaging\Config\Config::builds($this->configPath, (bool) $input->getOption('with-experimental'));
 
         $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
             /** @var Packaging\PackageInterface $package */
@@ -94,9 +93,10 @@ final class BuildCommand extends Command
         $force = ((bool) $input->getOption('force')) ?? false;
         $forceAll = ((bool) $input->getOption('force-all')) ?? false;
 
-        $commandBus = new Packaging\CommandBus\CommandBus();
+        $commandBus = new Packaging\Execution\CommandBus\CommandBus();
         /** @var Packaging\DependencyTree\NodeInterface $node */
         foreach ($tree->resolve(...$nodes) as $node) {
+            $task = $commandBus->task();
             if ($force && preg_match($pattern, (string) $node) > 0 || $forceAll) {
                 if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
                     $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</>, at path <fg=yellow>%path%</> (<fg=blue>force build</>).', ['%tagName%' => (string) $node, '%path%' => $node->getPath()]));
@@ -104,7 +104,7 @@ final class BuildCommand extends Command
                     $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</> (<fg=blue>force build</>).', ['%tagName%' => (string) $node]));
                 }
 
-                $node->forceBuild($commandBus);
+                $node->forceBuild($task);
             } else {
                 if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
                     $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</>, at path <fg=yellow>%path%</>.', ['%tagName%' => (string) $node, '%path%' => $node->getPath()]));
@@ -112,20 +112,20 @@ final class BuildCommand extends Command
                     $format->writeln(strtr('Found <options=bold;fg=green>%tagName%</>.', ['%tagName%' => (string) $node]));
                 }
 
-                $node->build($commandBus);
+                $node->build($task);
             }
 
             if ($input->getOption('push')) {
-                $node->push($commandBus);
+                $node->push($task);
             }
         }
 
-        if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
-            (new Packaging\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus, $this->environmentsPath);
-        } else {
-            $parallel = (int) $input->getOption('parallel');
-            (new Packaging\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus, $this->environmentsPath);
-        }
+//        if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
+            (new Packaging\Execution\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus, $this->environmentsPath);
+//        } else {
+//            $parallel = (int) $input->getOption('parallel');
+//            (new Packaging\Execution\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus, $this->environmentsPath);
+//        }
 
         return 0;
     }

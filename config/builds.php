@@ -2,402 +2,465 @@
 
 use Kiboko\Cloud\Domain\Packaging;
 
-$repository = new Packaging\Repository('kiboko/php');
+return function(bool $withExperimental): iterable {
+    $repository = new Packaging\Repository('kiboko/php');
 
-return [
-    new Packaging\Native\Package(
+    yield new Packaging\Native\Package(
         $repository,
         '5.6',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        new Packaging\Native\Flavor\StandardFlavorRepository()
-    ),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\Package(
+    yield new Packaging\Native\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        new Packaging\Native\Flavor\StandardFlavorRepository()
-    ),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\Package(
+    yield new Packaging\Native\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        new Packaging\Native\Flavor\StandardFlavorRepository()
-    ),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\Package(
+    yield new Packaging\Native\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        new Packaging\Native\Flavor\StandardFlavorRepository()
-    ),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\Package(
+    yield new Packaging\Native\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        new Packaging\Native\Flavor\StandardFlavorRepository()
-    ),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\Package(
+    yield new Packaging\Native\Package(
         $repository,
         '8.0',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        new Packaging\Native\Flavor\ExperimentalFlavorRepository()
-    ),
+        new Packaging\Native\Flavor\ExperimentalFlavorRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\PackageVariation(
+    yield new Packaging\Native\PackageVariation(
         $repository,
         '5.6',
         new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
-        new Packaging\Native\Variation\StandardVariationRepository()
-    ),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\PackageVariation(
+    yield new Packaging\Native\PackageVariation(
         $repository,
         '7.1',
         new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
-        new Packaging\Native\Variation\StandardVariationRepository()
-    ),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\PackageVariation(
+    yield new Packaging\Native\PackageVariation(
         $repository,
         '7.2',
         new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
-        new Packaging\Native\Variation\StandardVariationRepository()
-    ),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\PackageVariation(
+    yield new Packaging\Native\PackageVariation(
         $repository,
         '7.3',
         new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
-        new Packaging\Native\Variation\StandardVariationRepository()
-    ),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\PackageVariation(
+    yield new Packaging\Native\PackageVariation(
         $repository,
         '7.4',
         new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
-        new Packaging\Native\Variation\StandardVariationRepository()
-    ),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Native\PackageVariation(
+    yield new Packaging\Native\PackageVariation(
         $repository,
         '8.0',
         new Packaging\Placeholder('%package.variation%/'),
         new Packaging\Native\Flavor\ExperimentalFlavorRepository(),
-        new Packaging\Native\Variation\StandardVariationRepository()
-    ),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '5.6',
         new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '5.6',
         new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('oroplatform/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('orocommerce/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('orocrm/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
-    ),
+        new Packaging\Platform\Edition\MarelloCommunityEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloCommunityEditionRepository()
-    ),
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.1',
         new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.2',
         new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.3',
         new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
-    ),
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository(),
+        $withExperimental
+    );
 
-    new Packaging\Platform\Package(
+    yield new Packaging\Platform\Package(
         $repository,
         '7.4',
         new Packaging\Placeholder('marello/%package.edition%/'),
         new Packaging\Native\Flavor\StandardFlavorRepository(),
         new Packaging\Native\Variation\StandardVariationRepository(),
-        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository()
-    ),
-];
+        new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository(),
+        $withExperimental
+    );
+
+    yield new Packaging\Platform\Package(
+        $repository,
+        '7.4',
+        new Packaging\Placeholder('middleware/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MiddlewareCommunityEditionRepository()
+    );
+
+    yield new Packaging\Platform\Package(
+        $repository,
+        '7.4',
+        new Packaging\Placeholder('middleware/%package.edition%/'),
+        new Packaging\Native\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\MiddlewareEnterpriseEditionRepository()
+    );
+};

@@ -5,210 +5,99 @@ declare(strict_types=1);
 namespace Kiboko\Cloud\Platform\Console;
 
 use Kiboko\Cloud\Domain\Stack;
-use Kiboko\Cloud\Platform\Context\ContextGuesser;
-use Kiboko\Cloud\Platform\Context\Guesser;
-use Kiboko\Cloud\Platform\Context\NoPossibleGuess;
-use Composer\Semver\Semver;
+use Kiboko\Cloud\Platform\Context\ComposerPackageGuesser;
+use Kiboko\Cloud\Platform\Context\ContextGuesserFacade;
+use Kiboko\Cloud\Platform\Context\ContextGuesserInterface;
+use Kiboko\Cloud\Platform\Context\PHPVersionConsoleGuesser;
+use Kiboko\Cloud\Platform\Context\PHPVersionConsoleOptionGuesser;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 final class ContextWizard
 {
-    private ?string $cwd;
+    private ContextGuesserInterface $guesser;
 
-    public function __construct(?string $cwd = null)
+    public function __construct()
     {
-        $this->cwd = $cwd;
-    }
-
-    private function buildFromComposer(SymfonyStyle $format): ?Stack\DTO\Context
-    {
-        $finder = (new Finder())
-            ->in($this->cwd)
-            ->files()
-            ->name('composer.lock');
-
-        if ($finder->hasResults()) {
-            /** @var SplFileInfo $file */
-            foreach ($finder as $file) {
-                $json = \json_decode($file->getContents(), true);
-                break;
-            }
-
-            $guesser = new ContextGuesser(
-                new Guesser\OroCommerceEnterprise('oro/commerce-enterprise'),
-                new Guesser\OroCommerceCommunity('oro/commerce'),
-                new Guesser\OroCRMEnterprise('oro/crm-enterprise'),
-                new Guesser\OroCRMCommunity('oro/crm'),
-                new Guesser\MarelloEnterprise('marellocommerce/marello-enterprise'),
-                new Guesser\MarelloCommunity('marellocommerce/marello'),
-                new Guesser\OroPlatformEnterprise('oro/platform-enterprise'),
-                new Guesser\OroPlatformCommunity('oro/platform'),
-            );
-
-            try {
-                $context = $guesser->guess($json['packages'] ?? []);
-
-                if ($context->application === 'orocommerce' && $context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>OroCommerce Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'orocommerce' && !$context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>OroCommerce Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'orocrm' && $context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>OroCRM Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'orocrm' && !$context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>OroCRM Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'marello' && $context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>Marello Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'marello' && !$context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>Marello Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'oroplatform' && $context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>OroPlatform Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                } else if ($context->application === 'oroplatform' && !$context->isEnterpriseEdition) {
-                    $format->writeln(strtr('Found <fg=yellow>OroPlatform Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
-                }
-            } catch (NoPossibleGuess $exception) {
-                $format->warning('Could not guess any known application type.');
-
-                return null;
-            }
-
-            return $context;
-        }
-
-        return null;
-    }
-
-    private function buildInteractively(SymfonyStyle $format): ?Stack\DTO\Context
-    {
-        $context = new Stack\DTO\Context(
-            $format->askQuestion(
-                (new ChoiceQuestion('Which PHP version are you using?', ['5.6', '7.1', '7.2', '7.3', '7.4', '8.0'], '7.2'))
+        $this->guesser = new ContextGuesserFacade(
+            new ComposerPackageGuesser(
+                new ComposerPackageGuesser\OroCommerceEnterprise('oro/commerce-enterprise'),
+                new ComposerPackageGuesser\OroCommerceCommunity('oro/commerce'),
+                new ComposerPackageGuesser\OroCRMEnterprise('oro/crm-enterprise'),
+                new ComposerPackageGuesser\OroCRMCommunity('oro/crm'),
+                new ComposerPackageGuesser\MarelloEnterprise('marellocommerce/marello-enterprise'),
+                new ComposerPackageGuesser\MarelloCommunity('marellocommerce/marello'),
+                new ComposerPackageGuesser\MiddlewareCommunity('kiboko/middleware'),
+                new ComposerPackageGuesser\OroPlatformEnterprise('oro/platform-enterprise'),
+                new ComposerPackageGuesser\OroPlatformCommunity('oro/platform'),
             ),
-            $format->askQuestion(
-                (new ChoiceQuestion('Which application are you using? (leave empty for native image)', ['orocommerce', 'oroplatform', 'orocrm', 'marello', ''], ''))
+            new PHPVersionConsoleOptionGuesser(
+                new PHPVersionConsoleGuesser\OroPlatform(),
+                new PHPVersionConsoleGuesser\OroCRM(),
+                new PHPVersionConsoleGuesser\OroCommerce(),
+                new PHPVersionConsoleGuesser\Marello(),
+                new PHPVersionConsoleGuesser\Middleware(),
             ),
-            null,
-            null
         );
+    }
 
-        $context->applicationVersion = '';
-        if ('orocommerce' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
-                $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 1.6.</>');
-                $context->applicationVersion = '1.6';
-            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroCommerce version are you using?', ['1.6', '3.1'], '3.1'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroCommerce version are you using?', ['3.1', '4.1'], '3.1'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
-                $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 4.1.</>');
-                $context->applicationVersion = '4.1';
-            }
-        } elseif ('oroplatform' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroPlatform version are you using?', ['1.8', '2.6'], '2.6'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroPlatform version are you using?', ['2.6', '3.1'], '3.1'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroPlatform version are you using?', ['3.1', '4.1'], '3.1'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
-                $format->writeln(' <fg=green>Choosing automaticallly OroPlatform version 4.1.</>');
-                $context->applicationVersion = '4.1';
-            }
-        } elseif ('orocrm' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroPlatform version are you using?', ['1.8', '2.6'], '2.6'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroCRM version are you using?', ['2.6', '3.1'], '3.1'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which OroCRM version are you using?', ['3.1', '4.1'], '3.1'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
-                $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 4.1.</>');
-                $context->applicationVersion = '4.1';
-            }
-        } elseif ('marello' === $context->application) {
-            if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6'], '1.6'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6', '2.0', '2.1', '2.2'], '2.2'))
-                );
-            } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
-                $context->applicationVersion = $format->askQuestion(
-                    (new ChoiceQuestion('Which Marello version are you using?', ['2.0', '2.1', '2.2', '3.0'], '2.2'))
-                );
-            } elseif (Semver::satisfies($context->phpVersion, '>=7.4')) {
-                $format->writeln(' <fg=green>Choosing automaticallly Marello version 3.0.</>');
-                $context->applicationVersion = '3.0';
-            }
-        }
+    public function configureConsoleCommand(Command $command)
+    {
+        $this->guesser->configure($command);
 
-        $context->isEnterpriseEdition = false;
-        if (!empty($context->application)) {
-            $context->isEnterpriseEdition = $format->askQuestion(
-                (new ConfirmationQuestion('Is it for Enterprise Edition?', false))
-            );
-        }
-
-        return $context;
+        $command->addOption('mysql', null, InputOption::VALUE_NONE, 'Set up the application to use MySQL.');
+        $command->addOption('postgresql', null, InputOption::VALUE_NONE, 'Set up the application to use PostgreSQL.');
+        $command->addOption('with-xdebug', null, InputOption::VALUE_NONE, 'Set up the application to use Xdebug.');
+        $command->addOption('without-xdebug', null, InputOption::VALUE_NONE, 'Set up the application without Xdebug.');
+        $command->addOption('with-blackfire', null, InputOption::VALUE_NONE, 'Set up the application to use Blackfire.');
+        $command->addOption('without-blackfire', null, InputOption::VALUE_NONE, 'Set up the application without Blackfire.');
     }
 
     public function __invoke(InputInterface $input, OutputInterface $output): Stack\DTO\Context
     {
+        $context = $this->guesser->guess($input, $output, null);
+
         $format = new SymfonyStyle($input, $output);
 
-        $context = null;
-        if ($this->cwd !== null) {
-            $context = $this->buildFromComposer($format);
+        if ($input->getOption('enterprise') === $input->getOption('community')) {
+            if (!empty($context->application)) {
+                $context->dbms = $format->askQuestion(
+                    (new ChoiceQuestion(
+                        'Which database engine are you using?',
+                        ['mysql', 'postgresql'],
+                        $context->dbms ?? $context->isEnterpriseEdition ? 'postgresql' : 'mysql'
+                    ))
+                );
+            } else {
+                $context->dbms = $format->askQuestion(
+                    (new ChoiceQuestion('Which database engine are you using? (leave empty for none)', ['mysql', 'postgresql', ''], ''))
+                );
+            }
         }
 
-        if ($context === null) {
-            $context = $this->buildInteractively($format);
-        }
-
-        if (!empty($context->application)) {
-            $context->dbms = $format->askQuestion(
-                (new ChoiceQuestion(
-                    'Which database engine are you using?',
-                    ['mysql', 'postgresql'],
-                    $context->dbms ?? $context->isEnterpriseEdition ? 'postgresql' : 'mysql'
-                ))
-            );
+        if ($input->getOption('with-blackfire')) {
+            $context->withBlackfire = true;
+        } else if ($input->getOption('without-blackfire')) {
+            $context->withBlackfire = false;
         } else {
-            $context->dbms = $format->askQuestion(
-                (new ChoiceQuestion('Which database engine are you using? (leave empty for none)', ['mysql', 'postgresql', ''], ''))
+            $context->withBlackfire = $format->askQuestion(
+                (new ConfirmationQuestion('Include Blackfire?', $context->withBlackfire ?? false))
             );
         }
-
-        $context->withBlackfire = $format->askQuestion(
-            (new ConfirmationQuestion('Include Blackfire?', $context->withBlackfire ?? false))
-        );
-        $context->withXdebug = $format->askQuestion(
-            (new ConfirmationQuestion('Include XDebug?', $context->withXdebug ?? false))
-        );
+        if ($input->getOption('with-xdebug')) {
+            $context->withXdebug = true;
+        } else if ($input->getOption('without-xdebug')) {
+            $context->withXdebug = false;
+        } else {
+            $context->withXdebug = $format->askQuestion(
+                (new ConfirmationQuestion('Include XDebug?', $context->withXdebug ?? false))
+            );
+        }
 
         $format->table(
             ['php', 'application', 'edition', 'version', 'database', 'blackfire', 'xdebug'],

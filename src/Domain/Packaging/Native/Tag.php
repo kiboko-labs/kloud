@@ -34,23 +34,31 @@ final class Tag implements Packaging\Tag\TagBuildInterface
         return $this->repository;
     }
 
-    public function pull(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function pull(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\Pull($this));
+        $task->then(new Packaging\Execution\Command\Pull($this));
+
+        return $task;
     }
 
-    public function push(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function push(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\Push($this));
+        $task->then(new Packaging\Execution\Command\Push($this));
+
+        return $task;
     }
 
-    public function build(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function build(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\Build($this, $this->context));
+        $task->then(new Packaging\Execution\Command\Build($this, $this->context));
+
+        return $task;
     }
 
-    public function forceBuild(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function forceBuild(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\ForceBuild($this, $this->context));
+        $task->then(new Packaging\Execution\Command\ForceBuild($this, $this->context));
+
+        return $task;
     }
 }

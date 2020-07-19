@@ -18,12 +18,14 @@ final class PushCommand extends Command
 
     private string $configPath;
     private string $environmentsPath;
+    private ContextWizard $wizard;
 
     public function __construct(?string $name, string $configPath, string $environmentsPath)
     {
-        parent::__construct($name);
         $this->configPath = $configPath;
         $this->environmentsPath = $environmentsPath;
+        $this->wizard = new ContextWizard();
+        parent::__construct($name);
     }
 
     protected function configure()
@@ -32,27 +34,24 @@ final class PushCommand extends Command
 
         $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
 
-        $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the build commands in parallel', 'no');
+        $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[DEPRECATED] Run the Docker commands in parallel', 'no');
 
-        $this->addOption('working-directory', 'd', InputOption::VALUE_OPTIONAL);
+        $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
+
+        $this->wizard->configureConsoleCommand($this);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $workingDirectory = $input->getOption('working-directory') ?: getcwd();
-
         if (empty($pattern = $input->getOption('regex'))) {
-            $pattern = (new ContextWizard($workingDirectory))($input, $output)->getImagesRegex();
+            $pattern = ($this->wizard)($input, $output)->getImagesRegex();
         }
 
         $format = new SymfonyStyle($input, $output);
 
         $format->note(sprintf('Pushing all images matching the following pattern: %s', $pattern));
 
-        /** @var Packaging\PackageInterface[] $packages */
-        $packages = new \CachingIterator(new \ArrayIterator(array_merge(
-            require $this->configPath.'/builds.php',
-        )), \CachingIterator::FULL_CACHE);
+        $packages = Packaging\Config\Config::builds($this->configPath, (bool) $input->getOption('with-experimental'));
 
         $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
             /** @var Packaging\PackageInterface $package */
@@ -88,22 +87,22 @@ final class PushCommand extends Command
             });
         }
 
-        $commandBus = new Packaging\CommandBus\CommandBus();
+        $commandBus = new Packaging\Execution\CommandBus\CommandBus();
         /** @var Packaging\DependencyTree\NodeInterface $node */
         foreach ($tree->resolve(...$nodes) as $node) {
             if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
                 $format->writeln(strtr('Found <info>%tagName%</>.', ['%tagName%' => (string) $node]));
             }
 
-            $node->push($commandBus);
+            $node->push($commandBus->task());
         }
 
-        if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
-            (new Packaging\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus, $this->environmentsPath);
-        } else {
-            $parallel = (int) $input->getOption('parallel');
-            (new Packaging\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus, $this->environmentsPath);
-        }
+//        if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
+            (new Packaging\Execution\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus, $this->environmentsPath);
+//        } else {
+//            $parallel = (int) $input->getOption('parallel');
+//            (new Packaging\Execution\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus, $this->environmentsPath);
+//        }
 
         return 0;
     }

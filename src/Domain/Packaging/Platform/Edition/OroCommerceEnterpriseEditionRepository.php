@@ -8,13 +8,26 @@ final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryI
     {
         yield new EditionDependency(
             'orocommerce',
+            '1.6',
+            'ee',
+            new Edition(
+                'orocommerce',
+                '1.6',
+                'ce',
+                '>=5.6 <7.2'
+            )
+        );
+
+        yield new EditionDependency(
+            'orocommerce',
             '3.1',
             'ee',
             new Edition(
                 'orocommerce',
                 '3.1',
                 'ce',
-                '>=7.1 <8.1'
+                '>=7.1 <7.3',
+                '>=7.1 <=8.0',
             )
         );
 
@@ -26,7 +39,8 @@ final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryI
                 'orocommerce',
                 '4.1',
                 'ce',
-                '>=7.3 <9.0'
+                '>=7.3 <8.0',
+                '>=7.3 <=8.0',
             )
         );
     }

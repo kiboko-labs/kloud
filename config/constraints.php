@@ -59,7 +59,9 @@ return [
     new Assert\PHPExtensionVersion($repository, 'xml', '*', '/-[ce]e-\d+\.\d+-/'),
     new Assert\PHPExtensionVersion($repository, 'zip', '*', '/-[ce]e-\d+\.\d+-/'),
     new Assert\PHPExtensionVersion($repository, 'imap', '*', '/-[ce]e-\d+\.\d+-/'),
-    new Assert\PHPExtensionVersion($repository, 'pcntl', '*', '/(?:(?:oroplatform|orocommerce|orocrm)-[ce]e-4\.\d+-|marello-[ce]e-3\.\d+)/'),
+    new Assert\PHPExtensionVersion($repository, 'pcntl', '*', '/(?:(?:oroplatform|orocommerce|orocrm)-[ce]e-4\.\d+-|marello-[ce]e-3\.\d+|middleware-[ce]e-1\.\d+)/'),
+    new Assert\PHPExtensionVersion($repository, 'zmq', '*', '/(?:middleware-[ce]e-1\.\d+-)/'),
+    new Assert\PHPExtensionVersion($repository, 'rdkafka', '*', '/(?:middleware-[ce]e-1\.\d+-)/'),
 
     new Assert\ICUVersion($repository, '>=4.4', '/-[ce]e-\d+\.\d+-/'),
 ];

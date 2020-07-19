@@ -11,17 +11,20 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
     public string $number;
     private Packaging\Placeholder $path;
     private Native\Flavor\FlavorRepositoryInterface $flavors;
+    private bool $withExperimental;
 
     public function __construct(
         Packaging\RepositoryInterface $repository,
         string $number,
         Packaging\Placeholder $path,
-        Native\Flavor\FlavorRepositoryInterface $flavors
+        Native\Flavor\FlavorRepositoryInterface $flavors,
+        bool $withExperimental = false
     ) {
         $this->repository = $repository;
         $this->number = $number;
         $this->path = $path;
         $this->flavors = $flavors;
+        $this->withExperimental = $withExperimental;
     }
 
     public function __invoke(): \Traversable
@@ -46,35 +49,43 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         }
     }
 
-    public function pull(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function pull(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->pull($commands);
+            $tag->pull($task);
         }
+
+        return $task;
     }
 
-    public function push(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function push(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->push($commands);
+            $tag->push($task);
         }
+
+        return $task;
     }
 
-    public function build(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function build(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->build($commands);
+            $tag->build($task);
         }
+
+        return $task;
     }
 
-    public function forceBuild(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function forceBuild(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
         /** @var Packaging\Tag\TagBuildInterface $tag */
         foreach ($this as $tag) {
-            $tag->forceBuild($commands);
+            $tag->forceBuild($task);
         }
+
+        return $task;
     }
 }

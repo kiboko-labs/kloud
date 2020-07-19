@@ -42,23 +42,23 @@ final class Tag implements Packaging\Tag\TagBuildInterface, Packaging\Tag\Depend
         return $this->repository;
     }
 
-    public function pull(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function pull(Packaging\Execution\CommandBus\Task $commands): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\Pull($this));
+        return $commands->then(new Packaging\Execution\Command\Pull($this));
     }
 
-    public function push(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function push(Packaging\Execution\CommandBus\Task $commands): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\Push($this));
+        return $commands->then(new Packaging\Execution\Command\Push($this));
     }
 
-    public function build(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function build(Packaging\Execution\CommandBus\Task $commands): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\BuildFrom($this, $this->from, $this->context));
+        return $commands->then(new Packaging\Execution\Command\BuildFrom($this, $this->from, $this->context));
     }
 
-    public function forceBuild(Packaging\CommandBus\CommandBusInterface $commands): void
+    public function forceBuild(Packaging\Execution\CommandBus\Task $commands): Packaging\Execution\CommandBus\Task
     {
-        $commands->add(new Packaging\Command\ForceBuildFrom($this, $this->from, $this->context));
+        return $commands->then(new Packaging\Execution\Command\ForceBuildFrom($this, $this->from, $this->context));
     }
 }

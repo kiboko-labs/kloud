@@ -2,9 +2,12 @@
 
 namespace Kiboko\Cloud\Platform\Context;
 
+use Kiboko\Cloud\Domain\Stack;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 interface ContextGuesserInterface
 {
-    public function matches(array $package): bool;
-
-    public function guess(array $package);
+    /** @throws NoPossibleGuess */
+    public function guess(InputInterface $input, OutputInterface $output, ?Stack\DTO\Context $context = null): Stack\DTO\Context;
 }

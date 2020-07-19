@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
-use Kiboko\Cloud\Domain\Packaging\CommandBus;
+use Kiboko\Cloud\Domain\Packaging\Execution\CommandBus;
 use Kiboko\Cloud\Domain\Packaging;
 use Kiboko\Cloud\Domain\Packaging\Placeholder;
 
@@ -45,24 +45,32 @@ final class Node implements NodeInterface, \IteratorAggregate
         return new \ArrayIterator($this->edges);
     }
 
-    public function pull(CommandBus\CommandBusInterface $commands): void
+    public function pull(CommandBus\Task $task): CommandBus\Task
     {
-        $this->tag->pull($commands);
+        $this->tag->pull($task);
+
+        return $task;
     }
 
-    public function push(CommandBus\CommandBusInterface $commands): void
+    public function push(CommandBus\Task $task): CommandBus\Task
     {
-        $this->tag->push($commands);
+        $this->tag->push($task);
+
+        return $task;
     }
 
-    public function build(CommandBus\CommandBusInterface $commands): void
+    public function build(CommandBus\Task $task): CommandBus\Task
     {
-        $this->tag->build($commands);
+        $this->tag->build($task);
+
+        return $task;
     }
 
-    public function forceBuild(CommandBus\CommandBusInterface $commands): void
+    public function forceBuild(CommandBus\Task $task): CommandBus\Task
     {
-        $this->tag->forceBuild($commands);
+        $this->tag->forceBuild($task);
+
+        return $task;
     }
 
     public function add(NodeInterface ...$edges): void

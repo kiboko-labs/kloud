@@ -31,14 +31,16 @@ final class OroPlatformCommunityEditionRepository implements EditionRepositoryIn
             'oroplatform',
             '3.1',
             'ce',
-            '>=7.1 <8.1'
+            '>=7.1 <7.3',
+            '>=7.1 <=8.0',
         );
 
         yield new Edition(
             'oroplatform',
             '4.1',
             'ce',
-            '>=7.3 <9.0'
+            '>=7.3 <8.0',
+            '>=7.3 <=8.0',
         );
     }
 }

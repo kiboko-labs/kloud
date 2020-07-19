@@ -17,11 +17,13 @@ final class ListCommand extends Command
     public static $defaultName = 'images:list';
 
     private string $configPath;
+    private ContextWizard $wizard;
 
     public function __construct(?string $name, string $configPath)
     {
-        parent::__construct($name);
         $this->configPath = $configPath;
+        $this->wizard = new ContextWizard();
+        parent::__construct($name);
     }
 
     protected function configure()
@@ -30,23 +32,20 @@ final class ListCommand extends Command
 
         $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
 
-        $this->addOption('working-directory', 'd', InputOption::VALUE_OPTIONAL);
+        $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
+
+        $this->wizard->configureConsoleCommand($this);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $workingDirectory = $input->getOption('working-directory') ?: getcwd();
-
         if (empty($pattern = $input->getOption('regex'))) {
-            $pattern = (new ContextWizard($workingDirectory))($input, $output)->getImagesRegex();
+            $pattern = ($this->wizard)($input, $output)->getImagesRegex();
         }
 
         $format = new SymfonyStyle($input, $output);
 
-        /** @var Packaging\PackageInterface[] $packages */
-        $packages = new \CachingIterator(new \ArrayIterator(array_merge(
-            require $this->configPath.'/builds.php',
-        )), \CachingIterator::FULL_CACHE);
+        $packages = Packaging\Config\Config::builds($this->configPath, (bool) $input->getOption('with-experimental'));
 
         $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
             /** @var Packaging\PackageInterface $package */

@@ -17,8 +17,8 @@ final class Context
 
     public function __construct(
         string $phpVersion,
-        ?string $application,
-        ?string $applicationVersion,
+        ?string $application = null,
+        ?string $applicationVersion = null,
         ?string $dbms = self::DBMS_POSTGRESQL,
         ?bool $withBlackfire = null,
         ?bool $withXdebug = null,
@@ -45,7 +45,7 @@ final class Context
             $variations = '';
         }
 
-        if (empty($this->application)) {
+        if (empty($this->application) || empty($this->applicationVersion)) {
             if (empty($this->dbms)) {
                 return sprintf(
                     '/^%s-(?:cli|fpm)%s$/',

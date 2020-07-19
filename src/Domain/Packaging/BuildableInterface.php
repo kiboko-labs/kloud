@@ -6,8 +6,8 @@ use Kiboko\Cloud\Domain\Packaging;
 
 interface BuildableInterface
 {
-    public function pull(Packaging\CommandBus\CommandBusInterface $commands): void;
-    public function push(Packaging\CommandBus\CommandBusInterface $commands): void;
-    public function build(Packaging\CommandBus\CommandBusInterface $commands): void;
-    public function forceBuild(Packaging\CommandBus\CommandBusInterface $commands): void;
+    public function pull(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task;
+    public function push(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task;
+    public function build(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task;
+    public function forceBuild(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task;
 }
