@@ -18,6 +18,7 @@ RUN set -ex\
         postgresql-dev \
     && apk add --update \
         libpq \
+        postgresql-client \
     && docker-php-ext-configure pdo_pgsql \
     && docker-php-ext-install pdo_pgsql \
     && apk del .build-deps \
