@@ -45,11 +45,13 @@ RUN set -ex \
         perl \
         pkgconf \
         pkgconfig \
-        python \
+        python3 \
         re2c \
         readline \
         sqlite-libs \
-    && rm -rf /tmp/* /var/cache/apk/*
+    && rm -rf /tmp/* /var/cache/apk/* \
+    && mkdir -p /opt/${APP_USERNAME}/.composer \
+    && chown -R ${APP_USERNAME}:${APP_GROUPNAME} /opt/${APP_USERNAME}
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 

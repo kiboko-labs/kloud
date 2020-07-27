@@ -11,8 +11,8 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
     private Packaging\RepositoryInterface $repository;
     public string $number;
     private Packaging\Placeholder $path;
-    private Native\Flavor\FlavorRepositoryInterface $flavors;
-    private Native\Variation\PackageVariationInterface $variations;
+    private Native\PHP\Flavor\FlavorRepositoryInterface $flavors;
+    private Native\PHP\Variation\PackageVariationInterface $variations;
     private Edition\EditionRepositoryInterface $editions;
     private bool $withExperimental;
 
@@ -20,8 +20,8 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         Packaging\RepositoryInterface $repository,
         string $number,
         Packaging\Placeholder $path,
-        Native\Flavor\FlavorRepositoryInterface $flavors,
-        Native\Variation\PackageVariationInterface $variations,
+        Native\PHP\Flavor\FlavorRepositoryInterface $flavors,
+        Native\PHP\Variation\PackageVariationInterface $variations,
         Edition\EditionRepositoryInterface $editions,
         bool $withExperimental = false
     ) {
@@ -83,7 +83,7 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
         /** @var Packaging\Context\BuildableContextInterface $context */
         foreach ($this() as $context) {
             if (!$context->hasParent()) {
-                yield new Tag($this->repository, new Native\TagVariationReference($this->repository, $context), $context);
+                yield new Tag($this->repository, new Native\PHP\TagVariationReference($this->repository, $context), $context);
             } else {
                 yield new Tag($this->repository, new TagReference($this->repository, $context->getParent()), $context);
             }

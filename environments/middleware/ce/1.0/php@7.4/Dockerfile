@@ -29,6 +29,7 @@ RUN set -ex\
         && make install \
         && cd - \
         && echo "extension=rdkafka.so" > /usr/local/etc/php/conf.d/rdkafka.ini \
+        && rm -rf php-rdkafka \
     ) \
     && apk del .build-deps \
     && rm -rf /tmp/* /var/cache/apk/*

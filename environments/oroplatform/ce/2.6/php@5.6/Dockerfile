@@ -6,15 +6,7 @@ LABEL maintainer="Grégory Planchat <gregory@kiboko.fr>"
 
 RUN set -ex\
     && apk add --virtual .build-deps \
-        autoconf \
-        bash \
-        binutils \
-        expat \
-        file \
-        g++ \
-        gcc \
-        m4 \
-        make \
+        $PHPIZE_DEPS \
         libxml2-dev \
         libmcrypt-dev \
         libpng-dev \
@@ -24,7 +16,6 @@ RUN set -ex\
         krb5-dev \
         imap-dev \
         openssl-dev \
-        $PHPIZE_DEPS \
     && apk add --update \
         libmcrypt \
         freetype \

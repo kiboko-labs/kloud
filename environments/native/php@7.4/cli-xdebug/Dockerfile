@@ -14,7 +14,7 @@ RUN set -ex\
         m4 \
         make \
     && docker-php-source extract \
-    && pecl install xdebug-2.9.0 \
+    && pecl install xdebug-2.9.6 \
     && docker-php-ext-enable xdebug \
     && docker-php-source delete \
     && apk del .build-deps \

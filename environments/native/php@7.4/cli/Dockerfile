@@ -46,7 +46,7 @@ RUN set -ex \
         perl \
         pkgconf \
         pkgconfig \
-        python \
+        python3 \
         re2c \
         readline \
         sqlite-libs \
@@ -57,13 +57,16 @@ RUN set -ex \
     && if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then >&2 echo 'ERROR: Invalid installer signature'; rm composer-setup.php; exit 1; fi \
     && php composer-setup.php --install-dir /usr/local/bin --filename composer \
     && php -r "unlink('composer-setup.php');" \
-    && mkdir -p /opt/docker/.npm \
-    && chown docker:docker /opt/docker/.npm \
+    && mkdir -p /opt/${APP_USERNAME}/.npm \
+    && mkdir -p /opt/${APP_USERNAME}/.composer \
+    && chown ${APP_USERNAME}:${APP_GROUPNAME} /opt/docker/.npm \
+    && composer global init \
     && composer global require \
         friendsofphp/php-cs-fixer \
         phpunit/phpunit:^8.5 \
         phpspec/phpspec \
-        infection/infection
+        infection/infection \
+    && chown -R ${APP_USERNAME}:${APP_GROUPNAME} /opt/${APP_USERNAME}
 
 ENV PATH="/opt/${APP_USERNAME}/.composer/vendor/bin:${PATH}"
 
