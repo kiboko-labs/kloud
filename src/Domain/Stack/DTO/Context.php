@@ -10,6 +10,7 @@ final class Context
     public string $phpVersion;
     public ?bool $withBlackfire;
     public ?bool $withXdebug;
+    public ?bool $withElasticStack;
     public ?string $dbms;
     public ?string $application;
     public ?string $applicationVersion;
@@ -22,18 +23,20 @@ final class Context
         ?string $dbms = self::DBMS_POSTGRESQL,
         ?bool $withBlackfire = null,
         ?bool $withXdebug = null,
+        ?bool $withElasticStack = null,
         ?bool $isEnterpriseEdition = false
     ) {
         $this->phpVersion = $phpVersion;
         $this->withBlackfire = $withBlackfire;
         $this->withXdebug = $withXdebug;
+        $this->withElasticStack = $withElasticStack;
         $this->dbms = $dbms;
         $this->application = $application;
         $this->applicationVersion = $applicationVersion;
         $this->isEnterpriseEdition = $isEnterpriseEdition;
     }
 
-    public function getImagesRegex(): string
+    public function getPHPImagesRegex(): string
     {
         if ($this->withBlackfire && $this->withXdebug) {
             $variations = '(?:|-blackfire|-xdebug)';

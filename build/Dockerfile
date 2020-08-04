@@ -53,7 +53,7 @@ RUN set -ex\
         perl \
         pkgconf \
         pkgconfig \
-        python \
+        python2 \
         re2c \
         readline \
         sqlite-libs \

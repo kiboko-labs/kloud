@@ -23,15 +23,15 @@ final class OroCommerceEnterprise implements ComposerPackageDelegatedGuesserInte
     public function guess(array $package): Stack\DTO\Context
     {
         if (Semver::satisfies($package['version'], '^3.1')) {
-            return new Stack\DTO\Context('7.2', 'orocommerce', '3.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true);
+            return new Stack\DTO\Context('7.2', 'orocommerce', '3.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, true);
         }
 
         if (Semver::satisfies($package['version'], '^4.1')) {
-            return new Stack\DTO\Context('7.4', 'orocommerce', '4.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true);
+            return new Stack\DTO\Context('7.4', 'orocommerce', '4.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, true);
         }
 
         if (Semver::satisfies($package['version'], '^4.2')) {
-            return new Stack\DTO\Context('7.4', 'orocommerce', '4.2', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true);
+            return new Stack\DTO\Context('7.4', 'orocommerce', '4.2', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, true);
         }
 
         throw NoPossibleGuess::noVersionMatching();

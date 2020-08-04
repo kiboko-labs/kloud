@@ -23,15 +23,15 @@ final class OroPlatformCommunity implements ComposerPackageDelegatedGuesserInter
     public function guess(array $package): Stack\DTO\Context
     {
         if (Semver::satisfies($package['version'], '^1.8')) {
-            return new Stack\DTO\Context('5.6', 'oroplatform', '1.8', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return new Stack\DTO\Context('5.6', 'oroplatform', '1.8', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
         }
 
         if (Semver::satisfies($package['version'], '^2.6')) {
-            return new Stack\DTO\Context('5.6', 'oroplatform', '2.6', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return new Stack\DTO\Context('5.6', 'oroplatform', '2.6', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
         }
 
         if (Semver::satisfies($package['version'], '^3.1')) {
-            return new Stack\DTO\Context('7.2', 'oroplatform', '3.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return new Stack\DTO\Context('7.2', 'oroplatform', '3.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
         }
 
         if (Semver::satisfies($package['version'], '^4.1')) {

@@ -56,6 +56,8 @@ final class ContextWizard
         $command->addOption('without-xdebug', null, InputOption::VALUE_NONE, 'Set up the application without Xdebug.');
         $command->addOption('with-blackfire', null, InputOption::VALUE_NONE, 'Set up the application to use Blackfire.');
         $command->addOption('without-blackfire', null, InputOption::VALUE_NONE, 'Set up the application without Blackfire.');
+        $command->addOption('with-elastic', null, InputOption::VALUE_NONE, 'Set up the application with ElasticStack logging (Kibana).');
+        $command->addOption('without-elastic', null, InputOption::VALUE_NONE, 'Set up the application without ElasticStack logging (Kibana).');
     }
 
     public function __invoke(InputInterface $input, OutputInterface $output): Stack\DTO\Context
@@ -98,9 +100,18 @@ final class ContextWizard
                 (new ConfirmationQuestion('Include XDebug?', $context->withXdebug ?? false))
             );
         }
+        if ($input->getOption('with-elastic')) {
+            $context->withElasticStack = true;
+        } else if ($input->getOption('without-elastic')) {
+            $context->withElasticStack = false;
+        } else {
+            $context->withXdebug = $format->askQuestion(
+                (new ConfirmationQuestion('Include ElasticStack?', $context->withElasticStack ?? false))
+            );
+        }
 
         $format->table(
-            ['php', 'application', 'edition', 'version', 'database', 'blackfire', 'xdebug'],
+            ['php', 'application', 'edition', 'version', 'database', 'blackfire', 'xdebug', 'elastic-stack'],
             [[
                 $context->phpVersion,
                 $context->application ?: '<native>',
@@ -109,6 +120,7 @@ final class ContextWizard
                 $context->dbms ?: '<none>',
                 $context->withBlackfire ? 'yes' : 'no',
                 $context->withXdebug ? 'yes' : 'no',
+                $context->withElasticStack ? 'yes' : 'no',
             ]]
         );
 

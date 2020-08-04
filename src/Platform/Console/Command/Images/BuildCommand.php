@@ -32,7 +32,7 @@ final class BuildCommand extends Command
     {
         $this->setDescription('Build PHP Docker images, with an interactive wizard');
 
-        $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
+        $this->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
 
         $this->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the build for matching images only.');
         $this->addOption('force-all', 'a', InputOption::VALUE_NONE, 'Force the build for all matching images and dependencies.');
@@ -46,8 +46,8 @@ final class BuildCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (empty($pattern = $input->getOption('regex'))) {
-            $pattern = ($this->wizard)($input, $output)->getImagesRegex();
+        if (empty($pattern = $input->getOption('php-images-regex'))) {
+            $pattern = ($this->wizard)($input, $output)->getPHPImagesRegex();
         }
 
         $format = new SymfonyStyle($input, $output);
