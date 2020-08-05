@@ -22,8 +22,8 @@ Installation
 While installing system-wide, you will need administrator privilleges to install the command inside `/usr/local/bin/` directory.
 
 ```
-sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar
-sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar.pubkey
+sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/docker-images/releases/download/1.0.4/kloud.phar
+sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.4/kloud.phar.pubkey
 sudo chmod +x /usr/local/bin/kloud
 ```
 
