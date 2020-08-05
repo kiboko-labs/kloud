@@ -22,8 +22,8 @@ Installation
 While installing system-wide, you will need administrator privilleges to install the command inside `/usr/local/bin/` directory.
 
 ```
-sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/docker-images/releases/download/1.0.4/kloud.phar
-sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.4/kloud.phar.pubkey
+sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/docker-images/releases/latest/download/kloud.phar
+sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/docker-images/releases/latest/download/kloud.phar.pubkey
 sudo chmod +x /usr/local/bin/kloud
 ```
 
@@ -32,8 +32,8 @@ sudo chmod +x /usr/local/bin/kloud
 While installing in your project, no administrator privilege is required, the phar package will be available in the `bin/` directory.
 
 ```
-curl -L -o bin/kloud.phar https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar
-curl -L -o bin/kloud.phar.pubkey https://github.com/kiboko-labs/docker-images/releases/download/1.0.2/kloud.phar.pubkey
+curl -L -o bin/kloud.phar https://github.com/kiboko-labs/docker-images/releases/latest/download/kloud.phar
+curl -L -o bin/kloud.phar.pubkey https://github.com/kiboko-labs/docker-images/releases/latest/download/kloud.phar.pubkey
 chmod +x bin/kloud.phar
 ```
 
