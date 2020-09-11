@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace spec\Builder\Domain\Packaging\Context;
+namespace spec\Kiboko\Cloud\Domain\Packaging\Context;
 
-use Builder\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging;
 use PhpSpec\ObjectBehavior;
 
 final class BuildableContextSpec extends ObjectBehavior
@@ -20,16 +20,28 @@ final class BuildableContextSpec extends ObjectBehavior
 
     public function it_does_not_have_a_buildable_parent()
     {
-        $this->beConstructedWith(new Packaging\Context\Context(null, []), '/path/to/dockerfile', []);
+        $this->beConstructedWith(
+            new Packaging\Context\Context(null, []),
+            new Packaging\Placeholder('/path/to/dockerfile'),
+            []
+        );
 
-        $this->isParentBuildable()->shouldReturn(false);
+        $this->asBuildable()->shouldReturnAnInstanceOf(Packaging\Context\BuildableContextInterface::class);
+    }
+
+    public function it_does_fail_if_empty_path()
+    {
+        $this->beConstructedWith(null, null, []);
+
+        $this->shouldThrow(new \RuntimeException('Could not determine path from parent context, please provide a path for the context.'))
+            ->duringInstantiation();
     }
 
     public function it_does_fail_if_empty_path_and_not_a_buildable_parent()
     {
         $this->beConstructedWith(new Packaging\Context\Context(null, []), null, []);
 
-        $this->shouldThrow(new \RuntimeException('Could not determine path from parent context.'))
+        $this->shouldThrow(new \RuntimeException('Could not determine path from parent context, please provide a path for the context.'))
             ->duringInstantiation();
     }
 
@@ -37,23 +49,23 @@ final class BuildableContextSpec extends ObjectBehavior
     {
         $this->beConstructedWith(new Packaging\Context\BuildableContext(null, new Packaging\Placeholder('/path/to/dockerfile'), []), null, []);
 
-        $this->isParentBuildable()->shouldReturn(true);
+        $this->asBuildable()->shouldReturnAnInstanceOf(Packaging\Context\BuildableContextInterface::class);
     }
 
     public function it_does_build_a_copy_from_parent()
     {
         $this->beConstructedWith(new Packaging\Context\BuildableContext(null, new Packaging\Placeholder('/path/to/dockerfile'), ['%lorem%' => 'ipsum']), null, []);
 
-        $this->getParent(['%dolor%' => 'sit amet'])->shouldReturnAnInstanceOf(Packaging\Context\ContextInterface::class);
+        $this->getParent()->shouldReturnAnInstanceOf(Packaging\Context\ContextInterface::class);
     }
 
     public function it_does_build_a_copy_from_parent_and_combine_variables()
     {
         $this->beConstructedWith(new Packaging\Context\BuildableContext(null, new Packaging\Placeholder('/path/to/dockerfile'), ['%lorem%' => 'ipsum']), null, []);
 
-        $this->getParent(['%dolor%' => 'sit amet'])->shouldIterateAs(new \ArrayObject([
-            '%lorem%' => 'ipsum',
+        $this->getBuildableParent(null, ['%dolor%' => 'sit amet'])->shouldIterateAs(new \ArrayObject([
             '%dolor%' => 'sit amet',
+            '%lorem%' => 'ipsum',
         ]));
     }
 
@@ -61,7 +73,7 @@ final class BuildableContextSpec extends ObjectBehavior
     {
         $this->beConstructedWith(new Packaging\Context\BuildableContext(null, new Packaging\Placeholder('/path/to/dockerfile'), ['%lorem%' => 'ipsum']), null, []);
 
-        $this->getParent(['%lorem%' => 'ipsum sit amet'])->shouldIterateAs(new \ArrayObject([
+        $this->getBuildableParent(null, ['%lorem%' => 'ipsum sit amet'])->shouldIterateAs(new \ArrayObject([
             '%lorem%' => 'ipsum sit amet',
         ]));
     }

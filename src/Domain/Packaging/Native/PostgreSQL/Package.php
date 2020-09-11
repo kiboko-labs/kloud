@@ -39,7 +39,7 @@ final class Package implements \IteratorAggregate, Packaging\PackageInterface, P
     {
         /** @var Packaging\Context\BuildableContextInterface $context */
         foreach ($this() as $context) {
-            yield new Native\PHP\Tag($this->repository, $context);
+            yield new Native\PostgreSQL\Tag($this->repository, $context);
         }
     }
 

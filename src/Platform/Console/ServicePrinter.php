@@ -7,9 +7,8 @@ use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
 use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\ValuedEnvironmentVariableInterface;
 use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
-use Kiboko\Cloud\Domain\Stack\Diff\ServiceDiff;
 use Kiboko\Cloud\Domain\Stack\Diff\UnifiedDiffOutputBuilder;
-use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Diff;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -61,23 +60,10 @@ final class ServicePrinter
         }
     }
 
-    public function printServiceDiff(ServiceDiff $serviceDiff, InputInterface $input, OutputInterface $output): bool
+    public function printServiceDiff(Diff $diff, InputInterface $input, OutputInterface $output): void
     {
-        $diff = $serviceDiff->diff();
-        $differences = array_filter($diff->getChunks(), function (array $chunk) {
-            return $chunk[1] === Differ::ADDED || $chunk[1] === Differ::REMOVED;
-        });
-
-        if (count($differences) <= 0) {
-            return false;
-        }
-
         $format = new SymfonyStyle($input, $output);
 
-        $format->title(strtr('Service %service%', ['%service%' => $serviceDiff->getName()]));
-
         $format->write((string) (new UnifiedDiffOutputBuilder())->getDiff($diff->getChunks()));
-
-        return true;
     }
 }

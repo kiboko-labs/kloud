@@ -8,35 +8,40 @@ final class Context
     const DBMS_MYSQL = 'mysql';
 
     public string $phpVersion;
-    public ?bool $withBlackfire;
-    public ?bool $withXdebug;
-    public ?bool $withElasticStack;
     public ?string $dbms;
     public ?string $application;
     public ?string $applicationVersion;
     public ?bool $isEnterpriseEdition;
+    public ?bool $withBlackfire;
+    public ?bool $withXdebug;
+    public ?bool $withDejavu;
+    public ?bool $withElasticStack;
+    public ?bool $withDockerForMacOptimizations;
+    public array $selfManagedServices;
+    public array $selfManagedVolumes;
 
     public function __construct(
         string $phpVersion,
         ?string $application = null,
         ?string $applicationVersion = null,
         ?string $dbms = self::DBMS_POSTGRESQL,
-        ?bool $withBlackfire = null,
-        ?bool $withXdebug = null,
-        ?bool $withElasticStack = null,
         ?bool $isEnterpriseEdition = false
     ) {
         $this->phpVersion = $phpVersion;
-        $this->withBlackfire = $withBlackfire;
-        $this->withXdebug = $withXdebug;
-        $this->withElasticStack = $withElasticStack;
         $this->dbms = $dbms;
         $this->application = $application;
         $this->applicationVersion = $applicationVersion;
         $this->isEnterpriseEdition = $isEnterpriseEdition;
+        $this->withBlackfire = null;
+        $this->withXdebug = null;
+        $this->withDejavu = null;
+        $this->withElasticStack = null;
+        $this->withDockerForMacOptimizations = null;
+        $this->selfManagedServices = [];
+        $this->selfManagedVolumes = [];
     }
 
-    public function getPHPImagesRegex(): string
+    public function getImagesRegex(): string
     {
         if ($this->withBlackfire && $this->withXdebug) {
             $variations = '(?:|-blackfire|-xdebug)';

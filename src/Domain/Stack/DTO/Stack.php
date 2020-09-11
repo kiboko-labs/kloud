@@ -152,10 +152,10 @@ final class Stack
         );
 
         foreach ($this->files as $file) {
-            if (!file_exists($file->getDirectory())) {
-                mkdir($file->getDirectory(), 0755, true);
+            if (!file_exists($path . '/' . $file->getDirectory())) {
+                mkdir($path . '/' . $file->getDirectory(), 0755, true);
             }
-            file_put_contents($file->getPath(), $file->asBlob());
+            file_put_contents($path . '/' . $file->getPath(), $file->asBlob());
         }
 
         $stream = fopen($path . '.env.dist', 'w');

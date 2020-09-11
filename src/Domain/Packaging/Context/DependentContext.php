@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Packaging\Context;
 
+use Kiboko\Cloud\Domain\Packaging\Placeholder;
+
 final class DependentContext implements ContextInterface, \IteratorAggregate
 {
     use ContextTrait;
@@ -36,7 +38,7 @@ final class DependentContext implements ContextInterface, \IteratorAggregate
 
     public function asBuildable(?string $path = null, array $variables = []): BuildableContextInterface
     {
-        return new DependentBuildableContext($this->parent, $this->dependency, $path, $variables + $this->getLocalArrayCopy());
+        return new DependentBuildableContext($this->parent, $this->dependency, $path !== null ? new Placeholder($path) : null, $variables + $this->getLocalArrayCopy());
     }
 
     public function hasParent(): bool

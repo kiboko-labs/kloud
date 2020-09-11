@@ -52,7 +52,7 @@ final class BuildableContext implements BuildableContextInterface, \IteratorAggr
 
     public function asBuildable(?string $path = null, array $variables = []): BuildableContextInterface
     {
-        return new self($this->parent, $path ?? $this->path, $variables);
+        return new self($this->parent, $path !== null ? new Placeholder($path) : $this->path, $variables + $this->getLocalArrayCopy());
     }
 
     public function hasParent(): bool

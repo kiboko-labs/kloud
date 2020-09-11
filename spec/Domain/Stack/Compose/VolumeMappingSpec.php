@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Builder\Domain\Stack\Compose;
+namespace spec\Kiboko\Cloud\Domain\Stack\Compose;
 
-use Builder\Domain\Stack\Compose\VolumeMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use PhpSpec\ObjectBehavior;
 
 class VolumeMappingSpec extends ObjectBehavior

@@ -5,7 +5,7 @@ namespace Kiboko\Cloud\Platform\Console;
 use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use Kiboko\Cloud\Domain\Stack\Diff\VolumeDiff;
 use Kiboko\Cloud\Domain\Stack\Diff\UnifiedDiffOutputBuilder;
-use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Diff;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -26,23 +26,10 @@ final class VolumePrinter
         );
     }
 
-    public function printVolumeDiff(VolumeDiff $volumeDiff, InputInterface $input, OutputInterface $output): bool
+    public function printVolumeDiff(Diff $diff, InputInterface $input, OutputInterface $output): void
     {
-        $diff = $volumeDiff->diff();
-        $differences = array_filter($diff->getChunks(), function (array $chunk) {
-            return $chunk[1] === Differ::ADDED || $chunk[1] === Differ::REMOVED;
-        });
-
-        if (count($differences) <= 0) {
-            return false;
-        }
-
         $format = new SymfonyStyle($input, $output);
 
-        $format->title(strtr('Volume %volume%', ['%volume%' => $volumeDiff->getName()]));
-
         $format->write((string) (new UnifiedDiffOutputBuilder())->getDiff($diff->getChunks()));
-
-        return true;
     }
 }

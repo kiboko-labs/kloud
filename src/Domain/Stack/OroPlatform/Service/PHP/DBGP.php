@@ -8,6 +8,7 @@ use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use Kiboko\Cloud\Domain\Stack\DTO;
 use Kiboko\Cloud\Domain\Stack\DTO\Context;
+use Kiboko\Cloud\Domain\Stack\Resource;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class DBGP implements ServiceBuilderInterface
@@ -43,9 +44,9 @@ final class DBGP implements ServiceBuilderInterface
 
                 RUN set -ex \
                     && apk add \
-                        py-pip \
-                    && pip2 install --upgrade pip \
-                    && pip2 install komodo-python-dbgp
+                        py3-pip \
+                    && pip install --upgrade pip \
+                    && pip install komodo-python3-dbgp
 
                 CMD /usr/bin/pydbgpproxy -d 0.0.0.0:9000 -i 0.0.0.0:9001
 

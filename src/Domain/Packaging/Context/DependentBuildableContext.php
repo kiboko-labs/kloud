@@ -55,7 +55,7 @@ final class DependentBuildableContext implements BuildableContextInterface, \Ite
 
     public function asBuildable(?string $path = null, array $variables = []): BuildableContextInterface
     {
-        return new self($this->parent, $this->dependency, $path ?? $this->path, $variables);
+        return new self($this->parent, $this->dependency, $path !== null ? new Placeholder($path) : $this->path, $variables + $this->getLocalArrayCopy());
     }
 
     public function hasParent(): bool

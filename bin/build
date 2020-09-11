@@ -4,7 +4,10 @@ DIRECTORY=$( dirname $( dirname $0 ) )
 
 EXEC="docker-compose --project-directory=$DIRECTORY/ --file=$DIRECTORY/docker-compose.yml exec sh"
 
-$EXEC composer install --no-dev --optimize-autoloader \
+$EXEC composer install --dev --optimize-autoloader \
+  && $EXEC vendor/bin/phpspec run --stop-on-failure --no-code-generation \
+  && $EXEC composer install --no-dev --optimize-autoloader \
   && $EXEC box build \
   && docker build -t kiboko/kloud:latest $DIRECTORY/build/ \
-  && docker push kiboko/kloud
+  && docker push kiboko/kloud \
+  && $EXEC composer install --dev --optimize-autoloader

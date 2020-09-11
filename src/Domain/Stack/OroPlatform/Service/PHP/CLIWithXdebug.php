@@ -43,20 +43,24 @@ final class CLIWithXdebug implements ServiceBuilderInterface
         ];
 
         $stack->addServices(
-            (new Service('sh-xdebug', $this->buildImageTag($context)))
+            ($service = new Service('sh-xdebug', $this->buildImageTag($context)))
                 ->setUser('docker', 'docker')
                 ->addEnvironmentVariables(...$environment)
                 ->addVolumeMappings(
                     new VolumeMapping(new DTO\Concatenated(new Variable('HOME'), '/.ssh'), '/opt/docker/.ssh/'),
                     new VolumeMapping('./', '/var/www/html'),
-                    new VolumeMapping('cache', '/var/www/html/var/cache'),
-                    new VolumeMapping('assets', '/var/www/html/public/bundles'),
                     new VolumeMapping('composer', '/opt/docker/.composer/'),
                 )
                 ->setCommand('sleep', '31536000')
                 ->setRestartOnFailure(),
-            )
-        ;
+            );
+
+        if ($context->withDockerForMacOptimizations === true) {
+            $service->addVolumeMappings(
+                new VolumeMapping('cache', '/var/www/html/var/cache'),
+                new VolumeMapping('assets', '/var/www/html/public/bundles'),
+            );
+        }
 
         return $stack;
     }

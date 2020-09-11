@@ -23,6 +23,8 @@ final class Service implements NormalizableInterface
     private ?array $buildArguments;
     private array $dependencies;
     private array $command;
+    private array $healthCheck;
+    private array $labels;
 
     public function __construct(string $name, ?string $image = null, array $command = [])
     {
@@ -39,6 +41,8 @@ final class Service implements NormalizableInterface
         $this->buildArguments = [];
         $this->dependencies = [];
         $this->command = $command;
+        $this->healthCheck = [];
+        $this->labels = [];
     }
 
     public function getName(): string
@@ -143,6 +147,69 @@ final class Service implements NormalizableInterface
         return $this;
     }
 
+    public function unsetHealthCheck(): self
+    {
+        $this->healthCheck = [];
+
+        return $this;
+    }
+
+    public function disableHealthCheck(): self
+    {
+        $this->healthCheck = ['disable' => true];
+
+        return $this;
+    }
+
+    public function setHealthCheckCommand(string ...$parts): self
+    {
+        $this->healthCheck['test'] = ['CMD', ...$parts];
+
+        return $this;
+    }
+
+    public function setHealthCheckShellCommand(string $shellCommand): self
+    {
+        $this->healthCheck['test'] = ['CMD-SHELL', $shellCommand];
+
+        return $this;
+    }
+
+    public function setHealthCheckInterval(string $interval): self
+    {
+        $this->healthCheck['interval'] = $interval;
+
+        return $this;
+    }
+
+    public function setHealthCheckTimeout(string $timeout): self
+    {
+        $this->healthCheck['timeout'] = $timeout;
+
+        return $this;
+    }
+
+    public function setHealthCheckRetries(int $retries): self
+    {
+        $this->healthCheck['retries'] = $retries;
+
+        return $this;
+    }
+
+    public function setHealthCheckStartPeriod(string $startPeriod): self
+    {
+        $this->healthCheck['start_period'] = $startPeriod;
+
+        return $this;
+    }
+
+    public function addLabels(Label ...$labels): self
+    {
+        array_push($this->labels, ...$labels);
+
+        return $this;
+    }
+
     public function setNoRestart(): self
     {
         $this->restartMode = 'no';
@@ -242,6 +309,18 @@ final class Service implements NormalizableInterface
 
         if (count($this->command) > 0) {
             $configuration['command'] = $this->command;
+        }
+
+        if (count($this->healthCheck) > 0) {
+            $configuration['healthcheck'] = $this->healthCheck;
+        }
+
+        if (count($this->labels) > 0) {
+            $configuration['labels'] = iterator_to_array((function (Label ...$labels) {
+                foreach ($labels as $label) {
+                    yield $label->getKey() => $label->getValue();
+                }
+            })(...$this->labels));
         }
 
         return array_merge(

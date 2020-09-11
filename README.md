@@ -3,7 +3,7 @@ Docker images and stacks for Oro and Marello development
 
 This project aims at building your Docker stack for [OroCommerce](https://oroinc.com/b2b-ecommerce/), [OroCRM](https://oroinc.com/orocrm/), [OroPlatform](https://oroinc.com/oroplatform/) and [Marello](https://www.marello.com/) development.
 
-> ⚠️ Nota: Those stacks are not suited for production hosting 
+> ⚠️ Nota: Those stacks are not suited for production hosting, but to provide an environment based on Docker as identical as possible to OroCloud on a personal computer.
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -60,6 +60,32 @@ You can invoke the following command that will guess what you need and a wizard 
 
 `kloud stack:init`
 
+#### Available command line options
+
+* Database engine selection
+  * `--mysql`: Set up the application to use MySQL.
+  * `--postgresql`: Set up the application to use PostgreSQL.
+
+* Xdebug a debugger for PHP
+  * `--with-xdebug`: Set up the application to use Xdebug.
+  * `--without-xdebug`: Set up the application without Xdebug.
+
+* Blackfire an APM for PHP performance optimizations
+  * `--with-blackfire`: Set up the application to use Blackfire.
+  * `--without-blackfire`: Set up the application without Blackfire.
+
+* Dejavu, An ElasticSearch UI
+  * `--with-dejavu`: Set up the application to use Dejavu UI.
+  * `--without-dejavu`: Set up the application without Dejavu UI.
+
+* Elastic Stack for application logging
+  * `--with-elastic-stack`: Set up the application to use Elastic Stack logging.
+  * `--without-elastic-stack`: Set up the application without Elastic Stack logging.
+
+* Mac OS optimizations on data volumes
+  * `--with-macos-optimizations`: Set up the application to use Docker for Mac optimizations.
+  * `--without-macos-optimizations`: Set up the application without Docker for Mac optimizations.
+
 ### Update your stack
 
 In an existing project, you can upgrade the docker stack configuration. automagically.
@@ -73,6 +99,8 @@ If you need to build the images you need in a stack, you can execute the followi
 
 `kloud image:build`
 
+To enable experimental images, you will need to add option `--with-experimental`.
+  
 ### Test the required images
 
 If you need to test if the images you are using are following every constraint you would expect:

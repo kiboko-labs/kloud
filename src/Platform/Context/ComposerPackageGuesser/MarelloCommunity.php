@@ -23,19 +23,31 @@ final class MarelloCommunity implements ComposerPackageDelegatedGuesserInterface
     public function guess(array $package): Stack\DTO\Context
     {
         if (Semver::satisfies($package['version'], '^2.0')) {
-            return new Stack\DTO\Context('7.2', 'marello', '2.0', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('marello', '2.0', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^2.1')) {
-            return new Stack\DTO\Context('7.2', 'marello', '2.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('marello', '2.1', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^2.2')) {
-            return new Stack\DTO\Context('7.2', 'marello', '2.2', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('marello', '2.2', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^3.0')) {
-            return new Stack\DTO\Context('7.4', 'marello', '3.0', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('marello', '3.0', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         throw NoPossibleGuess::noVersionMatching();
