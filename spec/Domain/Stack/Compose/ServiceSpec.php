@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Builder\Domain\Stack\Compose;
+namespace spec\Kiboko\Cloud\Domain\Stack\Compose;
 
-use Builder\Domain\Stack\Compose\EnvironmentVariable;
-use Builder\Domain\Stack\Compose\PortMapping;
-use Builder\Domain\Stack\Compose\Service;
-use Builder\Domain\Stack\Compose\Variable;
-use Builder\Domain\Stack\Compose\VolumeMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\Service;
+use Kiboko\Cloud\Domain\Stack\Compose\Variable;
+use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -32,15 +32,15 @@ class ServiceSpec extends ObjectBehavior
 
     function it_is_has_an_image()
     {
-        $this->beConstructedWith('lorem', 'kiboko/php:kloud');
-        $this->getImage()->shouldReturn('kiboko/php:kloud');
+        $this->beConstructedWith('lorem', 'kiboko/kloud');
+        $this->getImage()->shouldReturn('kiboko/kloud');
     }
 
     function it_is_failing_normalization_without_an_image_or_a_build_context(NormalizerInterface $normalizer)
     {
         $this->beConstructedWith('lorem');
 
-        $this->shouldThrow(new \RuntimeException('The service should have either an image or a build context declared.'))
+        $this->shouldThrow(new \RuntimeException('The service should have either an image, a build context declared or extend an existing service.'))
             ->during('normalize', [$normalizer]);
     }
 

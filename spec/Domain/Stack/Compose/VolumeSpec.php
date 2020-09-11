@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Builder\Domain\Stack\Compose;
+namespace spec\Kiboko\Cloud\Domain\Stack\Compose;
 
-use Builder\Domain\Stack\Compose\Volume;
+use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;

@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Builder\Domain\Stack\Compose;
+namespace spec\Kiboko\Cloud\Domain\Stack\Compose;
 
-use Builder\Domain\Stack\Compose\EnvironmentVariable;
-use Builder\Domain\Stack\Compose\Variable;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use PhpSpec\ObjectBehavior;
 
 class EnvironmentVariableSpec extends ObjectBehavior

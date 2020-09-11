@@ -61,16 +61,21 @@ final class FPM implements ServiceBuilderInterface
         }
 
         $stack->addServices(
-            (new Service('fpm', $this->buildImageTag($context)))
+            ($service = new Service('fpm', $this->buildImageTag($context)))
                 ->setUser('docker', 'docker')
                 ->addEnvironmentVariables(...$environment)
                 ->addVolumeMappings(
                     new VolumeMapping('./', '/var/www/html'),
-                    new VolumeMapping('cache', '/var/www/html/var/cache'),
-                    new VolumeMapping('assets', '/var/www/html/public/bundles'),
                 )
                 ->setRestartOnFailure(),
             );
+
+        if ($context->withDockerForMacOptimizations === true) {
+            $service->addVolumeMappings(
+                new VolumeMapping('cache', '/var/www/html/var/cache'),
+                new VolumeMapping('assets', '/var/www/html/public/bundles'),
+            );
+        }
 
         return $stack;
     }

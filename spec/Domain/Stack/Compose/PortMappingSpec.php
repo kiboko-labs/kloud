@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Builder\Domain\Stack\Compose;
+namespace spec\Kiboko\Cloud\Domain\Stack\Compose;
 
-use Builder\Domain\Stack\Compose\PortMapping;
-use Builder\Domain\Stack\Compose\Variable;
+use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
+use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use PhpSpec\ObjectBehavior;
 
 class PortMappingSpec extends ObjectBehavior

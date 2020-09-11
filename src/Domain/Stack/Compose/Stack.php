@@ -39,12 +39,19 @@ final class Stack implements NormalizableInterface
     public function replaceServices(Service ...$services): self
     {
         foreach ($services as $service) {
-            $this->removeServices(...$this->extractServices($service->getName()));
+            $this->replaceService($service);
         }
 
-        $this->addServices(...$services);
-
         return $this;
+    }
+
+    private function replaceService(Service $replacement): void
+    {
+        foreach ($this->services as &$service) {
+            if ($service->getName() === $replacement->getName()) {
+                $service = $replacement;
+            }
+        }
     }
 
     public function getServices(): array
@@ -57,9 +64,15 @@ final class Stack implements NormalizableInterface
      */
     public function extractServices(string ...$names): array
     {
-        return array_filter($this->services, function (Service $service) use ($names) {
+        $list = array_filter($this->services, function (Service $service) use ($names) {
             return in_array($service->getName(), $names, true);
         });
+
+        usort($list, function(Service $left, Service $right) use ($names) {
+            return (array_search($left->getName(), $names, true) <=> array_search($right->getName(), $names, true));
+        });
+
+        return $list;
     }
 
     public function addVolumes(Volume ...$volumes): self
@@ -71,7 +84,7 @@ final class Stack implements NormalizableInterface
 
     public function removeVolumes(Volume ...$volumes): self
     {
-        $this->services = array_filter($this->volumes, function (Volume $volume) use ($volumes) {
+        $this->volumes = array_filter($this->volumes, function (Volume $volume) use ($volumes) {
             return !in_array($volume, $volumes, true);
         });
 
@@ -81,12 +94,19 @@ final class Stack implements NormalizableInterface
     public function replaceVolumes(Volume ...$volumes): self
     {
         foreach ($volumes as $volume) {
-            $this->removeVolumes(...$this->extractVolumes($volume->getName()));
+            $this->replaceVolume($volume);
         }
 
-        $this->addVolumes(...$volumes);
-
         return $this;
+    }
+
+    private function replaceVolume(Volume $replacement): void
+    {
+        foreach ($this->volumes as &$volume) {
+            if ($volume->getName() === $replacement->getName()) {
+                $volume = $replacement;
+            }
+        }
     }
 
     public function getVolumes(): array
@@ -99,9 +119,15 @@ final class Stack implements NormalizableInterface
      */
     public function extractVolumes(string ...$names): array
     {
-        return array_filter($this->volumes, function (Volume $volume) use ($names) {
+        $list = array_filter($this->volumes, function (Volume $volume) use ($names) {
             return in_array($volume->getName(), $names, true);
         });
+
+        usort($list, function(Volume $left, Volume $right) use ($names) {
+            return (array_search($left->getName(), $names, true) <=> array_search($right->getName(), $names, true));
+        });
+
+        return $list;
     }
 
     public function normalize(NormalizerInterface $normalizer, string $format = null, array $context = [])

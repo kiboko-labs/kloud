@@ -51,23 +51,28 @@ final class PHP implements ServiceBuilderInterface
                     'o' => 'size=2048m,uid=1000,gid=1000',
                 ],
             ]),
-            new Volume('assets', [
-                'driver' => 'local',
-                'driver_opts' => [
-                    'type' => 'tmpfs',
-                    'device' => 'tmpfs',
-                    'o' => 'size=2048m,uid=1000,gid=1000',
-                ],
-            ]),
-            new Volume('cache', [
-                'driver' => 'local',
-                'driver_opts' => [
-                    'type' => 'tmpfs',
-                    'device' => 'tmpfs',
-                    'o' => 'size=2048m,uid=1000,gid=1000',
-                ],
-            ]),
             );
+
+        if ($context->withDockerForMacOptimizations === true) {
+            $stack->addVolumes(
+                new Volume('assets', [
+                    'driver' => 'local',
+                    'driver_opts' => [
+                        'type' => 'tmpfs',
+                        'device' => 'tmpfs',
+                        'o' => 'size=2048m,uid=1000,gid=1000',
+                    ],
+                ]),
+                new Volume('cache', [
+                    'driver' => 'local',
+                    'driver_opts' => [
+                        'type' => 'tmpfs',
+                        'device' => 'tmpfs',
+                        'o' => 'size=2048m,uid=1000,gid=1000',
+                    ],
+                ]),
+                );
+        }
 
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('COMPOSER_AUTH'), '{"github-oauth":{"github.com":"0000000000000000000000000000000000000000"},"bitbucket-oauth":{"bitbucket.org":{"consumer-key":"0000000000000000000000000000000000000000","consumer-secret":"0000000000000000000000000000000000000000"}}}'),

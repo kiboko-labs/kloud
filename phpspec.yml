@@ -12,11 +12,11 @@ extensions:
 #      - vendor
 #    whitelist:
 #      - src
-  Builder\PHPSpec\BuilderExtension: ~
+  Kiboko\Cloud\PHPSpec\BuilderExtension: ~
 formatter.name: pretty
 stop_on_failure: false
 suites:
   builder_suite:
-    namespace: Builder
-    psr4_prefix: Builder
+    namespace: Kiboko\Cloud
+    psr4_prefix: Kiboko\Cloud
     src_path: '%paths.config%'

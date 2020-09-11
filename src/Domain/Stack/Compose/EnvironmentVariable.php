@@ -5,7 +5,7 @@ namespace Kiboko\Cloud\Domain\Stack\Compose;
 final class EnvironmentVariable implements \Stringable, ValuedEnvironmentVariableInterface
 {
     private Variable $variable;
-    /** @var string|int */
+    /** @var string|int|Variable|Expression */
     private $value;
 
     public function __construct(Variable $variable, $value = null)

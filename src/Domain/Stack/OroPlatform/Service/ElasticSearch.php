@@ -3,6 +3,7 @@
 namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service;
 
 use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
+use Kiboko\Cloud\Domain\Stack\Compose\Expression;
 use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
 use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\Variable;
@@ -30,11 +31,11 @@ final class ElasticSearch implements ServiceBuilderInterface
     private function buildImageTag(DTO\Context $context)
     {
         if (Semver::satisfies($context->applicationVersion, '^3.0')) {
-            return 'docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.7';
+            return 'docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.12';
         }
 
         if (Semver::satisfies($context->applicationVersion, '^4.0')) {
-            return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.6.1';
+            return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1';
         }
 
         throw new \RuntimeException('No image satisfies the application version constraint.');
@@ -45,15 +46,8 @@ final class ElasticSearch implements ServiceBuilderInterface
         $stack->addServices(
             (new Service('elasticsearch', $this->buildImageTag($context)))
                 ->addEnvironmentVariables(
-                    new EnvironmentVariable(new Variable('cluster.name'), 'docker-cluster'),
-                    new EnvironmentVariable(new Variable('bootstrap.memory_lock'), 'true'),
                     new EnvironmentVariable(new Variable('ES_JAVA_OPTS'), '-Xms512m -Xmx512m'),
-                    new EnvironmentVariable(new Variable('discovery.type'), 'single-node'),
-                    new EnvironmentVariable(new Variable('http.port'), '9200'),
-                    new EnvironmentVariable(new Variable('http.cors.allow-origin'), 'http://localhost:${DEJAVU_PORT},http://127.0.0.1:${DEJAVU_PORT},http://192.168.64.4:${DEJAVU_PORT},http://dejavu:${DEJAVU_PORT},http://host.docker.internal:${DEJAVU_PORT}'),
-                    new EnvironmentVariable(new Variable('http.cors.enabled'), 'true'),
-                    new EnvironmentVariable(new Variable('http.cors.allow-headers'), 'X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization'),
-                    new EnvironmentVariable(new Variable('http.cors.allow-credentials'), 'true'),
+                    new EnvironmentVariable(new Variable('http.cors.allow-origin'), new Expression('http://', new Variable('APPLICATION_DOMAIN'), ':', new Variable('DEJAVU_PORT'), ',http://')),
                 )
                 ->addPorts(
                     new PortMapping(new Variable('ELASTICSEARCH_PORT'), 9200)
@@ -75,15 +69,24 @@ final class ElasticSearch implements ServiceBuilderInterface
 
         $stack->addFiles(
             new Resource\InMemory('.docker/elasticsearch/elasticsearch.yml', <<<EOF
-                http.host: 0.0.0.0
-
+                cluster.name: 'docker-cluster'
+                bootstrap.memory_lock: true
+                discovery.type: 'single-node'
+                
+                http.host: '0.0.0.0'
+                http.port: 9200
+                
                 # Uncomment the following lines for a production cluster deployment
                 #transport.host: 0.0.0.0
                 #discovery.zen.minimum_master_nodes: 1
+                
                 http.cors.enabled : true
-                http.cors.allow-origin : "*"
-                http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
-                http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length
+                http.cors.allow-headers: 'X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization'
+                # Uncomment the following if you wish to open access to a 3rd-party application, like Dejavu.
+                #http.cors.allow-origin: "http://localhost:1234,http://127.0.0.1:1234"
+                http.cors.allow-credentials: true
+                http.cors.allow-methods : 'OPTIONS, HEAD, GET, POST, PUT, DELETE'
+                
                 cluster.routing.allocation.disk.threshold_enabled: false
                 EOF),
         );
@@ -91,6 +94,7 @@ final class ElasticSearch implements ServiceBuilderInterface
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('ELASTICSEARCH_PORT')),
             new EnvironmentVariable(new Variable('DEJAVU_PORT')),
+            new EnvironmentVariable(new Variable('APPLICATION_DOMAIN')),
         );
 
         return $stack;

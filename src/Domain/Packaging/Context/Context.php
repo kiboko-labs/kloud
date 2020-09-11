@@ -32,7 +32,7 @@ final class Context implements ContextInterface, \IteratorAggregate
 
     public function asBuildable(?string $path = null, array $variables = []): BuildableContextInterface
     {
-        return new BuildableContext($this->parent, $path, $variables + $this->getLocalArrayCopy());
+        return new BuildableContext($this->parent, $path !== null ? new Placeholder($path) : null, $variables + $this->getLocalArrayCopy());
     }
 
     public function hasParent(): bool

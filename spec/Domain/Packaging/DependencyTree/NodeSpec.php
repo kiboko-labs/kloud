@@ -1,14 +1,14 @@
 <?php
 
-namespace spec\Builder\Domain\Packaging\DependencyTree;
+namespace spec\Kiboko\Cloud\Domain\Packaging\DependencyTree;
 
-use Builder\Domain\Packaging\Context\BuildableContext;
-use Builder\Domain\Packaging\DependencyTree\Node;
-use Builder\Domain\Packaging\DependencyTree\NodeInterface;
-use Builder\Domain\Packaging\DependencyTree\ResolutionInterface;
-use Builder\Domain\Packaging\Native\Tag;
-use Builder\Domain\Packaging\Placeholder;
-use Builder\Domain\Packaging\Repository;
+use Kiboko\Cloud\Domain\Packaging\Context\BuildableContext;
+use Kiboko\Cloud\Domain\Packaging\DependencyTree\Node;
+use Kiboko\Cloud\Domain\Packaging\DependencyTree\NodeInterface;
+use Kiboko\Cloud\Domain\Packaging\DependencyTree\ResolutionInterface;
+use Kiboko\Cloud\Domain\Packaging\Native\PHP\Tag;
+use Kiboko\Cloud\Domain\Packaging\Placeholder;
+use Kiboko\Cloud\Domain\Packaging\Repository;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

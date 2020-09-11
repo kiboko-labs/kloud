@@ -23,23 +23,38 @@ final class OroPlatformCommunity implements ComposerPackageDelegatedGuesserInter
     public function guess(array $package): Stack\DTO\Context
     {
         if (Semver::satisfies($package['version'], '^1.8')) {
-            return new Stack\DTO\Context('5.6', 'oroplatform', '1.8', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return (new Stack\ContextBuilder('5.6'))
+                ->setApplication('oroplatform', '1.8', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^2.6')) {
-            return new Stack\DTO\Context('5.6', 'oroplatform', '2.6', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return (new Stack\ContextBuilder('5.6'))
+                ->setApplication('oroplatform', '2.6', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^3.1')) {
-            return new Stack\DTO\Context('7.2', 'oroplatform', '3.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('oroplatform', '3.1', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^4.1')) {
-            return new Stack\DTO\Context('7.4', 'oroplatform', '4.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('oroplatform', '4.1', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^4.2')) {
-            return new Stack\DTO\Context('7.4', 'oroplatform', '4.2', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('oroplatform', '4.2', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         throw NoPossibleGuess::noVersionMatching();

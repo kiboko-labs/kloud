@@ -34,16 +34,17 @@ final class PostgreSQL implements ServiceBuilderInterface
                     new PortMapping(new Variable('SQL_PORT'), 5432),
                 )
                 ->addEnvironmentVariables(
-                    new EnvironmentVariable(new Variable('POSTGRES_ROOT_PASSWORD'), 'password'),
-                    new EnvironmentVariable(new Variable('POSTGRES_DB'), 'kiboko'),
-                    new EnvironmentVariable(new Variable('POSTGRES_USER'), 'kiboko'),
-                    new EnvironmentVariable(new Variable('POSTGRES_PASSWORD'), 'password'),
+                    new EnvironmentVariable(new Variable('POSTGRES_ROOT_PASSWORD'), new Variable('SQL_ROOT_PASSWORD')),
+                    new EnvironmentVariable(new Variable('POSTGRES_DB'), new Variable('SQL_DATABASE')),
+                    new EnvironmentVariable(new Variable('POSTGRES_USER'), new Variable('SQL_USER')),
+                    new EnvironmentVariable(new Variable('POSTGRES_PASSWORD'), new Variable('SQL_PASSWORD')),
                 )
                 ->addVolumeMappings(
                     new VolumeMapping('./.docker/postgres@9.6/sql/uuid-ossp.sql', '/docker-entrypoint-initdb.d/00-uuid-ossp.sql', true),
                     new VolumeMapping('database', '/var/lib/postgresql/data'),
                 )
                 ->setRestartOnFailure()
+                ->setHealthCheckShellCommand('pg_isready -U$${POSTGRES_USER} -D$${POSTGRES_DB}')
             )
             ->addVolumes(
                 new Volume('database', ['driver' => 'local'])

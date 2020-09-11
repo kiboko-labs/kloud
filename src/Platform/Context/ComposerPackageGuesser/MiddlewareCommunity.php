@@ -23,7 +23,10 @@ final class MiddlewareCommunity implements ComposerPackageDelegatedGuesserInterf
     public function guess(array $package): Stack\DTO\Context
     {
         if (Semver::satisfies($package['version'], '^1.0')) {
-            return new Stack\DTO\Context('7.4', 'middleware', '1.0', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, false);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('middleware', '1.0', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         throw NoPossibleGuess::noVersionMatching();

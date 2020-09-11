@@ -23,15 +23,24 @@ final class OroCRMEnterprise implements ComposerPackageDelegatedGuesserInterface
     public function guess(array $package): Stack\DTO\Context
     {
         if (Semver::satisfies($package['version'], '^3.1')) {
-            return new Stack\DTO\Context('7.2', 'orocrm', '3.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('orocrm', '3.1', true)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^4.1')) {
-            return new Stack\DTO\Context('7.4', 'orocrm', '4.1', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('orocrm', '4.1', true)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         if (Semver::satisfies($package['version'], '^4.2')) {
-            return new Stack\DTO\Context('7.4', 'orocrm', '4.2', Stack\DTO\Context::DBMS_POSTGRESQL, true, true, true);
+            return (new Stack\ContextBuilder('7.2'))
+                ->setApplication('orocrm', '4.2', true)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
         }
 
         throw NoPossibleGuess::noVersionMatching();

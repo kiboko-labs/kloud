@@ -8,13 +8,14 @@ use Kiboko\Cloud\Domain\Stack\StackBuilder;
 use Kiboko\Cloud\Platform\Console\ServicePrinter;
 use Kiboko\Cloud\Platform\Console\ContextWizard;
 use Kiboko\Cloud\Platform\Console\VolumePrinter;
+use SebastianBergmann\Diff\Differ;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -63,7 +64,7 @@ final class UpgradeCommand extends Command
         );
 
         if ($finder->hasResults()) {
-            /** @var \SplFileInfo $file */
+            /** @var SplFileInfo $file */
             foreach ($finder->name('/^\.?kloud.ya?ml$/') as $file) {
                 try {
                     /** @var Context $context */
@@ -76,11 +77,15 @@ final class UpgradeCommand extends Command
             }
         }
 
-        if (empty($context)) {
-            $context = ($this->wizard)($input, $output, $workingDirectory);
+        if (!isset($context)) {
+            $context = ($this->wizard)($input, $output);
 
             $format->note('Writing a new .kloud.yaml file.');
-            file_put_contents($workingDirectory . '/.kloud.yaml', $serializer->serialize($context, 'yaml'));
+            file_put_contents($workingDirectory . '/.kloud.yaml', $serializer->serialize($context, 'yaml', [
+                'yaml_inline' => 2,
+                'yaml_indent' => 2,
+                'yaml_flags' => 0
+            ]));
         }
 
         $builder = new StackBuilder(
@@ -108,6 +113,10 @@ final class UpgradeCommand extends Command
             $format->note(strtr('Your stack is having %count% non-standard services.', ['%count%' => $extraServicesCount]));
 
             foreach ($extraServices as $service) {
+                if (in_array($service->getName(), $context->selfManagedServices)) {
+                    $format->note(strtr('Ignoring service %serviceName% as it is marked as self-managed.', ['%serviceName%' => $service->getName()]));
+                    continue;
+                }
                 $printer->printService($service, $input, $output);
 
                 if (!$format->askQuestion(new ConfirmationQuestion('Do you wish to keep this service in your stack?'))) {
@@ -119,13 +128,29 @@ final class UpgradeCommand extends Command
         $updatedServicesCount = 0;
         if (count($commonServices = $diff->diffServices()) > 0) {
             foreach ($commonServices as $serviceDiff) {
-                if (!$printer->printServiceDiff($serviceDiff, $input, $output)) {
+                $diffChunks = $serviceDiff->diff();
+
+                $differences = array_filter($diffChunks->getChunks(), function (array $chunk) {
+                    return $chunk[1] === Differ::ADDED || $chunk[1] === Differ::REMOVED;
+                });
+
+                if (count($differences) <= 0) {
                     continue;
                 }
 
+                if (in_array($serviceDiff->getName(), $context->selfManagedServices)) {
+                    $format->note(strtr('Ignoring service %serviceName% as it is marked as self-managed.', ['%serviceName%' => $serviceDiff->getName()]));
+                    $stack->replaceServices($serviceDiff->getFrom());
+                    continue;
+                }
+
+                $format->title(strtr('Service %service%', ['%service%' => $serviceDiff->getName()]));
+
+                $printer->printServiceDiff($diffChunks, $input, $output);
+
                 ++$updatedServicesCount;
                 if (!$format->askQuestion(new ConfirmationQuestion('Do you wish to update this service in your stack?'))) {
-                    $stack->replaceServices($serviceDiff->getTo());
+                    $stack->replaceServices($serviceDiff->getFrom());
                 }
             }
         }
@@ -147,6 +172,10 @@ final class UpgradeCommand extends Command
             $format->note(strtr('Your stack is having %count% non-standard volumes.', ['%count%' => $extraVolumesCount]));
 
             foreach ($extraVolumes as $volume) {
+                if (in_array($volume->getName(), $context->selfManagedVolumes)) {
+                    $format->note(strtr('Ignoring volume %volumeName% as it is marked as self-managed.', ['%volumeName%' => $volume->getName()]));
+                    continue;
+                }
                 $printer->printVolume($volume, $input, $output);
 
                 if (!$format->askQuestion(new ConfirmationQuestion('Do you wish to keep this volume in your stack?'))) {
@@ -158,13 +187,29 @@ final class UpgradeCommand extends Command
         $updatedVolumesCount = 0;
         if (count($commonVolumes = $diff->diffVolumes()) > 0) {
             foreach ($commonVolumes as $volumeDiff) {
-                if (!$printer->printVolumeDiff($volumeDiff, $input, $output)) {
+                $diffChunks = $volumeDiff->diff();
+
+                $differences = array_filter($diffChunks->getChunks(), function (array $chunk) {
+                    return $chunk[1] === Differ::ADDED || $chunk[1] === Differ::REMOVED;
+                });
+
+                if (count($differences) <= 0) {
                     continue;
                 }
 
+                if (in_array($volumeDiff->getName(), $context->selfManagedVolumes)) {
+                    $format->note(strtr('Ignoring volume %volumeName% as it is marked as self-managed.', ['%volumeName%' => $volumeDiff->getName()]));
+                    $stack->replaceVolumes($volumeDiff->getFrom());
+                    continue;
+                }
+
+                $format->title(strtr('Volume %volume%', ['%volume%' => $volumeDiff->getName()]));
+
+                $printer->printVolumeDiff($diffChunks, $input, $output);
+
                 ++$updatedVolumesCount;
                 if (!$format->askQuestion(new ConfirmationQuestion('Do you wish to update this volume in your stack?'))) {
-                    $stack->replaceServices($serviceDiff->getTo());
+                    $stack->replaceVolumes($volumeDiff->getFrom());
                 }
             }
         }

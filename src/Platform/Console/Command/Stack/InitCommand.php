@@ -7,9 +7,12 @@ use Kiboko\Cloud\Domain\Stack\StackBuilder;
 use Kiboko\Cloud\Platform\Console\ContextWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Serializer\Encoder\YamlEncoder;
+use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 final class InitCommand extends Command
 {
@@ -38,14 +41,38 @@ final class InitCommand extends Command
     {
         $workingDirectory = $input->getOption('working-directory') ?: getcwd();
 
+        $finder = (new Finder())
+            ->files()
+            ->ignoreDotFiles(false)
+            ->in($workingDirectory);
+
         $format = new SymfonyStyle($input, $output);
 
-        if (file_exists($workingDirectory . '/.kloud.yml')) {
-            $format->error('The directory was already initialized with a Docker stack.');
-            return 0;
+        $serializer = new Serializer(
+            [
+                new PropertyNormalizer(),
+            ],
+            [
+                new YamlEncoder()
+            ]
+        );
+
+        if ($finder->hasResults()) {
+            /** @var \SplFileInfo $file */
+            foreach ($finder->name('/^\.?kloud.ya?ml$/') as $file) {
+                $format->error('The directory was already initialized with a Docker stack. You should instead run stack:upgrade command.');
+                return 0;
+            }
         }
 
-        $context = ($this->wizard)($input, $output, $workingDirectory);
+        $context = ($this->wizard)($input, $output);
+
+        $format->note('Writing a new .kloud.yaml file.');
+        file_put_contents($workingDirectory . '/.kloud.yaml', $serializer->serialize($context, 'yaml', [
+            'yaml_inline' => 2,
+            'yaml_indent' => 2,
+            'yaml_flags' => 0
+        ]));
 
         $builder = new StackBuilder(
             new OroPlatform\Builder($this->stacksPath),
