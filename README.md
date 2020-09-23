@@ -5,6 +5,7 @@ This project aims at building your Docker stack for [OroCommerce](https://oroinc
 
 > ⚠️ Nota: Those stacks are not suited for production hosting, but to provide an environment based on Docker as identical as possible to OroCloud on a personal computer.
 
+* [Requirements](#requirements)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Supported versions and flavors](#supported-versions-and-flavours)
@@ -13,6 +14,11 @@ This project aims at building your Docker stack for [OroCommerce](https://oroinc
   * [OroCommerce](#orocommerce)
   * [Marello](#marello)
   * [Middleware](#middleware)
+
+Requirements:
+---
+
+- PHP 7.4
 
 Installation
 ---
