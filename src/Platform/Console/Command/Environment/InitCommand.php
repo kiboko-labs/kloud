@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Yaml\Yaml;
 
 final class InitCommand extends Command
 {
@@ -25,27 +26,22 @@ final class InitCommand extends Command
         $allLines = [];
 
         $serverAddress = $format->askQuestion(new Question('Server of your remote directory'));
-        $newLine = 'SERVER_ADDRESS' . ': ' . $serverAddress . PHP_EOL;
-        array_push($allLines, $newLine);
+        $allLines['SERVER_ADDRESS'] = $serverAddress;
 
         $depPath = $format->askQuestion(new Question('Path of your remote directory on the server'));
-        $newLine = 'DEPLOYMENT_PATH' . ': ' . $depPath . PHP_EOL;
-        array_push($allLines, $newLine);
+        $allLines['DEPLOYMENT_PATH'] = $depPath;
 
         $envDistPath = getcwd() . '/.env.dist';
         if (file_exists($envDistPath)) {
             $envDist = parse_ini_file($envDistPath);
             foreach (array_keys($envDist) as $line) {
                 $lineValue = $format->askQuestion(new Question('Value of ' . $line));
-                $newLine = $line . ': ' . $lineValue . PHP_EOL;
-                array_push($allLines, $newLine);
+                $allLines[$line] = $lineValue;
             }
         }
 
-        $newFile = fopen('.kloud.environent.yaml', 'w');
-        foreach ($allLines as $line) {
-            fwrite($newFile, $line);
-        }
+        $yaml = Yaml::dump($allLines);
+        file_put_contents('.kloud.environent.yaml', $yaml);
 
         return 0;
     }
