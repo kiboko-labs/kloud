@@ -19,6 +19,7 @@ RUN set -ex\
         nodejs \
         npm \
         docker \
+        openssh \
     && update-ca-certificates \
     && apk add --virtual .build-deps \
         autoconf \
@@ -34,6 +35,8 @@ RUN set -ex\
     && apk add --update icu-dev icu \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
+    && docker-php-ext-configure pcntl \
+    && docker-php-ext-install pcntl \
     && docker-php-source extract \
     && pecl install xdebug-2.9.0 \
     && docker-php-ext-enable xdebug \
