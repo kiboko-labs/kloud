@@ -296,7 +296,7 @@ environment variable value.
 
 ### How to access MySQL or PostgreSQL service from your computer?
 
-The MySQL or PostgreSQL servcie can be accessed through the port defined in the `SQL_PORT`
+The MySQL or PostgreSQL servcie can be accessed through the port defined in the `DATABASE_PORT`
 environment variable value.
 
 Supported versions and flavours
