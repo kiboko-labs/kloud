@@ -3,14 +3,12 @@
 namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service;
 
 use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
-use Kiboko\Cloud\Domain\Stack\Compose\Label;
 use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
 use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\Variable;
 use Kiboko\Cloud\Domain\Stack\Compose\Volume;
 use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use Kiboko\Cloud\Domain\Stack\DTO;
-use Kiboko\Cloud\Domain\Stack\Resource;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class MySQL implements ServiceBuilderInterface
@@ -35,10 +33,10 @@ final class MySQL implements ServiceBuilderInterface
                     new PortMapping(new Variable('SQL_PORT'), 3306),
                 )
                 ->addEnvironmentVariables(
-                    new EnvironmentVariable(new Variable('MYSQL_ROOT_PASSWORD'), new Variable('SQL_ROOT_PASSWORD')),
-                    new EnvironmentVariable(new Variable('MYSQL_DATABASE'), new Variable('SQL_DATABASE')),
-                    new EnvironmentVariable(new Variable('MYSQL_USER'), new Variable('SQL_USER')),
-                    new EnvironmentVariable(new Variable('MYSQL_PASSWORD'), new Variable('SQL_PASSWORD')),
+                    new EnvironmentVariable(new Variable('MYSQL_ROOT_PASSWORD'), new Variable('DATABASE_ROOT_PASSWORD')),
+                    new EnvironmentVariable(new Variable('MYSQL_DATABASE'), new Variable('DATABASE_NAME')),
+                    new EnvironmentVariable(new Variable('MYSQL_USER'), new Variable('DATABASE_USER')),
+                    new EnvironmentVariable(new Variable('MYSQL_PASSWORD'), new Variable('DATABASE_PASSWORD')),
                 )
                 ->addVolumeMappings(
                     new VolumeMapping('database', '/var/lib/mysql'),
@@ -52,11 +50,11 @@ final class MySQL implements ServiceBuilderInterface
         ;
 
         $stack->addEnvironmentVariables(
-            new EnvironmentVariable(new Variable('SQL_ROOT_PASSWORD')),
-            new EnvironmentVariable(new Variable('SQL_DATABASE')),
-            new EnvironmentVariable(new Variable('SQL_USER')),
-            new EnvironmentVariable(new Variable('SQL_PASSWORD')),
-            new EnvironmentVariable(new Variable('SQL_PORT')),
+            new EnvironmentVariable(new Variable('DATABASE_ROOT_PASSWORD'), 'password'),
+            new EnvironmentVariable(new Variable('DATABASE_NAME')),
+            new EnvironmentVariable(new Variable('DATABASE_USER')),
+            new EnvironmentVariable(new Variable('DATABASE_PASSWORD'), 'password'),
+            new EnvironmentVariable(new Variable('DATABASE_PORT')),
         );
 
         return $stack;

@@ -28,11 +28,16 @@ final class Kibana implements ServiceBuilderInterface
 
     private function buildImageTag(DTO\Context $context)
     {
-        if (Semver::satisfies($context->applicationVersion, '^3.0')) {
+        if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^3.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^2.0')
+        ) {
             return 'docker.elastic.co/kibana/kibana:6.8.11';
         }
 
-        if (Semver::satisfies($context->applicationVersion, '^4.0')) {
+        if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^4.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^3.0')
+            || in_array($context->application, ['middleware']) && Semver::satisfies($context->applicationVersion, '^1.0')
+        ) {
             return 'docker.elastic.co/kibana/kibana:7.8.1';
         }
 

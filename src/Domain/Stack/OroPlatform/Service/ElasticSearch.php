@@ -31,11 +31,16 @@ final class ElasticSearch implements ServiceBuilderInterface
 
     private function buildImageTag(DTO\Context $context)
     {
-        if (Semver::satisfies($context->applicationVersion, '^3.0')) {
+        if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^3.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^2.0')
+        ) {
             return 'docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.12';
         }
 
-        if (Semver::satisfies($context->applicationVersion, '^4.0')) {
+        if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^4.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^3.0')
+            || in_array($context->application, ['middleware']) && Semver::satisfies($context->applicationVersion, '^1.0')
+        ) {
             return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1';
         }
 
@@ -57,11 +62,7 @@ final class ElasticSearch implements ServiceBuilderInterface
                     new VolumeMapping('elasticsearch', '/usr/share/elasticsearch/data'),
                     new VolumeMapping('./.docker/elasticsearch/elasticsearch.yml', '/usr/share/elasticsearch/config/elasticsearch.yml'),
                 )
-                ->setRestartOnFailure(),
-            (new Service('dejavu', 'appbaseio/dejavu'))
-                ->addPorts(
-                    new PortMapping(new Variable('DEJAVU_PORT'), 1358)
-                )
+                ->setRestartOnFailure()
             )
             ->addVolumes(
                 new Volume('elasticsearch', ['driver' => 'local'])
@@ -97,6 +98,19 @@ final class ElasticSearch implements ServiceBuilderInterface
             new EnvironmentVariable(new Variable('DEJAVU_PORT')),
             new EnvironmentVariable(new Variable('APPLICATION_DOMAIN')),
         );
+
+        if ($context->withDejavu === true) {
+            $stack->addServices(
+                (new Service('dejavu', 'appbaseio/dejavu'))
+                    ->addPorts(
+                        new PortMapping(new Variable('DEJAVU_PORT'), 1358)
+                    )
+            );
+
+            $stack->addEnvironmentVariables(
+                new EnvironmentVariable(new Variable('DEJAVU_PORT')),
+                );
+        }
 
         return $stack;
     }
