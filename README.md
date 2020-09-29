@@ -261,6 +261,27 @@ parameters:
 Notice that the `ELASTICSEARCH_PORT` variable is not used, as this port is the one from your 
 computer's point of view, not a container's point of view in the stack.
 
+### How to enable ElasticStack logging
+
+To integrate ElasticStack in your monolog config, you will need to change your `config/config_dev.yml` file, as such:
+
+```yaml
+services:
+    monolog.formatters.logstash:
+        class: Monolog\Formatter\LogstashFormatter
+        arguments:
+            $applicationName: 'your application'
+monolog:
+    handlers:
+        logstash:
+            type: socket
+            connection_string: 'tcp://logstash:5044'
+            level: debug
+            formatter: monolog.formatters.logstash
+            persistent: true
+            connection_timeout: 5
+```
+
 ### How to access to Mailcatcher's interface?
 
 The Mailcatcher interface can be accessed through the port defined in the `MAILCATCHER_PORT`
