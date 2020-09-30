@@ -34,10 +34,10 @@ final class PostgreSQL implements ServiceBuilderInterface
                     new PortMapping(new Variable('SQL_PORT'), 5432),
                 )
                 ->addEnvironmentVariables(
-                    new EnvironmentVariable(new Variable('POSTGRES_ROOT_PASSWORD'), new Variable('SQL_ROOT_PASSWORD')),
-                    new EnvironmentVariable(new Variable('POSTGRES_DB'), new Variable('SQL_DATABASE')),
-                    new EnvironmentVariable(new Variable('POSTGRES_USER'), new Variable('SQL_USER')),
-                    new EnvironmentVariable(new Variable('POSTGRES_PASSWORD'), new Variable('SQL_PASSWORD')),
+                    new EnvironmentVariable(new Variable('POSTGRES_ROOT_PASSWORD'), new Variable('DATABASE_ROOT_PASSWORD')),
+                    new EnvironmentVariable(new Variable('POSTGRES_DB'), new Variable('DATABASE_NAME')),
+                    new EnvironmentVariable(new Variable('POSTGRES_USER'), new Variable('DATABASE_USER')),
+                    new EnvironmentVariable(new Variable('POSTGRES_PASSWORD'), new Variable('DATABASE_PASSWORD')),
                 )
                 ->addVolumeMappings(
                     new VolumeMapping('./.docker/postgres@9.6/sql/uuid-ossp.sql', '/docker-entrypoint-initdb.d/00-uuid-ossp.sql', true),
@@ -58,7 +58,11 @@ final class PostgreSQL implements ServiceBuilderInterface
         );
 
         $stack->addEnvironmentVariables(
-            new EnvironmentVariable(new Variable('SQL_PORT')),
+            new EnvironmentVariable(new Variable('DATABASE_ROOT_PASSWORD'), 'password'),
+            new EnvironmentVariable(new Variable('DATABASE_NAME')),
+            new EnvironmentVariable(new Variable('DATABASE_USER')),
+            new EnvironmentVariable(new Variable('DATABASE_PASSWORD'), 'password'),
+            new EnvironmentVariable(new Variable('DATABASE_PORT')),
         );
 
         return $stack;

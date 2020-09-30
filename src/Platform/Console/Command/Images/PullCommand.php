@@ -32,7 +32,7 @@ final class PullCommand extends Command
     {
         $this->setDescription('Pull PHP Docker images, with an interactive wizard');
 
-        $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
+        $this->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
 
         $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[DEPRECATED] Run the Docker commands in parallel', 'no');
 
@@ -43,8 +43,8 @@ final class PullCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (empty($pattern = $input->getOption('regex'))) {
-            $pattern = ($this->wizard)($input, $output)->getImagesRegex();
+        if (empty($pattern = $input->getOption('php-images-regex'))) {
+            $pattern = ($this->wizard)($input, $output)->getPHPImagesRegex();
         }
 
         $format = new SymfonyStyle($input, $output);

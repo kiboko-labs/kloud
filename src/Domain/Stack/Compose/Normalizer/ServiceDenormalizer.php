@@ -88,7 +88,6 @@ final class ServiceDenormalizer implements DenormalizerInterface
                     } else if (isset($matches[2])) {
                         $service->addEnvironmentVariables(new EnvironmentVariable(new Variable($matches[1]), $this->expressionParser->parse($matches[2])));
                     } else {
-                        var_dump($matches);
                         throw new \RuntimeException(strtr('Invalid environment variable format: "%value%".', ['%value%' => $value]));
                     }
                 } else if (!empty($value)) {

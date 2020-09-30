@@ -30,7 +30,7 @@ final class TreeCommand extends Command
     {
         $this->setDescription('Show PHP Docker images dependency tree');
 
-        $this->addOption('regex', 'x', InputOption::VALUE_REQUIRED);
+        $this->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
 
         $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
 
@@ -39,8 +39,8 @@ final class TreeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (empty($pattern = $input->getOption('regex'))) {
-            $pattern = ($this->wizard)($input, $output)->getImagesRegex();
+        if (empty($pattern = $input->getOption('php-images-regex'))) {
+            $pattern = ($this->wizard)($input, $output)->getPHPImagesRegex();
         }
 
         $packages = Packaging\Config\Config::builds($this->configPath, (bool) $input->getOption('with-experimental'));

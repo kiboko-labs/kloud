@@ -43,7 +43,7 @@ final class Builder implements DelegatedStackBuilderInterface
 
     public function matches(DTO\Context $context): bool
     {
-        return in_array($context->application, ['orocommerce', 'orocrm', 'oroplatform', 'marello'], true);
+        return in_array($context->application, ['orocommerce', 'orocrm', 'oroplatform', 'marello', 'middleware'], true);
     }
 
     public function build(DTO\Context $context): DTO\Stack

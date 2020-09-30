@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Packaging\Context;
 
+use Kiboko\Cloud\Domain\Packaging\Placeholder;
+
 final class Context implements ContextInterface, \IteratorAggregate
 {
     use ContextTrait;

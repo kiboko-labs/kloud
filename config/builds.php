@@ -3,35 +3,42 @@
 use Kiboko\Cloud\Domain\Packaging;
 
 return function(bool $withExperimental): iterable {
-//    $postgresqlRepository = new Packaging\Repository('kiboko/postgresql');
-//
-//    yield new Packaging\Native\PostgreSQL\Package(
-//        $postgresqlRepository,
-//        '9.6',
-//        new Packaging\Placeholder('postgresql/'),
-//        $withExperimental
-//    );
-//
-//    yield new Packaging\Native\PostgreSQL\Package(
-//        $postgresqlRepository,
-//        '10',
-//        new Packaging\Placeholder('postgresql/'),
-//        $withExperimental
-//    );
-//
-//    yield new Packaging\Native\PostgreSQL\Package(
-//        $postgresqlRepository,
-//        '11',
-//        new Packaging\Placeholder('postgresql/'),
-//        $withExperimental
-//    );
-//
-//    yield new Packaging\Native\PostgreSQL\Package(
-//        $postgresqlRepository,
-//        '12',
-//        new Packaging\Placeholder('postgresql/'),
-//        $withExperimental
-//    );
+    $dbgpRepository = new Packaging\Repository('kiboko/dbgp');
+
+    yield new Packaging\Native\GenericDockerfile(
+        $dbgpRepository,
+        new Packaging\Placeholder('native/dbgp/'),
+    );
+
+    $postgresqlRepository = new Packaging\Repository('kiboko/postgresql');
+
+    yield new Packaging\Native\PostgreSQL\Package(
+        $postgresqlRepository,
+        '9.6',
+        new Packaging\Placeholder('postgresql/'),
+        $withExperimental
+    );
+
+    yield new Packaging\Native\PostgreSQL\Package(
+        $postgresqlRepository,
+        '10',
+        new Packaging\Placeholder('postgresql/'),
+        $withExperimental
+    );
+
+    yield new Packaging\Native\PostgreSQL\Package(
+        $postgresqlRepository,
+        '11',
+        new Packaging\Placeholder('postgresql/'),
+        $withExperimental
+    );
+
+    yield new Packaging\Native\PostgreSQL\Package(
+        $postgresqlRepository,
+        '12',
+        new Packaging\Placeholder('postgresql/'),
+        $withExperimental
+    );
 
     $phpRepository = new Packaging\Repository('kiboko/php');
 
@@ -321,6 +328,16 @@ return function(bool $withExperimental): iterable {
 
     yield new Packaging\Platform\Package(
         $phpRepository,
+        '5.6',
+        new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\PHP\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
+        $withExperimental
+    );
+
+    yield new Packaging\Platform\Package(
+        $phpRepository,
         '7.1',
         new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
@@ -356,6 +373,16 @@ return function(bool $withExperimental): iterable {
         new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
+        $withExperimental
+    );
+
+    yield new Packaging\Platform\Package(
+        $phpRepository,
+        '5.6',
+        new Packaging\Placeholder('orocrm/%package.edition%/'),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\PHP\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository(),
         $withExperimental
     );
 

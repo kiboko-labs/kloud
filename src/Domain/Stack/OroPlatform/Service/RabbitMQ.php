@@ -61,6 +61,8 @@ final class RabbitMQ implements ServiceBuilderInterface
 
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('RABBITMQ_PORT')),
+            new EnvironmentVariable(new Variable('RABBITMQ_USER'), 'rabbitmq'),
+            new EnvironmentVariable(new Variable('RABBITMQ_PASSWORD'), 'password'),
         );
 
         return $stack;
