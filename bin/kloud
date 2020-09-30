@@ -60,7 +60,17 @@ $app->addCommands([
         __DIR__ . '/../compose/',
     ))->setAliases(['upgrade']),
 
-    (new Command\Environment\InitCommand()),
+    (new Command\Environment\InitCommand(
+        Command\Environment\InitCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\ListCommand(
+        Command\Environment\Variable\ListCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\GetCommand(
+        Command\Environment\Variable\GetCommand::$defaultName,
+    )),
 ]);
 
 $app->run(new ArgvInput($argv), new ConsoleOutput());
