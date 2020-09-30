@@ -171,6 +171,8 @@ We have built a [Firefox/Chrome plugin](https://github.com/kiboko-labs/kiboko-sy
 
 This extension is currently experimental and is limited to [a few domain names](https://github.com/kiboko-labs/kiboko-symfony-env#supported-domains). It may fit your needs as is, but be aware that you may need to manually package the extension if you need other domain names.
 
+![Capture of the plugin in action](https://github.com/kiboko-labs/kiboko-symfony-env/raw/master/screenshot.png)
+
 ### How to configure the mailer in the `parameters.yml` file?
 
 The parameters should be set as the following:
