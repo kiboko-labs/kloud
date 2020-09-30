@@ -1,8 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Platform\Console\Command\Environment\Variable;
 
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
+use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
+use Kiboko\Cloud\Domain\Environment\DTO\ValuedEnvironmentVariableInterface;
+use Kiboko\Cloud\Domain\Environment\VariableNotFoundException;
+use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariableInterface;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,7 +58,7 @@ final class GetCommand extends Command
                 new PropertyNormalizer(),
             ],
             [
-                new YamlEncoder()
+                new YamlEncoder(),
             ]
         );
 
@@ -60,7 +66,7 @@ final class GetCommand extends Command
             /** @var SplFileInfo $file */
             foreach ($finder->name('/^\.?kloud.environment.ya?ml$/') as $file) {
                 try {
-                    /** @var \Kiboko\Cloud\Domain\Stack\DTO\Context $context */
+                    /** @var Context $context */
                     $context = $serializer->deserialize($file->getContents(), Context::class, 'yaml');
                 } catch (\Throwable $exception) {
                     $format->error($exception->getMessage());
@@ -73,23 +79,32 @@ final class GetCommand extends Command
 
         if (!isset($context)) {
             $format->error('No .kloud.environment.yaml file found in your directory. You must initialize it using environment:init command');
+
             return 1;
         }
 
         $variableName = $format->askQuestion(new Question('Please enter a variable name'));
 
-        /** @var Context $context */
-        $value = $context->getVariableValue($variableName);
+        try {
+            /** @var EnvironmentVariableInterface $variable */
+            $variable = $context->getVariable($variableName);
+        } catch (VariableNotFoundException $exception) {
+            $format->error($exception->getMessage());
 
-        if (!$value) {
-            $format->error('This variable does not exist');
-            return 0;
+            return 1;
         }
 
         $format->table(
             ['Variable', 'Value'],
             [
-                [$variableName, $value],
+                [
+                    $variableName,
+                    $variable instanceof ValuedEnvironmentVariableInterface ?
+                        $variable->getValue() :
+                        ($variable instanceof SecretValueEnvironmentVariable ?
+                            sprintf('SECRET: %s', $variable->getSecret()) :
+                            null),
+                ],
             ]
         );
 

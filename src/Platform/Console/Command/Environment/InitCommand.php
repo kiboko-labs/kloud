@@ -1,18 +1,25 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Platform\Console\Command\Environment;
 
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
 use Kiboko\Cloud\Domain\Environment\DTO\Deployment;
+use Kiboko\Cloud\Domain\Environment\DTO\DirectValueEnvironmentVariable;
+use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
 use Kiboko\Cloud\Domain\Environment\DTO\Server;
+use Kiboko\Cloud\Domain\Environment\DTO\Variable;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Serializer\Encoder\YamlEncoder;
+use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -48,10 +55,11 @@ final class InitCommand extends Command
 
         $serializer = new Serializer(
             [
+                new CustomNormalizer(),
                 new PropertyNormalizer(),
             ],
             [
-                new YamlEncoder()
+                new YamlEncoder(),
             ]
         );
 
@@ -59,6 +67,7 @@ final class InitCommand extends Command
             /** @var \SplFileInfo $file */
             foreach ($finder->name('/^\.?kloud.environment.ya?ml$/') as $file) {
                 $format->error('The directory was already initialized with an environment file. You should update it using commands listed in environment:variable');
+
                 return 0;
             }
         }
@@ -76,21 +85,30 @@ final class InitCommand extends Command
             ),
         );
 
-        $envDistPath = getcwd() . '/.env.dist';
+        $envDistPath = getcwd().'/.env.dist';
         if (file_exists($envDistPath)) {
             $envDist = parse_ini_file($envDistPath);
             foreach (array_keys($envDist) as $name) {
-                $value = $format->askQuestion(new Question('Value of ' . $name));
-                $variable = [$name, $value];
-                $context->environmentVariables[$name] = $value;
+                $value = $format->askQuestion(new Question('Value of '.$name));
+
+                $isSecret = false;
+                if ($value) {
+                    $isSecret = $format->askQuestion(new ConfirmationQuestion('Is this a secret variable ?', false));
+                }
+
+                if ($isSecret) {
+                    $context->addVariable(new SecretValueEnvironmentVariable(new Variable($name), $value));
+                } else {
+                    $context->addVariable(new DirectValueEnvironmentVariable(new Variable($name), $value));
+                }
             }
         }
 
         $format->note('Writing a new .kloud.environment.yaml file.');
-        file_put_contents($workingDirectory . '/.kloud.environment.yaml', $serializer->serialize($context, 'yaml', [
-            'yaml_inline' => 2,
+        file_put_contents($workingDirectory.'/.kloud.environment.yaml', $serializer->serialize($context, 'yaml', [
+            'yaml_inline' => 4,
             'yaml_indent' => 0,
-            'yaml_flags' => 0
+            'yaml_flags' => 0,
         ]));
 
         return 0;

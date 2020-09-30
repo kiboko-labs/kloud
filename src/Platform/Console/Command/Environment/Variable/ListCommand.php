@@ -1,9 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Platform\Console\Command\Environment\Variable;
 
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
 use Kiboko\Cloud\Domain\Environment\DTO\EnvironmentVariableInterface;
+use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
 use Kiboko\Cloud\Domain\Environment\DTO\ValuedEnvironmentVariableInterface;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
 use Symfony\Component\Console\Command\Command;
@@ -53,7 +56,7 @@ final class ListCommand extends Command
                 new PropertyNormalizer(),
             ],
             [
-                new YamlEncoder()
+                new YamlEncoder(),
             ]
         );
 
@@ -74,6 +77,7 @@ final class ListCommand extends Command
 
         if (!isset($context)) {
             $format->error('No .kloud.environment.yaml file found in your directory. You must initialize it using environment:init command');
+
             return 1;
         }
 
@@ -84,7 +88,11 @@ final class ListCommand extends Command
                 foreach ($context->environmentVariables as $variable) {
                     yield [
                         (string) $variable->getVariable(),
-                        ($context->getVariableValue((string) $variable->getVariable()))
+                        $variable instanceof ValuedEnvironmentVariableInterface ?
+                            $variable->getValue() :
+                            ($variable instanceof SecretValueEnvironmentVariable ?
+                                sprintf('SECRET: %s', $variable->getSecret()) :
+                                null),
                     ];
                 }
             })($context)),

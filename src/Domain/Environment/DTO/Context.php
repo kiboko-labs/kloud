@@ -1,7 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Environment\DTO;
 
+use Kiboko\Cloud\Domain\Environment\VariableNotFoundException;
 use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
@@ -18,32 +21,22 @@ class Context implements NormalizableInterface, DenormalizableInterface
         $this->environmentVariables = [];
     }
 
-    public function addVariables(EnvironmentVariableInterface ...$variables): void
+    public function addVariable(EnvironmentVariableInterface ...$variable): void
     {
-        array_push($this->environmentVariables, ...$variables);
+        array_push($this->environmentVariables, ...$variable);
     }
 
-    public function getVariableValue(string $variableName)
+    public function getVariable(string $variableName): EnvironmentVariableInterface
     {
         foreach ($this->environmentVariables as $variable) {
-            if ($variable instanceof DirectValueEnvironmentVariable) {
-                if ($variableName === $variable->getVariable()->__toString()) {
-                    $value = $variable->getValue()->__toString();
-                    if (!$value) {
-                        $value = ' ';
-                    }
-                    return $value;
-                }
-            } else if ($variable instanceof SecretValueEnvironmentVariable) {
-                if ($variableName === $variable->getVariable()->__toString()) {
-                    return '**secret**';
-                }
-            } else {
-                if ($variableName === $variable->getVariable()->__toString()) {
-                    return ' ';
-                }
+            if ($variableName !== (string) $variable->getVariable()) {
+                continue;
             }
+
+            return $variable;
         }
+
+        throw new VariableNotFoundException(strtr('The variable %name% does not exist.', ['%name%' => $variableName]));
     }
 
     public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = [])
@@ -52,13 +45,13 @@ class Context implements NormalizableInterface, DenormalizableInterface
         $this->environmentVariables = [];
 
         $parser = new ExpressionParser();
-        foreach ($data['environmentVariables'] as $variable) {
+        foreach ($data['environment'] as $variable) {
             if (isset($variable['value'])) {
                 $this->environmentVariables[] = new DirectValueEnvironmentVariable(
                     new Variable($variable['name']),
                     $parser->parse($variable['value'])
                 );
-            } else if (isset($variable['secret'])) {
+            } elseif (isset($variable['secret'])) {
                 $this->environmentVariables[] = new SecretValueEnvironmentVariable(
                     new Variable($variable['name']),
                     $variable['secret']
@@ -75,7 +68,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
     {
         return [
             'deployment' => $normalizer->normalize($this->deployment, $format, $context),
-            'environment' => (function($variables) {
+            'environment' => iterator_to_array((function ($variables) {
                 /** @var EnvironmentVariableInterface $variable */
                 foreach ($variables as $variable) {
                     if ($variable instanceof DirectValueEnvironmentVariable) {
@@ -83,7 +76,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
                             'name' => (string) $variable->getVariable(),
                             'value' => $variable->getValue(),
                         ];
-                    } else if ($variable instanceof SecretValueEnvironmentVariable){
+                    } elseif ($variable instanceof SecretValueEnvironmentVariable) {
                         yield [
                             'name' => (string) $variable->getVariable(),
                             'secret' => $variable->getSecret(),
@@ -94,7 +87,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
                         ];
                     }
                 }
-            })($this->environmentVariables),
+            })($this->environmentVariables)),
         ];
     }
 }
