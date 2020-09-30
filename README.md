@@ -126,7 +126,8 @@ services.mail.ports contains an invalid type, it should be a number, or an objec
 ```
 
 Those warnings and errors are due to missing environment variables, probably because you did 
-not copy the `.env.dist` file to a `.env` file.
+not copy the `.env.dist` file to a `.env` file, or you juste made a `stack:upgrade` and some
+new environment variables are required.
 
 ### What is the use of the `I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK` environment variable?
 
