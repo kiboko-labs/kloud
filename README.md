@@ -165,6 +165,12 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 The application frontend can be accessed through the port defined in the `HTTP_PORT`
 environment variable value.
 
+### How to switch between dev/prod/xdebug environments? (experimental)
+
+We have built a [Firefox/Chrome plugin](https://github.com/kiboko-labs/kiboko-symfony-env) to help you switch between environments.
+
+This extension is currently experimental and is limited to [a few domain names](https://github.com/kiboko-labs/kiboko-symfony-env#supported-domains). It may fit your needs as is, but be aware that you may need to manually package the extension if you need other domain names.
+
 ### How to configure the mailer in the `parameters.yml` file?
 
 The parameters should be set as the following:
