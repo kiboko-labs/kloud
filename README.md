@@ -16,7 +16,7 @@ This project aims at building your Docker stack for [OroCommerce](https://oroinc
   * [Marello](#marello)
   * [Middleware](#middleware)
 
-- Requirements:
+Requirements:
 ---
 - PHP 7.4
 
