@@ -39,6 +39,20 @@ class Context implements NormalizableInterface, DenormalizableInterface
         throw new VariableNotFoundException(strtr('The variable %name% does not exist.', ['%name%' => $variableName]));
     }
 
+    public function setVariable(EnvironmentVariableInterface $newVariable)
+    {
+        $i = 0;
+        foreach ($this->environmentVariables as $variable) {
+            if ((string) $newVariable->getVariable() !== (string) $variable->getVariable()) {
+                ++$i;
+                continue;
+            }
+            $this->environmentVariables[$i] = $newVariable;
+
+            return;
+        }
+    }
+
     public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = [])
     {
         $this->deployment = $denormalizer->denormalize($data['deployment'], Deployment::class, $format, $context);
@@ -49,7 +63,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
             if (isset($variable['value'])) {
                 $this->environmentVariables[] = new DirectValueEnvironmentVariable(
                     new Variable($variable['name']),
-                    $parser->parse($variable['value'])
+                    $variable['value']
                 );
             } elseif (isset($variable['secret'])) {
                 $this->environmentVariables[] = new SecretValueEnvironmentVariable(

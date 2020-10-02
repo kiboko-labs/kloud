@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Environment\DTO;
 
@@ -21,5 +23,10 @@ class SecretValueEnvironmentVariable implements EnvironmentVariableInterface
     public function getSecret(): string
     {
         return $this->secret;
+    }
+
+    public function setSecret(string $secret)
+    {
+        $this->secret = $secret;
     }
 }

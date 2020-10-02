@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Environment\DTO;
 
@@ -22,5 +24,10 @@ class DirectValueEnvironmentVariable implements ValuedEnvironmentVariableInterfa
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function setValue(string $value)
+    {
+        $this->value = $value;
     }
 }

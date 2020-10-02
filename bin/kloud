@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-    throw new RuntimeException('This command requires a minimum version 5.4 for PHP. Please upgrade your PHP version or use the pre-packaged Docker image variant. See https://github.com/kiboko-labs/docker-images/#if-you-want-to-use-the-pre-packaged-docker-image');
+if (version_compare(PHP_VERSION, '7.4.0') < 0) {
+    throw new RuntimeException('This command requires a minimum version 7.4 for PHP. Please upgrade your PHP version or use the pre-packaged Docker image variant. See https://github.com/kiboko-labs/docker-images/#if-you-want-to-use-the-pre-packaged-docker-image');
 }
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -70,6 +70,14 @@ $app->addCommands([
 
     (new Command\Environment\Variable\GetCommand(
         Command\Environment\Variable\GetCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\SetCommand(
+        Command\Environment\Variable\SetCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\UnsetCommand(
+        Command\Environment\Variable\UnsetCommand::$defaultName,
     )),
 ]);
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Environment\DTO;
 
@@ -20,7 +22,7 @@ final class ExpressionParser
 
             if (isset($matches[3])) {
                 $elements[] = new Variable($matches[3]);
-            } else if (isset($matches[2])) {
+            } elseif (isset($matches[2])) {
                 $elements[] = new Variable($matches[2]);
             }
 
