@@ -1,0 +1,52 @@
+version: '3.5'
+services:
+  pgsql:
+    image: oroinc/pgsql:9.6-alpine
+    ports: ['5432']
+    labels:
+      com.symfony.server.service-prefix: ORO_DB
+    environment:
+      POSTGRES_USER: oro_db_user
+      POSTGRES_DB: oro_db
+      POSTGRES_PASSWORD: oro_db_pass
+      POSTGRES_ROOT_PASSWORD: oro_db_pass
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready -U$${POSTGRES_USER} -D$${POSTGRES_DB}"
+    restart: on-failure
+  rabbitmq:
+    image: oroinc/rabbitmq:3.7-alpine
+    ports: ['5672']
+    labels:
+      com.symfony.server.service-prefix: ORO_MQ
+    environment:
+      RABBITMQ_DEFAULT_USER: oro_mq_user
+      RABBITMQ_DEFAULT_PASS: oro_mq_pass
+    restart: on-failure
+  elasticsearch:
+    image: elasticsearch:7.6.2
+    environment:
+      discovery.type: "single-node"
+      cluster.name: docker-cluster
+      bootstrap.memory_lock: 'true'
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    ports: ["9200", "9300"]
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    labels:
+      com.symfony.server.service-prefix: ORO_SEARCH
+    restart: on-failure
+  redis:
+    image: redis:5-alpine
+    ports: ["6379"]
+    labels:
+      com.symfony.server.service-prefix: ORO_REDIS
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports: ['1025', '1080']
+    labels:
+      com.symfony.server.service-prefix: ORO_MAILER
+volumes:
+  postgres: {}
+  elasticsearch: {}
