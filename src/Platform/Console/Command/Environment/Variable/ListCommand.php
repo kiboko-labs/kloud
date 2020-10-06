@@ -34,7 +34,7 @@ final class ListCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Prints the list of environment variable');
+        $this->setDescription('Print the list of environment variables and their value');
 
         $this->wizard->configureConsoleCommand($this);
     }

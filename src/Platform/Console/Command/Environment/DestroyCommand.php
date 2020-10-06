@@ -10,6 +10,7 @@ use Deployer\Console\Output\OutputWatcher;
 use Deployer\Deployer;
 use Deployer\Executor\SeriesExecutor;
 use Deployer\Host\Host;
+use function Deployer\run;
 use Deployer\Task\Task;
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
@@ -24,7 +25,6 @@ use Symfony\Component\Serializer\Encoder\YamlEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use function Deployer\run;
 
 final class DestroyCommand extends Command
 {
@@ -42,7 +42,7 @@ final class DestroyCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Destroy the Docker infrastructure with associated volumes and remove remote directory');
+        $this->setDescription('Destroy the docker infrastructure with associated volumes and remove remote directory');
 
         $this->wizard->configureConsoleCommand($this);
     }

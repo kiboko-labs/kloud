@@ -39,7 +39,7 @@ final class SetCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Prints an environment variable');
+        $this->setDescription('Change an environment variable value');
 
         $this->wizard->configureConsoleCommand($this);
     }

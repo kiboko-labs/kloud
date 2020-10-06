@@ -90,8 +90,24 @@ $app->addCommands([
         $app,
     )),
 
+    (new Command\Environment\StartCommand(
+        Command\Environment\StartCommand::$defaultName,
+        $app,
+    )),
+
+
+    (new Command\Environment\StopCommand(
+        Command\Environment\StopCommand::$defaultName,
+        $app,
+    )),
+
     (new Command\Environment\RsyncCommand(
         Command\Environment\RsyncCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\Cache\ClearCommand(
+        Command\Environment\Cache\ClearCommand::$defaultName,
         $app,
     )),
 ]);

@@ -43,7 +43,7 @@ final class RsyncCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Deploy the application to a remote server using rsync and initialize docker containers');
+        $this->setDescription('Synchronize remote directory according to local directory');
 
         $this->wizard->configureConsoleCommand($this);
     }

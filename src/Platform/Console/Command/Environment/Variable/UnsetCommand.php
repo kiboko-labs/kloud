@@ -35,7 +35,7 @@ final class UnsetCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Prints an environment variable');
+        $this->setDescription('Unset an environment variable value');
 
         $this->wizard->configureConsoleCommand($this);
     }
