@@ -79,6 +79,21 @@ $app->addCommands([
     (new Command\Environment\Variable\UnsetCommand(
         Command\Environment\Variable\UnsetCommand::$defaultName,
     )),
+
+    (new Command\Environment\DeployCommand(
+        Command\Environment\DeployCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\DestroyCommand(
+        Command\Environment\DestroyCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\RsyncCommand(
+        Command\Environment\RsyncCommand::$defaultName,
+        $app,
+    )),
 ]);
 
 $app->run(new ArgvInput($argv), new ConsoleOutput());

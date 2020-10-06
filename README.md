@@ -19,6 +19,7 @@ This project aims at building your Docker stack for [OroCommerce](https://oroinc
 Requirements:
 ---
 - PHP 7.4
+- rsync (for environment commands)
 
 Installation
 ---

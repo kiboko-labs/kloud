@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\Domain\Environment\DTO;
 
-use Kiboko\Cloud\Domain\Environment\VariableNotFoundException;
+use Kiboko\Cloud\Domain\Environment\Exception\VariableNotFoundException;
 use Symfony\Component\Serializer\Normalizer\DenormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;

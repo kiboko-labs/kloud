@@ -1,8 +1,7 @@
 <?php
 
-namespace Kiboko\Cloud\Domain\Environment;
+namespace Kiboko\Cloud\Domain\Environment\Exception;
 
 class VariableNotFoundException extends \RuntimeException
 {
-
 }

@@ -7,7 +7,7 @@ namespace Kiboko\Cloud\Platform\Console\Command\Environment\Variable;
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
 use Kiboko\Cloud\Domain\Environment\DTO\EnvironmentVariable;
 use Kiboko\Cloud\Domain\Environment\DTO\EnvironmentVariableInterface;
-use Kiboko\Cloud\Domain\Environment\VariableNotFoundException;
+use Kiboko\Cloud\Domain\Environment\Exception\VariableNotFoundException;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

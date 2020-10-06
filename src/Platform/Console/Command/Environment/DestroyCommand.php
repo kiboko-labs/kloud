@@ -2,18 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Kiboko\Cloud\Platform\Console\Command\Environment\Variable;
+namespace Kiboko\Cloud\Platform\Console\Command\Environment;
 
+use Deployer\Console\Application;
+use Deployer\Console\Output\Informer;
+use Deployer\Console\Output\OutputWatcher;
+use Deployer\Deployer;
+use Deployer\Executor\SeriesExecutor;
+use Deployer\Host\Host;
+use Deployer\Task\Task;
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
-use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
-use Kiboko\Cloud\Domain\Environment\DTO\ValuedEnvironmentVariableInterface;
-use Kiboko\Cloud\Domain\Environment\Exception\VariableNotFoundException;
-use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariableInterface;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
+use Symfony\Component\Console\Application as Console;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -21,22 +24,25 @@ use Symfony\Component\Serializer\Encoder\YamlEncoder;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use function Deployer\run;
 
-final class GetCommand extends Command
+final class DestroyCommand extends Command
 {
-    public static $defaultName = 'environment:variable:get';
+    public static $defaultName = 'environment:destroy';
 
+    private Console $console;
     private EnvironmentWizard $wizard;
 
-    public function __construct(?string $name)
+    public function __construct(?string $name, Console $console)
     {
+        $this->console = $console;
         $this->wizard = new EnvironmentWizard();
         parent::__construct($name);
     }
 
     protected function configure()
     {
-        $this->setDescription('Prints an environment variable');
+        $this->setDescription('Destroy the Docker infrastructure with associated volumes and remove remote directory');
 
         $this->wizard->configureConsoleCommand($this);
     }
@@ -66,7 +72,7 @@ final class GetCommand extends Command
             /** @var SplFileInfo $file */
             foreach ($finder->name('/^\.?kloud.environment.ya?ml$/') as $file) {
                 try {
-                    /** @var Context $context */
+                    /** @var \Kiboko\Cloud\Domain\Stack\DTO\Context $context */
                     $context = $serializer->deserialize($file->getContents(), Context::class, 'yaml');
                 } catch (\Throwable $exception) {
                     $format->error($exception->getMessage());
@@ -83,30 +89,35 @@ final class GetCommand extends Command
             return 1;
         }
 
-        $variableName = $format->askQuestion(new Question('Please enter a variable name'));
+        $application = new Application($this->console->getName());
+        $deployer = new Deployer($application);
+        $deployer['output'] = $output;
 
-        try {
-            /** @var EnvironmentVariableInterface $variable */
-            $variable = $context->getVariable($variableName);
-        } catch (VariableNotFoundException $exception) {
-            $format->error($exception->getMessage());
+        $hosts = [];
+        $tasks = [];
 
-            return 1;
+        /** @var Context $context */
+        $host = new Host($context->deployment->server->hostname);
+        $host->port($context->deployment->server->port);
+        $host->user($context->deployment->server->username);
+        array_push($hosts, $host);
+
+        $directories = explode('/', $workingDirectory);
+        $projectName = end($directories);
+
+        $commands = [
+            'docker:down' => 'cd '.$context->deployment->path.'/'.$projectName.' && docker-compose down -v',
+            'directory:remove' => 'cd '.$context->deployment->path.' && rm -rf '.$projectName,
+        ];
+
+        foreach ($commands as $key => $value) {
+            array_push($tasks, new Task($key, function () use ($value, $host) {
+                run($value);
+            }));
         }
 
-        $format->table(
-            ['Variable', 'Value'],
-            [
-                [
-                    $variableName,
-                    $variable instanceof ValuedEnvironmentVariableInterface ?
-                        $variable->getValue() :
-                        ($variable instanceof SecretValueEnvironmentVariable ?
-                            sprintf('SECRET: %s', $variable->getSecret()) :
-                            null),
-                ],
-            ]
-        );
+        $seriesExecutor = new SeriesExecutor($input, $output, new Informer(new OutputWatcher($output)));
+        $seriesExecutor->run($tasks, $hosts);
 
         return 0;
     }

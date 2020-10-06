@@ -10,7 +10,7 @@ use Kiboko\Cloud\Domain\Environment\DTO\EnvironmentVariable;
 use Kiboko\Cloud\Domain\Environment\DTO\EnvironmentVariableInterface;
 use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
 use Kiboko\Cloud\Domain\Environment\DTO\ValuedEnvironmentVariableInterface;
-use Kiboko\Cloud\Domain\Environment\VariableNotFoundException;
+use Kiboko\Cloud\Domain\Environment\Exception\VariableNotFoundException;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
