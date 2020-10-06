@@ -24,6 +24,15 @@ final class ContextBuilder
         $this->phpVersion = $phpVersion;
         $this->selfManagedServices = [];
         $this->selfManagedVolumes = [];
+        $this->dbms = null;
+        $this->application = null;
+        $this->applicationVersion = null;
+        $this->isEnterpriseEdition = null;
+        $this->withBlackfire = null;
+        $this->withXdebug = null;
+        $this->withDejavu = null;
+        $this->withElasticStack = null;
+        $this->withDockerForMacOptimizations = null;
     }
 
     public function getContext(): Context
