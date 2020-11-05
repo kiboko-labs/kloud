@@ -44,7 +44,7 @@ final class MarelloCommunity implements ComposerPackageDelegatedGuesserInterface
         }
 
         if (Semver::satisfies($package['version'], '^3.0')) {
-            return (new Stack\ContextBuilder('7.2'))
+            return (new Stack\ContextBuilder('7.4'))
                 ->setApplication('marello', '3.0', false)
                 ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
                 ->getContext();
