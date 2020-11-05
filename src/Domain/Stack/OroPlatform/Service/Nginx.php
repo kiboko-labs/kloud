@@ -40,8 +40,6 @@ final class Nginx implements ServiceBuilderInterface
                     new VolumeMapping('./.docker/nginx@1.15/config/vhosts/prod.conf', '/etc/nginx/conf.d/100-vhost-prod.conf'),
                     new VolumeMapping('./.docker/nginx@1.15/config/vhosts/dev.conf', '/etc/nginx/conf.d/100-vhost-dev.conf'),
                     new VolumeMapping('./', '/var/www/html'),
-                    new VolumeMapping('cache', '/var/www/html/var/cache', true),
-                    new VolumeMapping('assets', '/var/www/html/public/bundles', true),
                 )
                 ->addPorts(
                     new PortMapping(new Variable('HTTP_PORT'), 80),
@@ -173,6 +171,13 @@ final class Nginx implements ServiceBuilderInterface
             new EnvironmentVariable(new Variable('APPLICATION_DOMAIN')),
             new EnvironmentVariable(new Variable('DEFAULT_APPLICATION'), 'dev'),
         );
+
+        if ($context->withDockerForMacOptimizations) {
+            $service->addVolumeMappings(
+                new VolumeMapping('cache', '/var/www/html/var/cache'),
+                new VolumeMapping('assets', '/var/www/html/public/bundles'),
+            );
+        }
 
         if ($context->withXdebug) {
             $service->addVolumeMappings(
