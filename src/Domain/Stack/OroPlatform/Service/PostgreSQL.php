@@ -44,7 +44,7 @@ final class PostgreSQL implements ServiceBuilderInterface
                     new VolumeMapping('database', '/var/lib/postgresql/data'),
                 )
                 ->setRestartOnFailure()
-                ->setHealthCheckShellCommand('pg_isready -U$${POSTGRES_USER} -D$${POSTGRES_DB}')
+                ->setHealthCheckShellCommand('pg_isready -U$${POSTGRES_USER} -d$${POSTGRES_DB}')
             )
             ->addVolumes(
                 new Volume('database', ['driver' => 'local'])

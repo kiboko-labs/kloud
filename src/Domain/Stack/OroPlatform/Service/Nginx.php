@@ -30,10 +30,10 @@ final class Nginx implements ServiceBuilderInterface
         $stack->addServices(
             ($service = new Service('http', 'nginx:alpine'))
                 ->addVolumeMappings(
-                    new VolumeMapping('./.docker/nginx@1.15/config/options.conf', '/etc/nginx/conf.d/000-options.conf'),
-                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/reverse-proxy.conf', '/etc/nginx/conf.d/200-default.conf'),
-                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/prod.conf', '/etc/nginx/conf.d/100-vhost-prod.conf'),
-                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/dev.conf', '/etc/nginx/conf.d/100-vhost-dev.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/options.conf', '/etc/nginx/conf.d/options.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/reverse-proxy.conf', '/etc/nginx/conf.d/default.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/prod.conf', '/etc/nginx/conf.d/vhost-prod.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/dev.conf', '/etc/nginx/conf.d/vhost-dev.conf'),
                     new VolumeMapping('./', '/var/www/html'),
                 )
                 ->addPorts(
@@ -63,7 +63,7 @@ final class Nginx implements ServiceBuilderInterface
                 }
 
                 map \$http_x_symfony_env \$pool {
-                     default "\${DEFAULT_APPLICATION}-app";
+                     default "dev-app";
                      prod "prod-app";
                      dev "dev-app";
                      xdebug "xdebug-app";
@@ -162,7 +162,6 @@ final class Nginx implements ServiceBuilderInterface
 
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('HTTP_PORT')),
-            new EnvironmentVariable(new Variable('DEFAULT_APPLICATION'), 'dev'),
         );
 
         if ($context->withDockerForMacOptimizations) {
@@ -174,7 +173,7 @@ final class Nginx implements ServiceBuilderInterface
 
         if ($context->withXdebug) {
             $service->addVolumeMappings(
-                new VolumeMapping('./.docker/nginx@1.15/config/vhosts/xdebug.conf', '/etc/nginx/conf.d/100-vhost-xdebug.conf'),
+                new VolumeMapping('./.docker/nginx@1.15/config/vhosts/xdebug.conf', '/etc/nginx/conf.d/vhost-xdebug.conf'),
             );
             $stack->addFiles(
                 new Resource\InMemory('./.docker/nginx@1.15/config/vhosts/xdebug.conf', <<<EOF
