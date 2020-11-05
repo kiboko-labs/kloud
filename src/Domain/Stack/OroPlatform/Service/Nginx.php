@@ -27,11 +27,6 @@ final class Nginx implements ServiceBuilderInterface
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack
     {
-        $servicesDependency = ['http-worker-prod', 'http-worker-dev'];
-        if ($context->withXdebug) {
-            $servicesDependency[] = 'http-worker-xdebug';
-        }
-
         $stack->addServices(
             ($service = new Service('http', 'nginx:alpine'))
                 ->addVolumeMappings(
@@ -45,7 +40,6 @@ final class Nginx implements ServiceBuilderInterface
                     new PortMapping(new Variable('HTTP_PORT'), 80),
                 )
                 ->setRestartOnFailure()
-                ->addDependencies(...$servicesDependency)
         );
 
         $stack->addFiles(
