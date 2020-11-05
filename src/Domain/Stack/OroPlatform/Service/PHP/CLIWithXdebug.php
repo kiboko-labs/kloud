@@ -38,6 +38,12 @@ final class CLIWithXdebug implements ServiceBuilderInterface
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack
     {
         $environment = [
+            new InheritedEnvironmentVariable(new Variable('DATABASE_NAME')),
+            new InheritedEnvironmentVariable(new Variable('DATABASE_USER')),
+            new InheritedEnvironmentVariable(new Variable('DATABASE_PASSWORD')),
+            new InheritedEnvironmentVariable(new Variable('WEBSOCKET_PORT')),
+            new InheritedEnvironmentVariable(new Variable('RABBITMQ_USER')),
+            new InheritedEnvironmentVariable(new Variable('RABBITMQ_PASSWORD')),
             new InheritedEnvironmentVariable(new Variable('COMPOSER_AUTH')),
             new InheritedEnvironmentVariable(new Variable('COMPOSER_PROCESS_TIMEOUT')),
         ];
