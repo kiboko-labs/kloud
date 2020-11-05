@@ -55,7 +55,7 @@ final class CLI implements ServiceBuilderInterface
             new InheritedEnvironmentVariable(new Variable('WEBSOCKET_PORT')),
             new InheritedEnvironmentVariable(new Variable('RABBITMQ_USER')),
             new InheritedEnvironmentVariable(new Variable('RABBITMQ_PASSWORD')),
-            new InheritedEnvironmentVariable(new Variable('CO MPOSER_AUTH')),
+            new InheritedEnvironmentVariable(new Variable('COMPOSER_AUTH')),
             new InheritedEnvironmentVariable(new Variable('COMPOSER_PROCESS_TIMEOUT')),
         ];
         if ($context->withBlackfire) {

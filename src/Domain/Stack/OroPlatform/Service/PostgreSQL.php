@@ -31,7 +31,7 @@ final class PostgreSQL implements ServiceBuilderInterface
         $stack->addServices(
             (new Service('sql', 'postgres:9.6-alpine'))
                 ->addPorts(
-                    new PortMapping(new Variable('SQL_PORT'), 5432),
+                    new PortMapping(new Variable('DATABASE_PORT'), 5432),
                 )
                 ->addEnvironmentVariables(
                     new EnvironmentVariable(new Variable('POSTGRES_ROOT_PASSWORD'), new Variable('DATABASE_ROOT_PASSWORD')),

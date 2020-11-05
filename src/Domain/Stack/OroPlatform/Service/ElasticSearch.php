@@ -50,10 +50,9 @@ final class ElasticSearch implements ServiceBuilderInterface
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack
     {
         $stack->addServices(
-            (new Service('elasticsearch', $this->buildImageTag($context)))
+            ($service = new Service('elasticsearch', $this->buildImageTag($context)))
                 ->addEnvironmentVariables(
                     new EnvironmentVariable(new Variable('ES_JAVA_OPTS'), '-Xms512m -Xmx512m'),
-                    new EnvironmentVariable(new Variable('http.cors.allow-origin'), new Expression('http://', new Variable('APPLICATION_DOMAIN'), ':', new Variable('DEJAVU_PORT'), ',http://')),
                 )
                 ->addPorts(
                     new PortMapping(new Variable('ELASTICSEARCH_PORT'), 9200)
@@ -95,8 +94,6 @@ final class ElasticSearch implements ServiceBuilderInterface
 
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('ELASTICSEARCH_PORT')),
-            new EnvironmentVariable(new Variable('DEJAVU_PORT')),
-            new EnvironmentVariable(new Variable('APPLICATION_DOMAIN')),
         );
 
         if ($context->withDejavu === true) {
@@ -109,6 +106,11 @@ final class ElasticSearch implements ServiceBuilderInterface
 
             $stack->addEnvironmentVariables(
                 new EnvironmentVariable(new Variable('DEJAVU_PORT')),
+                );
+
+            $service
+                ->addEnvironmentVariables(
+                    new EnvironmentVariable(new Variable('http.cors.allow-origin'), new Expression('http://', new Variable('APPLICATION_DOMAIN'), ':', new Variable('DEJAVU_PORT'))),
                 );
         }
 

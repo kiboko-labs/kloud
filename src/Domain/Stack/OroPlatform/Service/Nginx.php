@@ -51,15 +51,15 @@ final class Nginx implements ServiceBuilderInterface
                 EOF),
             new Resource\InMemory('.docker/nginx@1.15/config/vhosts/reverse-proxy.conf', <<<EOF
                 upstream prod-app {
-                    server http-worker-prod;
+                    server localhost:8000;
                 }
 
                 upstream dev-app {
-                    server http-worker-dev;
+                    server localhost:8001;
                 }
 
                 upstream xdebug-app {
-                    server http-worker-xdebug;
+                    server localhost:8002;
                 }
 
                 map \$http_x_symfony_env \$pool {
@@ -71,7 +71,7 @@ final class Nginx implements ServiceBuilderInterface
 
                 server {
                      listen 80;
-                     server_name \${APPLICATION_DOMAIN}:\${HTTP_PORT};
+                     server_name _;
 
                      access_log /var/log/syslog;
                      error_log /var/log/syslog info;
@@ -96,8 +96,8 @@ final class Nginx implements ServiceBuilderInterface
                 EOF),
             new Resource\InMemory('.docker/nginx@1.15/config/vhosts/dev.conf', <<<EOF
                 server {
-                    listen 80;
-                    server_name http-worker-dev;
+                    listen 8001;
+                    server_name _;
                     root /var/www/html/public;
 
                     index index_dev.php;
@@ -128,8 +128,8 @@ final class Nginx implements ServiceBuilderInterface
                 EOF),
             new Resource\InMemory('.docker/nginx@1.15/config/vhosts/prod.conf', <<<EOF
                 server {
-                    listen 80;
-                    server_name http-worker-prod;
+                    listen 8000;
+                    server_name _;
                     root /var/www/html/public;
 
                     index index.php;
@@ -162,7 +162,6 @@ final class Nginx implements ServiceBuilderInterface
 
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('HTTP_PORT')),
-            new EnvironmentVariable(new Variable('APPLICATION_DOMAIN')),
             new EnvironmentVariable(new Variable('DEFAULT_APPLICATION'), 'dev'),
         );
 
@@ -180,8 +179,8 @@ final class Nginx implements ServiceBuilderInterface
             $stack->addFiles(
                 new Resource\InMemory('./.docker/nginx@1.15/config/vhosts/xdebug.conf', <<<EOF
                     server {
-                        listen 80;
-                        server_name http-worker-xdebug;
+                        listen 8002;
+                        server_name _;
                         root /var/www/html/public;
 
                         index index_dev.php;

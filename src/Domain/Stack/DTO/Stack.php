@@ -158,7 +158,7 @@ final class Stack
             file_put_contents($path . '/' . $file->getPath(), $file->asBlob());
         }
 
-        $stream = fopen($path . '.env.dist', 'w');
+        $stream = fopen($path . '/.env.dist', 'w');
         foreach ($this->environment as $environmentVariable) {
             fprintf($stream, '%s=%s' . PHP_EOL, $environmentVariable->getVariable()->name, (string) $environmentVariable->getValue());
         }

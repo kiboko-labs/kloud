@@ -30,7 +30,7 @@ final class MySQL implements ServiceBuilderInterface
         $stack->addServices(
             (new Service('sql', 'mysql:5.7'))
                 ->addPorts(
-                    new PortMapping(new Variable('SQL_PORT'), 3306),
+                    new PortMapping(new Variable('DATABASE_PORT'), 3306),
                 )
                 ->addEnvironmentVariables(
                     new EnvironmentVariable(new Variable('MYSQL_ROOT_PASSWORD'), new Variable('DATABASE_ROOT_PASSWORD')),
