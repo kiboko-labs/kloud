@@ -1,8 +1,12 @@
 name: Kloud Build
 on:
-  release:
-    types:
-      - created
+#  release:
+#    types:
+#      - created
+  push:
+    branches: [ feature/github-actions-builder ]
+  pull_request:
+    branches: [ feature/github-actions-builder ]
 jobs:
   build:
     runs-on: self-hosted
