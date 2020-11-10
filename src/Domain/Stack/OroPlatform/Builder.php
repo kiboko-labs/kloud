@@ -25,6 +25,8 @@ final class Builder implements DelegatedStackBuilderInterface
             new Service\RabbitMQ($stacksPath),
             new Service\Redis($stacksPath),
             new Service\ElasticSearch($stacksPath),
+            new Service\Kibana($stacksPath),
+            new Service\Logstash($stacksPath),
             new Service\MySQL($stacksPath),
             new Service\PostgreSQL($stacksPath),
             new Service\Nginx($stacksPath),
@@ -59,7 +61,11 @@ final class Builder implements DelegatedStackBuilderInterface
                 continue;
             }
 
-            $serviceBuilder->build($stack, $context);
+            try {
+                $serviceBuilder->build($stack, $context);
+            } catch (Service\StackServiceNotApplicableException $exception) {
+                continue;
+            }
         }
 
         return $stack;

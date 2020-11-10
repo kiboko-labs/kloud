@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service;
 
+use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\VolumeMapping;
 use Kiboko\Cloud\Domain\Stack\DTO;
 use Kiboko\Cloud\Domain\Stack\Resource;
@@ -24,6 +25,13 @@ final class Logstash implements ServiceBuilderInterface
 
     private function buildImageTag(DTO\Context $context)
     {
+        if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '^1.6 || ^2.0')
+            || in_array($context->application, ['orocommerce']) && Semver::satisfies($context->applicationVersion, '^1.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^1.5')
+        ) {
+            return 'docker.elastic.co/logstash/logstash:5.6.16';
+        }
+
         if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^3.0')
             || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^2.0')
         ) {
@@ -37,7 +45,7 @@ final class Logstash implements ServiceBuilderInterface
             return 'docker.elastic.co/logstash/logstash:7.8.1';
         }
 
-        throw new \RuntimeException('No image satisfies the application version constraint.');
+        throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint('logstash');
     }
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack

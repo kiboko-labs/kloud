@@ -23,7 +23,7 @@ final class OroCommerce implements PHPVersionConsoleDelegatedGuesserInterface
     {
         $format = new SymfonyStyle($input, $output);
 
-        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
+        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
             $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 1.6.</>');
             $context->applicationVersion = '1.6';
         } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {

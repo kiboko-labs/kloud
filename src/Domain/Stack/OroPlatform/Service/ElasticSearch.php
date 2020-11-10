@@ -31,9 +31,19 @@ final class ElasticSearch implements ServiceBuilderInterface
 
     private function buildImageTag(DTO\Context $context)
     {
+        if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '^1.6 || ^2.0')
+            || in_array($context->application, ['orocommerce']) && Semver::satisfies($context->applicationVersion, '^1.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^1.5')
+        ) {
+            return 'docker.elastic.co/elasticsearch/elasticsearch:5.6.16';
+        }
+
         if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^3.0')
             || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^2.0')
         ) {
+            if ($context->withElasticStack) {
+                return 'docker.elastic.co/elasticsearch/elasticsearch:6.8.12';
+            }
             return 'docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.12';
         }
 
@@ -41,10 +51,13 @@ final class ElasticSearch implements ServiceBuilderInterface
             || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^3.0')
             || in_array($context->application, ['middleware']) && Semver::satisfies($context->applicationVersion, '^1.0')
         ) {
+            if ($context->withElasticStack) {
+                return 'docker.elastic.co/elasticsearch/elasticsearch:7.9.1';
+            }
             return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1';
         }
 
-        throw new \RuntimeException('No image satisfies the application version constraint.');
+        throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint();
     }
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack

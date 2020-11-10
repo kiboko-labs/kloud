@@ -23,7 +23,7 @@ final class OroCRM implements PHPVersionConsoleDelegatedGuesserInterface
     {
         $format = new SymfonyStyle($input, $output);
 
-        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
+        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
             $context->applicationVersion = $format->askQuestion(
                 (new ChoiceQuestion('Which OroCRM version are you using?', ['1.8', '2.6'], '2.6'))
             );
