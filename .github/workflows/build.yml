@@ -25,7 +25,26 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build Phar
-      run: composer run-script build-phar
-    - name: Build the Docker image
-      run: docker build build/ --file Dockerfile --tag my-image-name:$(date +%s)
+    - run: 'echo "CONTENT" > kloud-private.pem'
+      shell: bash
+      env:
+        CONTENT: ${{secrets.BOX_SECRET_KEY}}
+    - run: 'echo "CONTENT" > kloud-private.passphrase'
+      shell: bash
+      env:
+        CONTENT: ${{secrets.BOX_SECRET_KEY_PASSPHRASE}}
+    - name: Build the Phar package
+      uses: gplanchat/github-action-box@master
+      env:
+        BOX_SECRET_KEY: ${{secrets.BOX_SECRET_KEY}}
+        BOX_SECRET_KEY_PASSPHRASE: ${{secrets.BOX_SECRET_KEY_PASSPHRASE}}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: kloud.phar
+        path: build/kloud.phar
+    - uses: actions/upload-artifact@v2
+      with:
+        name: kloud.phar.pubkey
+        path: build/kloud.phar.pubkey
+#    - name: Build the Docker image
+#      run: docker build build/ --file Dockerfile --tag my-image-name:$(date +%s)
