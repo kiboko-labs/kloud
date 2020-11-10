@@ -1,5 +1,4 @@
-name: Kloud Test and Build
-
+name: Kloud Test
 on:
   push:
     branches: [ master ]
