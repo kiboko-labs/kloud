@@ -9,7 +9,7 @@ on:
     branches: [ feature/github-actions-builder ]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Validate composer.json and composer.lock
@@ -26,4 +26,6 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
     - name: Build Phar
-      run: composer run-script build
+      run: composer run-script build-phar
+    - name: Build the Docker image
+      run: docker build build/ --file Dockerfile --tag my-image-name:$(date +%s)

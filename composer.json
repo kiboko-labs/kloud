@@ -45,6 +45,7 @@
     },
     "scripts": {
         "phpspec": "vendor/bin/phpspec run --stop-on-failure --no-code-generation",
-        "phpunit": "vendor/bin/phpunit test/"
+        "phpunit": "vendor/bin/phpunit test/",
+        "build-phar": "box build"
     }
 }
