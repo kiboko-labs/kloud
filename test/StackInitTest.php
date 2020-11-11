@@ -67,6 +67,18 @@ final class StackInitTest extends TestCase
             );
     }
 
+    public function useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\OroCommerceEnterpriseFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
     public function useOroCommerceCommunityWithPostgresql()
     {
         yield from (new Fixture\OroCommerceCommunityFixture('postgresql'))
@@ -97,6 +109,18 @@ final class StackInitTest extends TestCase
             ->apply(
                 new Fixture\Visitor\WithBlackfire(),
                 new Fixture\Visitor\WithoutXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
+    public function useOroCommerceCommunityWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\OroCommerceCommunityFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
                 new Fixture\Visitor\WithDejavu(),
                 new Fixture\Visitor\WithElasticStack(),
                 new Fixture\Visitor\WithDockerForMacOptimizations(),
@@ -139,6 +163,18 @@ final class StackInitTest extends TestCase
             );
     }
 
+    public function useOroCRMEnterpriseWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\OroCRMEnterpriseFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
     public function useOroCRMCommunityWithPostgresql()
     {
         yield from (new Fixture\OroCRMCommunityFixture('postgresql'))
@@ -169,6 +205,18 @@ final class StackInitTest extends TestCase
             ->apply(
                 new Fixture\Visitor\WithBlackfire(),
                 new Fixture\Visitor\WithoutXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
+    public function useOroCRMCommunityWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\OroCRMCommunityFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
                 new Fixture\Visitor\WithDejavu(),
                 new Fixture\Visitor\WithElasticStack(),
                 new Fixture\Visitor\WithDockerForMacOptimizations(),
@@ -211,6 +259,18 @@ final class StackInitTest extends TestCase
             );
     }
 
+    public function useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\OroPlatformEnterpriseFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
     public function useOroPlatformCommunityWithPostgresql()
     {
         yield from (new Fixture\OroPlatformCommunityFixture('postgresql'))
@@ -241,6 +301,18 @@ final class StackInitTest extends TestCase
             ->apply(
                 new Fixture\Visitor\WithBlackfire(),
                 new Fixture\Visitor\WithoutXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
+    public function useOroPlatformCommunityWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\OroPlatformCommunityFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
                 new Fixture\Visitor\WithDejavu(),
                 new Fixture\Visitor\WithElasticStack(),
                 new Fixture\Visitor\WithDockerForMacOptimizations(),
@@ -283,6 +355,18 @@ final class StackInitTest extends TestCase
             );
     }
 
+    public function useMarelloEnterpriseWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\MarelloEnterpriseFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
     public function useMarelloCommunityWithPostgresql()
     {
         yield from (new Fixture\MarelloCommunityFixture('postgresql'))
@@ -313,6 +397,18 @@ final class StackInitTest extends TestCase
             ->apply(
                 new Fixture\Visitor\WithBlackfire(),
                 new Fixture\Visitor\WithoutXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
+    public function useMarelloCommunityWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\MarelloCommunityFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
                 new Fixture\Visitor\WithDejavu(),
                 new Fixture\Visitor\WithElasticStack(),
                 new Fixture\Visitor\WithDockerForMacOptimizations(),
@@ -355,6 +451,18 @@ final class StackInitTest extends TestCase
             );
     }
 
+    public function useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\MiddlewareEnterpriseFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
     public function useMiddlewareCommunityWithPostgresql()
     {
         yield from (new Fixture\MiddlewareCommunityFixture('postgresql'))
@@ -391,35 +499,59 @@ final class StackInitTest extends TestCase
             );
     }
 
+    public function useMiddlewareCommunityWithPostgresqlWithoutBlackfire()
+    {
+        yield from (new Fixture\MiddlewareCommunityFixture('postgresql'))
+            ->apply(
+                new Fixture\Visitor\WithoutBlackfire(),
+                new Fixture\Visitor\WithXdebug(),
+                new Fixture\Visitor\WithDejavu(),
+                new Fixture\Visitor\WithElasticStack(),
+                new Fixture\Visitor\WithDockerForMacOptimizations(),
+            );
+    }
+
     /**
      * @dataProvider useOroCommerceEnterpriseWithPostgresql
      * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCommerceCommunityWithPostgresql
      * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMEnterpriseWithPostgresql
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMCommunityWithPostgresql
      * @dataProvider useOroCRMCommunityWithPostgresqlWithoutElasticStack
      * @dataProvider useOroCRMCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformEnterpriseWithPostgresql
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformCommunityWithPostgresql
      * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutElasticStack
      * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloEnterpriseWithPostgresql
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloCommunityWithPostgresql
      * @dataProvider useMarelloCommunityWithPostgresqlWithoutElasticStack
      * @dataProvider useMarelloCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareEnterpriseWithPostgresql
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareCommunityWithPostgresql
      * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutElasticStack
      * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutBlackfire
      */
     public function testSuccessfulWizard($inputOptions, array $desiredOutputs)
     {
@@ -458,24 +590,34 @@ final class StackInitTest extends TestCase
     /**
      * @dataProvider useOroCommerceEnterpriseWithPostgresql
      * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCommerceCommunityWithPostgresql
      * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMEnterpriseWithPostgresql
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMCommunityWithPostgresql
      * @dataProvider useOroCRMCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformEnterpriseWithPostgresql
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformCommunityWithPostgresql
      * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloEnterpriseWithPostgresql
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloCommunityWithPostgresql
      * @dataProvider useMarelloCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareEnterpriseWithPostgresql
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareCommunityWithPostgresql
      * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutBlackfire
      */
     public function testSuccessfulWizardHavingPostgre($inputOptions, array $desiredOutputs)
     {
@@ -508,7 +650,9 @@ final class StackInitTest extends TestCase
 
         $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sql', '/^postgres:\d+.\d+-alpine$/');
         $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/-postgresql$/');
         $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/-postgresql$/');
     }
 
     /**
@@ -554,6 +698,52 @@ final class StackInitTest extends TestCase
 
         $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sql', '/^postgres:\d+.\d+-alpine$/');
         $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/-postgresql$/');
+    }
+
+    /**
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutBlackfire
+     */
+    public function testSuccessfulWizardHavingPostgreNotHavingBlackfire($inputOptions, array $desiredOutputs)
+    {
+        $tester = new CommandTester(
+            new Command\Stack\InitCommand(
+                Command\Stack\InitCommand::$defaultName,
+                __DIR__ . '/empty',
+                __DIR__ . '/../environments'
+            )
+        );
+
+        try {
+            $returnCode = $tester->execute(
+                array_merge(
+                    [
+                        '--working-directory' => sprintf('%s://test', $this->fs->getScheme())
+                    ],
+                    $inputOptions
+                )
+            );
+        } catch (\Throwable $exception) {
+            $this->fail($tester->getDisplay());
+        }
+
+        $this->assertEquals(0, $returnCode);
+
+        foreach ($desiredOutputs as $output) {
+            $this->assertStringContainsString($output, $tester->getDisplay());
+        }
+
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/-blackfire-/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/-blackfire-/');
     }
 
     /**
@@ -561,22 +751,102 @@ final class StackInitTest extends TestCase
      * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutXdebug
      * @dataProvider useOroCommerceCommunityWithPostgresql
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutXdebug
      * @dataProvider useOroCRMEnterpriseWithPostgresql
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutXdebug
      * @dataProvider useOroCRMCommunityWithPostgresql
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutXdebug
      * @dataProvider useOroPlatformEnterpriseWithPostgresql
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutXdebug
      * @dataProvider useOroPlatformCommunityWithPostgresql
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutXdebug
      * @dataProvider useMarelloEnterpriseWithPostgresql
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutXdebug
      * @dataProvider useMarelloCommunityWithPostgresql
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutXdebug
      * @dataProvider useMiddlewareEnterpriseWithPostgresql
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutElasticStack
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutXdebug
      * @dataProvider useMiddlewareCommunityWithPostgresql
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutElasticStack
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutXdebug
+     */
+    public function testSuccessfulWizardHavingPostgreHavingBlackfire($inputOptions, array $desiredOutputs)
+    {
+        $tester = new CommandTester(
+            new Command\Stack\InitCommand(
+                Command\Stack\InitCommand::$defaultName,
+                __DIR__ . '/empty',
+                __DIR__ . '/../environments'
+            )
+        );
+
+        try {
+            $returnCode = $tester->execute(
+                array_merge(
+                    [
+                        '--working-directory' => sprintf('%s://test', $this->fs->getScheme())
+                    ],
+                    $inputOptions
+                )
+            );
+        } catch (\Throwable $exception) {
+            $this->fail($tester->getDisplay());
+        }
+
+        $this->assertEquals(0, $returnCode);
+
+        foreach ($desiredOutputs as $output) {
+            $this->assertStringContainsString($output, $tester->getDisplay());
+        }
+
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/-blackfire-/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/-blackfire-/');
+    }
+
+    /**
+     * @dataProvider useOroCommerceEnterpriseWithPostgresql
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroCommerceCommunityWithPostgresql
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroCRMEnterpriseWithPostgresql
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroCRMCommunityWithPostgresql
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroPlatformEnterpriseWithPostgresql
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useOroPlatformCommunityWithPostgresql
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useMarelloEnterpriseWithPostgresql
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useMarelloCommunityWithPostgresql
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutBlackfire
+     * @dataProvider useMiddlewareEnterpriseWithPostgresql
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutElasticStack
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire
+     * @dataProvider useMiddlewareCommunityWithPostgresql
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutBlackfire
      */
     public function testSuccessfulWizardHavingElasticSearch($inputOptions)
     {
@@ -644,24 +914,34 @@ final class StackInitTest extends TestCase
     /**
      * @dataProvider useOroCommerceEnterpriseWithPostgresql
      * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCommerceCommunityWithPostgresql
      * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMEnterpriseWithPostgresql
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMCommunityWithPostgresql
      * @dataProvider useOroCRMCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformEnterpriseWithPostgresql
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformCommunityWithPostgresql
      * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloEnterpriseWithPostgresql
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloCommunityWithPostgresql
      * @dataProvider useMarelloCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareEnterpriseWithPostgresql
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareCommunityWithPostgresql
      * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutBlackfire
      */
     public function testSuccessfulWizardHavingKibana($inputOptions)
     {
@@ -734,24 +1014,34 @@ final class StackInitTest extends TestCase
     /**
      * @dataProvider useOroCommerceEnterpriseWithPostgresql
      * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCommerceCommunityWithPostgresql
      * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCommerceCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMEnterpriseWithPostgresql
      * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroCRMCommunityWithPostgresql
      * @dataProvider useOroCRMCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroCRMCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformEnterpriseWithPostgresql
      * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useOroPlatformCommunityWithPostgresql
      * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useOroPlatformCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloEnterpriseWithPostgresql
      * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMarelloCommunityWithPostgresql
      * @dataProvider useMarelloCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMarelloCommunityWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareEnterpriseWithPostgresql
      * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareEnterpriseWithPostgresqlWithoutBlackfire
      * @dataProvider useMiddlewareCommunityWithPostgresql
      * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutXdebug
+     * @dataProvider useMiddlewareCommunityWithPostgresqlWithoutBlackfire
      */
     public function testSuccessfulWizardHavingLogstash($inputOptions)
     {
