@@ -25,14 +25,6 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - run: 'echo "CONTENT" > kloud-private.pem'
-      shell: bash
-      env:
-        CONTENT: ${{secrets.BOX_SECRET_KEY}}
-    - run: 'echo "CONTENT" > kloud-private.passphrase'
-      shell: bash
-      env:
-        CONTENT: ${{secrets.BOX_SECRET_KEY_PASSPHRASE}}
     - name: Build the Phar package
       uses: gplanchat/github-action-box@master
       env:

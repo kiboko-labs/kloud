@@ -43,5 +43,18 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
                 '>=7.3 <=8.0',
             )
         );
+
+        yield new EditionDependency(
+            'orocrm',
+            '4.2',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '4.2',
+                'ee',
+                '>=7.3 <8.0',
+                '>=7.3 <=8.0',
+            )
+        );
     }
 }
