@@ -95,6 +95,8 @@ final class PHPVersionConsoleOptionGuesser implements ContextGuesserInterface, C
             $format->writeln(strtr('Choosing <fg=yellow>Marello Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
         } else if ($context->application === 'marello' && !$context->isEnterpriseEdition) {
             $format->writeln(strtr('Choosing <fg=yellow>Marello Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+        } else if ($context->application === 'middleware' && $context->isEnterpriseEdition) {
+            $format->writeln(strtr('Choosing <fg=yellow>Middleware Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
         } else if ($context->application === 'middleware' && !$context->isEnterpriseEdition) {
             $format->writeln(strtr('Choosing <fg=yellow>Middleware Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
         } else if ($context->application === 'oroplatform' && $context->isEnterpriseEdition) {

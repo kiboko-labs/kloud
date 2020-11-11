@@ -2,7 +2,7 @@
 
 namespace test\Kiboko\Cloud;
 
-final class WizardAssertionManager implements \IteratorAggregate
+final class WizardAssertionFixtureProvider implements \IteratorAggregate
 {
     private array $phpVersions;
     private string $application;

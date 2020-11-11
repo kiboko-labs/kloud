@@ -1,11 +1,15 @@
 name: Kloud Build
 on:
-  release:
-    types:
-      - created
+#  release:
+#    types:
+#      - created
+  push:
+    branches: [ feature/github-actions-builder ]
+  pull_request:
+    branches: [ feature/github-actions-builder ]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Validate composer.json and composer.lock
@@ -21,5 +25,18 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build Phar
-      run: composer run-script build
+    - name: Build the Phar package
+      uses: gplanchat/github-action-box@master
+      env:
+        BOX_SECRET_KEY: ${{secrets.BOX_SECRET_KEY}}
+        BOX_SECRET_KEY_PASSPHRASE: ${{secrets.BOX_SECRET_KEY_PASSPHRASE}}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: kloud.phar
+        path: build/kloud.phar
+    - uses: actions/upload-artifact@v2
+      with:
+        name: kloud.phar.pubkey
+        path: build/kloud.phar.pubkey
+#    - name: Build the Docker image
+#      run: docker build build/ --file Dockerfile --tag my-image-name:$(date +%s)

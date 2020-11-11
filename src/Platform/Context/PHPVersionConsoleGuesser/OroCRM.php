@@ -33,11 +33,15 @@ final class OroCRM implements PHPVersionConsoleDelegatedGuesserInterface
             );
         } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
             $context->applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which OroCRM version are you using?', ['3.1', '4.1'], '3.1'))
+                (new ChoiceQuestion('Which OroCRM version are you using?', ['3.1', '4.1'], '4.1'))
             );
         } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
-            $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 4.1.</>');
-            $context->applicationVersion = '4.1';
+            $context->applicationVersion = $format->askQuestion(
+                (new ChoiceQuestion('Which OroCRM version are you using?', ['4.1', '4.2'], '4.2'))
+            );
+        } else if (Semver::satisfies($context->phpVersion, '>=8.0')) {
+            $format->writeln(' <fg=green>Choosing automaticallly OroCRM version 4.2.</>');
+            $context->applicationVersion = '4.2';
         } else {
             throw NoPossibleGuess::noGuesserMatching();
         }
