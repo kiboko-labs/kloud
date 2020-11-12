@@ -1,12 +1,12 @@
 name: Kloud Build
 on:
-#  release:
-#    types:
-#      - created
+  release:
+    types:
+      - created
   push:
-    branches: [ feature/github-actions-builder ]
+    branches: [ master ]
   pull_request:
-    branches: [ feature/github-actions-builder ]
+    branches: [ master ]
 jobs:
   build:
     runs-on: ubuntu-latest
