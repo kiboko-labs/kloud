@@ -71,7 +71,7 @@ final class ContextWizard
 
         $format = new SymfonyStyle($input, $output);
 
-        if ($input->getOption('enterprise') === $input->getOption('community')) {
+        if ($input->getOption('postgresql') === $input->getOption('mysql')) {
             if (!empty($context->application)) {
                 $context->dbms = $format->askQuestion(
                     (new ChoiceQuestion(
@@ -85,6 +85,10 @@ final class ContextWizard
                     (new ChoiceQuestion('Which database engine are you using? (leave empty for none)', ['mysql', 'postgresql', ''], ''))
                 );
             }
+        } else if ($input->getOption('postgresql') === true) {
+            $context->dbms = 'postgresql';
+        } else if ($input->getOption('mysql') === true) {
+            $context->dbms = 'mysql';
         }
 
         if ($input->getOption('with-blackfire')) {
