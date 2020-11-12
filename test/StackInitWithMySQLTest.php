@@ -38,46 +38,7 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceEnterpriseWithoutXdebug
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCommerceCommunityWithoutXdebug
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutXdebug
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutXdebug
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutXdebug
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutXdebug
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutXdebug
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutXdebug
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutXdebug
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutXdebug
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useAll
      */
     public function testSuccessfulWizard($inputOptions, array $desiredOutputs)
     {
@@ -114,36 +75,7 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useAll
      */
     public function testSuccessfulWizardHavingMySQL($inputOptions, array $desiredOutputs)
     {
@@ -175,23 +107,10 @@ final class StackInitWithMySQLTest extends TestCase
         }
 
         $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sql', '/^mysql:\d+.\d+/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko\/php:\d+\.\d+-fpm-xdebug.*-mysql$/');
     }
 
     /**
-     * @dataProvider useOroCommerceEnterpriseWithoutXdebug
-     * @dataProvider useOroCommerceCommunityWithoutXdebug
-     * @dataProvider useOroCRMEnterpriseWithoutXdebug
-     * @dataProvider useOroCRMCommunityWithoutXdebug
-     * @dataProvider useOroPlatformEnterpriseWithoutXdebug
-     * @dataProvider useOroPlatformCommunityWithoutXdebug
-     * @dataProvider useMarelloEnterpriseWithoutXdebug
-     * @dataProvider useMarelloCommunityWithoutXdebug
-     * @dataProvider useMiddlewareEnterpriseWithoutXdebug
-     * @dataProvider useMiddlewareCommunityWithoutXdebug
+     * @dataProvider useWithoutXdebug
      */
     public function testSuccessfulWizardNotHavingXdebug($inputOptions, array $desiredOutputs)
     {
@@ -229,36 +148,9 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useGeneric
+     * @dataProvider useWithoutElasticStack
+     * @dataProvider useWithoutBlackfire
      */
     public function testSuccessfulWizardHavingXdebug($inputOptions, array $desiredOutputs)
     {
@@ -289,21 +181,14 @@ final class StackInitWithMySQLTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
     }
 
     /**
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useWithoutBlackfire
      */
     public function testSuccessfulWizardNotHavingBlackfire($inputOptions, array $desiredOutputs)
     {
@@ -341,36 +226,9 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceEnterpriseWithoutXdebug
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCommerceCommunityWithoutXdebug
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutXdebug
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutXdebug
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutXdebug
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutXdebug
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutXdebug
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutXdebug
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutXdebug
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutXdebug
+     * @dataProvider useGeneric
+     * @dataProvider useWithoutElasticStack
+     * @dataProvider useWithoutXdebug
      */
     public function testSuccessfulWizardHavingBlackfire($inputOptions, array $desiredOutputs)
     {
@@ -406,41 +264,10 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceEnterpriseWithoutXdebug
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutXdebug
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutXdebug
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutXdebug
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutXdebug
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutXdebug
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutXdebug
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutXdebug
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutXdebug
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutXdebug
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useGeneric
+     * @dataProvider useWithoutBlackfire
+     * @dataProvider useWithoutXdebug
+     * @dataProvider useEnterpriseWithoutElasticStack
      */
     public function testSuccessfulWizardHavingElasticSearch($inputOptions)
     {
@@ -471,11 +298,7 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
+     * @dataProvider useCommunityWithoutElasticStack
      */
     public function testSuccessfulWizardNotHavingElasticSearch($inputOptions)
     {
@@ -506,36 +329,9 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutXdebug
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutXdebug
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutXdebug
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutXdebug
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutXdebug
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutXdebug
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutXdebug
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutXdebug
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutXdebug
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutXdebug
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useGeneric
+     * @dataProvider useWithoutXdebug
+     * @dataProvider useWithoutBlackfire
      */
     public function testSuccessfulWizardHavingKibana($inputOptions)
     {
@@ -566,16 +362,7 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
+     * @dataProvider useWithoutElasticStack
      */
     public function testSuccessfulWizardNotHavingKibana($inputOptions)
     {
@@ -606,36 +393,9 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterprise
-     * @dataProvider useOroCommerceEnterpriseWithoutXdebug
-     * @dataProvider useOroCommerceEnterpriseWithoutBlackfire
-     * @dataProvider useOroCommerceCommunity
-     * @dataProvider useOroCommerceCommunityWithoutXdebug
-     * @dataProvider useOroCommerceCommunityWithoutBlackfire
-     * @dataProvider useOroCRMEnterprise
-     * @dataProvider useOroCRMEnterpriseWithoutXdebug
-     * @dataProvider useOroCRMEnterpriseWithoutBlackfire
-     * @dataProvider useOroCRMCommunity
-     * @dataProvider useOroCRMCommunityWithoutXdebug
-     * @dataProvider useOroCRMCommunityWithoutBlackfire
-     * @dataProvider useOroPlatformEnterprise
-     * @dataProvider useOroPlatformEnterpriseWithoutXdebug
-     * @dataProvider useOroPlatformEnterpriseWithoutBlackfire
-     * @dataProvider useOroPlatformCommunity
-     * @dataProvider useOroPlatformCommunityWithoutXdebug
-     * @dataProvider useOroPlatformCommunityWithoutBlackfire
-     * @dataProvider useMarelloEnterprise
-     * @dataProvider useMarelloEnterpriseWithoutXdebug
-     * @dataProvider useMarelloEnterpriseWithoutBlackfire
-     * @dataProvider useMarelloCommunity
-     * @dataProvider useMarelloCommunityWithoutXdebug
-     * @dataProvider useMarelloCommunityWithoutBlackfire
-     * @dataProvider useMiddlewareEnterprise
-     * @dataProvider useMiddlewareEnterpriseWithoutXdebug
-     * @dataProvider useMiddlewareEnterpriseWithoutBlackfire
-     * @dataProvider useMiddlewareCommunity
-     * @dataProvider useMiddlewareCommunityWithoutXdebug
-     * @dataProvider useMiddlewareCommunityWithoutBlackfire
+     * @dataProvider useGeneric
+     * @dataProvider useWithoutXdebug
+     * @dataProvider useWithoutBlackfire
      */
     public function testSuccessfulWizardHavingLogstash($inputOptions)
     {
@@ -667,16 +427,7 @@ final class StackInitWithMySQLTest extends TestCase
     }
 
     /**
-     * @dataProvider useOroCommerceEnterpriseWithoutElasticStack
-     * @dataProvider useOroCommerceCommunityWithoutElasticStack
-     * @dataProvider useOroCRMEnterpriseWithoutElasticStack
-     * @dataProvider useOroCRMCommunityWithoutElasticStack
-     * @dataProvider useOroPlatformEnterpriseWithoutElasticStack
-     * @dataProvider useOroPlatformCommunityWithoutElasticStack
-     * @dataProvider useMarelloEnterpriseWithoutElasticStack
-     * @dataProvider useMarelloCommunityWithoutElasticStack
-     * @dataProvider useMiddlewareEnterpriseWithoutElasticStack
-     * @dataProvider useMiddlewareCommunityWithoutElasticStack
+     * @dataProvider useWithoutElasticStack
      */
     public function testSuccessfulWizardNotHavingLogstash($inputOptions)
     {
