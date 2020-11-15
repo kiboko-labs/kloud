@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Assertion;
+namespace test\Kiboko\Cloud\Stack\Assertion;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\LogicalNot;
