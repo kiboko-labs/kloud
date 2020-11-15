@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud;
+namespace test\Kiboko\Cloud\Stack;
 
 use Kiboko\Cloud\Platform\Console\Command;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use test\Kiboko\Cloud\Assertion\AssertTrait;
+use test\Kiboko\Cloud\Stack\Assertion\AssertTrait;
 use Vfs\FileSystem;
 use Vfs\Node\Directory;
 
-final class StackInitWithPostgresTest extends TestCase
+final class StackInitWithMySQLTest extends TestCase
 {
     use AssertTrait;
     use StackInitTraitFixtures;
@@ -19,7 +19,7 @@ final class StackInitWithPostgresTest extends TestCase
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->dbms = 'postgresql';
+        $this->dbms = 'mysql';
     }
 
     public function setUp(): void
@@ -40,7 +40,7 @@ final class StackInitWithPostgresTest extends TestCase
     /**
      * @dataProvider useAll
      */
-    public function testSuccessfulWizard($inputOptions, array $desiredOutputs)
+    public function testSuccessfulWizard(array $inputOptions, array $desiredOutputs)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -77,7 +77,7 @@ final class StackInitWithPostgresTest extends TestCase
     /**
      * @dataProvider useAll
      */
-    public function testSuccessfulWizardHavingPostgre($inputOptions, array $desiredOutputs)
+    public function testSuccessfulWizardHavingMySQL(array $inputOptions, array $desiredOutputs)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -106,13 +106,13 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sql', '/^postgres:\d+.\d+-alpine$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sql', '/^mysql:\d+.\d+/');
     }
 
     /**
      * @dataProvider useWithoutXdebug
      */
-    public function testSuccessfulWizardNotHavingXdebug($inputOptions, array $desiredOutputs)
+    public function testSuccessfulWizardNotHavingXdebug(array $inputOptions, array $desiredOutputs)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -141,10 +141,10 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
     }
 
     /**
@@ -152,7 +152,7 @@ final class StackInitWithPostgresTest extends TestCase
      * @dataProvider useWithoutElasticStack
      * @dataProvider useWithoutBlackfire
      */
-    public function testSuccessfulWizardHavingXdebug($inputOptions, array $desiredOutputs)
+    public function testSuccessfulWizardHavingXdebug(array $inputOptions, array $desiredOutputs)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -181,16 +181,16 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
     }
 
     /**
      * @dataProvider useWithoutBlackfire
      */
-    public function testSuccessfulWizardNotHavingBlackfire($inputOptions, array $desiredOutputs)
+    public function testSuccessfulWizardNotHavingBlackfire(array $inputOptions, array $desiredOutputs)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -219,10 +219,10 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-mysql$/');
     }
 
     /**
@@ -230,7 +230,7 @@ final class StackInitWithPostgresTest extends TestCase
      * @dataProvider useWithoutElasticStack
      * @dataProvider useWithoutXdebug
      */
-    public function testSuccessfulWizardHavingBlackfire($inputOptions, array $desiredOutputs)
+    public function testSuccessfulWizardHavingBlackfire(array $inputOptions, array $desiredOutputs)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -259,8 +259,8 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-mysql$/');
     }
 
     /**
@@ -269,7 +269,7 @@ final class StackInitWithPostgresTest extends TestCase
      * @dataProvider useWithoutXdebug
      * @dataProvider useEnterpriseWithoutElasticStack
      */
-    public function testSuccessfulWizardHavingElasticSearch($inputOptions)
+    public function testSuccessfulWizardHavingElasticSearch(array $inputOptions)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -300,7 +300,7 @@ final class StackInitWithPostgresTest extends TestCase
     /**
      * @dataProvider useCommunityWithoutElasticStack
      */
-    public function testSuccessfulWizardNotHavingElasticSearch($inputOptions)
+    public function testSuccessfulWizardNotHavingElasticSearch(array $inputOptions)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -333,7 +333,7 @@ final class StackInitWithPostgresTest extends TestCase
      * @dataProvider useWithoutXdebug
      * @dataProvider useWithoutBlackfire
      */
-    public function testSuccessfulWizardHavingKibana($inputOptions)
+    public function testSuccessfulWizardHavingKibana(array $inputOptions)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -364,7 +364,7 @@ final class StackInitWithPostgresTest extends TestCase
     /**
      * @dataProvider useWithoutElasticStack
      */
-    public function testSuccessfulWizardNotHavingKibana($inputOptions)
+    public function testSuccessfulWizardNotHavingKibana(array $inputOptions)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -397,7 +397,7 @@ final class StackInitWithPostgresTest extends TestCase
      * @dataProvider useWithoutXdebug
      * @dataProvider useWithoutBlackfire
      */
-    public function testSuccessfulWizardHavingLogstash($inputOptions)
+    public function testSuccessfulWizardHavingLogstash(array $inputOptions)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(
@@ -429,7 +429,7 @@ final class StackInitWithPostgresTest extends TestCase
     /**
      * @dataProvider useWithoutElasticStack
      */
-    public function testSuccessfulWizardNotHavingLogstash($inputOptions)
+    public function testSuccessfulWizardNotHavingLogstash(array $inputOptions)
     {
         $tester = new CommandTester(
             new Command\Stack\InitCommand(

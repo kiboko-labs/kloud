@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Fixture;
+namespace test\Kiboko\Cloud\Stack\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
+use test\Kiboko\Cloud\Fixture\FixtureInterface;
+use test\Kiboko\Cloud\Fixture\VisitableFixture;
+use test\Kiboko\Cloud\Stack\WizardAssertionFixtureProvider;
 
 final class OroCommerceCommunityFixture implements FixtureInterface
 {
@@ -18,22 +20,22 @@ final class OroCommerceCommunityFixture implements FixtureInterface
     public function get(): iterable
     {
         yield (new WizardAssertionFixtureProvider(['5.6'], 'orocommerce', ['1.6'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCommerce Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.1', '7.2'], 'orocommerce', ['3.1'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCommerce Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.3'], 'orocommerce', ['3.1', '4.1'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCommerce Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.4'], 'orocommerce', ['4.1', '4.2'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCommerce Community Edition, version %applicationVersion%.',
             )
         ;

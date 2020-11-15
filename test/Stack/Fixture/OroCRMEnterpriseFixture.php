@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Fixture;
+namespace test\Kiboko\Cloud\Stack\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
+use test\Kiboko\Cloud\Fixture\FixtureInterface;
+use test\Kiboko\Cloud\Fixture\VisitableFixture;
+use test\Kiboko\Cloud\Stack\WizardAssertionFixtureProvider;
 
 final class OroCRMEnterpriseFixture implements FixtureInterface
 {
@@ -18,22 +20,22 @@ final class OroCRMEnterpriseFixture implements FixtureInterface
     public function get(): iterable
     {
         yield (new WizardAssertionFixtureProvider(['5.6'], 'orocrm', ['1.8', '2.6'], true, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCRM Enterprise Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.1', '7.2', '7.3'], 'orocrm', ['3.1'], true, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCRM Enterprise Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.3'], 'orocrm', ['3.1'], true, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCRM Enterprise Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.4'], 'orocrm', ['4.1', '4.2'], true, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroCRM Enterprise Edition, version %applicationVersion%.',
             )
         ;

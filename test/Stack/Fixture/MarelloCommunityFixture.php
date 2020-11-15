@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Fixture;
+namespace test\Kiboko\Cloud\Stack\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
+use test\Kiboko\Cloud\Fixture\FixtureInterface;
+use test\Kiboko\Cloud\Fixture\VisitableFixture;
+use test\Kiboko\Cloud\Stack\WizardAssertionFixtureProvider;
 
 final class MarelloCommunityFixture implements FixtureInterface
 {
@@ -18,22 +20,22 @@ final class MarelloCommunityFixture implements FixtureInterface
     public function get(): iterable
     {
         yield (new WizardAssertionFixtureProvider(['5.6'], 'marello', ['1.5', '1.6'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.1', '7.2'], 'marello', ['1.5', '1.6', '2.0', '2.1', '2.2'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.3'], 'marello', ['2.0', '2.1', '2.2', '3.0'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.4'], 'marello', ['3.0'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
         ;

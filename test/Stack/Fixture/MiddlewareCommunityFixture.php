@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Fixture;
+namespace test\Kiboko\Cloud\Stack\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
+use test\Kiboko\Cloud\Fixture\FixtureInterface;
+use test\Kiboko\Cloud\Fixture\VisitableFixture;
+use test\Kiboko\Cloud\Stack\WizardAssertionFixtureProvider;
 
 final class MiddlewareCommunityFixture implements FixtureInterface
 {
@@ -18,7 +20,7 @@ final class MiddlewareCommunityFixture implements FixtureInterface
     public function get(): iterable
     {
         yield (new WizardAssertionFixtureProvider(['7.4'], 'middleware', ['1.0'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing Middleware Community Edition, version %applicationVersion%.',
             )
         ;

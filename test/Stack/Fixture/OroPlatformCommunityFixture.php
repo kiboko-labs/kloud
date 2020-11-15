@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Fixture;
+namespace test\Kiboko\Cloud\Stack\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
+use test\Kiboko\Cloud\Fixture\FixtureInterface;
+use test\Kiboko\Cloud\Fixture\VisitableFixture;
+use test\Kiboko\Cloud\Stack\WizardAssertionFixtureProvider;
 
 final class OroPlatformCommunityFixture implements FixtureInterface
 {
@@ -18,22 +20,22 @@ final class OroPlatformCommunityFixture implements FixtureInterface
     public function get(): iterable
     {
         yield (new WizardAssertionFixtureProvider(['5.6'], 'oroplatform', ['1.8', '2.6'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroPlatform Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.1', '7.2', '7.3'], 'oroplatform', ['3.1'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroPlatform Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.3'], 'oroplatform', ['3.1'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroPlatform Community Edition, version %applicationVersion%.',
             )
         ;
         yield (new WizardAssertionFixtureProvider(['7.4'], 'oroplatform', ['4.1', '4.2'], false, $this->dbms))
-            ->expectMessages(
+            ->expectWizardMessages(
                 'Choosing OroPlatform Community Edition, version %applicationVersion%.',
             )
         ;

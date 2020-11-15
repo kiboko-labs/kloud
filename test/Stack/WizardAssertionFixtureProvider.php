@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud;
+namespace test\Kiboko\Cloud\Stack;
 
-final class WizardAssertionFixtureProvider implements \IteratorAggregate
+use test\Kiboko\Cloud\Fixture\FixtureProviderInterface;
+
+final class WizardAssertionFixtureProvider implements FixtureProviderInterface, \IteratorAggregate
 {
     private array $phpVersions;
     private string $application;
@@ -28,7 +30,7 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         $this->withDejavu = false;
         $this->withElasticStack = false;
         $this->withDockerForMacOptimizations = false;
-        $this->expectedMessages = [];
+        $this->expectedMessages = $expectedMessages;
     }
 
     public function withBlackfire(): self
@@ -101,7 +103,7 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         return $this;
     }
 
-    public function expectMessages(string ...$messages): self
+    public function expectWizardMessages(string ...$messages): self
     {
         array_push($this->expectedMessages, ...$messages);
 

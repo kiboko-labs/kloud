@@ -41,7 +41,7 @@ final class Context
         $this->selfManagedVolumes = [];
     }
 
-    public function getImagesRegex(): string
+    public function getPHPImagesRegex(): string
     {
         if ($this->withBlackfire && $this->withXdebug) {
             $variations = '(?:|-blackfire|-xdebug)';
