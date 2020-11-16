@@ -5,14 +5,15 @@ namespace test\Kiboko\Cloud\Stack;
 use Kiboko\Cloud\Platform\Console\Command;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use test\Kiboko\Cloud\Stack\Assertion\AssertTrait;
+use test\Kiboko\Cloud\Assertion\AssertTrait;
+use test\Kiboko\Cloud\Fixture\CloudFixtures;
 use Vfs\FileSystem;
 use Vfs\Node\Directory;
 
 final class StackInitWithPostgresTest extends TestCase
 {
     use AssertTrait;
-    use StackInitTraitFixtures;
+    use CloudFixtures;
 
     private ?FileSystem $fs = null;
 

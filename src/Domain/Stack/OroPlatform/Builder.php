@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Domain\Stack\OroPlatform;
 
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
 use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
 use Kiboko\Cloud\Domain\Stack\Compose\Stack;
 use Kiboko\Cloud\Domain\Stack\Compose\Variable;
@@ -16,8 +17,10 @@ final class Builder implements DelegatedStackBuilderInterface
     /** @var iterable|ServiceBuilderInterface[] */
     private iterable $serviceBuilders;
 
-    public function __construct(string $stacksPath)
-    {
+    public function __construct(
+        RepositoryInterface $phpRepository,
+        string $stacksPath
+    ) {
         $this->stacksPath = $stacksPath;
 
         $this->serviceBuilders = [
@@ -32,10 +35,10 @@ final class Builder implements DelegatedStackBuilderInterface
             new Service\Nginx($stacksPath),
             new Service\PHP(
                 $stacksPath,
-                new Service\PHP\FPM($stacksPath),
-                new Service\PHP\FPMWithXdebug($stacksPath),
-                new Service\PHP\CLI($stacksPath),
-                new Service\PHP\CLIWithXdebug($stacksPath),
+                new Service\PHP\FPM($phpRepository, $stacksPath),
+                new Service\PHP\FPMWithXdebug($phpRepository, $stacksPath),
+                new Service\PHP\CLI($phpRepository, $stacksPath),
+                new Service\PHP\CLIWithXdebug($phpRepository, $stacksPath),
                 new Service\PHP\Blackfire($stacksPath),
                 new Service\PHP\MessageQueue($stacksPath),
                 new Service\PHP\Websocket($stacksPath),

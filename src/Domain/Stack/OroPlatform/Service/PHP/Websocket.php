@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service\PHP;
 
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
 use Kiboko\Cloud\Domain\Stack\Compose\EnvironmentVariable;
 use Kiboko\Cloud\Domain\Stack\Compose\PortMapping;
 use Kiboko\Cloud\Domain\Stack\Compose\Service;

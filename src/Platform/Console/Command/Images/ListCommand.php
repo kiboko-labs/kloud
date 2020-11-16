@@ -19,8 +19,10 @@ final class ListCommand extends Command
     private string $configPath;
     private ContextWizard $wizard;
 
-    public function __construct(?string $name, string $configPath)
-    {
+    public function __construct(
+        string $configPath,
+        ?string $name = null
+    ) {
         $this->configPath = $configPath;
         $this->wizard = new ContextWizard();
         parent::__construct($name);
@@ -32,6 +34,9 @@ final class ListCommand extends Command
 
         $this->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
 
+        $this->addOption('dbgp-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/dbgp');
+        $this->addOption('postgresql-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/postgresql');
+        $this->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
         $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
 
         $this->wizard->configureConsoleCommand($this);
@@ -45,7 +50,13 @@ final class ListCommand extends Command
 
         $format = new SymfonyStyle($input, $output);
 
-        $packages = Packaging\Config\Config::builds($this->configPath, (bool) $input->getOption('with-experimental'));
+        $packages = Packaging\Config\Config::builds(
+            $this->configPath,
+            new Packaging\Repository($input->getOption('dbgp-repository')),
+            new Packaging\Repository($input->getOption('postgresql-repository')),
+            new Packaging\Repository($input->getOption('php-repository')),
+            (bool) $input->getOption('with-experimental')
+        );
 
         $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
             /** @var Packaging\PackageInterface $package */

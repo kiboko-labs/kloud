@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kiboko\Cloud\Platform\Console\Command\Images;
 
 use Kiboko\Cloud\Domain\Packaging;
+use Kiboko\Cloud\Domain\Packaging\Execution\CommandBus\CommandRunnerInterface;
 use Kiboko\Cloud\Platform\Console\ContextWizard;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,10 +19,16 @@ final class BuildCommand extends Command
 
     private string $configPath;
     private string $environmentsPath;
-    private ContextWizard $wizard;
+    private CommandRunnerInterface $commandRunner;
+    private ?ContextWizard $wizard;
 
-    public function __construct(?string $name, string $configPath, string $environmentsPath)
-    {
+    public function __construct(
+        CommandRunnerInterface $commandRunner,
+        string $configPath,
+        string $environmentsPath,
+        ?string $name = null
+    ) {
+        $this->commandRunner = $commandRunner;
         $this->configPath = $configPath;
         $this->environmentsPath = $environmentsPath;
         $this->wizard = new ContextWizard();
@@ -31,8 +38,6 @@ final class BuildCommand extends Command
     protected function configure()
     {
         $this->setDescription('Build PHP Docker images, with an interactive wizard');
-
-        $this->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
 
         $this->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the build for matching images only.');
         $this->addOption('force-all', 'a', InputOption::VALUE_NONE, 'Force the build for all matching images and dependencies.');
@@ -54,7 +59,13 @@ final class BuildCommand extends Command
 
         $format->note(sprintf('Building all images matching the following pattern: %s', $pattern));
 
-        $packages = Packaging\Config\Config::builds($this->configPath, (bool) $input->getOption('with-experimental'));
+        $packages = Packaging\Config\Config::builds(
+            $this->configPath,
+            new Packaging\Repository($input->getOption('dbgp-repository')),
+            new Packaging\Repository($input->getOption('postgresql-repository')),
+            new Packaging\Repository($input->getOption('php-repository')),
+            (bool) $input->getOption('with-experimental')
+        );
 
         $format->table(['tag', 'parent', 'path'], iterator_to_array((function () use ($pattern, $packages) {
             /** @var Packaging\PackageInterface $package */
@@ -120,12 +131,12 @@ final class BuildCommand extends Command
             }
         }
 
-//        if ('no' === $input->getOption('parallel') || 1 === (int) $input->getOption('parallel')) {
-            (new Packaging\Execution\CommandBus\SequentialCommandRunner($input, $output))->run($commandBus, $this->environmentsPath);
-//        } else {
-//            $parallel = (int) $input->getOption('parallel');
-//            (new Packaging\Execution\CommandBus\ParallelCommandRunner($input, $output, $parallel > 0 ? $parallel : 12))->run($commandBus, $this->environmentsPath);
-//        }
+        if (count($commandBus) <= 0) {
+            $format->error('Your input did not match any build setup.');
+            return 1;
+        }
+
+        $this->commandRunner->run($commandBus, $this->environmentsPath);
 
         return 0;
     }

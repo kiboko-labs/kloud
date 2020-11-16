@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Stack;
+namespace test\Kiboko\Cloud;
 
 use test\Kiboko\Cloud\Fixture\FixtureProviderInterface;
 
@@ -8,7 +8,7 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
 {
     private array $phpVersions;
     private string $application;
-    private array $applicationVersion;
+    private array $applicationVersions;
     private bool $isEnterpriseEdition;
     private string $dbms;
     private bool $withBlackfire;
@@ -17,12 +17,13 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
     private bool $withElasticStack;
     private bool $withDockerForMacOptimizations;
     private array $expectedMessages;
+    private array $expectedProcesses;
 
     public function __construct(array $phpVersions, string $application, array $applicationVersion, bool $isEnterpriseEdition, string $dbms, array $expectedMessages = [])
     {
         $this->phpVersions = $phpVersions;
         $this->application = $application;
-        $this->applicationVersion = $applicationVersion;
+        $this->applicationVersions = $applicationVersion;
         $this->isEnterpriseEdition = $isEnterpriseEdition;
         $this->dbms = $dbms;
         $this->withBlackfire = false;
@@ -31,6 +32,22 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         $this->withElasticStack = false;
         $this->withDockerForMacOptimizations = false;
         $this->expectedMessages = $expectedMessages;
+        $this->expectedProcesses = [];
+    }
+
+    public function getApplication(): string
+    {
+        return $this->application;
+    }
+
+    public function isEnterpriseEdition(): bool
+    {
+        return $this->isEnterpriseEdition;
+    }
+
+    public function getDBMS(): string
+    {
+        return $this->dbms;
     }
 
     public function withBlackfire(): self
@@ -47,6 +64,11 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         return $this;
     }
 
+    public function hasBlackfire(): bool
+    {
+        return $this->withBlackfire;
+    }
+
     public function withXdebug(): self
     {
         $this->withXdebug = true;
@@ -59,6 +81,11 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         $this->withXdebug = false;
 
         return $this;
+    }
+
+    public function hasXdebug(): bool
+    {
+        return $this->withXdebug;
     }
 
     public function withDejavu(): self
@@ -75,6 +102,11 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         return $this;
     }
 
+    public function hasDejavu(): bool
+    {
+        return $this->withDejavu;
+    }
+
     public function withElasticStack(): self
     {
         $this->withElasticStack = true;
@@ -87,6 +119,11 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         $this->withElasticStack = false;
 
         return $this;
+    }
+
+    public function hasElasticStack(): bool
+    {
+        return $this->withElasticStack;
     }
 
     public function withDockerForMacOptimizations(): self
@@ -103,6 +140,11 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         return $this;
     }
 
+    public function hasDockerForMacOptimizations(): bool
+    {
+        return $this->withDockerForMacOptimizations;
+    }
+
     public function expectWizardMessages(string ...$messages): self
     {
         array_push($this->expectedMessages, ...$messages);
@@ -110,12 +152,20 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         return $this;
     }
 
+    public function expectProcesses(array ...$processes): self
+    {
+        array_push($this->expectedProcesses, ...$processes);
+
+        return $this;
+    }
+
     public function getIterator(): \Iterator
     {
         foreach ($this->phpVersions as $phpVersion) {
-            foreach ($this->applicationVersion as $applicationVersion) {
+            foreach ($this->applicationVersions as $applicationVersion) {
                 yield [
                     [
+                        '--php-repository' => 'kiboko-test/php',
                         '--php-version' => $phpVersion,
                         '--application' => $this->application,
                         '--application-version' => $applicationVersion,
@@ -127,7 +177,11 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
                         $this->withElasticStack ? '--with-elastic-stack' : '--without-elastic-stack' => null,
                         $this->withDockerForMacOptimizations ? '--with-macos-optimizations' : '--without-macos-optimizations' => null,
                     ],
-                    iterator_to_array($this->generateMessages($phpVersion, $applicationVersion), false)
+                    iterator_to_array($this->generateMessages($phpVersion, $applicationVersion), false),
+                    iterator_to_array($this->generateProcesses(
+                        $phpVersion,
+                        $applicationVersion
+                    )),
                 ];
             }
         }
@@ -142,8 +196,17 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
                     '%phpVersion%' => $phpVersion,
                     '%application%' => $this->application,
                     '%applicationVersion%' => $applicationVersion,
+                    '%applicationEdition%' => $this->isEnterpriseEdition ? 'ee' : 'ce',
+                    '%dbms%' => $this->dbms,
                 ]
             );
+        }
+    }
+
+    private function generateProcesses(string $phpVersion, string $applicationVersion): \Iterator
+    {
+        foreach ($this->expectedProcesses as $process) {
+            yield new ProcessMatcher($this, $process, $phpVersion, $applicationVersion);
         }
     }
 }

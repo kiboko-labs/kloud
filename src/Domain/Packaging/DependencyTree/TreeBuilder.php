@@ -26,7 +26,7 @@ final class TreeBuilder implements \IteratorAggregate
                 continue;
             }
 
-            $parent = $this->repository->find((string) $package->getParent());
+            $parent = $this->repository->find(sprintf('%s:%s', (string) $package->getParent()->getRepository(), (string) $package->getParent()));
 
             if (null === $parent) {
                 throw new \RuntimeException(strtr('The parent package %parent%, for package %package% was not found.', ['%package%' => (string) $package, '%parent%' => (string) $package->getParent()]));

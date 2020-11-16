@@ -1,16 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Stack;
+namespace test\Kiboko\Cloud\Fixture;
 
+use test\Kiboko\Cloud\Fixture\Platform;
 use test\Kiboko\Cloud\Fixture\Visitor;
 
-trait StackInitTraitFixtures
+trait CloudFixtures
 {
     private string $dbms;
 
     public function useOroCommerceEnterprise()
     {
-        yield from (new Fixture\OroCommerceEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -22,7 +23,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceEnterpriseWithoutElasticStack()
     {
-        yield from (new Fixture\OroCommerceEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -34,7 +35,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceEnterpriseWithoutXdebug()
     {
-        yield from (new Fixture\OroCommerceEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -46,7 +47,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceEnterpriseWithoutBlackfire()
     {
-        yield from (new Fixture\OroCommerceEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -58,7 +59,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceCommunity()
     {
-        yield from (new Fixture\OroCommerceCommunityFixture($this->dbms))
+        yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -70,7 +71,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceCommunityWithoutElasticStack()
     {
-        yield from (new Fixture\OroCommerceCommunityFixture($this->dbms))
+        yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -82,7 +83,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceCommunityWithoutXdebug()
     {
-        yield from (new Fixture\OroCommerceCommunityFixture($this->dbms))
+        yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -94,7 +95,7 @@ trait StackInitTraitFixtures
 
     public function useOroCommerceCommunityWithoutBlackfire()
     {
-        yield from (new Fixture\OroCommerceCommunityFixture($this->dbms))
+        yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -106,7 +107,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMEnterprise()
     {
-        yield from (new Fixture\OroCRMEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -118,7 +119,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMEnterpriseWithoutElasticStack()
     {
-        yield from (new Fixture\OroCRMEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -130,7 +131,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMEnterpriseWithoutXdebug()
     {
-        yield from (new Fixture\OroCRMEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -142,7 +143,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMEnterpriseWithoutBlackfire()
     {
-        yield from (new Fixture\OroCRMEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -154,7 +155,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMCommunity()
     {
-        yield from (new Fixture\OroCRMCommunityFixture($this->dbms))
+        yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -166,7 +167,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMCommunityWithoutElasticStack()
     {
-        yield from (new Fixture\OroCRMCommunityFixture($this->dbms))
+        yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -178,7 +179,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMCommunityWithoutXdebug()
     {
-        yield from (new Fixture\OroCRMCommunityFixture($this->dbms))
+        yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -190,7 +191,7 @@ trait StackInitTraitFixtures
 
     public function useOroCRMCommunityWithoutBlackfire()
     {
-        yield from (new Fixture\OroCRMCommunityFixture($this->dbms))
+        yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -202,7 +203,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformEnterprise()
     {
-        yield from (new Fixture\OroPlatformEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -214,7 +215,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformEnterpriseWithoutElasticStack()
     {
-        yield from (new Fixture\OroPlatformEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -226,7 +227,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformEnterpriseWithoutXdebug()
     {
-        yield from (new Fixture\OroPlatformEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -238,7 +239,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformEnterpriseWithoutBlackfire()
     {
-        yield from (new Fixture\OroPlatformEnterpriseFixture($this->dbms))
+        yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -250,7 +251,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformCommunity()
     {
-        yield from (new Fixture\OroPlatformCommunityFixture($this->dbms))
+        yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -262,7 +263,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformCommunityWithoutElasticStack()
     {
-        yield from (new Fixture\OroPlatformCommunityFixture($this->dbms))
+        yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -274,7 +275,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformCommunityWithoutXdebug()
     {
-        yield from (new Fixture\OroPlatformCommunityFixture($this->dbms))
+        yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -286,7 +287,7 @@ trait StackInitTraitFixtures
 
     public function useOroPlatformCommunityWithoutBlackfire()
     {
-        yield from (new Fixture\OroPlatformCommunityFixture($this->dbms))
+        yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -298,7 +299,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloEnterprise()
     {
-        yield from (new Fixture\MarelloEnterpriseFixture($this->dbms))
+        yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -310,7 +311,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloEnterpriseWithoutElasticStack()
     {
-        yield from (new Fixture\MarelloEnterpriseFixture($this->dbms))
+        yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -322,7 +323,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloEnterpriseWithoutXdebug()
     {
-        yield from (new Fixture\MarelloEnterpriseFixture($this->dbms))
+        yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -334,7 +335,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloEnterpriseWithoutBlackfire()
     {
-        yield from (new Fixture\MarelloEnterpriseFixture($this->dbms))
+        yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -346,7 +347,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloCommunity()
     {
-        yield from (new Fixture\MarelloCommunityFixture($this->dbms))
+        yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -358,7 +359,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloCommunityWithoutElasticStack()
     {
-        yield from (new Fixture\MarelloCommunityFixture($this->dbms))
+        yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -370,7 +371,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloCommunityWithoutXdebug()
     {
-        yield from (new Fixture\MarelloCommunityFixture($this->dbms))
+        yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -382,7 +383,7 @@ trait StackInitTraitFixtures
 
     public function useMarelloCommunityWithoutBlackfire()
     {
-        yield from (new Fixture\MarelloCommunityFixture($this->dbms))
+        yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -394,7 +395,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareEnterprise()
     {
-        yield from (new Fixture\MiddlewareEnterpriseFixture($this->dbms))
+        yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -406,7 +407,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareEnterpriseWithoutElasticStack()
     {
-        yield from (new Fixture\MiddlewareEnterpriseFixture($this->dbms))
+        yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -418,7 +419,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareEnterpriseWithoutXdebug()
     {
-        yield from (new Fixture\MiddlewareEnterpriseFixture($this->dbms))
+        yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -430,7 +431,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareEnterpriseWithoutBlackfire()
     {
-        yield from (new Fixture\MiddlewareEnterpriseFixture($this->dbms))
+        yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),
@@ -442,7 +443,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareCommunity()
     {
-        yield from (new Fixture\MiddlewareCommunityFixture($this->dbms))
+        yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -454,7 +455,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareCommunityWithoutElasticStack()
     {
-        yield from (new Fixture\MiddlewareCommunityFixture($this->dbms))
+        yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithXdebug(),
@@ -466,7 +467,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareCommunityWithoutXdebug()
     {
-        yield from (new Fixture\MiddlewareCommunityFixture($this->dbms))
+        yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
@@ -478,7 +479,7 @@ trait StackInitTraitFixtures
 
     public function useMiddlewareCommunityWithoutBlackfire()
     {
-        yield from (new Fixture\MiddlewareCommunityFixture($this->dbms))
+        yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
                 new Visitor\WithXdebug(),

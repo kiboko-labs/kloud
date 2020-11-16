@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kiboko\Cloud\Platform\Console;
 
 use Composer\Semver\Semver;
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
 use Kiboko\Cloud\Domain\Stack;
 use Kiboko\Cloud\Platform\Context\ComposerPackageGuesser;
 use Kiboko\Cloud\Platform\Context\ContextGuesserFacade;
@@ -21,7 +22,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class ContextWizard
 {
-    private ContextGuesserInterface $guesser;
+    private ?ContextGuesserInterface $guesser = null;
 
     public function __construct()
     {
@@ -51,6 +52,8 @@ final class ContextWizard
     {
         $this->guesser->configure($command);
 
+        $command->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
+        $command->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
         $command->addOption('mysql', null, InputOption::VALUE_NONE, 'Set up the application to use MySQL.');
         $command->addOption('postgresql', null, InputOption::VALUE_NONE, 'Set up the application to use PostgreSQL.');
         $command->addOption('with-xdebug', null, InputOption::VALUE_NONE, 'Set up the application to use Xdebug.');

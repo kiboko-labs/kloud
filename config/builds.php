@@ -2,15 +2,16 @@
 
 use Kiboko\Cloud\Domain\Packaging;
 
-return function(bool $withExperimental): iterable {
-    $dbgpRepository = new Packaging\Repository('kiboko/dbgp');
-
+return function(
+    Packaging\RepositoryInterface $dbgpRepository,
+    Packaging\RepositoryInterface $postgresqlRepository,
+    Packaging\RepositoryInterface $phpRepository,
+    bool $withExperimental
+): iterable {
     yield new Packaging\Native\GenericDockerfile(
         $dbgpRepository,
         new Packaging\Placeholder('native/dbgp/'),
     );
-
-    $postgresqlRepository = new Packaging\Repository('kiboko/postgresql');
 
     yield new Packaging\Native\PostgreSQL\Package(
         $postgresqlRepository,
@@ -39,8 +40,6 @@ return function(bool $withExperimental): iterable {
         new Packaging\Placeholder('postgresql/'),
         $withExperimental
     );
-
-    $phpRepository = new Packaging\Repository('kiboko/php');
 
     yield new Packaging\Native\PHP\Package(
         $phpRepository,
@@ -248,6 +247,16 @@ return function(bool $withExperimental): iterable {
 
     yield new Packaging\Platform\Package(
         $phpRepository,
+        '5.6',
+        new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\PHP\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
+        $withExperimental
+    );
+
+    yield new Packaging\Platform\Package(
+        $phpRepository,
         '7.1',
         new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
         new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
@@ -283,6 +292,16 @@ return function(bool $withExperimental): iterable {
         new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
+        $withExperimental
+    );
+
+    yield new Packaging\Platform\Package(
+        $phpRepository,
+        '5.6',
+        new Packaging\Placeholder('orocommerce/%package.edition%/'),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
+        new Packaging\Native\PHP\Variation\StandardVariationRepository(),
+        new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository(),
         $withExperimental
     );
 

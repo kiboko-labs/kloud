@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Platform\Context;
 
+use Kiboko\Cloud\Domain\Packaging\Repository;
 use Kiboko\Cloud\Domain\Stack;
 use Kiboko\Cloud\Platform\Context\PHPVersionConsoleGuesser\PHPVersionConsoleDelegatedGuesserInterface;
 use Symfony\Component\Console\Command\Command;
@@ -29,6 +30,16 @@ final class PHPVersionConsoleOptionGuesser implements ContextGuesserInterface, C
         $command->addOption('application-version', null, InputOption::VALUE_REQUIRED, 'Set up the required application version.');
         $command->addOption('enterprise', null, InputOption::VALUE_NONE, 'Set up the required application edition to Enterprise Edition.');
         $command->addOption('community', null, InputOption::VALUE_NONE, 'Set up the required application edition to Community Edition.');
+
+        if (!$command->getDefinition()->hasOption('dbgp-repository')) {
+            $command->addOption('dbgp-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/dbgp');
+        }
+        if (!$command->getDefinition()->hasOption('postgresql-repository')) {
+            $command->addOption('postgresql-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/postgresql');
+        }
+        if (!$command->getDefinition()->hasOption('php-repository')) {
+            $command->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
+        }
     }
 
     /** @throws NoPossibleGuess */
@@ -49,7 +60,8 @@ final class PHPVersionConsoleOptionGuesser implements ContextGuesserInterface, C
         }
 
         if ($context === null) {
-            $context = new Stack\DTO\Context($phpVersion, $application);
+            $repository = new Repository($input->getOption('php-repository'));
+            $context = new Stack\DTO\Context($repository, $phpVersion, $application);
         } else {
             $context->phpVersion = $phpVersion;
             $context->application = $application;

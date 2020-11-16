@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Platform\Console\Command\Stack;
 
+use Kiboko\Cloud\Domain\Packaging\Repository;
 use Kiboko\Cloud\Domain\Stack\OroPlatform;
 use Kiboko\Cloud\Domain\Stack\StackBuilder;
 use Kiboko\Cloud\Platform\Console\ContextWizard;
@@ -22,7 +23,7 @@ final class InitCommand extends Command
     private string $stacksPath;
     private ContextWizard $wizard;
 
-    public function __construct(?string $name, string $configPath, string $stacksPath)
+    public function __construct(string $configPath, string $stacksPath, ?string $name = null)
     {
         $this->configPath = $configPath;
         $this->stacksPath = $stacksPath;
@@ -75,7 +76,7 @@ final class InitCommand extends Command
         ]));
 
         $builder = new StackBuilder(
-            new OroPlatform\Builder($this->stacksPath),
+            new OroPlatform\Builder(new Repository($input->getOption('repository')), $this->stacksPath),
         );
 
         $stack = $builder->build($context);

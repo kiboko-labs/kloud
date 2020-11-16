@@ -5,14 +5,15 @@ namespace test\Kiboko\Cloud\Stack;
 use Kiboko\Cloud\Platform\Console\Command;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use test\Kiboko\Cloud\Stack\Assertion\AssertTrait;
+use test\Kiboko\Cloud\Assertion\AssertTrait;
+use test\Kiboko\Cloud\Fixture;
 use Vfs\FileSystem;
 use Vfs\Node\Directory;
 
 final class StackInitWithMySQLTest extends TestCase
 {
     use AssertTrait;
-    use StackInitTraitFixtures;
+    use Fixture\CloudFixtures;
 
     private ?FileSystem $fs = null;
 
