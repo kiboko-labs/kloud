@@ -12,14 +12,24 @@ trait CloudFixtures
     public function useOroCommerceEnterprise()
     {
         yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useOroCommerceEnterpriseWithoutElasticStack()
     {
         yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -27,7 +37,11 @@ trait CloudFixtures
     {
         yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -36,20 +50,34 @@ trait CloudFixtures
         yield from (new Platform\OroCommerceEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useOroCommerceCommunity()
     {
         yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useOroCommerceCommunityWithoutElasticStack()
     {
         yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -57,7 +85,11 @@ trait CloudFixtures
     {
         yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -66,20 +98,34 @@ trait CloudFixtures
         yield from (new Platform\OroCommerceCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useOroCRMEnterprise()
     {
         yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useOroCRMEnterpriseWithoutElasticStack()
     {
         yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -87,7 +133,11 @@ trait CloudFixtures
     {
         yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -96,20 +146,34 @@ trait CloudFixtures
         yield from (new Platform\OroCRMEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useOroCRMCommunity()
     {
         yield from (new Platform\OroCRMCommunityFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useOroCRMCommunityWithoutElasticStack()
     {
         yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -117,7 +181,11 @@ trait CloudFixtures
     {
         yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -126,20 +194,34 @@ trait CloudFixtures
         yield from (new Platform\OroCRMCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useOroPlatformEnterprise()
     {
         yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useOroPlatformEnterpriseWithoutElasticStack()
     {
         yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -147,7 +229,11 @@ trait CloudFixtures
     {
         yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -156,20 +242,34 @@ trait CloudFixtures
         yield from (new Platform\OroPlatformEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useOroPlatformCommunity()
     {
         yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useOroPlatformCommunityWithoutElasticStack()
     {
         yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -177,7 +277,11 @@ trait CloudFixtures
     {
         yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -186,20 +290,34 @@ trait CloudFixtures
         yield from (new Platform\OroPlatformCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useMarelloEnterprise()
     {
         yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useMarelloEnterpriseWithoutElasticStack()
     {
         yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -207,7 +325,11 @@ trait CloudFixtures
     {
         yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -216,20 +338,34 @@ trait CloudFixtures
         yield from (new Platform\MarelloEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useMarelloCommunity()
     {
         yield from (new Platform\MarelloCommunityFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useMarelloCommunityWithoutElasticStack()
     {
         yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -237,7 +373,11 @@ trait CloudFixtures
     {
         yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -246,20 +386,34 @@ trait CloudFixtures
         yield from (new Platform\MarelloCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useMiddlewareEnterprise()
     {
         yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useMiddlewareEnterpriseWithoutElasticStack()
     {
         yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -267,7 +421,11 @@ trait CloudFixtures
     {
         yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -276,20 +434,34 @@ trait CloudFixtures
         yield from (new Platform\MiddlewareEnterpriseFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
     public function useMiddlewareCommunity()
     {
         yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
-            ->all();
+            ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
+            );
     }
 
     public function useMiddlewareCommunityWithoutElasticStack()
     {
         yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
                 new Visitor\WithoutElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -297,7 +469,11 @@ trait CloudFixtures
     {
         yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
+                new Visitor\WithBlackfire(),
                 new Visitor\WithoutXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 
@@ -306,6 +482,10 @@ trait CloudFixtures
         yield from (new Platform\MiddlewareCommunityFixture($this->dbms))
             ->apply(
                 new Visitor\WithoutBlackfire(),
+                new Visitor\WithXdebug(),
+                new Visitor\WithDejavu(),
+                new Visitor\WithElasticStack(),
+                new Visitor\WithDockerForMacOptimizations(),
             );
     }
 

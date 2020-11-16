@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace test\Kiboko\Cloud\Stack\Assertion;
+namespace test\Kiboko\Cloud\Assertion;
 
 use PHPUnit\Framework\Constraint\Constraint;
 use Symfony\Component\PropertyAccess\PropertyAccess;
