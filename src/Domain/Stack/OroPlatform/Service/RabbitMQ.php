@@ -30,8 +30,8 @@ final class RabbitMQ implements ServiceBuilderInterface
             (new Service('amqp'))
                 ->setBuildContext('.docker/rabbitmq@3.6')
                 ->addEnvironmentVariables(
-                    new EnvironmentVariable(new Variable('RABBITMQ_DEFAULT_USER'), 'kiboko'),
-                    new EnvironmentVariable(new Variable('RABBITMQ_DEFAULT_PASS'), 'password'),
+                    new EnvironmentVariable(new Variable('RABBITMQ_DEFAULT_USER'), new Variable('RABBITMQ_USER')),
+                    new EnvironmentVariable(new Variable('RABBITMQ_DEFAULT_PASS'), new Variable('RABBITMQ_PASSWORD')),
                 )
                 ->addPorts(
                     new PortMapping(new Variable('RABBITMQ_PORT'), 15672)

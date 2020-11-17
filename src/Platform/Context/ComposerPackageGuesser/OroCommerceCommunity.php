@@ -29,15 +29,15 @@ final class OroCommerceCommunity implements ComposerPackageDelegatedGuesserInter
                 ->getContext();
         }
 
-        if (Semver::satisfies($package['version'], '^4.1')) {
-            return (new Stack\ContextBuilder('7.2'))
+        if (Semver::satisfies($package['version'], '^4.1.0')) {
+            return (new Stack\ContextBuilder('7.4'))
                 ->setApplication('orocommerce', '4.1', false)
                 ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
                 ->getContext();
         }
 
-        if (Semver::satisfies($package['version'], '^4.2')) {
-            return (new Stack\ContextBuilder('7.2'))
+        if (Semver::satisfies($package['version'], '^4.2.0')) {
+            return (new Stack\ContextBuilder('7.4'))
                 ->setApplication('orocommerce', '4.2', false)
                 ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
                 ->getContext();

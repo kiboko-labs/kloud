@@ -28,6 +28,13 @@ final class Kibana implements ServiceBuilderInterface
 
     private function buildImageTag(DTO\Context $context)
     {
+        if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '^1.6 || ^2.0')
+            || in_array($context->application, ['orocommerce']) && Semver::satisfies($context->applicationVersion, '^1.0')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^1.5')
+        ) {
+            return 'docker pull docker.elastic.co/kibana/kibana:5.6.16';
+        }
+
         if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^3.0')
             || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^2.0')
         ) {
@@ -41,7 +48,7 @@ final class Kibana implements ServiceBuilderInterface
             return 'docker.elastic.co/kibana/kibana:7.8.1';
         }
 
-        throw new \RuntimeException('No image satisfies the application version constraint.');
+        throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint('kibana');
     }
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack

@@ -23,7 +23,7 @@ final class Marello implements PHPVersionConsoleDelegatedGuesserInterface
     {
         $format = new SymfonyStyle($input, $output);
 
-        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
+        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
             $context->applicationVersion = $format->askQuestion(
                 (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6'], '1.6'))
             );

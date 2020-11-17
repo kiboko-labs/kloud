@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\PHPSpec\Matcher\Iterate;
 
-use Kiboko\Cloud\Tag\DependentTagInterface;
+use Kiboko\Cloud\Domain\Packaging\Tag\DependentTagInterface;
 use PhpSpec\Formatter\Presenter\Presenter;
 use PhpSpec\Matcher\Iterate as StandardIterate;
 
@@ -22,9 +22,10 @@ final class IterableTagsMatcher
      * @param array|\Traversable $expected
      *
      * @throws \InvalidArgumentException
-     * @throws Iterate\SubjectElementDoesNotMatchException
-     * @throws Iterate\SubjectHasFewerElementsException
-     * @throws Iterate\SubjectHasMoreElementsException
+     * @throws SubjectElementTagDoesNotMatchException
+     * @throws SubjectElementParentTagDoesNotMatchException
+     * @throws StandardIterate\SubjectHasMoreElementsException
+     * @throws StandardIterate\SubjectHasFewerElementsException
      */
     public function match($subject, $expected): void
     {

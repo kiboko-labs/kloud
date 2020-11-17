@@ -23,9 +23,10 @@ final class IterableBuildableTagsMatcher
      * @param array|\Traversable $expected
      *
      * @throws \InvalidArgumentException
-     * @throws StandardIterate\SubjectElementDoesNotMatchException
+     * @throws SubjectElementPathDoesNotMatchException
+     * @throws SubjectElementTagDoesNotMatchException
+     * @throws SubjectElementParentTagDoesNotMatchException
      * @throws StandardIterate\SubjectHasFewerElementsException
-     * @throws StandardIterate\SubjectHasMoreElementsException
      */
     public function match($subject, $expected): void
     {

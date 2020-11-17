@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\Platform\Console;
 
+use Composer\Semver\Semver;
 use Kiboko\Cloud\Domain\Stack;
 use Kiboko\Cloud\Platform\Context\ComposerPackageGuesser;
 use Kiboko\Cloud\Platform\Context\ContextGuesserFacade;
@@ -70,7 +71,7 @@ final class ContextWizard
 
         $format = new SymfonyStyle($input, $output);
 
-        if ($input->getOption('enterprise') === $input->getOption('community')) {
+        if ($input->getOption('postgresql') === $input->getOption('mysql')) {
             if (!empty($context->application)) {
                 $context->dbms = $format->askQuestion(
                     (new ChoiceQuestion(
@@ -84,6 +85,10 @@ final class ContextWizard
                     (new ChoiceQuestion('Which database engine are you using? (leave empty for none)', ['mysql', 'postgresql', ''], ''))
                 );
             }
+        } else if ($input->getOption('postgresql') === true) {
+            $context->dbms = 'postgresql';
+        } else if ($input->getOption('mysql') === true) {
+            $context->dbms = 'mysql';
         }
 
         if ($input->getOption('with-blackfire')) {
@@ -113,7 +118,12 @@ final class ContextWizard
                 (new ConfirmationQuestion('Include Dejavu UI?', $context->withDejavu ?? false))
             );
         }
-        if ($input->getOption('with-elastic-stack')) {
+        if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.8')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.5')
+        ) {
+            $format->note('ElasticStack logging is not available with this application version.');
+            $context->withElasticStack = false;
+        } else if ($input->getOption('with-elastic-stack')) {
             $context->withElasticStack = true;
         } else if ($input->getOption('without-elastic-stack')) {
             $context->withElasticStack = false;

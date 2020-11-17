@@ -31,7 +31,7 @@ final class PostgreSQL implements ServiceBuilderInterface
         $stack->addServices(
             (new Service('sql', 'postgres:9.6-alpine'))
                 ->addPorts(
-                    new PortMapping(new Variable('SQL_PORT'), 5432),
+                    new PortMapping(new Variable('DATABASE_PORT'), 5432),
                 )
                 ->addEnvironmentVariables(
                     new EnvironmentVariable(new Variable('POSTGRES_ROOT_PASSWORD'), new Variable('DATABASE_ROOT_PASSWORD')),
@@ -44,7 +44,7 @@ final class PostgreSQL implements ServiceBuilderInterface
                     new VolumeMapping('database', '/var/lib/postgresql/data'),
                 )
                 ->setRestartOnFailure()
-                ->setHealthCheckShellCommand('pg_isready -U$${POSTGRES_USER} -D$${POSTGRES_DB}')
+                ->setHealthCheckShellCommand('pg_isready -U$${POSTGRES_USER} -d$${POSTGRES_DB}')
             )
             ->addVolumes(
                 new Volume('database', ['driver' => 'local'])

@@ -23,7 +23,7 @@ final class OroCommerce implements PHPVersionConsoleDelegatedGuesserInterface
     {
         $format = new SymfonyStyle($input, $output);
 
-        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.2')) {
+        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
             $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 1.6.</>');
             $context->applicationVersion = '1.6';
         } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
@@ -32,11 +32,15 @@ final class OroCommerce implements PHPVersionConsoleDelegatedGuesserInterface
             );
         } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
             $context->applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which OroCommerce version are you using?', ['3.1', '4.1'], '3.1'))
+                (new ChoiceQuestion('Which OroCommerce version are you using?', ['3.1', '4.1'], '4.1'))
             );
         } else if (Semver::satisfies($context->phpVersion, '>=7.4')) {
-            $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 4.1.</>');
-            $context->applicationVersion = '4.1';
+            $context->applicationVersion = $format->askQuestion(
+                (new ChoiceQuestion('Which OroCommerce version are you using?', ['4.1', '4.2'], '4.2'))
+            );
+        } else if (Semver::satisfies($context->phpVersion, '>=8.0')) {
+            $format->writeln(' <fg=green>Choosing automaticallly OroCommerce version 4.2.</>');
+            $context->applicationVersion = '4.2';
         } else {
             throw NoPossibleGuess::noGuesserMatching();
         }

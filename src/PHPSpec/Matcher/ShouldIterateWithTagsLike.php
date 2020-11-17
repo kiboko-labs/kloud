@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\PHPSpec\Matcher;
 
-use Kiboko\Cloud\PHPSPec\Matcher\Iterate\IterableTagsMatcher;
+use Kiboko\Cloud\PHPSpec\Matcher\Iterate\IterableTagsMatcher;
 use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Formatter\Presenter\Presenter;
 use PhpSpec\Matcher\Iterate;

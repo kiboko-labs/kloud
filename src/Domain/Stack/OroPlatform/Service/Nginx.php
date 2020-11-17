@@ -27,27 +27,19 @@ final class Nginx implements ServiceBuilderInterface
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack
     {
-        $servicesDependency = ['http-worker-prod', 'http-worker-dev'];
-        if ($context->withXdebug) {
-            $servicesDependency[] = 'http-worker-xdebug';
-        }
-
         $stack->addServices(
             ($service = new Service('http', 'nginx:alpine'))
                 ->addVolumeMappings(
-                    new VolumeMapping('./.docker/nginx@1.15/config/options.conf', '/etc/nginx/conf.d/000-options.conf'),
-                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/reverse-proxy.conf', '/etc/nginx/conf.d/200-default.conf'),
-                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/prod.conf', '/etc/nginx/conf.d/100-vhost-prod.conf'),
-                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/dev.conf', '/etc/nginx/conf.d/100-vhost-dev.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/options.conf', '/etc/nginx/conf.d/options.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/reverse-proxy.conf', '/etc/nginx/conf.d/default.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/prod.conf', '/etc/nginx/conf.d/vhost-prod.conf'),
+                    new VolumeMapping('./.docker/nginx@1.15/config/vhosts/dev.conf', '/etc/nginx/conf.d/vhost-dev.conf'),
                     new VolumeMapping('./', '/var/www/html'),
-                    new VolumeMapping('cache', '/var/www/html/var/cache', true),
-                    new VolumeMapping('assets', '/var/www/html/public/bundles', true),
                 )
                 ->addPorts(
                     new PortMapping(new Variable('HTTP_PORT'), 80),
                 )
                 ->setRestartOnFailure()
-                ->addDependencies(...$servicesDependency)
         );
 
         $stack->addFiles(
@@ -59,19 +51,19 @@ final class Nginx implements ServiceBuilderInterface
                 EOF),
             new Resource\InMemory('.docker/nginx@1.15/config/vhosts/reverse-proxy.conf', <<<EOF
                 upstream prod-app {
-                    server http-worker-prod;
+                    server localhost:8000;
                 }
 
                 upstream dev-app {
-                    server http-worker-dev;
+                    server localhost:8001;
                 }
 
                 upstream xdebug-app {
-                    server http-worker-xdebug;
+                    server localhost:8002;
                 }
 
                 map \$http_x_symfony_env \$pool {
-                     default "\${DEFAULT_APPLICATION}-app";
+                     default "dev-app";
                      prod "prod-app";
                      dev "dev-app";
                      xdebug "xdebug-app";
@@ -79,7 +71,7 @@ final class Nginx implements ServiceBuilderInterface
 
                 server {
                      listen 80;
-                     server_name \${APPLICATION_DOMAIN}:\${HTTP_PORT};
+                     server_name _;
 
                      access_log /var/log/syslog;
                      error_log /var/log/syslog info;
@@ -104,8 +96,8 @@ final class Nginx implements ServiceBuilderInterface
                 EOF),
             new Resource\InMemory('.docker/nginx@1.15/config/vhosts/dev.conf', <<<EOF
                 server {
-                    listen 80;
-                    server_name http-worker-dev;
+                    listen 8001;
+                    server_name _;
                     root /var/www/html/public;
 
                     index index_dev.php;
@@ -136,8 +128,8 @@ final class Nginx implements ServiceBuilderInterface
                 EOF),
             new Resource\InMemory('.docker/nginx@1.15/config/vhosts/prod.conf', <<<EOF
                 server {
-                    listen 80;
-                    server_name http-worker-prod;
+                    listen 8000;
+                    server_name _;
                     root /var/www/html/public;
 
                     index index.php;
@@ -170,19 +162,24 @@ final class Nginx implements ServiceBuilderInterface
 
         $stack->addEnvironmentVariables(
             new EnvironmentVariable(new Variable('HTTP_PORT')),
-            new EnvironmentVariable(new Variable('APPLICATION_DOMAIN')),
-            new EnvironmentVariable(new Variable('DEFAULT_APPLICATION'), 'dev'),
         );
+
+        if ($context->withDockerForMacOptimizations) {
+            $service->addVolumeMappings(
+                new VolumeMapping('cache', '/var/www/html/var/cache'),
+                new VolumeMapping('assets', '/var/www/html/public/bundles'),
+            );
+        }
 
         if ($context->withXdebug) {
             $service->addVolumeMappings(
-                new VolumeMapping('./.docker/nginx@1.15/config/vhosts/xdebug.conf', '/etc/nginx/conf.d/100-vhost-xdebug.conf'),
+                new VolumeMapping('./.docker/nginx@1.15/config/vhosts/xdebug.conf', '/etc/nginx/conf.d/vhost-xdebug.conf'),
             );
             $stack->addFiles(
                 new Resource\InMemory('./.docker/nginx@1.15/config/vhosts/xdebug.conf', <<<EOF
                     server {
-                        listen 80;
-                        server_name http-worker-xdebug;
+                        listen 8002;
+                        server_name _;
                         root /var/www/html/public;
 
                         index index_dev.php;
