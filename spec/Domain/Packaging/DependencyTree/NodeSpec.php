@@ -212,6 +212,6 @@ class NodeSpec extends ObjectBehavior
             )
         ));
 
-        $this->callOnWrappedObject('__toString')->shouldReturn('7.4-fpm');
+        $this->callOnWrappedObject('__toString')->shouldReturn('kiboko/php:7.4-fpm');
     }
 }
