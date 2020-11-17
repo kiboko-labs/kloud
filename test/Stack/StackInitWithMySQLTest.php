@@ -143,10 +143,10 @@ final class StackInitWithMySQLTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-mysql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
     }
 
     /**
@@ -183,10 +183,10 @@ final class StackInitWithMySQLTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko-test\/php:\d+\.\d+-cli-xdebug-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko-test\/php:\d+\.\d+-fpm-xdebug-.*-mysql$/');
     }
 
     /**
@@ -221,10 +221,10 @@ final class StackInitWithMySQLTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-mysql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-mysql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-blackfire-.*-mysql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-blackfire-.*-mysql$/');
     }
 
     /**
@@ -263,8 +263,8 @@ final class StackInitWithMySQLTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-mysql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-blackfire-.*-mysql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-blackfire-.*-mysql$/');
     }
 
     /**

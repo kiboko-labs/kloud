@@ -142,10 +142,10 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
     }
 
     /**
@@ -182,10 +182,10 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh-xdebug', '/^kiboko-test\/php:\d+\.\d+-cli-xdebug-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm-xdebug', '/^kiboko-test\/php:\d+\.\d+-fpm-xdebug-.*-postgresql$/');
     }
 
     /**
@@ -220,10 +220,10 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-postgresql$/');
-        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-blackfire-.*-postgresql$/');
+        $this->assertDockerServiceNotUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-blackfire-.*-postgresql$/');
     }
 
     /**
@@ -260,8 +260,8 @@ final class StackInitWithPostgresTest extends TestCase
             $this->assertStringContainsString($output, $tester->getDisplay());
         }
 
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko\/php:\d+\.\d+-cli-blackfire-.*-postgresql$/');
-        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko\/php:\d+\.\d+-fpm-blackfire-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'sh', '/^kiboko-test\/php:\d+\.\d+-cli-blackfire-.*-postgresql$/');
+        $this->assertDockerServiceUsesImagePattern(sprintf('%s://test/docker-compose.yml', $this->fs->getScheme()), 'fpm', '/^kiboko-test\/php:\d+\.\d+-fpm-blackfire-.*-postgresql$/');
     }
 
     /**

@@ -35,7 +35,7 @@ final class ImageBuildWithMySQLTest extends TestCase
             ->add('test', new Directory());
 
         if (!$this->dropImages(...$this->listImages('kiboko-test/php'))) {
-            $this->markTestIncomplete('Could not delete the Docker image tags for kiboko/php image.');
+            $this->markTestIncomplete('Could not delete the Docker image tags for kiboko-test/php image.');
         }
     }
 
@@ -89,7 +89,7 @@ final class ImageBuildWithMySQLTest extends TestCase
                     $inputOptions
                 )
             );
-        } catch (Exception $exception) {
+        } catch (Exception|\UnexpectedValueException $exception) {
             $this->fail($exception->getMessage());
         } catch (\Throwable $exception) {
             $this->fail($tester->getDisplay());

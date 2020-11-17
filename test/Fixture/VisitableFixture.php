@@ -4,6 +4,14 @@ namespace test\Kiboko\Cloud\Fixture;
 
 trait VisitableFixture
 {
+    public function all(): iterable
+    {
+        /** @var FixtureProviderInterface $fixtureProvider */
+        foreach ($this->get() as $fixtureProvider) {
+            yield from $fixtureProvider;
+        }
+    }
+
     public function apply(FixtureVisitorInterface ...$visitors): iterable
     {
         /** @var FixtureProviderInterface $fixtureProvider */

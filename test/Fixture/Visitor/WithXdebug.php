@@ -12,7 +12,7 @@ final class WithXdebug implements FixtureVisitorInterface
     {
         $subject
             ->withXdebug()
-            ->expectProcesses(
+            ->expectImageBuildProcesses(
                 ['docker', 'build', '--rm', '--tag', new Placeholder\ContextReplacement('kiboko-test/php:%phpVersion%-fpm-xdebug'), '-'],
                 ['docker', 'build', '--rm', '--tag', new Placeholder\ContextReplacement('kiboko-test/php:%phpVersion%-cli-xdebug'), '-'],
                 ['docker', 'build', '--rm', '--tag', new Placeholder\ContextReplacement('kiboko-test/php:%phpVersion%-fpm-xdebug-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Placeholder\Regex('/^SOURCE_VARIATION=/'), '-'],

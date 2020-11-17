@@ -18,7 +18,7 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
     private bool $withElasticStack;
     private bool $withDockerForMacOptimizations;
     private array $expectedMessages;
-    private array $expectedProcesses;
+    private array $expectedImageBuildProcesses;
 
     public function __construct(array $phpVersions, string $application, array $applicationVersion, bool $isEnterpriseEdition, string $dbms, array $expectedMessages = [])
     {
@@ -27,14 +27,14 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         $this->applicationVersions = $applicationVersion;
         $this->isEnterpriseEdition = $isEnterpriseEdition;
         $this->dbms = $dbms;
-        $this->withExperimental = false;
-        $this->withBlackfire = false;
-        $this->withXdebug = false;
-        $this->withDejavu = false;
-        $this->withElasticStack = false;
-        $this->withDockerForMacOptimizations = false;
+        $this->withExperimental = true;
+        $this->withBlackfire = true;
+        $this->withXdebug = true;
+        $this->withDejavu = true;
+        $this->withElasticStack = true;
+        $this->withDockerForMacOptimizations = true;
         $this->expectedMessages = $expectedMessages;
-        $this->expectedProcesses = [];
+        $this->expectedImageBuildProcesses = [];
     }
 
     public function getApplication(): string
@@ -173,9 +173,9 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         return $this;
     }
 
-    public function expectProcesses(array ...$processes): self
+    public function expectImageBuildProcesses(array ...$processes): self
     {
-        array_push($this->expectedProcesses, ...$processes);
+        array_push($this->expectedImageBuildProcesses, ...$processes);
 
         return $this;
     }
@@ -237,7 +237,7 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
 
     private function generateProcesses(string $phpVersion, string $applicationVersion): \Iterator
     {
-        foreach ($this->expectedProcesses as $process) {
+        foreach ($this->expectedImageBuildProcesses as $process) {
             yield new ProcessMatcher($this, $process, $phpVersion, $applicationVersion);
         }
     }

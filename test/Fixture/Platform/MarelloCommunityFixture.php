@@ -21,49 +21,76 @@ final class MarelloCommunityFixture implements FixtureInterface
 
     public function get(): iterable
     {
-        yield (new WizardAssertionFixtureProvider(['5.6'], 'marello', ['1.5', '1.6'], false, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['7.1'], 'marello', ['1.4', '1.5'], false, $this->dbms))
             ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
-            ->expectProcesses(
+            ->expectImageBuildProcesses(
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
             )
         ;
-        yield (new WizardAssertionFixtureProvider(['7.1', '7.2'], 'marello', ['1.5', '1.6', '2.0', '2.1', '2.2'], false, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['7.1', '7.2'], 'marello', ['2.0', '2.1', '2.2'], false, $this->dbms))
             ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
-            ->expectProcesses(
+            ->expectImageBuildProcesses(
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
             )
         ;
-        yield (new WizardAssertionFixtureProvider(['7.3'], 'marello', ['2.0', '2.1', '2.2', '3.0'], false, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['7.3', '7.4'], 'marello', ['2.0', '2.1', '2.2'], false, $this->dbms))
             ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
-            ->expectProcesses(
+            ->expectImageBuildProcesses(
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
+            )
+            ->withExperimental()
+        ;
+        yield (new WizardAssertionFixtureProvider(['8.0'], 'marello', ['2.0', '2.1', '2.2'], false, $this->dbms))
+            ->expectWizardMessages(
+                'Choosing Marello Community Edition, version %applicationVersion%.',
+            )
+            ->expectImageBuildProcesses(
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
+            )
+            ->withExperimental()
+            ->withoutBlackfire()
+        ;
+        yield (new WizardAssertionFixtureProvider(['7.3', '7.4'], 'marello', ['3.0'], false, $this->dbms))
+            ->expectWizardMessages(
+                'Choosing Marello Community Edition, version %applicationVersion%.',
+            )
+            ->expectImageBuildProcesses(
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
             )
         ;
-        yield (new WizardAssertionFixtureProvider(['7.4'], 'marello', ['3.0'], false, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['8.0'], 'marello', ['3.0'], false, $this->dbms))
             ->expectWizardMessages(
                 'Choosing Marello Community Edition, version %applicationVersion%.',
             )
-            ->expectProcesses(
+            ->expectImageBuildProcesses(
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
             )
+            ->withExperimental()
+            ->withoutBlackfire()
         ;
     }
 }

@@ -78,6 +78,16 @@ RUN set -ex\
     && chown docker:docker /opt/docker/.npm
 
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+ENV current_os=alpine
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/$current_os/amd64/$version \
+    && mkdir -p /tmp/blackfire \
+    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
+    && curl -A "Docker" -L https://blackfire.io/api/v1/releases/client/linux_static/amd64 | tar zxp -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
+    && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
 COPY config/memory.ini /usr/local/etc/php/conf.d/memory.ini
 COPY config/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini

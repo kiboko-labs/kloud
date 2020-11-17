@@ -37,7 +37,6 @@ final class TreeCommand extends Command
         $this->addOption('dbgp-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/dbgp');
         $this->addOption('postgresql-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/postgresql');
         $this->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
-        $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
 
         $this->wizard->configureConsoleCommand($this);
     }

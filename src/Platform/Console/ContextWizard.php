@@ -66,6 +66,8 @@ final class ContextWizard
         $command->addOption('without-elastic-stack', null, InputOption::VALUE_NONE, 'Set up the application without Elastic Stack logging.');
         $command->addOption('with-macos-optimizations', null, InputOption::VALUE_NONE, 'Set up the application to use Docker for Mac optimizations.');
         $command->addOption('without-macos-optimizations', null, InputOption::VALUE_NONE, 'Set up the application without Docker for Mac optimizations.');
+
+        $command->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
     }
 
     public function __invoke(InputInterface $input, OutputInterface $output): Stack\DTO\Context

@@ -44,8 +44,6 @@ final class BuildCommand extends Command
         $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[EXPERIMENTAL] Run the Docker commands in parallel', 'no');
         $this->addOption('push', 'p', InputOption::VALUE_NONE, 'Push images to Docker Hub (requires authentication).');
 
-        $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
-
         $this->wizard->configureConsoleCommand($this);
     }
 

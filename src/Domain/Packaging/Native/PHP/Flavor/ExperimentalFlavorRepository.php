@@ -8,5 +8,7 @@ final class ExperimentalFlavorRepository implements FlavorRepositoryInterface, \
     {
         yield 'fpm';
         yield 'cli';
+        yield 'fpm-xdebug';
+        yield 'cli-xdebug';
     }
 }

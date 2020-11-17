@@ -46,8 +46,6 @@ final class PullCommand extends Command
         $this->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
         $this->addOption('parallel', 'P', InputOption::VALUE_OPTIONAL, '[DEPRECATED] Run the Docker commands in parallel', 'no');
 
-        $this->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
-
         $this->wizard->configureConsoleCommand($this);
     }
 

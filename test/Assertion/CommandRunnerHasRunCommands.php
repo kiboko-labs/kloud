@@ -37,13 +37,11 @@ final class CommandRunnerHasRunCommands extends Constraint
             if (!$this->hasCommand($command)) {
                 $this->fail(
                     $other,
-                    'The desired commands were not executed during the process.',
+                    'The desired command was not found in the expected commands list.',
                     new ComparisonFailure(
                         $other,
                         iterator_to_array($this->commandRunner),
-                        implode(' ', array_map(function (ProcessMatcher $command) {
-                            return $this->exporter()->export($command->getCommandLine());
-                        }, $other)),
+                        $command,
                         implode(' ', array_map(function (Process $command) {
                             return $this->exporter()->export($command->getCommandLine());
                         }, iterator_to_array($this->commandRunner)))

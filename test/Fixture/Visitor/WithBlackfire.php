@@ -12,7 +12,7 @@ final class WithBlackfire implements FixtureVisitorInterface
     {
         $subject
             ->withBlackfire()
-            ->expectProcesses(
+            ->expectImageBuildProcesses(
                 ['docker', 'build', '--rm', '--tag', new Placeholder\ContextReplacement('kiboko-test/php:%phpVersion%-fpm-blackfire'), '-'],
                 ['docker', 'build', '--rm', '--tag', new Placeholder\ContextReplacement('kiboko-test/php:%phpVersion%-cli-blackfire'), '-'],
                 ['docker', 'build', '--rm', '--tag', new Placeholder\ContextReplacement('kiboko-test/php:%phpVersion%-fpm-blackfire-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Placeholder\Regex('/^SOURCE_VARIATION=/'), '-'],
