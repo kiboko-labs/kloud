@@ -9,7 +9,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Process\Process;
 use test\Kiboko\Cloud\Assertion\AssertTrait;
 use test\Kiboko\Cloud\Fixture;
-use test\Kiboko\Cloud\Fixture\Platform\OroCommerceCommunityFixture;
 use test\Kiboko\Cloud\TestCommandRunner;
 use Vfs\FileSystem;
 use Vfs\Node\Directory;

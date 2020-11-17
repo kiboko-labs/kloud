@@ -3,6 +3,7 @@
 namespace test\Kiboko\Cloud\Stack;
 
 use Kiboko\Cloud\Platform\Console\Command;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use test\Kiboko\Cloud\Assertion\AssertTrait;
@@ -250,6 +251,8 @@ final class StackInitWithMySQLTest extends TestCase
                     $inputOptions
                 )
             );
+        } catch (Exception $exception) {
+            $this->fail($exception->getMessage());
         } catch (\Throwable $exception) {
             $this->fail($tester->getDisplay());
         }

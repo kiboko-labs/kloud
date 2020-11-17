@@ -21,7 +21,7 @@ final class OroCRMEnterpriseFixture implements FixtureInterface
 
     public function get(): iterable
     {
-        yield (new WizardAssertionFixtureProvider(['5.6'], 'orocrm', ['1.8', '2.6'], true, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['5.6'], 'orocrm', ['1.8', '1.12', '2.6'], true, $this->dbms))
             ->expectWizardMessages(
                 'Choosing OroCRM Enterprise Edition, version %applicationVersion%.',
             )

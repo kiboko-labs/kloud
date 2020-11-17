@@ -21,7 +21,7 @@ final class OroPlatformCommunityFixture implements FixtureInterface
 
     public function get(): iterable
     {
-        yield (new WizardAssertionFixtureProvider(['5.6'], 'oroplatform', ['1.8', '2.6'], false, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['5.6'], 'oroplatform', ['1.6', '1.8', '1.10', '2.6'], false, $this->dbms))
             ->expectWizardMessages(
                 'Choosing OroPlatform Community Edition, version %applicationVersion%.',
             )

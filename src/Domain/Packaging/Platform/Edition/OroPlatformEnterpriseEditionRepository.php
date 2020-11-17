@@ -14,7 +14,7 @@ final class OroPlatformEnterpriseEditionRepository implements EditionRepositoryI
                 'oroplatform',
                 '1.10',
                 'ce',
-                '>=5.6 <7.0'
+                '>=5.5 <7.0'
             )
         );
 

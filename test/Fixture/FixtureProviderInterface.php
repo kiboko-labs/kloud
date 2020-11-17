@@ -8,6 +8,10 @@ interface FixtureProviderInterface extends \Traversable
     public function isEnterpriseEdition(): bool;
     public function getDBMS(): string;
 
+    public function withExperimental(): FixtureProviderInterface;
+    public function withoutExperimental(): FixtureProviderInterface;
+    public function hasExperimental(): bool;
+
     public function withBlackfire(): FixtureProviderInterface;
     public function withoutBlackfire(): FixtureProviderInterface;
     public function hasBlackfire(): bool;

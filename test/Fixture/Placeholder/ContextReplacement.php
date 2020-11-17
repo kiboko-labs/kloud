@@ -8,17 +8,10 @@ use test\Kiboko\Cloud\Fixture\PlaceholderInterface;
 final class ContextReplacement implements PlaceholderInterface
 {
     private string $pattern;
-    private ?FixtureProviderInterface $context;
 
     public function __construct(string $pattern)
     {
         $this->pattern = $pattern;
-        $this->context = null;
-    }
-
-    public function setContext(FixtureProviderInterface $context)
-    {
-        $this->context = $context;
     }
 
     public function matches(FixtureProviderInterface $context, string $value, string $phpVersion, string $applicationVersion)

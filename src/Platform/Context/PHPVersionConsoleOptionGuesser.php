@@ -67,6 +67,17 @@ final class PHPVersionConsoleOptionGuesser implements ContextGuesserInterface, C
             $context->application = $application;
         }
 
+        $context->isEnterpriseEdition = false;
+        if (!empty($context->application)) {
+            if ($input->getOption('enterprise') === $input->getOption('community')) {
+                $context->isEnterpriseEdition = $format->askQuestion(
+                    (new ConfirmationQuestion('Is it for Enterprise Edition?', false))
+                );
+            } else {
+                $context->isEnterpriseEdition = $input->getOption('enterprise');
+            }
+        }
+
         if (null === ($applicationVersion = $input->getOption('application-version'))) {
             foreach ($this->contextGuessers as $guesser) {
                 if (!$guesser->matches($application)) {
@@ -82,17 +93,6 @@ final class PHPVersionConsoleOptionGuesser implements ContextGuesserInterface, C
             }
         } else {
             $context->applicationVersion = $applicationVersion;
-        }
-
-        $context->isEnterpriseEdition = false;
-        if (!empty($context->application)) {
-            if ($input->getOption('enterprise') === $input->getOption('community')) {
-                $context->isEnterpriseEdition = $format->askQuestion(
-                    (new ConfirmationQuestion('Is it for Enterprise Edition?', false))
-                );
-            } else {
-                $context->isEnterpriseEdition = $input->getOption('enterprise');
-            }
         }
 
         if ($context->application === 'orocommerce' && $context->isEnterpriseEdition) {

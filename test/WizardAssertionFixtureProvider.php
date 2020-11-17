@@ -11,6 +11,7 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
     private array $applicationVersions;
     private bool $isEnterpriseEdition;
     private string $dbms;
+    private bool $withExperimental;
     private bool $withBlackfire;
     private bool $withXdebug;
     private bool $withDejavu;
@@ -26,6 +27,7 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
         $this->applicationVersions = $applicationVersion;
         $this->isEnterpriseEdition = $isEnterpriseEdition;
         $this->dbms = $dbms;
+        $this->withExperimental = false;
         $this->withBlackfire = false;
         $this->withXdebug = false;
         $this->withDejavu = false;
@@ -48,6 +50,25 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
     public function getDBMS(): string
     {
         return $this->dbms;
+    }
+
+    public function withExperimental(): self
+    {
+        $this->withExperimental = true;
+
+        return $this;
+    }
+
+    public function withoutExperimental(): self
+    {
+        $this->withExperimental = false;
+
+        return $this;
+    }
+
+    public function hasExperimental(): bool
+    {
+        return $this->withExperimental;
     }
 
     public function withBlackfire(): self
@@ -163,20 +184,31 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
     {
         foreach ($this->phpVersions as $phpVersion) {
             foreach ($this->applicationVersions as $applicationVersion) {
+                if ($this->withExperimental === true) {
+                    $experimental = [
+                        '--with-experimental' => null,
+                    ];
+                } else {
+                    $experimental = [];
+                }
+
                 yield [
-                    [
-                        '--php-repository' => 'kiboko-test/php',
-                        '--php-version' => $phpVersion,
-                        '--application' => $this->application,
-                        '--application-version' => $applicationVersion,
-                        $this->isEnterpriseEdition ? '--enterprise' : '--community' => null,
-                        sprintf('--%s', $this->dbms) => null,
-                        $this->withBlackfire ? '--with-blackfire' : '--without-blackfire' => null,
-                        $this->withXdebug ? '--with-xdebug' : '--without-xdebug' => null,
-                        $this->withDejavu ? '--with-dejavu' : '--without-dejavu' => null,
-                        $this->withElasticStack ? '--with-elastic-stack' : '--without-elastic-stack' => null,
-                        $this->withDockerForMacOptimizations ? '--with-macos-optimizations' : '--without-macos-optimizations' => null,
-                    ],
+                    array_merge(
+                        [
+                            '--php-repository' => 'kiboko-test/php',
+                            '--php-version' => $phpVersion,
+                            '--application' => $this->application,
+                            '--application-version' => $applicationVersion,
+                            $this->isEnterpriseEdition ? '--enterprise' : '--community' => null,
+                            sprintf('--%s', $this->dbms) => null,
+                            $this->withBlackfire ? '--with-blackfire' : '--without-blackfire' => null,
+                            $this->withXdebug ? '--with-xdebug' : '--without-xdebug' => null,
+                            $this->withDejavu ? '--with-dejavu' : '--without-dejavu' => null,
+                            $this->withElasticStack ? '--with-elastic-stack' : '--without-elastic-stack' => null,
+                            $this->withDockerForMacOptimizations ? '--with-macos-optimizations' : '--without-macos-optimizations' => null,
+                        ],
+                        $experimental
+                    ),
                     iterator_to_array($this->generateMessages($phpVersion, $applicationVersion), false),
                     iterator_to_array($this->generateProcesses(
                         $phpVersion,
