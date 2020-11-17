@@ -10,6 +10,7 @@ use Kiboko\Cloud\Domain\Stack\DelegatedStackBuilderInterface;
 use Kiboko\Cloud\Domain\Stack\DTO;
 use Kiboko\Cloud\Domain\Stack\OroPlatform\Service;
 use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
+use Kiboko\Cloud\Domain\Stack\UnprocessableVersionConstraintsException;
 
 final class Builder implements DelegatedStackBuilderInterface
 {
@@ -67,7 +68,11 @@ final class Builder implements DelegatedStackBuilderInterface
             try {
                 $serviceBuilder->build($stack, $context);
             } catch (Service\StackServiceNotApplicableException $exception) {
-                continue;
+                throw new UnprocessableVersionConstraintsException(
+                    'One of the required services could not be applied to these versions constraints.',
+                    0,
+                    $exception
+                );
             }
         }
 

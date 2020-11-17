@@ -123,8 +123,9 @@ final class ContextWizard
                 (new ConfirmationQuestion('Include Dejavu UI?', $context->withDejavu ?? false))
             );
         }
-        if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.8')
-            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.5')
+        if ($context->isEnterpriseEdition && in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.8')
+            || !$context->isEnterpriseEdition && in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.6')
+            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.4')
         ) {
             $format->note('ElasticStack logging is not available with this application version.');
             $context->withElasticStack = false;

@@ -43,7 +43,6 @@ final class MiddlewareEnterpriseFixture implements FixtureInterface
                 ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%application%-%applicationEdition%-%applicationVersion%-%dbms%'), '--build-arg', new Regex('/^SOURCE_VARIATION=/'), '-'],
             )
             ->withExperimental()
-            ->withoutBlackfire()
         ;
     }
 }

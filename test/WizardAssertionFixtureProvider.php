@@ -2,6 +2,7 @@
 
 namespace test\Kiboko\Cloud;
 
+use Composer\Semver\Semver;
 use test\Kiboko\Cloud\Fixture\FixtureProviderInterface;
 
 final class WizardAssertionFixtureProvider implements FixtureProviderInterface, \IteratorAggregate
