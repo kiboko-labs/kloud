@@ -18,4 +18,9 @@ final class Regex implements PlaceholderInterface
     {
         return 0 < preg_match($this->pattern, $value);
     }
+
+    public function toString(FixtureProviderInterface $context, string $phpVersion, string $applicationVersion): string
+    {
+        return sprintf('<regex %s>', $this->pattern);
+    }
 }

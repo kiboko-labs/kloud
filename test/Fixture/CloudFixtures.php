@@ -386,8 +386,8 @@ trait CloudFixtures
     public function useAll()
     {
         yield from $this->useGeneric();
-        yield from $this->useWithoutBlackfire();
-        yield from $this->useWithoutElasticStack();
-        yield from $this->useWithoutXdebug();
+//        yield from $this->useWithoutBlackfire();
+//        yield from $this->useWithoutElasticStack();
+//        yield from $this->useWithoutXdebug();
     }
 }
