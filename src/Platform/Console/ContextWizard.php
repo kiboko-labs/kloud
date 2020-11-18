@@ -125,7 +125,8 @@ final class ContextWizard
         }
         if ($context->isEnterpriseEdition && in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.8')
             || !$context->isEnterpriseEdition && in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.6')
-            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.4')
+            || $context->isEnterpriseEdition && in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.2')
+            || !$context->isEnterpriseEdition && in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.4')
         ) {
             $format->note('ElasticStack logging is not available with this application version.');
             $context->withElasticStack = false;
