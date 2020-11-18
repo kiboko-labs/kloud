@@ -5,7 +5,7 @@ namespace test\Kiboko\Cloud\Assertion;
 use PHPUnit\Framework\Constraint\Constraint;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use Symfony\Component\Process\Process;
-use test\Kiboko\Cloud\ProcessMatcher;
+use test\Kiboko\Cloud\CommandExpectation;
 use test\Kiboko\Cloud\TestCommandRunner;
 
 final class CommandRunnerHasRunCommands extends Constraint
@@ -17,7 +17,7 @@ final class CommandRunnerHasRunCommands extends Constraint
         $this->commandRunner = $commandRunner;
     }
 
-    private function hasCommand(ProcessMatcher $processPlaceholder): bool
+    private function hasCommand(CommandExpectation $processPlaceholder): bool
     {
         /** @var Process $process */
         foreach ($this->commandRunner as $process) {
@@ -33,16 +33,21 @@ final class CommandRunnerHasRunCommands extends Constraint
 
     public function evaluate($other, string $description = '', bool $returnResult = false)
     {
+        /** @var CommandExpectation $command */
         foreach ($other as $command) {
             if (!$this->hasCommand($command)) {
                 $this->fail(
                     $other,
-                    'The desired command was not found in the expected commands list.',
+                    'The following command was not found in the expected commands list:' . $command,
                     new ComparisonFailure(
-                        $other,
+                        array_map(function (CommandExpectation $command) {
+                            return $this->exporter()->export((string)$command);
+                        }, $other),
                         iterator_to_array($this->commandRunner),
-                        $command,
-                        implode(' ', array_map(function (Process $command) {
+                        implode(PHP_EOL, array_map(function (CommandExpectation $command) {
+                            return $this->exporter()->export((string)$command);
+                        }, $other)),
+                        implode(PHP_EOL, array_map(function (Process $command) {
                             return $this->exporter()->export($command->getCommandLine());
                         }, iterator_to_array($this->commandRunner)))
                     )
@@ -57,7 +62,7 @@ final class CommandRunnerHasRunCommands extends Constraint
 
     protected function failureDescription($other): string
     {
-        return ' the desired executed processes list ' . $this->exporter()->export(array_map(function (ProcessMatcher $command) {
+        return ' the desired executed processes list ' . $this->exporter()->export(array_map(function (CommandExpectation $command) {
                 return $this->exporter()->export($command->getCommandLine());
             }, $other))
             . ' matches the actually executed processes list '

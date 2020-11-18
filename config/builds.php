@@ -85,9 +85,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('native/php@%php.version%/%php.flavor%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         $withExperimental
     );
 
@@ -140,9 +138,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('%package.variation%/php/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         $withExperimental
     );
@@ -201,9 +197,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('oroplatform/%package.edition%/%package.version%/php@%php.version%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformCommunityEditionRepository(),
         $withExperimental
@@ -263,9 +257,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('oroplatform/%package.edition%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroPlatformEnterpriseEditionRepository(),
         $withExperimental
@@ -325,9 +317,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('orocommerce/%package.edition%/%package.version%/php@%php.version%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceCommunityEditionRepository(),
         $withExperimental
@@ -387,9 +377,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('orocommerce/%package.edition%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCommerceEnterpriseEditionRepository(),
         $withExperimental
@@ -449,9 +437,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('orocrm/%package.edition%/%package.version%/php@%php.version%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMCommunityEditionRepository(),
         $withExperimental
@@ -511,9 +497,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('orocrm/%package.edition%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\OroCRMEnterpriseEditionRepository(),
         $withExperimental
@@ -563,9 +547,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('marello/%package.edition%/%package.version%/php@%php.version%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloCommunityEditionRepository(),
         $withExperimental
@@ -615,9 +597,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('marello/%package.edition%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MarelloEnterpriseEditionRepository(),
         $withExperimental
@@ -637,9 +617,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('middleware/%package.edition%/%package.version%/php@%php.version%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MiddlewareCommunityEditionRepository(),
         $withExperimental
@@ -659,9 +637,7 @@ return function(
         $phpRepository,
         '8.0',
         new Packaging\Placeholder('middleware/%package.edition%/'),
-        $withExperimental ?
-            new Packaging\Native\PHP\Flavor\StandardFlavorRepository() :
-            new Packaging\Native\PHP\Flavor\ExperimentalFlavorRepository(),
+        new Packaging\Native\PHP\Flavor\StandardFlavorRepository(),
         new Packaging\Native\PHP\Variation\StandardVariationRepository(),
         new Packaging\Platform\Edition\MiddlewareEnterpriseEditionRepository(),
         $withExperimental

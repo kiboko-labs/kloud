@@ -4,11 +4,12 @@ namespace Kiboko\Cloud\Domain\Packaging\Tag;
 
 use Kiboko\Cloud\Domain\Packaging;
 
-trait TagTrait
+trait TagVariationTrait
 {
     private Packaging\RepositoryInterface $repository;
     private Packaging\Placeholder $name;
     private Packaging\Context\BuildableContextInterface $context;
+    private Packaging\Tag\TagInterface $from;
 
     public function getContext(): Packaging\Context\ContextInterface
     {
@@ -23,6 +24,11 @@ trait TagTrait
     public function getRepository(): Packaging\RepositoryInterface
     {
         return $this->repository;
+    }
+
+    public function getParent(): Packaging\Tag\TagInterface
+    {
+        return $this->from;
     }
 
     public function pull(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
@@ -41,14 +47,14 @@ trait TagTrait
 
     public function build(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
-        $task->then(new Packaging\Execution\Command\Build($this, $this->context));
+        $task->then(new Packaging\Execution\Command\BuildFrom($this, $this->from, $this->context));
 
         return $task;
     }
 
     public function forceBuild(Packaging\Execution\CommandBus\Task $task): Packaging\Execution\CommandBus\Task
     {
-        $task->then(new Packaging\Execution\Command\ForceBuild($this, $this->context));
+        $task->then(new Packaging\Execution\Command\ForceBuildFrom($this, $this->from, $this->context));
 
         return $task;
     }

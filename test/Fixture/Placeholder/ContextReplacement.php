@@ -16,7 +16,17 @@ final class ContextReplacement implements PlaceholderInterface
 
     public function matches(FixtureProviderInterface $context, string $value, string $phpVersion, string $applicationVersion)
     {
-        return $value === strtr($this->pattern, [
+        return $value === $this->compile($context, $phpVersion, $applicationVersion);
+    }
+
+    public function toString(FixtureProviderInterface $context, string $phpVersion, string $applicationVersion): string
+    {
+        return sprintf('\'%s\'', $this->compile($context, $phpVersion, $applicationVersion));
+    }
+
+    private function compile(FixtureProviderInterface $context, string $phpVersion, string $applicationVersion): string
+    {
+        return strtr($this->pattern, [
             '%phpVersion%' => $phpVersion,
             '%application%' => $context->getApplication(),
             '%applicationVersion%' => $applicationVersion,

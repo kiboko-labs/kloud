@@ -15,10 +15,20 @@ RUN set -ex\
         gcc \
         m4 \
         make \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        freetype-dev \
+        zlib-dev \
+        krb5-dev \
+        imap-dev \
+        openssl-dev \
         librdkafka-dev \
         git \
-    && apk add \
+    && apk add --update \
+        c-client \
         librdkafka \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap \
     && ( \
         git clone https://github.com/arnaud-lb/php-rdkafka.git \
         && cd php-rdkafka \

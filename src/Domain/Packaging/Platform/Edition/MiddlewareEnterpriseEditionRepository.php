@@ -11,9 +11,9 @@ final class MiddlewareEnterpriseEditionRepository implements EditionRepositoryIn
             '1.0',
             'ee',
             new Edition(
-                'oroplatform',
-                '4.1',
-                'ee',
+                'middleware',
+                '1.0',
+                'ce',
                 '>=7.4 <8.0',
                 '>=7.4 <=8.0'
             )

@@ -6,7 +6,7 @@ use Symfony\Component\Process\Process;
 use test\Kiboko\Cloud\Fixture\FixtureProviderInterface;
 use test\Kiboko\Cloud\Fixture\PlaceholderInterface;
 
-final class ProcessMatcher
+final class CommandExpectation implements \Stringable
 {
     private FixtureProviderInterface $context;
     private array $commandline;
@@ -51,5 +51,12 @@ final class ProcessMatcher
         }
 
         return true;
+    }
+
+    public function __toString()
+    {
+        return implode(' ', array_map(function ($item) {
+            return $item instanceof PlaceholderInterface ? $item->toString($this->context, $this->phpVersion, $this->applicationVersion) : sprintf('\'%s\'', (string) $item);
+        }, $this->commandline));
     }
 }
