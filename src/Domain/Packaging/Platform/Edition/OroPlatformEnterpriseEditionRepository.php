@@ -8,13 +8,37 @@ final class OroPlatformEnterpriseEditionRepository implements EditionRepositoryI
     {
         yield new EditionDependency(
             'oroplatform',
+            '1.8',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '1.6',
+                'ce',
+                '>=5.5 <7.0'
+            )
+        );
+
+        yield new EditionDependency(
+            'oroplatform',
+            '1.10',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '1.8',
+                'ce',
+                '>=5.5 <7.0'
+            )
+        );
+
+        yield new EditionDependency(
+            'oroplatform',
             '1.12',
             'ee',
             new Edition(
                 'oroplatform',
                 '1.10',
                 'ce',
-                '>=5.6 <7.0'
+                '>=5.5 <7.0'
             )
         );
 

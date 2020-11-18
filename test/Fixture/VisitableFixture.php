@@ -2,13 +2,19 @@
 
 namespace test\Kiboko\Cloud\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
-
 trait VisitableFixture
 {
+    public function all(): iterable
+    {
+        /** @var FixtureProviderInterface $fixtureProvider */
+        foreach ($this->get() as $fixtureProvider) {
+            yield from $fixtureProvider;
+        }
+    }
+
     public function apply(FixtureVisitorInterface ...$visitors): iterable
     {
-        /** @var WizardAssertionFixtureProvider $fixtureProvider */
+        /** @var FixtureProviderInterface $fixtureProvider */
         foreach ($this->get() as $fixtureProvider) {
             foreach ($visitors as $visitor) {
                 $fixtureProvider = $visitor($fixtureProvider);

@@ -14,7 +14,7 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 'oroplatform',
                 '2.6',
                 'ee',
-                '>=5.6 <7.2'
+                '>=7.1 <7.2'
             )
         );
 
@@ -26,7 +26,7 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
                 'oroplatform',
                 '2.6',
                 'ee',
-                '>=5.6 <7.2'
+                '>=7.1 <7.2'
             )
         );
 

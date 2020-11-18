@@ -33,7 +33,8 @@ final class ElasticSearch implements ServiceBuilderInterface
     {
         if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '^1.6 || ^2.0')
             || in_array($context->application, ['orocommerce']) && Semver::satisfies($context->applicationVersion, '^1.0')
-            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^1.5')
+            || in_array($context->application, ['marello']) && $context->isEnterpriseEdition && Semver::satisfies($context->applicationVersion, '^1.2')
+            || in_array($context->application, ['marello']) && !$context->isEnterpriseEdition && Semver::satisfies($context->applicationVersion, '^1.4')
         ) {
             return 'docker.elastic.co/elasticsearch/elasticsearch:5.6.16';
         }
@@ -57,7 +58,7 @@ final class ElasticSearch implements ServiceBuilderInterface
             return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1';
         }
 
-        throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint();
+        throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint('elasticsearch');
     }
 
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack

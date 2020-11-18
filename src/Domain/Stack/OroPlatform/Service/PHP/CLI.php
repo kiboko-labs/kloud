@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Domain\Stack\OroPlatform\Service\PHP;
 
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
 use Kiboko\Cloud\Domain\Stack\Compose\InheritedEnvironmentVariable;
 use Kiboko\Cloud\Domain\Stack\Compose\Service;
 use Kiboko\Cloud\Domain\Stack\Compose\Variable;
@@ -11,10 +12,12 @@ use Kiboko\Cloud\Domain\Stack\ServiceBuilderInterface;
 
 final class CLI implements ServiceBuilderInterface
 {
+    private RepositoryInterface $repository;
     private string $stacksPath;
 
-    public function __construct(string $stacksPath)
+    public function __construct(RepositoryInterface $phpRepository, string $stacksPath)
     {
+        $this->repository = $phpRepository;
         $this->stacksPath = $stacksPath;
     }
 
@@ -27,7 +30,8 @@ final class CLI implements ServiceBuilderInterface
     {
         if ($context->withBlackfire) {
             return sprintf(
-                'kiboko/php:%s-cli-blackfire-%s-%s-%s-%s',
+                '%s:%s-cli-blackfire-%s-%s-%s-%s',
+                $this->repository,
                 $context->phpVersion,
                 $context->application,
                 $context->isEnterpriseEdition ? 'ee' : 'ce',
@@ -37,7 +41,8 @@ final class CLI implements ServiceBuilderInterface
         }
 
         return sprintf(
-            'kiboko/php:%s-cli-%s-%s-%s-%s',
+            '%s:%s-cli-%s-%s-%s-%s',
+            $this->repository,
             $context->phpVersion,
             $context->application,
             $context->isEnterpriseEdition ? 'ee' : 'ce',

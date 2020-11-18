@@ -2,33 +2,74 @@
 
 namespace test\Kiboko\Cloud;
 
-final class WizardAssertionFixtureProvider implements \IteratorAggregate
+use Composer\Semver\Semver;
+use test\Kiboko\Cloud\Fixture\FixtureProviderInterface;
+
+final class WizardAssertionFixtureProvider implements FixtureProviderInterface, \IteratorAggregate
 {
     private array $phpVersions;
     private string $application;
-    private array $applicationVersion;
+    private array $applicationVersions;
     private bool $isEnterpriseEdition;
     private string $dbms;
+    private bool $withExperimental;
     private bool $withBlackfire;
     private bool $withXdebug;
     private bool $withDejavu;
     private bool $withElasticStack;
     private bool $withDockerForMacOptimizations;
     private array $expectedMessages;
+    private array $expectedImageBuildProcesses;
 
     public function __construct(array $phpVersions, string $application, array $applicationVersion, bool $isEnterpriseEdition, string $dbms, array $expectedMessages = [])
     {
         $this->phpVersions = $phpVersions;
         $this->application = $application;
-        $this->applicationVersion = $applicationVersion;
+        $this->applicationVersions = $applicationVersion;
         $this->isEnterpriseEdition = $isEnterpriseEdition;
         $this->dbms = $dbms;
-        $this->withBlackfire = false;
-        $this->withXdebug = false;
-        $this->withDejavu = false;
-        $this->withElasticStack = false;
-        $this->withDockerForMacOptimizations = false;
-        $this->expectedMessages = [];
+        $this->withExperimental = true;
+        $this->withBlackfire = true;
+        $this->withXdebug = true;
+        $this->withDejavu = true;
+        $this->withElasticStack = true;
+        $this->withDockerForMacOptimizations = true;
+        $this->expectedMessages = $expectedMessages;
+        $this->expectedImageBuildProcesses = [];
+    }
+
+    public function getApplication(): string
+    {
+        return $this->application;
+    }
+
+    public function isEnterpriseEdition(): bool
+    {
+        return $this->isEnterpriseEdition;
+    }
+
+    public function getDBMS(): string
+    {
+        return $this->dbms;
+    }
+
+    public function withExperimental(): self
+    {
+        $this->withExperimental = true;
+
+        return $this;
+    }
+
+    public function withoutExperimental(): self
+    {
+        $this->withExperimental = false;
+
+        return $this;
+    }
+
+    public function hasExperimental(): bool
+    {
+        return $this->withExperimental;
     }
 
     public function withBlackfire(): self
@@ -45,6 +86,11 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         return $this;
     }
 
+    public function hasBlackfire(): bool
+    {
+        return $this->withBlackfire;
+    }
+
     public function withXdebug(): self
     {
         $this->withXdebug = true;
@@ -57,6 +103,11 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         $this->withXdebug = false;
 
         return $this;
+    }
+
+    public function hasXdebug(): bool
+    {
+        return $this->withXdebug;
     }
 
     public function withDejavu(): self
@@ -73,6 +124,11 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         return $this;
     }
 
+    public function hasDejavu(): bool
+    {
+        return $this->withDejavu;
+    }
+
     public function withElasticStack(): self
     {
         $this->withElasticStack = true;
@@ -85,6 +141,11 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         $this->withElasticStack = false;
 
         return $this;
+    }
+
+    public function hasElasticStack(): bool
+    {
+        return $this->withElasticStack;
     }
 
     public function withDockerForMacOptimizations(): self
@@ -101,9 +162,21 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
         return $this;
     }
 
-    public function expectMessages(string ...$messages): self
+    public function hasDockerForMacOptimizations(): bool
+    {
+        return $this->withDockerForMacOptimizations;
+    }
+
+    public function expectWizardMessages(string ...$messages): self
     {
         array_push($this->expectedMessages, ...$messages);
+
+        return $this;
+    }
+
+    public function expectImageBuildProcesses(array ...$processes): self
+    {
+        array_push($this->expectedImageBuildProcesses, ...$processes);
 
         return $this;
     }
@@ -111,21 +184,37 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
     public function getIterator(): \Iterator
     {
         foreach ($this->phpVersions as $phpVersion) {
-            foreach ($this->applicationVersion as $applicationVersion) {
+            foreach ($this->applicationVersions as $applicationVersion) {
+                if ($this->withExperimental === true) {
+                    $experimental = [
+                        '--with-experimental' => null,
+                    ];
+                } else {
+                    $experimental = [];
+                }
+
                 yield [
-                    [
-                        '--php-version' => $phpVersion,
-                        '--application' => $this->application,
-                        '--application-version' => $applicationVersion,
-                        $this->isEnterpriseEdition ? '--enterprise' : '--community' => null,
-                        sprintf('--%s', $this->dbms) => null,
-                        $this->withBlackfire ? '--with-blackfire' : '--without-blackfire' => null,
-                        $this->withXdebug ? '--with-xdebug' : '--without-xdebug' => null,
-                        $this->withDejavu ? '--with-dejavu' : '--without-dejavu' => null,
-                        $this->withElasticStack ? '--with-elastic-stack' : '--without-elastic-stack' => null,
-                        $this->withDockerForMacOptimizations ? '--with-macos-optimizations' : '--without-macos-optimizations' => null,
-                    ],
-                    iterator_to_array($this->generateMessages($phpVersion, $applicationVersion), false)
+                    array_merge(
+                        [
+                            '--php-repository' => 'kiboko-test/php',
+                            '--php-version' => $phpVersion,
+                            '--application' => $this->application,
+                            '--application-version' => $applicationVersion,
+                            $this->isEnterpriseEdition ? '--enterprise' : '--community' => null,
+                            sprintf('--%s', $this->dbms) => null,
+                            $this->withBlackfire ? '--with-blackfire' : '--without-blackfire' => null,
+                            $this->withXdebug ? '--with-xdebug' : '--without-xdebug' => null,
+                            $this->withDejavu ? '--with-dejavu' : '--without-dejavu' => null,
+                            $this->withElasticStack ? '--with-elastic-stack' : '--without-elastic-stack' => null,
+                            $this->withDockerForMacOptimizations ? '--with-macos-optimizations' : '--without-macos-optimizations' => null,
+                        ],
+                        $experimental
+                    ),
+                    iterator_to_array($this->generateMessages($phpVersion, $applicationVersion), false),
+                    iterator_to_array($this->generateProcesses(
+                        $phpVersion,
+                        $applicationVersion
+                    )),
                 ];
             }
         }
@@ -140,8 +229,17 @@ final class WizardAssertionFixtureProvider implements \IteratorAggregate
                     '%phpVersion%' => $phpVersion,
                     '%application%' => $this->application,
                     '%applicationVersion%' => $applicationVersion,
+                    '%applicationEdition%' => $this->isEnterpriseEdition ? 'ee' : 'ce',
+                    '%dbms%' => $this->dbms,
                 ]
             );
+        }
+    }
+
+    private function generateProcesses(string $phpVersion, string $applicationVersion): \Iterator
+    {
+        foreach ($this->expectedImageBuildProcesses as $process) {
+            yield new ProcessMatcher($this, $process, $phpVersion, $applicationVersion);
         }
     }
 }

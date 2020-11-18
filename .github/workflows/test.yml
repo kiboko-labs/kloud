@@ -40,3 +40,5 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
     - name: Run PHPUnit test suite
       run: composer run-script phpunit
+      env:
+        COMPOSER_PROCESS_TIMEOUT: 900

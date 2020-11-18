@@ -28,7 +28,7 @@ final class UpgradeCommand extends Command
     private string $stacksPath;
     private ContextWizard $wizard;
 
-    public function __construct(?string $name, string $configPath, string $stacksPath)
+    public function __construct(string $configPath, string $stacksPath, ?string $name = null)
     {
         $this->configPath = $configPath;
         $this->stacksPath = $stacksPath;

@@ -2,11 +2,14 @@
 
 namespace Kiboko\Cloud\Domain\Stack\DTO;
 
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
+
 final class Context
 {
     const DBMS_POSTGRESQL = 'postgresql';
     const DBMS_MYSQL = 'mysql';
 
+    public RepositoryInterface $repository;
     public string $phpVersion;
     public ?string $dbms;
     public ?string $application;
@@ -21,12 +24,14 @@ final class Context
     public array $selfManagedVolumes;
 
     public function __construct(
+        RepositoryInterface $repository,
         string $phpVersion,
         ?string $application = null,
         ?string $applicationVersion = null,
         ?string $dbms = self::DBMS_POSTGRESQL,
         ?bool $isEnterpriseEdition = false
     ) {
+        $this->repository = $repository;
         $this->phpVersion = $phpVersion;
         $this->dbms = $dbms;
         $this->application = $application;
@@ -41,7 +46,7 @@ final class Context
         $this->selfManagedVolumes = [];
     }
 
-    public function getImagesRegex(): string
+    public function getPHPImagesRegex(): string
     {
         if ($this->withBlackfire && $this->withXdebug) {
             $variations = '(?:|-blackfire|-xdebug)';
@@ -56,27 +61,30 @@ final class Context
         if (empty($this->application) || empty($this->applicationVersion)) {
             if (empty($this->dbms)) {
                 return sprintf(
-                    '/^%s-(?:cli|fpm)%s$/',
-                    preg_quote($this->phpVersion),
+                    '/^%s:%s-(?:cli|fpm)%s$/',
+                    preg_quote((string) $this->repository, '/'),
+                    preg_quote($this->phpVersion, '/'),
                     $variations
                 );
             }
 
             return sprintf(
-                '/^%s-(?:cli|fpm)%s-%s$/',
-                preg_quote($this->phpVersion),
+                '/^%s:%s-(?:cli|fpm)%s-%s$/',
+                preg_quote((string) $this->repository, '/'),
+                preg_quote($this->phpVersion, '/'),
                 $variations,
                 $this->dbms
             );
         }
 
         return sprintf(
-            '/^%s-(?:cli|fpm)%s-%s-%s-%s-%s$/',
-            preg_quote($this->phpVersion),
+            '/^%s:%s-(?:cli|fpm)%s-%s-%s-%s-%s$/',
+            preg_quote((string) $this->repository, '/'),
+            preg_quote($this->phpVersion, '/'),
             $variations,
             $this->application,
             $this->isEnterpriseEdition ? 'ee' : 'ce',
-            preg_quote($this->applicationVersion),
+            preg_quote($this->applicationVersion, '/'),
             $this->dbms
         );
     }

@@ -6,17 +6,32 @@ use Kiboko\Cloud\Domain\Packaging;
 
 final class Config
 {
+    private Packaging\RepositoryInterface $dbgpRepository;
+    private Packaging\RepositoryInterface $postgresqlRepository;
+    private Packaging\RepositoryInterface $phpRepository;
     private bool $withExperimental;
 
-    public function __construct(bool $withExperimental)
-    {
+    public function __construct(
+        Packaging\RepositoryInterface $dbgpRepository,
+        Packaging\RepositoryInterface $postgresqlRepository,
+        Packaging\RepositoryInterface $phpRepository,
+        bool $withExperimental = false
+    ) {
+        $this->dbgpRepository = $dbgpRepository;
+        $this->postgresqlRepository = $postgresqlRepository;
+        $this->phpRepository = $phpRepository;
         $this->withExperimental = $withExperimental;
     }
 
-    /** @return Packaging\PackageInterface[]  */
-    public static function builds(string $configPath, bool $withExperimental = false): iterable
-    {
-        $config = new self($withExperimental);
+    /** @return Packaging\PackageInterface[] */
+    public static function builds(
+        string $configPath,
+        Packaging\RepositoryInterface $dbgpRepository,
+        Packaging\RepositoryInterface $postgresqlRepository,
+        Packaging\RepositoryInterface $phpRepository,
+        bool $withExperimental = false
+    ): iterable {
+        $config = new self($dbgpRepository, $postgresqlRepository, $phpRepository, $withExperimental);
 
         return $config->walkBuilds(require $configPath.'/builds.php');
     }
@@ -25,9 +40,12 @@ final class Config
     public function walkBuilds(callable $callback): iterable
     {
         return new \ArrayIterator(
-//            new \NoRewindIterator(
-                iterator_to_array($callback($this->withExperimental)),
-//            ),
+            iterator_to_array($callback(
+                $this->dbgpRepository,
+                $this->postgresqlRepository,
+                $this->phpRepository,
+                $this->withExperimental
+            )),
             \CachingIterator::FULL_CACHE
         );
     }
