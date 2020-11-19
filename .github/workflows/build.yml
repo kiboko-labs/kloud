@@ -6,7 +6,7 @@ on:
   push:
     branches: [ feature/github-actions-test-stacks ]
 jobs:
-  orocommerce-41-php-74:
+  build-all:
     runs-on: ubuntu-latest
     steps:
     - name: Set up QEMU
@@ -32,84 +32,531 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build for OroCommerce EE 4.1 on PHP 7.4 with PostgreSQL
+    - name: Build for OroPlatform CE 3.1 on PHP 7.1 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
-        php-version: '7.4'
-        application: 'orocommerce'
-        application-version: '4.1'
-        edition: 'enterprise'
-        dbms: 'postgresql'
-        with-blackfire: 1
-        with-xdebug: 1
-        push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.4 with PostgreSQL
-      uses: gplanchat/github-action-kloud-build@master
-      with:
-        php-version: '7.4'
-        application: 'orocommerce'
-        application-version: '4.1'
+        php-version: '7.1'
+        application: 'oroplatform'
+        application-version: '3.1'
         edition: 'community'
         dbms: 'postgresql'
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-    - name: Build for OroCommerce EE 4.1 on PHP 7.4 with MySQL
+    - name: Build for OroPlatform CE 3.1 on PHP 7.1 with MySQL
       uses: gplanchat/github-action-kloud-build@master
       with:
-        php-version: '7.4'
-        application: 'orocommerce'
-        application-version: '4.1'
-        edition: 'enterprise'
-        dbms: 'mysql'
-        with-blackfire: 1
-        with-xdebug: 1
-        push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.4 with MySQL
-      uses: gplanchat/github-action-kloud-build@master
-      with:
-        php-version: '7.4'
-        application: 'orocommerce'
-        application-version: '4.1'
+        php-version: '7.1'
+        application: 'oroplatform'
+        application-version: '3.1'
         edition: 'community'
         dbms: 'mysql'
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-  orocommerce-41-php-73:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
+    - name: Build for OroPlatform EE 3.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - uses: actions/checkout@v2
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
+        php-version: '7.1'
+        application: 'oroplatform'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 3.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
       with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build for OroCommerce EE 4.1 on PHP 7.3 with PostgreSQL
+        php-version: '7.1'
+        application: 'oroplatform'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 3.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'oroplatform'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 3.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'oroplatform'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 3.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'oroplatform'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 3.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'oroplatform'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 4.1 on PHP 7.3 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
         php-version: '7.3'
-        application: 'orocommerce'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 4.1 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 4.1 on PHP 7.3 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'oroplatform'
         application-version: '4.1'
         edition: 'enterprise'
         dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 4.1 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 4.1 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 4.1 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 4.2 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.2'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform CE 4.2 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.2'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 4.2 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroPlatform EE 4.2 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'oroplatform'
+        application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 3.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 3.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 3.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 3.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 3.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 3.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 3.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 3.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocrm'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 4.1 on PHP 7.3 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 4.1 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 4.1 on PHP 7.3 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 4.1 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 4.1 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 4.1 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 4.2 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.2'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM CE 4.2 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.2'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 4.2 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCRM EE 4.2 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocrm'
+        application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce CE 3.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce CE 3.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce EE 3.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce EE 3.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce CE 3.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce CE 3.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce EE 3.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce EE 3.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'orocommerce'
+        application-version: '3.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
         with-blackfire: 1
         with-xdebug: 1
         push: 1
@@ -120,6 +567,28 @@ jobs:
         application: 'orocommerce'
         application-version: '4.1'
         edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce CE 4.1 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce EE 4.1 on PHP 7.3 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'enterprise'
         dbms: 'postgresql'
         with-blackfire: 1
         with-xdebug: 1
@@ -135,10 +604,21 @@ jobs:
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.3 with MySQL
+    - name: Build for OroCommerce CE 4.1 on PHP 7.4 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
-        php-version: '7.3'
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce CE 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
         application: 'orocommerce'
         application-version: '4.1'
         edition: 'community'
@@ -146,190 +626,13 @@ jobs:
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-  orocommerce-31-php72:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/checkout@v2
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-      - name: Build for OroCommerce EE 3.1 on PHP 7.2 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.2 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce EE 3.1 on PHP 7.2 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.2 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-  orocommerce-31-php71:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/checkout@v2
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-      - name: Build for OroCommerce EE 3.1 on PHP 7.1 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.1 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce EE 3.1 on PHP 7.1 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.1 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocommerce'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-  orocrm-41-php-74:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - uses: actions/checkout@v2
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest --no-dev
     - name: Build for OroCommerce EE 4.1 on PHP 7.4 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
         php-version: '7.4'
-        application: 'orocrm'
+        application: 'orocommerce'
         application-version: '4.1'
         edition: 'enterprise'
-        dbms: 'postgresql'
-        with-blackfire: 1
-        with-xdebug: 1
-        push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.4 with PostgreSQL
-      uses: gplanchat/github-action-kloud-build@master
-      with:
-        php-version: '7.4'
-        application: 'orocrm'
-        application-version: '4.1'
-        edition: 'community'
         dbms: 'postgresql'
         with-blackfire: 1
         with-xdebug: 1
@@ -338,233 +641,54 @@ jobs:
       uses: gplanchat/github-action-kloud-build@master
       with:
         php-version: '7.4'
-        application: 'orocrm'
+        application: 'orocommerce'
         application-version: '4.1'
         edition: 'enterprise'
         dbms: 'mysql'
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.4 with MySQL
+    - name: Build for OroCommerce CE 4.2 on PHP 7.4 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
         php-version: '7.4'
-        application: 'orocrm'
-        application-version: '4.1'
-        edition: 'community'
-        dbms: 'mysql'
-        with-blackfire: 1
-        with-xdebug: 1
-        push: 1
-  orocrm-41-php-73:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - uses: actions/checkout@v2
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build for OroCommerce EE 4.1 on PHP 7.3 with PostgreSQL
-      uses: gplanchat/github-action-kloud-build@master
-      with:
-        php-version: '7.3'
-        application: 'orocrm'
-        application-version: '4.1'
-        edition: 'enterprise'
-        dbms: 'postgresql'
-        with-blackfire: 1
-        with-xdebug: 1
-        push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.3 with PostgreSQL
-      uses: gplanchat/github-action-kloud-build@master
-      with:
-        php-version: '7.3'
-        application: 'orocrm'
-        application-version: '4.1'
+        application: 'orocommerce'
+        application-version: '4.2'
         edition: 'community'
         dbms: 'postgresql'
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-    - name: Build for OroCommerce EE 4.1 on PHP 7.3 with MySQL
+    - name: Build for OroCommerce CE 4.2 on PHP 7.4 with MySQL
       uses: gplanchat/github-action-kloud-build@master
       with:
-        php-version: '7.3'
-        application: 'orocrm'
-        application-version: '4.1'
-        edition: 'enterprise'
-        dbms: 'mysql'
-        with-blackfire: 1
-        with-xdebug: 1
-        push: 1
-    - name: Build for OroCommerce CE 4.1 on PHP 7.3 with MySQL
-      uses: gplanchat/github-action-kloud-build@master
-      with:
-        php-version: '7.3'
-        application: 'orocrm'
-        application-version: '4.1'
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.2'
         edition: 'community'
         dbms: 'mysql'
         with-blackfire: 1
         with-xdebug: 1
         push: 1
-  orocrm-31-php72:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/checkout@v2
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-      - name: Build for OroCommerce EE 3.1 on PHP 7.2 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.2 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce EE 3.1 on PHP 7.2 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.2 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.2'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-  orocrm-31-php71:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/checkout@v2
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-      - name: Build for OroCommerce EE 3.1 on PHP 7.1 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.1 with PostgreSQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'postgresql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce EE 3.1 on PHP 7.1 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'enterprise'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-      - name: Build for OroCommerce CE 3.1 on PHP 7.1 with MySQL
-        uses: gplanchat/github-action-kloud-build@master
-        with:
-          php-version: '7.1'
-          application: 'orocrm'
-          application-version: '3.1'
-          edition: 'community'
-          dbms: 'mysql'
-          with-blackfire: 1
-          with-xdebug: 1
-          push: 1
-
-
+    - name: Build for OroCommerce EE 4.2 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+    - name: Build for OroCommerce EE 4.2 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1

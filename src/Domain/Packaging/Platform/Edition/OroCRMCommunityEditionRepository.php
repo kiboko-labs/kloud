@@ -88,8 +88,8 @@ final class OroCRMCommunityEditionRepository implements EditionRepositoryInterfa
                 'oroplatform',
                 '4.2',
                 'ce',
-                '>=7.3 <8.0',
-                '>=7.3 <=8.0',
+                '>=7.4 <8.0',
+                '>=7.4 <=8.0',
             )
         );
     }
