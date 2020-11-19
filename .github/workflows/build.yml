@@ -1,16 +1,23 @@
-name: Kloud Build
+name: Kloud Build Docker images
 on:
   release:
     types:
       - created
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ feature/github-actions-test-stacks ]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - uses: actions/checkout@v2
     - name: Validate composer.json and composer.lock
       run: composer validate
@@ -25,18 +32,14 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build the Phar package
-      uses: gplanchat/github-action-box@master
-      env:
-        BOX_SECRET_KEY: ${{secrets.BOX_SECRET_KEY}}
-        BOX_SECRET_KEY_PASSPHRASE: ${{secrets.BOX_SECRET_KEY_PASSPHRASE}}
-    - uses: actions/upload-artifact@v2
+    - name: Build the Docker images
+      uses: gplanchat/github-action-kloud-build@master
       with:
-        name: kloud.phar
-        path: build/kloud.phar
-    - uses: actions/upload-artifact@v2
-      with:
-        name: kloud.phar.pubkey
-        path: build/kloud.phar.pubkey
-#    - name: Build the Docker image
-#      run: docker build build/ --file Dockerfile --tag my-image-name:$(date +%s)
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: true
+        with-xdebug: true
+

@@ -1,4 +1,4 @@
-name: Kloud Test
+name: Kloud Run Tests
 on: [push, pull_request]
 
 jobs:
