@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest --no-dev
-    - name: Build the Docker images
+    - name: Build the Docker images for OroCommerce Enterprise Edition 4.1 on PHP 7.4 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
         php-version: '7.4'
@@ -42,4 +42,38 @@ jobs:
         dbms: 'postgresql'
         with-blackfire: true
         with-xdebug: true
+        push: true
+    - name: Build the Docker images for OroCommerce Community Edition 4.1 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: true
+        with-xdebug: true
+        push: true
+    - name: Build the Docker images for OroCommerce Enterprise Edition 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: true
+        with-xdebug: true
+        push: true
+    - name: Build the Docker images for OroCommerce Community Edition 4.1 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'orocommerce'
+        application-version: '4.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: true
+        with-xdebug: true
+        push: true
 
