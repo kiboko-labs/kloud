@@ -41,4 +41,4 @@ jobs:
     - name: Run PHPUnit test suite
       run: composer run-script phpunit
       env:
-        COMPOSER_PROCESS_TIMEOUT: 900
+        COMPOSER_PROCESS_TIMEOUT: 1800
