@@ -25,7 +25,6 @@ use Symfony\Component\Serializer\Serializer;
 final class LoadCommand extends Command
 {
     public static $defaultName = 'environment:database:load';
-
     private Console $console;
     private EnvironmentWizard $wizard;
 
@@ -38,7 +37,7 @@ final class LoadCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Dumps the database in the current state');
+        $this->setDescription('Load a database dump');
 
         $this->wizard->configureConsoleCommand($this);
     }
