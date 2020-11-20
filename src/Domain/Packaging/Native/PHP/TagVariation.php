@@ -6,8 +6,7 @@ use Kiboko\Cloud\Domain\Packaging;
 
 final class TagVariation implements Packaging\Tag\TagBuildInterface, Packaging\Tag\DependentTagInterface
 {
-    use Packaging\Tag\TagTrait;
-    private Packaging\Tag\TagInterface $from;
+    use Packaging\Tag\TagVariationTrait;
 
     public function __construct(
         Packaging\RepositoryInterface $repository,
@@ -18,10 +17,5 @@ final class TagVariation implements Packaging\Tag\TagBuildInterface, Packaging\T
         $this->name = new Packaging\Placeholder('%php.version%-%php.flavor%-%package.variation%', $context->getArrayCopy());
         $this->context = $context;
         $this->from = $from;
-    }
-
-    public function getParent(): Packaging\Tag\TagInterface
-    {
-        return $this->from;
     }
 }

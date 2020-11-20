@@ -1,5 +1,5 @@
-name: Kloud Test
-on: [push, pull_request]
+name: Kloud Run Tests
+on: [push]
 
 jobs:
   phpspec:
@@ -41,4 +41,4 @@ jobs:
     - name: Run PHPUnit test suite
       run: composer run-script phpunit
       env:
-        COMPOSER_PROCESS_TIMEOUT: 900
+        COMPOSER_PROCESS_TIMEOUT: 1800

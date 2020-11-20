@@ -11,4 +11,9 @@ final class Any implements PlaceholderInterface
     {
         return true;
     }
+
+    public function toString(FixtureProviderInterface $context, string $phpVersion, string $applicationVersion): string
+    {
+        return '<any>';
+    }
 }

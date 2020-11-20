@@ -35,9 +35,9 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
             '1.12',
             'ee',
             new Edition(
-                'oroplatform',
-                '1.12',
-                'ee',
+                'orocrm',
+                '1.10',
+                'ce',
                 '>=5.5 <7.0'
             )
         );
@@ -47,9 +47,9 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
             '2.6',
             'ee',
             new Edition(
-                'oroplatform',
+                'orocrm',
                 '2.6',
-                'ee',
+                'ce',
                 '>=5.6 <7.2'
             )
         );
@@ -59,9 +59,9 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
             '3.1',
             'ee',
             new Edition(
-                'oroplatform',
+                'orocrm',
                 '3.1',
-                'ee',
+                'ce',
                 '>=7.1 <7.3',
                 '>=7.1 <=8.0',
             )
@@ -72,9 +72,9 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
             '4.1',
             'ee',
             new Edition(
-                'oroplatform',
+                'orocrm',
                 '4.1',
-                'ee',
+                'ce',
                 '>=7.3 <8.0',
                 '>=7.3 <=8.0',
             )
@@ -85,11 +85,11 @@ final class OroCRMEnterpriseEditionRepository implements EditionRepositoryInterf
             '4.2',
             'ee',
             new Edition(
-                'oroplatform',
+                'orocrm',
                 '4.2',
-                'ee',
-                '>=7.3 <8.0',
-                '>=7.3 <=8.0',
+                'ce',
+                '>=7.4 <8.0',
+                '>=7.4 <=8.0',
             )
         );
     }

@@ -13,7 +13,7 @@ use test\Kiboko\Cloud\TestCommandRunner;
 use Vfs\FileSystem;
 use Vfs\Node\Directory;
 
-final class ImageBuildWithMySQLTest extends TestCase
+final class ImageBuildWithPostgreSQLTest extends TestCase
 {
     use AssertTrait;
     use Fixture\CloudFixtures;
@@ -23,7 +23,7 @@ final class ImageBuildWithMySQLTest extends TestCase
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->dbms = 'mysql';
+        $this->dbms = 'postgresql';
     }
 
     public function setUp(): void

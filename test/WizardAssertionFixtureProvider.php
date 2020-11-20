@@ -2,7 +2,6 @@
 
 namespace test\Kiboko\Cloud;
 
-use Composer\Semver\Semver;
 use test\Kiboko\Cloud\Fixture\FixtureProviderInterface;
 
 final class WizardAssertionFixtureProvider implements FixtureProviderInterface, \IteratorAggregate
@@ -239,7 +238,7 @@ final class WizardAssertionFixtureProvider implements FixtureProviderInterface, 
     private function generateProcesses(string $phpVersion, string $applicationVersion): \Iterator
     {
         foreach ($this->expectedImageBuildProcesses as $process) {
-            yield new ProcessMatcher($this, $process, $phpVersion, $applicationVersion);
+            yield new CommandExpectation($this, $process, $phpVersion, $applicationVersion);
         }
     }
 }
