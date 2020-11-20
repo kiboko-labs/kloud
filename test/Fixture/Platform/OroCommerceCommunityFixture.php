@@ -67,7 +67,22 @@ final class OroCommerceCommunityFixture implements FixtureInterface
             )
             ->withExperimental()
         ;
-        yield (new WizardAssertionFixtureProvider(['7.3', '7.4'], 'orocommerce', ['4.1', '4.2'], false, $this->dbms))
+        yield (new WizardAssertionFixtureProvider(['7.3'], 'orocommerce', ['4.1'], false, $this->dbms))
+            ->expectWizardMessages(
+                'Choosing OroCommerce Community Edition, version %applicationVersion%.',
+            )
+            ->expectImageBuildProcesses(
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-%dbms%'), '--build-arg', new ContextReplacement('SOURCE_VARIATION=%phpVersion%-fpm'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-oroplatform-ce-%applicationVersion%-%dbms%'), '--build-arg', new ContextReplacement('SOURCE_VARIATION=%phpVersion%-fpm-%dbms%'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-fpm-orocommerce-ce-%applicationVersion%-%dbms%'), '--build-arg', new ContextReplacement('SOURCE_VARIATION=%phpVersion%-fpm-oroplatform-ce-%applicationVersion%-%dbms%'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-%dbms%'), '--build-arg', new ContextReplacement('SOURCE_VARIATION=%phpVersion%-cli'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-oroplatform-ce-%applicationVersion%-%dbms%'), '--build-arg', new ContextReplacement('SOURCE_VARIATION=%phpVersion%-cli-%dbms%'), '-'],
+                ['docker', 'build', '--rm', '--tag', new ContextReplacement('kiboko-test/php:%phpVersion%-cli-orocommerce-ce-%applicationVersion%-%dbms%'), '--build-arg', new ContextReplacement('SOURCE_VARIATION=%phpVersion%-cli-oroplatform-ce-%applicationVersion%-%dbms%'), '-'],
+            )
+        ;
+        yield (new WizardAssertionFixtureProvider(['7.4'], 'orocommerce', ['4.1', '4.2'], false, $this->dbms))
             ->expectWizardMessages(
                 'Choosing OroCommerce Community Edition, version %applicationVersion%.',
             )
