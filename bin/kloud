@@ -118,6 +118,11 @@ $app->addCommands([
         Command\Environment\Database\DumpCommand::$defaultName,
         $app,
     )),
+
+    (new Command\Environment\Database\LoadCommand(
+        Command\Environment\Database\LoadCommand::$defaultName,
+        $app,
+    )),
 ]);
 
 $app->run(new ArgvInput($argv), new ConsoleOutput());

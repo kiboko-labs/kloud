@@ -22,9 +22,9 @@ use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-final class DumpCommand extends Command
+final class LoadCommand extends Command
 {
-    public static $defaultName = 'environment:database:dump';
+    public static $defaultName = 'environment:database:load';
 
     private Console $console;
     private EnvironmentWizard $wizard;
@@ -120,17 +120,17 @@ final class DumpCommand extends Command
             $dbms = strtolower($format->askQuestion(new ChoiceQuestion('Is it a MySQL or PostgreSQL database?', ['MySQL', 'PostgreSQL'])));
         }
 
-        $dumpName = $format->askQuestion(new Question('How do you want to name it?', 'dump.sql'));
+        $dumpName = $format->askQuestion(new Question('Name of your SQL dump to load'));
         $dumpPath = $remoteProjectPath.'/.docker/'.$dumpName;
         $databaseName = $environementContext->database->databaseName;
         $username = $environementContext->database->username;
         $password = $environementContext->database->password;
 
         if ('postgresql' === $dbms) {
-            $process2 = new Process(['ssh', '-t', $host->getUser().'@'.$host->getHostname(), 'docker', 'exec', '-i', $containerIds, 'pg_dump', '-U', $username, $databaseName, '>', $dumpPath]);
+            $process2 = new Process(['ssh', '-t', $host->getUser().'@'.$host->getHostname(), 'docker', 'exec', '-i', $containerIds, 'psql', '-U', $username, $databaseName, '<', $dumpPath]);
             try {
                 $process2->setTimeout(0)->mustRun();
-                $format->success('Dump well created at '.$host->getUser().'@'.$host->getHostname().':'.$dumpPath);
+                $format->success('Dump well loaded');
 
                 return 0;
             } catch (\Exception $exception) {
@@ -139,10 +139,10 @@ final class DumpCommand extends Command
                 return 1;
             }
         } else {
-            $process2 = new Process(['ssh', '-t', $host->getUser().'@'.$host->getHostname(), 'docker', 'exec', $containerIds, '/usr/bin/mysqldump', '-u', $username, '--password='.$password, $databaseName, '>', $dumpPath]);
+            $process2 = new Process(['ssh', '-t', $host->getUser().'@'.$host->getHostname(), 'docker', 'exec', '-i', $containerIds, 'mysql', '-u', $username, '--password='.$password, $databaseName, '<', $dumpPath]);
             try {
                 $process2->setTimeout(0)->mustRun();
-                $format->success('Dump well created at '.$host->getUser().'@'.$host->getHostname().':'.$dumpPath);
+                $format->success('Dump well loaded');
 
                 return 0;
             } catch (\Exception $exception) {
