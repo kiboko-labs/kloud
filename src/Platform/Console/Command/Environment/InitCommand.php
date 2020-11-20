@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kiboko\Cloud\Platform\Console\Command\Environment;
 
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
+use Kiboko\Cloud\Domain\Environment\DTO\Database;
 use Kiboko\Cloud\Domain\Environment\DTO\Deployment;
 use Kiboko\Cloud\Domain\Environment\DTO\DirectValueEnvironmentVariable;
 use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
@@ -82,6 +83,11 @@ final class InitCommand extends Command
                     $format->askQuestion(new Question('Please provide the SSH user name of your remote environment', 'root')),
                 ),
                 $format->askQuestion(new Question('Please provide the path to your remote environment')),
+            ),
+            new Database(
+                $format->askQuestion(new Question('Please provide the name of your database')),
+                $format->askQuestion(new Question('Please provide the user\'s name of your database')),
+                $format->askQuestion(new Question('Please provide the user\'s password of your database')),
             ),
         );
 

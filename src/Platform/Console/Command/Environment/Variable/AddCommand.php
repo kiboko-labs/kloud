@@ -2,22 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Kiboko\Cloud\Platform\Console\Command\Environment;
+namespace Kiboko\Cloud\Platform\Console\Command\Environment\Variable;
 
-use Deployer\Console\Application;
-use Deployer\Console\Output\Informer;
-use Deployer\Console\Output\OutputWatcher;
-use Deployer\Deployer;
-use Deployer\Executor\SeriesExecutor;
-use Deployer\Host\Host;
-use function Deployer\run;
-use Deployer\Task\Task;
 use Kiboko\Cloud\Domain\Environment\DTO\Context;
+use Kiboko\Cloud\Domain\Environment\DTO\DirectValueEnvironmentVariable;
+use Kiboko\Cloud\Domain\Environment\DTO\SecretValueEnvironmentVariable;
+use Kiboko\Cloud\Domain\Environment\DTO\Variable;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
-use Symfony\Component\Console\Application as Console;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -26,23 +22,21 @@ use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-final class DestroyCommand extends Command
+final class AddCommand extends Command
 {
-    public static $defaultName = 'environment:destroy';
+    public static $defaultName = 'environment:variable:add';
 
-    private Console $console;
     private EnvironmentWizard $wizard;
 
-    public function __construct(?string $name, Console $console)
+    public function __construct(?string $name)
     {
-        $this->console = $console;
         $this->wizard = new EnvironmentWizard();
         parent::__construct($name);
     }
 
     protected function configure()
     {
-        $this->setDescription('Destroy the docker infrastructure with associated volumes and remove remote directory');
+        $this->setDescription('Add an environment variable');
 
         $this->wizard->configureConsoleCommand($this);
     }
@@ -72,7 +66,7 @@ final class DestroyCommand extends Command
             /** @var SplFileInfo $file */
             foreach ($finder->name('/^\.?kloud.environment.ya?ml$/') as $file) {
                 try {
-                    /** @var \Kiboko\Cloud\Domain\Stack\DTO\Context $context */
+                    /** @var Context $context */
                     $context = $serializer->deserialize($file->getContents(), Context::class, 'yaml');
                 } catch (\Throwable $exception) {
                     $format->error($exception->getMessage());
@@ -89,36 +83,26 @@ final class DestroyCommand extends Command
             return 1;
         }
 
-        $application = new Application($this->console->getName());
-        $deployer = new Deployer($application);
-        $deployer['output'] = $output;
+        $variableName = $format->askQuestion(new Question('Please enter a variable name'));
+        $variableValue = $format->askQuestion(new Question('Please enter '.$variableName.' value'));
 
-        $hosts = [];
-        $tasks = [];
-
-        /** @var Context $context */
-        $host = new Host($context->deployment->server->hostname);
-        $host->port($context->deployment->server->port);
-        $host->user($context->deployment->server->username);
-        array_push($hosts, $host);
-
-        $directories = explode('/', $workingDirectory);
-        $projectName = end($directories);
-        $cd = 'cd '.$context->deployment->path;
-
-        $commands = [
-            'docker:down' => $cd.'/'.$projectName.' && docker-compose down -v',
-            'directory:remove' => $cd.' && rm -rf '.$projectName,
-        ];
-
-        foreach ($commands as $key => $value) {
-            array_push($tasks, new Task($key, function () use ($value, $host) {
-                run($value);
-            }));
+        $isSecret = false;
+        if ($variableValue) {
+            $isSecret = $format->askQuestion(new ConfirmationQuestion('Is this a secret variable ?', false));
         }
 
-        $seriesExecutor = new SeriesExecutor($input, $output, new Informer(new OutputWatcher($output)));
-        $seriesExecutor->run($tasks, $hosts);
+        if ($isSecret) {
+            $context->addVariable(new SecretValueEnvironmentVariable(new Variable($variableName), $variableValue));
+        } else {
+            $context->addVariable(new DirectValueEnvironmentVariable(new Variable($variableName), $variableValue));
+        }
+
+        $format->note('Writing a new .kloud.environment.yaml file.');
+        file_put_contents($workingDirectory.'/.kloud.environment.yaml', $serializer->serialize($context, 'yaml', [
+            'yaml_inline' => 4,
+            'yaml_indent' => 0,
+            'yaml_flags' => 0,
+        ]));
 
         return 0;
     }

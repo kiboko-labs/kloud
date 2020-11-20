@@ -13,11 +13,13 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 class Context implements NormalizableInterface, DenormalizableInterface
 {
     public ?Deployment $deployment;
+    public ?Database $database;
     public iterable $environmentVariables;
 
-    public function __construct(?Deployment $deployment = null)
+    public function __construct(?Deployment $deployment = null, ?Database $database = null)
     {
         $this->deployment = $deployment;
+        $this->database = $database;
         $this->environmentVariables = [];
     }
 
@@ -39,7 +41,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
         throw new VariableNotFoundException(strtr('The variable %name% does not exist.', ['%name%' => $variableName]));
     }
 
-    public function setVariable(EnvironmentVariableInterface $newVariable)
+    public function setVariable(EnvironmentVariableInterface $newVariable): void
     {
         $i = 0;
         foreach ($this->environmentVariables as $variable) {
@@ -56,6 +58,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
     public function denormalize(DenormalizerInterface $denormalizer, $data, string $format = null, array $context = [])
     {
         $this->deployment = $denormalizer->denormalize($data['deployment'], Deployment::class, $format, $context);
+        $this->database = $denormalizer->denormalize($data['database'], Database::class, $format, $context);
         $this->environmentVariables = [];
 
         $parser = new ExpressionParser();
@@ -82,6 +85,7 @@ class Context implements NormalizableInterface, DenormalizableInterface
     {
         return [
             'deployment' => $normalizer->normalize($this->deployment, $format, $context),
+            'database' => $normalizer->normalize($this->database, $format, $context),
             'environment' => iterator_to_array((function ($variables) {
                 /** @var EnvironmentVariableInterface $variable */
                 foreach ($variables as $variable) {

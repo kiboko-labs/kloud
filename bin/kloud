@@ -76,6 +76,10 @@ $app->addCommands([
         Command\Environment\Variable\SetCommand::$defaultName,
     )),
 
+    (new Command\Environment\Variable\AddCommand(
+        Command\Environment\Variable\AddCommand::$defaultName,
+    )),
+
     (new Command\Environment\Variable\UnsetCommand(
         Command\Environment\Variable\UnsetCommand::$defaultName,
     )),
@@ -95,7 +99,6 @@ $app->addCommands([
         $app,
     )),
 
-
     (new Command\Environment\StopCommand(
         Command\Environment\StopCommand::$defaultName,
         $app,
@@ -108,6 +111,11 @@ $app->addCommands([
 
     (new Command\Environment\Cache\ClearCommand(
         Command\Environment\Cache\ClearCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\Database\DumpCommand(
+        Command\Environment\Database\DumpCommand::$defaultName,
         $app,
     )),
 ]);

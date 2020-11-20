@@ -21,6 +21,9 @@ class DirectValueEnvironmentVariable implements ValuedEnvironmentVariableInterfa
         return $this->variable;
     }
 
+    /**
+     * @return int|Expression|Variable|string
+     */
     public function getValue()
     {
         return $this->value;
