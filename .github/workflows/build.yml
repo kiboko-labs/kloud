@@ -3,8 +3,6 @@ on:
   release:
     types:
       - created
-  push:
-    branches: [ feature/github-actions-test-stacks ]
 jobs:
   build-all:
     runs-on: ubuntu-latest
@@ -859,6 +857,510 @@ jobs:
         php-version: '7.4'
         application: 'orocommerce'
         application-version: '4.2'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.0 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.0 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.0 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.0 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.0 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.0 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.0 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.0 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.0'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.1 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.1 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.1 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.1 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.1'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.2 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.2 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.2 on PHP 7.1 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.2 on PHP 7.1 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.2 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.1'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 2.2 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.2 on PHP 7.2 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 2.2 on PHP 7.2 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.2'
+        application: 'marello'
+        application-version: '2.2'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 3.0 on PHP 7.3 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 3.0 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 3.0 on PHP 7.3 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 3.0 on PHP 7.3 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.3'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 3.0 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello CE 3.0 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 3.0 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Marello EE 3.0 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'marello'
+        application-version: '3.0'
+        edition: 'enterprise'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Middleware CE 1.0 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'middleware'
+        application-version: '1.0'
+        edition: 'community'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Middleware CE 1.0 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'middleware'
+        application-version: '1.0'
+        edition: 'community'
+        dbms: 'mysql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Middleware EE 1.0 on PHP 7.4 with PostgreSQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'middleware'
+        application-version: '1.0'
+        edition: 'enterprise'
+        dbms: 'postgresql'
+        with-blackfire: 1
+        with-xdebug: 1
+        push: 1
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build for Middleware EE 1.0 on PHP 7.4 with MySQL
+      uses: gplanchat/github-action-kloud-build@master
+      with:
+        php-version: '7.4'
+        application: 'middleware'
+        application-version: '1.0'
         edition: 'enterprise'
         dbms: 'mysql'
         with-blackfire: 1
