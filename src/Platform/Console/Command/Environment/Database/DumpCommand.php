@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Kiboko\Cloud\Platform\Console\Command\Environment\Database;
 
-use Deployer\Console\Application;
-use Deployer\Deployer;
 use Deployer\Host\Host;
-use Deployer\Logger\Handler\FileHandler;
-use Deployer\Logger\Handler\NullHandler;
-use Deployer\Logger\Logger;
 use Kiboko\Cloud\Domain\Environment\DTO\Context as EnvironmentContext;
 use Kiboko\Cloud\Domain\Stack\DTO\Context as StackContext;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
@@ -100,18 +95,6 @@ final class DumpCommand extends Command
             return 1;
         }
 
-        $application = new Application($this->console->getName());
-        $deployer = new Deployer($application);
-        $deployer['output'] = $output;
-        $deployer['log_handler'] = function ($deployer) {
-            return !empty($deployer->config['log_file'])
-                ? new FileHandler($deployer->config['log_file'])
-                : new NullHandler();
-        };
-        $deployer['logger'] = function ($deployer) {
-            return new Logger($deployer['log_handler']);
-        };
-
         $host = new Host($environementContext->deployment->server->hostname);
         $host->port($environementContext->deployment->server->port);
         $host->user($environementContext->deployment->server->username);
@@ -160,11 +143,6 @@ final class DumpCommand extends Command
             $process2 = new Process(['ssh', '-t', $host->getUser().'@'.$host->getHostname(), 'docker', 'exec', $containerIds, '/usr/bin/mysqldump', '-u', $username, '--password='.$password, $databaseName, '>', $dumpPath]);
             try {
                 $process2->mustRun();
-                if (!file_exists($host->getUser().'@'.$host->getHostname().':'.$dumpPath)) {
-                    $format->error('Dump couldn\'t be created');
-
-                    return 1;
-                }
                 $format->success('Dump well created at '.$host->getUser().'@'.$host->getHostname().':'.$dumpPath);
 
                 return 0;
