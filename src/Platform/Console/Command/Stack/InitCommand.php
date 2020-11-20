@@ -70,7 +70,7 @@ final class InitCommand extends Command
         $format->note('Writing a new .kloud.yaml file.');
         file_put_contents($workingDirectory . '/.kloud.yaml', $serializer->serialize($context, 'yaml', [
             'yaml_inline' => 2,
-            'yaml_indent' => 2,
+            'yaml_indent' => 0,
             'yaml_flags' => 0
         ]));
 
