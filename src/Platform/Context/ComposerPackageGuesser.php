@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Platform\Context;
 
+use Kiboko\Cloud\Domain\Packaging\Repository;
 use Kiboko\Cloud\Domain\Stack;
 use Kiboko\Cloud\Platform\Context\ComposerPackageGuesser\ComposerPackageDelegatedGuesserInterface;
 use Symfony\Component\Console\Command\Command;
@@ -25,6 +26,16 @@ final class ComposerPackageGuesser implements ContextGuesserInterface, ConsoleOp
     public function configure(Command $command)
     {
         $command->addOption('working-directory', 'd', InputOption::VALUE_OPTIONAL, 'Change the working directory in which the stack will be guessed from and written.');
+
+        if (!$command->getDefinition()->hasOption('dbgp-repository')) {
+            $command->addOption('dbgp-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/dbgp');
+        }
+        if (!$command->getDefinition()->hasOption('postgresql-repository')) {
+            $command->addOption('postgresql-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/postgresql');
+        }
+        if (!$command->getDefinition()->hasOption('php-repository')) {
+            $command->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
+        }
     }
 
     private function filterPackages(array $packages): array
@@ -62,6 +73,8 @@ final class ComposerPackageGuesser implements ContextGuesserInterface, ConsoleOp
 
         $packages = $this->filterPackages($json['packages']);
 
+        $repository = new Repository($input->getOption('php-repository'));
+
         $format = new SymfonyStyle($input, $output);
         foreach ($this->contextGuessers as $guesser) {
             try {
@@ -70,7 +83,7 @@ final class ComposerPackageGuesser implements ContextGuesserInterface, ConsoleOp
                         continue;
                     }
 
-                    $context = $guesser->guess($package);
+                    $context = $guesser->guess($repository, $package);
 
                     if ($context->application === 'orocommerce' && $context->isEnterpriseEdition) {
                         $format->writeln(strtr('Found <fg=yellow>OroCommerce Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
@@ -88,9 +101,15 @@ final class ComposerPackageGuesser implements ContextGuesserInterface, ConsoleOp
                         $format->writeln(strtr('Found <fg=yellow>OroPlatform Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
                     } else if ($context->application === 'oroplatform' && !$context->isEnterpriseEdition) {
                         $format->writeln(strtr('Found <fg=yellow>OroPlatform Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                    } else if ($context->application === 'middleware' && $context->isEnterpriseEdition) {
+                        $format->writeln(strtr('Found <fg=yellow>Middleware Enterprise Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                    } else if ($context->application === 'middleware' && !$context->isEnterpriseEdition) {
+                        $format->writeln(strtr('Found <fg=yellow>Middleware Community Edition</>, version %version%.', ['%version%' => $context->applicationVersion]));
+                    } else {
+                        $format->writeln(strtr('Found <fg=yellow>%application%</>, version %version%.', ['%application%' => $context->application, '%version%' => $context->applicationVersion]));
                     }
 
-                    return $guesser->guess($package);
+                    return $context;
                 }
             } catch (NoPossibleGuess $exception) {
                 $format->warning('Could not guess any known application type.');

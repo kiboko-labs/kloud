@@ -7,6 +7,7 @@ if (version_compare(PHP_VERSION, '7.4.0') < 0) {
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Kiboko\Cloud\Domain\Packaging\Execution\CommandBus\SequentialCommandRunner;
 use Kiboko\Cloud\Platform\Console\Command;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -14,50 +15,58 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 $app = new Application('Kiboko Docker Builder');
 
+$input = new ArgvInput($argv);
+$output =new ConsoleOutput();
+
+$commandRunner = new SequentialCommandRunner($input, $output);
+
 $app->addCommands([
     (new Command\Images\BuildCommand(
-        Command\Images\BuildCommand::$defaultName,
+        $commandRunner,
         __DIR__ . '/../config/',
-        __DIR__ . '/../environments'
+        __DIR__ . '/../environments',
+        Command\Images\BuildCommand::$defaultName,
     ))->setAliases(['build', 'wizard']),
 
     (new Command\Images\PushCommand(
-        Command\Images\PushCommand::$defaultName,
+        $commandRunner,
         __DIR__ . '/../config/',
-        __DIR__ . '/../environments'
+        __DIR__ . '/../environments',
+        Command\Images\PushCommand::$defaultName,
     ))->setAliases(['push']),
 
     (new Command\Images\PullCommand(
-        Command\Images\PullCommand::$defaultName,
+        $commandRunner,
         __DIR__ . '/../config/',
-        __DIR__ . '/../environments'
+        __DIR__ . '/../environments',
+        Command\Images\PullCommand::$defaultName,
     ))->setAliases(['pull']),
 
     (new Command\Images\ListCommand(
+        __DIR__ . '/../config/',
         Command\Images\ListCommand::$defaultName,
-        __DIR__ . '/../config/'
     ))->setAliases(['which']),
 
     (new Command\Images\TreeCommand(
+        __DIR__ . '/../config/',
         Command\Images\TreeCommand::$defaultName,
-        __DIR__ . '/../config/'
     ))->setAliases(['tree']),
 
     (new Command\Images\TestCommand(
+        __DIR__ . '/../config/',
         Command\Images\TestCommand::$defaultName,
-        __DIR__ . '/../config/'
     ))->setAliases(['test']),
 
     (new Command\Stack\InitCommand(
-        Command\Stack\InitCommand::$defaultName,
         __DIR__ . '/../config/',
         __DIR__ . '/../compose/',
+        Command\Stack\InitCommand::$defaultName,
     ))->setAliases(['init']),
 
     (new Command\Stack\UpgradeCommand(
-        Command\Stack\UpgradeCommand::$defaultName,
         __DIR__ . '/../config/',
         __DIR__ . '/../compose/',
+        Command\Stack\UpgradeCommand::$defaultName,
     ))->setAliases(['upgrade']),
 
     (new Command\Environment\InitCommand(
@@ -130,4 +139,4 @@ $app->addCommands([
     )),
 ]);
 
-$app->run(new ArgvInput($argv), new ConsoleOutput());
+$app->run($input, $output);

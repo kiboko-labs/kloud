@@ -8,25 +8,25 @@ final class MarelloCommunityEditionRepository implements EditionRepositoryInterf
     {
         yield new EditionDependency(
             'marello',
+            '1.4',
+            'ce',
+            new Edition(
+                'oroplatform',
+                '2.6',
+                'ce',
+                '>=7.1 <7.2'
+            )
+        );
+
+        yield new EditionDependency(
+            'marello',
             '1.5',
             'ce',
             new Edition(
                 'oroplatform',
                 '2.6',
                 'ce',
-                '>=5.6 <7.2'
-            )
-        );
-
-        yield new EditionDependency(
-            'marello',
-            '1.6',
-            'ce',
-            new Edition(
-                'oroplatform',
-                '2.6',
-                'ce',
-                '>=5.6 <7.2'
+                '>=7.1 <7.2'
             )
         );
 

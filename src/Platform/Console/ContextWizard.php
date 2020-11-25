@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kiboko\Cloud\Platform\Console;
 
 use Composer\Semver\Semver;
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
 use Kiboko\Cloud\Domain\Stack;
 use Kiboko\Cloud\Platform\Context\ComposerPackageGuesser;
 use Kiboko\Cloud\Platform\Context\ContextGuesserFacade;
@@ -21,7 +22,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class ContextWizard
 {
-    private ContextGuesserInterface $guesser;
+    private ?ContextGuesserInterface $guesser = null;
 
     public function __construct()
     {
@@ -51,6 +52,8 @@ final class ContextWizard
     {
         $this->guesser->configure($command);
 
+        $command->addOption('php-images-regex', 'x', InputOption::VALUE_REQUIRED);
+        $command->addOption('php-repository', null, InputOption::VALUE_REQUIRED, 'Set your Docker Image repository name for PHP.', 'kiboko/php');
         $command->addOption('mysql', null, InputOption::VALUE_NONE, 'Set up the application to use MySQL.');
         $command->addOption('postgresql', null, InputOption::VALUE_NONE, 'Set up the application to use PostgreSQL.');
         $command->addOption('with-xdebug', null, InputOption::VALUE_NONE, 'Set up the application to use Xdebug.');
@@ -63,6 +66,8 @@ final class ContextWizard
         $command->addOption('without-elastic-stack', null, InputOption::VALUE_NONE, 'Set up the application without Elastic Stack logging.');
         $command->addOption('with-macos-optimizations', null, InputOption::VALUE_NONE, 'Set up the application to use Docker for Mac optimizations.');
         $command->addOption('without-macos-optimizations', null, InputOption::VALUE_NONE, 'Set up the application without Docker for Mac optimizations.');
+
+        $command->addOption('with-experimental', 'E', InputOption::VALUE_NONE, 'Enable Experimental images and PHP versions.');
     }
 
     public function __invoke(InputInterface $input, OutputInterface $output): Stack\DTO\Context
@@ -118,8 +123,10 @@ final class ContextWizard
                 (new ConfirmationQuestion('Include Dejavu UI?', $context->withDejavu ?? false))
             );
         }
-        if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.8')
-            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.5')
+        if ($context->isEnterpriseEdition && in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.8')
+            || !$context->isEnterpriseEdition && in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '<1.6')
+            || $context->isEnterpriseEdition && in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.2')
+            || !$context->isEnterpriseEdition && in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '<1.4')
         ) {
             $format->note('ElasticStack logging is not available with this application version.');
             $context->withElasticStack = false;

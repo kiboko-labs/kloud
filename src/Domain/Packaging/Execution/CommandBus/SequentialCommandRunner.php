@@ -8,7 +8,9 @@ use Kiboko\Cloud\Domain\Packaging\Execution\Command\CommandInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleSectionOutput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
 final class SequentialCommandRunner implements CommandRunnerInterface
@@ -25,14 +27,21 @@ final class SequentialCommandRunner implements CommandRunnerInterface
     public function run(CommandBusInterface $commandBus, string $rootPath)
     {
         /** @var ConsoleSectionOutput $section */
-        $progressBar = new ProgressBar($this->output->section());
-        $section = $this->output->section();
+        if ($this->input instanceof StyleInterface) {
+            $progressBar = new ProgressBar($this->output->section());
+            $section = $this->output->section();
+        } else {
+            $progressBar = new ProgressBar($this->output);
+            $section = new NullOutput();
+        }
 
         /** @var Task $task */
         foreach ($progressBar->iterate($commandBus, count($commandBus)) as $task) {
             /** @var CommandInterface $command */
             foreach ($task as $command) {
-                $section->overwrite(sprintf('Running: <info>%s</>', (string)$task));
+                if ($section instanceof ConsoleSectionOutput) {
+                    $section->overwrite(sprintf('Running: <info>%s</>', (string)$task));
+                }
                 $process = $command($rootPath);
 
                 $process->run();
@@ -42,6 +51,10 @@ final class SequentialCommandRunner implements CommandRunnerInterface
                 }
             }
         }
-        $section->overwrite('Finished!');
+        if ($section instanceof ConsoleSectionOutput) {
+            $section->overwrite('Finished!');
+        } else {
+            $section->writeln('Finished!');
+        }
     }
 }

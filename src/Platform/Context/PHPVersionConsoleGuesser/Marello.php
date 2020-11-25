@@ -23,17 +23,21 @@ final class Marello implements PHPVersionConsoleDelegatedGuesserInterface
     {
         $format = new SymfonyStyle($input, $output);
 
-        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
+        if ($context->isEnterpriseEdition && Semver::satisfies($context->phpVersion, '>=7.1 <7.2')) {
             $context->applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6'], '1.6'))
+                (new ChoiceQuestion('Which Marello Enterprise version are you using?', ['1.2', '1.3'], '1.3'))
+            );
+        } else if (!$context->isEnterpriseEdition && Semver::satisfies($context->phpVersion, '>=7.1 <7.2')) {
+            $context->applicationVersion = $format->askQuestion(
+                (new ChoiceQuestion('Which Marello Community version are you using?', ['1.4', '1.5'], '1.5'))
             );
         } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
             $context->applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which Marello version are you using?', ['1.5', '1.6', '2.0', '2.1', '2.2'], '2.2'))
+                (new ChoiceQuestion('Which Marello version are you using?', ['2.0', '2.1', '2.2'], '2.2'))
             );
-        } else if (Semver::satisfies($context->phpVersion, '>=7.2 <7.4')) {
+        } else if (Semver::satisfies($context->phpVersion, '>=7.3 <7.4')) {
             $context->applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which Marello version are you using?', ['2.0', '2.1', '2.2', '3.0'], '2.2'))
+                (new ChoiceQuestion('Which Marello version are you using?', ['2.0', '2.1', '2.2', '3.0'], '3.0'))
             );
         } elseif (Semver::satisfies($context->phpVersion, '>=7.4')) {
             $format->writeln(' <fg=green>Choosing automaticallly Marello version 3.0.</>');

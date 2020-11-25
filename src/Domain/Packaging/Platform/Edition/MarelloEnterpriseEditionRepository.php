@@ -11,10 +11,10 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             '1.2',
             'ee',
             new Edition(
-                'oroplatform',
-                '2.6',
-                'ee',
-                '>=5.6 <7.2'
+                'marello',
+                '1.4',
+                'ce',
+                '>=7.1 <7.2'
             )
         );
 
@@ -23,10 +23,10 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             '1.3',
             'ee',
             new Edition(
-                'oroplatform',
-                '2.6',
-                'ee',
-                '>=5.6 <7.2'
+                'marello',
+                '1.5',
+                'ce',
+                '>=7.1 <7.2'
             )
         );
 
@@ -35,9 +35,9 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             '2.0',
             'ee',
             new Edition(
-                'oroplatform',
-                '3.1',
-                'ee',
+                'marello',
+                '2.0',
+                'ce',
                 '>=7.1 <7.3',
                 '>=7.1 <=8.0'
             )
@@ -48,9 +48,9 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             '2.1',
             'ee',
             new Edition(
-                'oroplatform',
-                '3.1',
-                'ee',
+                'marello',
+                '2.1',
+                'ce',
                 '>=7.1 <7.3',
                 '>=7.1 <=8.0'
             )
@@ -61,9 +61,9 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             '2.2',
             'ee',
             new Edition(
-                'oroplatform',
-                '3.1',
-                'ee',
+                'marello',
+                '2.2',
+                'ce',
                 '>=7.1 <7.3',
                 '>=7.1 <=8.0'
             )
@@ -74,9 +74,9 @@ final class MarelloEnterpriseEditionRepository implements EditionRepositoryInter
             '3.0',
             'ee',
             new Edition(
-                'oroplatform',
-                '4.1',
-                'ee',
+                'marello',
+                '3.0',
+                'ce',
                 '>=7.3 <8.0',
                 '>=7.3 <=8.0'
             )

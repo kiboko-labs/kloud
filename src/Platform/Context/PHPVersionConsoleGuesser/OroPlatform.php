@@ -23,9 +23,13 @@ final class OroPlatform implements PHPVersionConsoleDelegatedGuesserInterface
     {
         $format = new SymfonyStyle($input, $output);
 
-        if (Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
+        if ($context->isEnterpriseEdition && Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
             $context->applicationVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which OroPlatform version are you using?', ['1.8', '2.6'], '2.6'))
+                (new ChoiceQuestion('Which OroPlatform Enterprise version are you using?', ['1.8', '1.10', '1.12', '2.6'], '2.6'))
+            );
+        } else if (!$context->isEnterpriseEdition && Semver::satisfies($context->phpVersion, '>=5.6 <7.1')) {
+            $context->applicationVersion = $format->askQuestion(
+                (new ChoiceQuestion('Which OroPlatform Community version are you using?', ['1.6', '1.8', '1.10', '2.6'], '2.6'))
             );
         } else if (Semver::satisfies($context->phpVersion, '>=7.1 <7.3')) {
             $context->applicationVersion = $format->askQuestion(

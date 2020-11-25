@@ -8,16 +8,23 @@ final class OroPlatformCommunityEditionRepository implements EditionRepositoryIn
     {
         yield new Edition(
             'oroplatform',
+            '1.6',
+            'ce',
+            '>=5.4 <7.0'
+        );
+
+        yield new Edition(
+            'oroplatform',
             '1.8',
             'ce',
-            '>=5.6 <7.0'
+            '>=5.4 <7.0'
         );
 
         yield new Edition(
             'oroplatform',
             '1.10',
             'ce',
-            '>=5.6 <7.0'
+            '>=5.5 <7.0'
         );
 
         yield new Edition(
@@ -47,8 +54,8 @@ final class OroPlatformCommunityEditionRepository implements EditionRepositoryIn
             'oroplatform',
             '4.2',
             'ce',
-            '>=7.3 <8.0',
-            '>=7.3 <=8.0',
+            '>=7.4 <8.0',
+            '>=7.4 <=8.0',
         );
     }
 }
