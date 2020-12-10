@@ -27,7 +27,8 @@ final class Logstash implements ServiceBuilderInterface
     {
         if (in_array($context->application, ['oroplatform', 'orocrm']) && Semver::satisfies($context->applicationVersion, '^1.6 || ^2.0')
             || in_array($context->application, ['orocommerce']) && Semver::satisfies($context->applicationVersion, '^1.0')
-            || in_array($context->application, ['marello']) && Semver::satisfies($context->applicationVersion, '^1.5')
+            || in_array($context->application, ['marello']) && $context->isEnterpriseEdition && Semver::satisfies($context->applicationVersion, '^1.2')
+            || in_array($context->application, ['marello']) && !$context->isEnterpriseEdition && Semver::satisfies($context->applicationVersion, '^1.4')
         ) {
             return 'docker.elastic.co/logstash/logstash:5.6.16';
         }

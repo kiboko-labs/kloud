@@ -25,7 +25,7 @@ final class Node implements NodeInterface, \IteratorAggregate
 
     public function __toString()
     {
-        return (string) $this->tag;
+        return sprintf('%s:%s', (string) $this->tag->getRepository(), (string) $this->tag);
     }
 
     public function getPath(): ?Placeholder

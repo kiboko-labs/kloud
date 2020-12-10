@@ -2,9 +2,7 @@
 
 namespace test\Kiboko\Cloud\Fixture;
 
-use test\Kiboko\Cloud\WizardAssertionFixtureProvider;
-
 interface FixtureVisitorInterface
 {
-    public function __invoke(WizardAssertionFixtureProvider $subject): WizardAssertionFixtureProvider;
+    public function __invoke(FixtureProviderInterface $subject): FixtureProviderInterface;
 }

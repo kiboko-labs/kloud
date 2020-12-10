@@ -1,5 +1,5 @@
-name: Kloud Test
-on: [push, pull_request]
+name: Kloud Run Tests
+on: [push]
 
 jobs:
   phpspec:
@@ -40,3 +40,5 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
     - name: Run PHPUnit test suite
       run: composer run-script phpunit
+      env:
+        COMPOSER_PROCESS_TIMEOUT: 1800

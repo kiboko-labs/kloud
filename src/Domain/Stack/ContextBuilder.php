@@ -2,10 +2,12 @@
 
 namespace Kiboko\Cloud\Domain\Stack;
 
+use Kiboko\Cloud\Domain\Packaging\RepositoryInterface;
 use Kiboko\Cloud\Domain\Stack\DTO\Context;
 
 final class ContextBuilder
 {
+    public RepositoryInterface $repository;
     public string $phpVersion;
     public ?string $dbms;
     public ?string $application;
@@ -19,8 +21,9 @@ final class ContextBuilder
     public array $selfManagedServices;
     public array $selfManagedVolumes;
 
-    public function __construct(string $phpVersion)
+    public function __construct(RepositoryInterface $repository, string $phpVersion)
     {
+        $this->repository = $repository;
         $this->phpVersion = $phpVersion;
         $this->selfManagedServices = [];
         $this->selfManagedVolumes = [];
@@ -37,7 +40,7 @@ final class ContextBuilder
 
     public function getContext(): Context
     {
-        $context = new Context($this->phpVersion, $this->application, $this->applicationVersion, $this->dbms, $this->isEnterpriseEdition);
+        $context = new Context($this->repository, $this->phpVersion, $this->application, $this->applicationVersion, $this->dbms, $this->isEnterpriseEdition);
         $context->withBlackfire = $this->withBlackfire;
         $context->withXdebug = $this->withXdebug;
         $context->withDejavu = $this->withDejavu;
