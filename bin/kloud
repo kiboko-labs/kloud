@@ -128,6 +128,11 @@ $app->addCommands([
         Command\Environment\ShellCommand::$defaultName,
         $app,
     )),
+
+    (new Command\Environment\ProxyCommand(
+        Command\Environment\ProxyCommand::$defaultName,
+        $app,
+    )),
 ]);
 
 $app->run(new ArgvInput($argv), new ConsoleOutput());
