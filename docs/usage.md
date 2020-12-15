@@ -40,13 +40,15 @@ The command have set some ports values for all services, you may wish to change 
   * `--with-macos-optimizations`: Set up the application to use Docker for Mac optimizations.
   * `--without-macos-optimizations`: Set up the application without Docker for Mac optimizations.
 
-Update your stack
+Upgrade your stack
 ---
 
 In an existing project, you can upgrade the docker stack configuration. automagically.
 You can invoke the following command that will guess what services needs to be updated and in case of differences, a wizard will ask you what you wish to keep or delete:
 
-`kloud stack:update`
+`kloud stack:upgrade`
+
+> Initialize the Docker stack in a project without Docker stack
 
 Build the required images
 ---
