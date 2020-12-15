@@ -1,9 +1,53 @@
 Frequently Asked Questions
 ===
 
-I am having some warnings while launching `docker-compose up` for the first time
----
+<details>
+<summary>I'm having an error after I installed Kloud.</summary>
 
+```
+line 1: Not: command not found
+```
+
+You must install a specific version.
+</details>
+
+<details>
+<summary>How to install a specific version ?</summary>
+
+Versions available are : 1.0, 1.1 and 1.2
+
+Example for 1.2.2
+
+```
+sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/kloud/releases/download/1.2.2/kloud.phar
+sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/kloud/releases/download/1.2.2/kloud.phar.pubkey
+sudo chmod +x /usr/local/bin/kloud
+```
+</details>
+
+<details>
+<summary>How to change my stack's configuration ?</summary>
+
+```
+kloud stack:upgrade
+```
+</details>
+
+<details>
+<summary>Missing ports in docker-compose.yml file for mailcatcher</summary>
+You must add this ligne like this :
+
+``` 
+mail:
+    image: 'schickling/mailcatcher:latest'
+    ports:
+        - '${MAILCATCHER_PORT}:1080'
+        - 'YOUR_PORT:1025'
+    restart: on-failure
+```
+</details>
+<details>
+<summary>I am having some warnings while launching `docker-compose up` for the first time</summary>
 If you are having this sort of messages:
 
 ```
@@ -15,12 +59,11 @@ services.mail.ports contains an invalid type, it should be a number, or an objec
 Those warnings and errors are due to missing environment variables, probably because you did 
 not copy the `.env.dist` file to a `.env` file, or you juste made a `stack:upgrade` and some
 new environment variables are required.
-
-What is the use of the `I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK` environment variable?
----
-
+</details>
+<details>
+<summary>What is the use of the `I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK` environment variable?</summary>
 This environment variable is used to disable the IP check in the `public/index_dev.php` file.
-To benefit from this feature, you will need to apply the following patch: 
+To benefit from this feature, you will need to apply the following patch:
 
 ```patch
 Index: public/index_dev.php
@@ -47,24 +90,25 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
      header('HTTP/1.0 403 Forbidden');
      exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 ```
-
-How to access My application's frontend?
----
+</details>
+<details>
+<summary>How to access My application's frontend?</summary>
 
 The application frontend can be accessed through the port defined in the `HTTP_PORT`
 environment variable value.
+</details>
+<details>
+<summary>How to switch between dev/prod/xdebug environments? (experimental)</summary>
 
-How to switch between dev/prod/xdebug environments? (experimental)
----
 
 We have built a [Firefox/Chrome plugin](https://github.com/kiboko-labs/kiboko-symfony-env) to help you switch between environments.
 
 This extension is currently experimental and is limited to [a few domain names](https://github.com/kiboko-labs/kiboko-symfony-env#supported-domains). It may fit your needs as is, but be aware that you may need to manually package the extension if you need other domain names.
 
 ![Capture of the plugin in action](https://github.com/kiboko-labs/kiboko-symfony-env/raw/master/screenshot.png)
-
-How to configure the mailer in the `parameters.yml` file?
----
+</details>
+<details>
+<summary>How to configure the mailer in the `parameters.yml` file?</summary>
 
 The parameters should be set as the following:
 
@@ -80,10 +124,10 @@ parameters:
 
 Notice that the `MAILER_PORT` variable is not used, as this port is the one from your 
 computer's point of view, not a container's point of view in the stack.
+</details>
 
-How to configure the websocket service in the `parameters.yml` file?
----
-
+<details>
+<summary>How to configure the websocket service in the `parameters.yml` file?</summary>
 The parameters should be set as the following on Oro 4.1+:
 
 ```yaml
@@ -102,10 +146,9 @@ parameters:
 
 Notice that the `WEBSOCKET_PORT` variable is not used for the `websocket_bind_port`, as this
 port is the one from your computer's point of view, not a container's point of view in the stack.
-
-How to configure the database service in the `parameters.yml` file?
----
-
+</details>
+<details>
+<summary>How to configure the database service in the `parameters.yml` file?</summary>
 The parameters should be set as the following on Oro 4.1+:
 
 ```yaml
@@ -121,10 +164,9 @@ parameters:
 
 Notice that the `DATABASE_PORT` variable is not used, as this port is the one from your 
 computer's point of view, not a container's point of view in the stack.
-
-How to configure the search engine service in the `parameters.yml` file?
----
-
+</details>
+<details>
+<summary>How to configure the search engine service in the `parameters.yml` file?</summary>
 The parameters should be set as the following:
 
 ```yaml
@@ -145,10 +187,9 @@ parameters:
 
 Notice that the `ELASTICSEARCH_PORT` variable is not used, as this port is the one from your 
 computer's point of view, not a container's point of view in the stack.
-
-How to configure the message queue service in the `parameters.yml` file?
----
-
+</details>
+<details>
+<summary>How to configure the message queue service in the `parameters.yml` file?</summary>
 The parameters should be set as the following:
 
 ```yaml
@@ -164,10 +205,9 @@ parameters:
 
 Notice that the `ELASTICSEARCH_PORT` variable is not used, as this port is the one from your 
 computer's point of view, not a container's point of view in the stack.
-
-How to enable ElasticStack logging
----
-
+</details>
+<details>
+<summary>How to enable ElasticStack logging</summary>
 To integrate ElasticStack in your monolog config, you will need to change your `config/config_dev.yml` file, as such:
 
 ```yaml
@@ -186,48 +226,49 @@ monolog:
             persistent: true
             connection_timeout: 5
 ```
-
-How to access to Mailcatcher's interface?
----
+</details>
+<details>
+<summary>How to access to Mailcatcher's interface?</summary>
 
 The Mailcatcher interface can be accessed through the port defined in the `MAILCATCHER_PORT`
 environment variable value.
-
-How to access RabbitMQ manager's interface?
----
+</details>
+<details>
+<summary>How to access RabbitMQ manager's interface?</summary>
 
 The RabbitMQ manager interface can be accessed through the port defined in the `RABBITMQ_PORT`
 environment variable value.
-
-How to access Dejavu's interface for Elasticsearch?
----
+</details>
+<details>
+<summary>How to access Dejavu's interface for Elasticsearch?</summary>
 
 The Dejavu interface can be accessed through the port defined in the `DEJAVU_PORT`
 environment variable value.
 
 Additionnally, the `ELASTICSEARCH_PORT` variable should be defined in order to make
 Elasticsearch's API accessible from your computer.
-
-How to access Elasticsearch's API?
----
+</details>
+<details>
+<summary>How to access Elasticsearch's API?</summary>
 
 The Elasticsearch API can be accessed through the port defined in the `ELASTICSEARCH_PORT`
 environment variable value.
-
-How to access Kibana's interface?
----
+</details>
+<details>
+<summary>How to access Kibana's interface?</summary>
 
 The Kibana interface can be accessed through the port defined in the `KIBANA_PORT`
 environment variable value.
-
-How to access Redis service from your computer?
----
+</details>
+<details>
+<summary>How to access Redis service from your computer?</summary>
 
 The Redis servcie can be accessed through the port defined in the `REDIS_PORT`
 environment variable value.
-
-How to access MySQL or PostgreSQL service from your computer?
----
+</details>
+<details>
+<summary>How to access MySQL or PostgreSQL service from your computer?</summary>
 
 The MySQL or PostgreSQL servcie can be accessed through the port defined in the `DATABASE_PORT`
 environment variable value.
+</details>
