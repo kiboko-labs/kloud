@@ -2,6 +2,7 @@
 
 namespace Kiboko\Cloud\Platform\Console\Command\Stack;
 
+use Kiboko\Cloud\Domain\Packaging\Repository;
 use Kiboko\Cloud\Domain\Stack\DTO\Context;
 use Kiboko\Cloud\Domain\Stack\OroPlatform;
 use Kiboko\Cloud\Domain\Stack\StackBuilder;
@@ -89,7 +90,10 @@ final class UpgradeCommand extends Command
         }
 
         $builder = new StackBuilder(
-            new OroPlatform\Builder($this->stacksPath),
+            new OroPlatform\Builder(
+                new Repository($input->getOption('php-repository')),
+                $this->stacksPath
+            ),
         );
 
         $stack = $builder->build($context);
