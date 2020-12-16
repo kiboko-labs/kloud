@@ -76,7 +76,10 @@ final class InitCommand extends Command
         ]));
 
         $builder = new StackBuilder(
-            new OroPlatform\Builder(new Repository($input->getOption('php-repository')), $this->stacksPath),
+            new OroPlatform\Builder(
+                new Repository($input->getOption('php-repository')),
+                $this->stacksPath
+            ),
         );
 
         $stack = $builder->build($context);
