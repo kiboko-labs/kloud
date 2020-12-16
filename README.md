@@ -16,7 +16,7 @@ Documentation
 
 * [Installation](docs/installation.md)
 * [Usage](docs/usage.md)
-* [Frequently Asked Questions EN](docs/faq.md)
+* [Frequently Asked Questions](docs/faq.md)
 * [Docker for Mac optimizations](docs/docker-for-mac-optimizations.md)
 * [Versions sunsetting policy, experimental and discontinued support](docs/sunsetting-policy.md)
 * Supported versions and flavors
