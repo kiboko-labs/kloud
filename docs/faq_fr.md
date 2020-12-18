@@ -6,7 +6,6 @@ Table des matières
 
  * [Comment installer une version spécifique de Kloud ?](#how-to-install-a-specific-version)
  * [Comment changer la configuration de ma stack ?](#how-to-change-my-stacks-configuration)
- * [Il manque un port dans le fichier docker-compose.yml file pour mailcatcher](#missing-ports-in-docker-composeyml-file-for-mailcatcher)
  * [Lorsque je lance docker-compose up pour la première fois, je reçois des avertissements](#i-am-having-some-warnings-while-launching-docker-compose-up-for-the-first-time)
  * [Quelle est l’utilité de la variable d’environnement I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK ?](#what-is-the-use-of-the-i_am_developer_disable_index_ip_check-environment-variable)
  * [Comment accéder à l’interface de mon application ?](#how-to-access-my-applications-frontend)
@@ -44,20 +43,6 @@ Comment changer la configuration de ma stack ?
 
 ```
 kloud stack:upgrade
-```
-
-Il manque un port dans le fichier docker-compose.yml file pour mailcatcher
----
-
-Vous devez ajouter cette ligne :
-
-``` 
-mail:
-    image: 'schickling/mailcatcher:latest'
-    ports:
-        - '${MAILCATCHER_PORT}:1080'
-        - '${SMTP_PORT}:1025'
-    restart: on-failure
 ```
 
 Lorsque je lance `docker-compose up` pour la première fois, je reçois des avertissements

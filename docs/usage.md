@@ -48,7 +48,7 @@ You can invoke the following command that will guess what services needs to be u
 
 `kloud stack:upgrade`
 
-> Initialize the Docker stack in a project without Docker stack
+> Update the Docker stack in a project
 
 Build the required images
 ---
