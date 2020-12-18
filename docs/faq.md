@@ -1,6 +1,51 @@
 Frequently Asked Questions
 ===
 
+Table of contents
+---
+
+ * [How to install a specific version?](#how-to-install-a-specific-version)
+ * [How to change my stack's configuration?](#how-to-change-my-stacks-configuration)
+ * [I am having some warnings while launching docker-compose up for the first time](#i-am-having-some-warnings-while-launching-docker-compose-up-for-the-first-time)
+ * [What is the use of the I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK environment variable?](#what-is-the-use-of-the-i_am_developer_disable_index_ip_check-environment-variable)
+ * [How to access My application's frontend?](#how-to-access-my-applications-frontend)
+ * [How to switch between dev/prod/xdebug environments? (experimental)](#how-to-switch-between-devprodxdebug-environments-experimental)
+ * [How to configure the mailer in the parameters.yml file?](#how-to-configure-the-mailer-in-the-parametersyml-file)
+ * [How to configure the websocket service in the parameters.yml file?](#how-to-configure-the-websocket-service-in-the-parametersyml-file)
+ * [How to configure the database service in the parameters.yml file?](#how-to-configure-the-database-service-in-the-parametersyml-file)
+ * [How to configure the search engine service in the parameters.yml file?](#how-to-configure-the-search-engine-service-in-the-parametersyml-file)
+ * [How to configure the message queue service in the parameters.yml file?](#how-to-configure-the-message-queue-service-in-the-parametersyml-file)
+ * [How to enable ElasticStack logging](#how-to-enable-elasticstack-logging)
+ * [How to access to Mailcatcher's interface?](#how-to-access-to-mailcatchers-interface)
+ * [How to access RabbitMQ manager's interface?](#how-to-access-rabbitmq-managers-interface)
+ * [How to access Dejavu's interface for Elasticsearch?](#how-to-access-dejavus-interface-for-elasticsearch)
+ * [How to access Elasticsearch's API?](#how-to-access-elasticsearchs-api)
+ * [How to access Kibana's interface?](#how-to-access-kibanas-interface)
+ * [How to access Redis service from your computer?](#how-to-access-redis-service-from-your-computer)
+ * [How to access MySQL or PostgreSQL service from your computer?](#how-to-access-mysql-or-postgresql-service-from-your-computer)
+
+ -----------------
+ 
+How to install a specific version?
+---
+
+Versions available are : 1.0, 1.1 and 1.2
+
+Example for 1.2.2
+
+```
+sudo curl -L -o /usr/local/bin/kloud https://github.com/kiboko-labs/kloud/releases/download/1.2.2/kloud.phar
+sudo curl -L -o /usr/local/bin/kloud.pubkey https://github.com/kiboko-labs/kloud/releases/download/1.2.2/kloud.phar.pubkey
+sudo chmod +x /usr/local/bin/kloud
+```
+
+How to change my stack's configuration?
+---
+
+```
+kloud stack:upgrade
+```
+
 I am having some warnings while launching `docker-compose up` for the first time
 ---
 
@@ -20,7 +65,7 @@ What is the use of the `I_AM_DEVELOPER_DISABLE_INDEX_IP_CHECK` environment varia
 ---
 
 This environment variable is used to disable the IP check in the `public/index_dev.php` file.
-To benefit from this feature, you will need to apply the following patch: 
+To benefit from this feature, you will need to apply the following patch:
 
 ```patch
 Index: public/index_dev.php
