@@ -28,7 +28,7 @@ final class Context
         string $phpVersion,
         ?string $application = null,
         ?string $applicationVersion = null,
-        ?string $dbms = self::DBMS_POSTGRESQL,
+        ?string $dbms = null,
         ?bool $isEnterpriseEdition = false
     ) {
         $this->repository = $repository;

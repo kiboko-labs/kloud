@@ -17,7 +17,8 @@
         "symfony/property-access": "^5.0",
         "symfony/serializer": "^5.0",
         "symfony/yaml": "^5.0",
-        "splitbrain/php-archive": "^1.1"
+        "splitbrain/php-archive": "^1.1",
+        "deployer/deployer": "^6.8"
     },
     "require-dev": {
         "friends-of-phpspec/phpspec-code-coverage": "^4.0",

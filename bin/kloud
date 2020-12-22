@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-    throw new RuntimeException('This command requires a minimum version 5.4 for PHP. Please upgrade your PHP version or use the pre-packaged Docker image variant. See https://github.com/kiboko-labs/docker-images/#if-you-want-to-use-the-pre-packaged-docker-image');
+if (version_compare(PHP_VERSION, '7.4.0') < 0) {
+    throw new RuntimeException('This command requires a minimum version 7.4 for PHP. Please upgrade your PHP version or use the pre-packaged Docker image variant. See https://github.com/kiboko-labs/docker-images/#if-you-want-to-use-the-pre-packaged-docker-image');
 }
 
 require __DIR__ . '/../vendor/autoload.php';
@@ -22,7 +22,7 @@ $commandRunner = new SequentialCommandRunner($input, $output);
 
 $app->addCommands([
     (new Command\Images\BuildCommand(
-            $commandRunner,
+        $commandRunner,
         __DIR__ . '/../config/',
         __DIR__ . '/../environments',
         Command\Images\BuildCommand::$defaultName,
@@ -68,6 +68,80 @@ $app->addCommands([
         __DIR__ . '/../compose/',
         Command\Stack\UpgradeCommand::$defaultName,
     ))->setAliases(['upgrade']),
+
+    (new Command\Environment\InitCommand(
+        Command\Environment\InitCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\AddCommand(
+        Command\Environment\Variable\AddCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\UnsetCommand(
+        Command\Environment\Variable\UnsetCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\GetCommand(
+        Command\Environment\Variable\GetCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\SetCommand(
+        Command\Environment\Variable\SetCommand::$defaultName,
+    )),
+
+    (new Command\Environment\Variable\ListCommand(
+        Command\Environment\Variable\ListCommand::$defaultName,
+    )),
+
+    (new Command\Environment\DeployCommand(
+        Command\Environment\DeployCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\DestroyCommand(
+        Command\Environment\DestroyCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\StartCommand(
+        Command\Environment\StartCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\StopCommand(
+        Command\Environment\StopCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\RsyncCommand(
+        Command\Environment\RsyncCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\Cache\ClearCommand(
+        Command\Environment\Cache\ClearCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\Database\DumpCommand(
+        Command\Environment\Database\DumpCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\Database\LoadCommand(
+        Command\Environment\Database\LoadCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\ShellCommand(
+        Command\Environment\ShellCommand::$defaultName,
+        $app,
+    )),
+
+    (new Command\Environment\ProxyCommand(
+        Command\Environment\ProxyCommand::$defaultName,
+        $app,
+    )),
 ]);
 
 $app->run($input, $output);

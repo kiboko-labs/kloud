@@ -65,3 +65,24 @@ Test the required images
 If you need to test if the images you are using are following every constraint you would expect:
 
 `kloud image:test`
+
+Environment commands
+---
+
+After `kloud stack:init`, you can use several environment commands to do several things on a remote server
+
+* `kloud environment:init`: Initialize the environment file in local workspace.
+* `kloud environment:variable:add`: Add an environment variable.
+* `kloud environment:variable:unset`: Unset an environment variable value.
+* `kloud environment:variable:get`: Print an environment variable value.
+* `kloud environment:variable:set`: Change an environment variable value.
+* `kloud environment:variable:list`: Print the list of environment variables and their value.
+* `kloud environment:deploy`: Deploy the application to a remote server using rsync and initialize docker services.
+* `kloud environment:destroy`: Destroy the docker infrastructure with associated volumes and remove remote directory.
+* `kloud environment:start`: Start docker services on the remote server.
+* `kloud environment:stop`: Stop docker services on the remote server.
+* `kloud environment:rsync`: Synchronize remote directory according to local directory.
+* `kloud environment:cache:clear`: Clear cache and restart FPM service.
+* `kloud environment:database:dump`: Dump the database in the current state.
+* `kloud environment:database:load`: Load a database dump.
+* `kloud environment:shell`: Start a shell session for a service.
