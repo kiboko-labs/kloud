@@ -80,7 +80,7 @@ After `kloud stack:init`, you can use several environment commands to do several
 * `kloud environment:start`: Start docker services on the remote server.
 * `kloud environment:stop`: Stop docker services on the remote server.
 * `kloud environment:rsync`: Synchronize remote directory according to local directory.
-* `kloud environment:cache:clear`: SClear cache and restart FPM service.
+* `kloud environment:cache:clear`: Clear cache and restart FPM service.
 * `kloud environment:database:dump`: Dump the database in the current state.
 * `kloud environment:database:load`: Load a database dump.
 * `kloud environment:shell`: Start a shell session for a service.
