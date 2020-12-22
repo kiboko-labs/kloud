@@ -8,6 +8,7 @@ use Deployer\Host\Host;
 use Kiboko\Cloud\Domain\Environment\DTO\Context as EnvironmentContext;
 use Kiboko\Cloud\Domain\Stack\DTO\Context as StackContext;
 use Kiboko\Cloud\Platform\Console\EnvironmentWizard;
+use Kiboko\Cloud\Platform\Serializer\Normalizer\StackContextNormalizer;
 use Symfony\Component\Console\Application as Console;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,15 +47,23 @@ final class DumpCommand extends Command
     {
         $workingDirectory = $input->getOption('working-directory') ?: getcwd();
 
-        $finder = (new Finder())
+        $environmentFinder = (new Finder())
             ->files()
             ->ignoreDotFiles(false)
-            ->in($workingDirectory);
+            ->in($workingDirectory)
+            ->name('/^\.?kloud.environment.ya?ml$/');
+
+        $stackFinder = (new Finder())
+            ->files()
+            ->ignoreDotFiles(false)
+            ->in($workingDirectory)
+            ->name('/^\.?kloud.ya?ml$/');
 
         $format = new SymfonyStyle($input, $output);
 
         $serializer = new Serializer(
             [
+                new StackContextNormalizer(),
                 new CustomNormalizer(),
                 new PropertyNormalizer(),
             ],
@@ -63,8 +72,8 @@ final class DumpCommand extends Command
             ]
         );
 
-        if ($finder->hasResults()) {
-            foreach ($finder->name('/^\.?kloud.environment.ya?ml$/') as $environmentFile) {
+        if ($environmentFinder->hasResults()) {
+            foreach ($environmentFinder as $environmentFile) {
                 try {
                     /** @var EnvironmentContext $environementContext */
                     $environementContext = $serializer->deserialize($environmentFile->getContents(), EnvironmentContext::class, 'yaml');
@@ -75,7 +84,7 @@ final class DumpCommand extends Command
 
                 break;
             }
-            foreach ($finder->name('/^\.?kloud.ya?ml$/') as $stackFile) {
+            foreach ($stackFinder as $stackFile) {
                 try {
                     /** @var StackContext $stackContext */
                     $stackContext = $serializer->deserialize($stackFile->getContents(), StackContext::class, 'yaml');
