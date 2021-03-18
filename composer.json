@@ -5,7 +5,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "composer/semver": "^1.1",
+        "composer/semver": "^1.4",
         "padraic/phar-updater": "^1.0",
         "psr/log": "^1.1",
         "sebastian/comparator": "^3.0 || ^4.0",
