@@ -31,7 +31,7 @@ final class CommandRunnerHasRunCommands extends Constraint
         return false;
     }
 
-    public function evaluate($other, string $description = '', bool $returnResult = false)
+    public function evaluate($other, string $description = '', bool $returnResult = false): bool|null
     {
         /** @var CommandExpectation $command */
         foreach ($other as $command) {
