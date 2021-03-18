@@ -1,4 +1,4 @@
-Installation
+Installation of the tool
 ===
 
 Installing system-wide the `kloud` command
