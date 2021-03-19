@@ -25,7 +25,7 @@ RUN set -ex \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
     && apk del icu-dev \
-    && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted \
+    && apk add gnu-libiconv --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/$(cat /etc/alpine-release)/community/ --allow-untrusted \
     && apk del \
         .build-deps \
         gdbm \
