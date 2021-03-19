@@ -30,7 +30,7 @@ final class OroCRMEnterprise implements ComposerPackageDelegatedGuesserInterface
                 ->getContext();
         }
 
-        if (Semver::satisfies($package['version'], '^4.1.0')) {
+        if (Semver::satisfies($package['version'], '4.1.*')) {
             return (new Stack\ContextBuilder($repository, '7.4'))
                 ->setApplication('orocrm', '4.1', true)
                 ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)

@@ -44,7 +44,7 @@ final class OroPlatformCommunity implements ComposerPackageDelegatedGuesserInter
                 ->getContext();
         }
 
-        if (Semver::satisfies($package['version'], '^4.1.0')) {
+        if (Semver::satisfies($package['version'], '4.1.*')) {
             return (new Stack\ContextBuilder($repository, '7.4'))
                 ->setApplication('oroplatform', '4.1', false)
                 ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
