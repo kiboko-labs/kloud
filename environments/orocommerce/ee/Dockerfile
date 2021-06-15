@@ -24,7 +24,11 @@ RUN set -ex\
         openssl-dev \
     && apk add --update \
         c-client \
+    && docker-php-source extract \
+    && pecl install mongodb \
+    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/ext-mongodb.ini \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install imap \
+    && docker-php-source delete \
     && apk del .build-deps \
     && rm -rf /tmp/* /var/cache/apk/*
