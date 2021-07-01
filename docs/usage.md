@@ -59,7 +59,7 @@ and in case of differences, a wizard will ask you what you wish to keep or delet
 Build the required images
 ---
 
-In hte case you are using a [sunsetting or experimental version combination](sunsetting-policy.md),
+In the case you are using a [sunsetting or experimental version combination](sunsetting-policy.md),
 you will need to build yourself the images. Any other version will be auomatically built and pushed
 to Docker Hub, without the need for you to build them yourself.
 
