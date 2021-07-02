@@ -40,12 +40,30 @@ docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
 Building the docker image
 ---
 
-If you want to build the Docker image, clone this repository and run:
+If you want to build the Kloud Docker image, clone this repository and run:
 
 ```
 curl -L -o build/kloud.phar https://github.com/kiboko-labs/kloud/releases/download/1.2.4/kloud.phar
 curl -L -o build/kloud.phar.pubkey https://github.com/kiboko-labs/kloud/releases/download/1.2.4/download/kloud.phar.pubkey
 chmod +x bin/kloud.phar
 docker build . --tag kiboko/kloud
+```
+
+Building the phar
+---
+
+If you want to create the phar:
+
+Install box:
+
+```
+curl -LSs https://box-project.github.io/box2/installer.php | php
+```
+
+```
+mv box.json.dist
+composer install
+openssl genrsa -out kloud-private-nopassphrase.pem
+./box.phar build -v
 ```
 
