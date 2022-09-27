@@ -44,6 +44,13 @@ final class OroCommerceEnterprise implements ComposerPackageDelegatedGuesserInte
                 ->getContext();
         }
 
+        if (Semver::satisfies($package['version'], '^5.0.*')) {
+            return (new Stack\ContextBuilder($repository, '8.1'))
+                ->setApplication('orocommerce', '5.0', true)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
+        }
+
         throw NoPossibleGuess::noVersionMatching();
     }
 }

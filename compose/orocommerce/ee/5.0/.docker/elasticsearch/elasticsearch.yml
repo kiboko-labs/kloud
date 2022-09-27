@@ -1,0 +1,19 @@
+cluster.name: 'docker-cluster'
+bootstrap.memory_lock: true
+discovery.type: 'single-node'
+
+http.host: '0.0.0.0'
+http.port: 9200
+
+# Uncomment the following lines for a production cluster deployment
+#transport.host: 0.0.0.0
+#discovery.zen.minimum_master_nodes: 1
+
+http.cors.enabled : true
+http.cors.allow-headers: 'X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization'
+# Uncomment the following if you wish to open access to a 3rd-party application, like Dejavu.
+#http.cors.allow-origin: "http://localhost:1234,http://127.0.0.1:1234"
+http.cors.allow-credentials: true
+http.cors.allow-methods : 'OPTIONS, HEAD, GET, POST, PUT, DELETE'
+
+cluster.routing.allocation.disk.threshold_enabled: false

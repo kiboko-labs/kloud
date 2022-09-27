@@ -53,7 +53,20 @@ final class OroCommerceEnterpriseEditionRepository implements EditionRepositoryI
                 '4.2',
                 'ce',
                 '>=7.4 <8.0',
-                '>=7.4 <=8.0',
+                '>=7.4 <=8.1',
+            )
+        );
+
+        yield new EditionDependency(
+            'orocommerce',
+            '5.0',
+            'ee',
+            new Edition(
+                'orocommerce',
+                '5.0',
+                'ce',
+                '>=8.1',
+                '>=8.1',
             )
         );
     }

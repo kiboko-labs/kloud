@@ -23,7 +23,7 @@ RUN set -ex\
         && make all -j5 \
         && make install \
         && cd - \
-        && echo "extension=xdeubg.so" > /usr/local/etc/php/conf.d/xdebug.ini \
+        && echo "extension=xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini \
         && rm -rf xdebug/ \
     ) \
     && docker-php-source delete \

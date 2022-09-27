@@ -92,5 +92,18 @@ final class OroPlatformEnterpriseEditionRepository implements EditionRepositoryI
                 '>=7.4 <=8.0',
             )
         );
+
+        yield new EditionDependency(
+            'oroplatform',
+            '5.0',
+            'ee',
+            new Edition(
+                'oroplatform',
+                '5.0',
+                'ce',
+                '>=8.1',
+                '>=8.1',
+            )
+        );
     }
 }

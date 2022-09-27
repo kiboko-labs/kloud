@@ -49,7 +49,7 @@ final class PHPVersionConsoleOptionGuesser implements ContextGuesserInterface, C
 
         if (null === ($phpVersion = $input->getOption('php-version'))) {
             $phpVersion = $format->askQuestion(
-                (new ChoiceQuestion('Which PHP version are you using?', ['5.6', '7.1', '7.2', '7.3', '7.4', '8.0'], '7.3'))
+                (new ChoiceQuestion('Which PHP version are you using?', ['5.6', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1'], '7.3'))
             );
         }
 

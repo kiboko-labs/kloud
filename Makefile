@@ -41,6 +41,11 @@ php-7.4: ## Build all possible images for PHP 7.4
 php-7.4:
 	$(KLOUD) build --regex='/^7\.4-/' --force-all --push
 
+.PHONY: php-8.1
+php-8.1: ## Build all possible images for PHP 8.1
+php-8.1:
+    $(KLOUD) build --regex='/^8\.1-/' --force-all --push
+
 .PHONY: all
 all: ## Build all possible images
 all:

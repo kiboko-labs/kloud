@@ -58,6 +58,14 @@ final class ElasticSearch implements ServiceBuilderInterface
             return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.1';
         }
 
+        if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^5.0')
+        ) {
+            if ($context->withElasticStack) {
+                return 'docker.elastic.co/elasticsearch/elasticsearch:7.16.1';
+            }
+            return 'docker.elastic.co/elasticsearch/elasticsearch-oss:7.16.1';
+        }
+
         throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint('elasticsearch');
     }
 

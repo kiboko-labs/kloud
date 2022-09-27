@@ -28,7 +28,7 @@ final class RabbitMQ implements ServiceBuilderInterface
     {
         $stack->addServices(
             (new Service('amqp'))
-                ->setBuildContext('.docker/rabbitmq@3.6')
+                ->setBuildContext('.docker/rabbitmq@3.9')
                 ->addEnvironmentVariables(
                     new EnvironmentVariable(new Variable('RABBITMQ_DEFAULT_USER'), new Variable('RABBITMQ_USER')),
                     new EnvironmentVariable(new Variable('RABBITMQ_DEFAULT_PASS'), new Variable('RABBITMQ_PASSWORD')),
@@ -40,8 +40,8 @@ final class RabbitMQ implements ServiceBuilderInterface
         );
 
         $stack->addFiles(
-            new Resource\InMemory('.docker/rabbitmq@3.6/Dockerfile', <<<EOF
-                FROM rabbitmq:3.7-management-alpine
+            new Resource\InMemory('.docker/rabbitmq@3.9/Dockerfile', <<<EOF
+                FROM rabbitmq:3.9-management-alpine
 
                 RUN set -ex\
                     && apk update \
@@ -49,13 +49,17 @@ final class RabbitMQ implements ServiceBuilderInterface
                     && apk add --no-cache --virtual .build-deps \
                         zip \
                         curl \
-                    && curl https://dl.bintray.com/rabbitmq/community-plugins/3.7.x/rabbitmq_delayed_message_exchange/rabbitmq_delayed_message_exchange-20171201-3.7.x.zip > \$RABBITMQ_HOME/plugins/rabbitmq_delayed_message_exchange-20171201-3.7.x.zip \
-                    && unzip \$RABBITMQ_HOME/plugins/rabbitmq_delayed_message_exchange-20171201-3.7.x.zip -d \$RABBITMQ_HOME/plugins \
-                    && rm \$RABBITMQ_HOME/plugins/rabbitmq_delayed_message_exchange-20171201-3.7.x.zip \
+                    && m -f /etc/rabbitmq/conf.d/management_agent.disable_metrics_collector.conf; \
+                    && cp /plugins/rabbitmq_management-*/priv/www/cli/rabbitmqadmin /usr/local/bin/rabbitmqadmin; \
+                    && [ -s /usr/local/bin/rabbitmqadmin ]; \
+                    && chmod +x /usr/local/bin/rabbitmqadmin; \
+                    && apk add --no-cache python3; \
+                    && rabbitmqadmin --version
                     && apk del .build-deps
                 
                 RUN rabbitmq-plugins enable --offline rabbitmq_delayed_message_exchange
                 RUN rabbitmq-plugins enable --offline rabbitmq_consistent_hash_exchange
+                RUN rabbitmq-plugins enable --offline rabbitmq_management
                 EOF),
         );
 

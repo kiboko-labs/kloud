@@ -49,6 +49,11 @@ final class Kibana implements ServiceBuilderInterface
             return 'docker.elastic.co/kibana/kibana:7.8.1';
         }
 
+        if (in_array($context->application, ['oroplatform', 'orocrm', 'orocommerce']) && Semver::satisfies($context->applicationVersion, '^5.0')
+        ) {
+            return 'docker.elastic.co/kibana/kibana:7.16.1';
+        }
+
         throw StackServiceNotApplicableException::noImageSatisfiesTheApplicationConstraint('kibana');
     }
 

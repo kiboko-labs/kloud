@@ -3,7 +3,7 @@
     "description": "Build and manage your development Docker stack for OroCommerce, OroCRM, OroPlatform and Marello applications",
     "license": "MIT",
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^7.4 || ^8.0 || ^8.1",
         "ext-json": "*",
         "composer/semver": "^1.4 || ^2.0 || ^3.0",
         "laravel-zero/phar-updater": "^1.0",
@@ -24,7 +24,7 @@
         "friendsofphp/php-cs-fixer": "^3.0@dev",
         "monolog/monolog": "^2.0 || ^3.0",
         "phpspec/phpspec": "^6.1 || ^7.0",
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^9.5",
         "adlawson/vfs": "^0.12.1"
     },
     "minimum-stability": "stable",

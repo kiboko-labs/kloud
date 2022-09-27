@@ -58,6 +58,13 @@ final class OroPlatformCommunity implements ComposerPackageDelegatedGuesserInter
                 ->getContext();
         }
 
+        if (Semver::satisfies($package['version'], '^5.0.*')) {
+            return (new Stack\ContextBuilder($repository, '8.1'))
+                ->setApplication('oroplatform', '5.0', false)
+                ->setDbms(Stack\DTO\Context::DBMS_POSTGRESQL)
+                ->getContext();
+        }
+
         throw NoPossibleGuess::noVersionMatching();
     }
 }

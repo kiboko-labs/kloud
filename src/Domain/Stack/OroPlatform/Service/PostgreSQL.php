@@ -29,7 +29,7 @@ final class PostgreSQL implements ServiceBuilderInterface
     public function build(DTO\Stack $stack, DTO\Context $context): DTO\Stack
     {
         $stack->addServices(
-            (new Service('sql', 'postgres:9.6-alpine'))
+            (new Service('sql', 'postgres:14.2-alpine'))
                 ->addPorts(
                     new PortMapping(new Variable('DATABASE_PORT'), 5432),
                 )
@@ -52,7 +52,7 @@ final class PostgreSQL implements ServiceBuilderInterface
         ;
 
         $stack->addFiles(
-            new Resource\InMemory('./.docker/postgres@9.6/sql/uuid-ossp.sql', <<<EOF
+            new Resource\InMemory('./.docker/postgres@14.2/sql/uuid-ossp.sql', <<<EOF
                 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
                 EOF),
         );

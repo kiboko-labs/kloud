@@ -305,6 +305,62 @@ jobs:
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroPlatform CE 5.0 on PHP 8.1 with PostgreSQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'oroplatform'
+          application-version: '5.0'
+          edition: 'community'
+          dbms: 'postgresql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroPlatform CE 5.0 on PHP 8.1 with MySQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'oroplatform'
+          application-version: '5.0'
+          edition: 'community'
+          dbms: 'mysql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroPlatform EE 5.0 on PHP 8.1 with PostgreSQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'oroplatform'
+          application-version: '5.0'
+          edition: 'enterprise'
+          dbms: 'postgresql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroPlatform EE 5.0 on PHP 8.1 with MySQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'oroplatform'
+          application-version: '5.0'
+          edition: 'enterprise'
+          dbms: 'mysql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build for OroCRM CE 3.1 on PHP 7.1 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
@@ -585,6 +641,62 @@ jobs:
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCRM CE 5.0 on PHP 8.1 with PostgreSQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocrm'
+          application-version: '5.0'
+          edition: 'community'
+          dbms: 'postgresql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCRM CE 5.0 on PHP 8.1 with MySQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocrm'
+          application-version: '5.0'
+          edition: 'community'
+          dbms: 'mysql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCRM EE 5.0 on PHP 8.1 with PostgreSQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocrm'
+          application-version: '5.0'
+          edition: 'enterprise'
+          dbms: 'postgresql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCRM EE 5.0 on PHP 8.1 with MySQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocrm'
+          application-version: '5.0'
+          edition: 'enterprise'
+          dbms: 'mysql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build for OroCommerce CE 3.1 on PHP 7.1 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:
@@ -865,6 +977,62 @@ jobs:
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCommerce CE 5.0 on PHP 8.1 with PostgreSQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocommerce'
+          application-version: '5.0'
+          edition: 'community'
+          dbms: 'postgresql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCommerce CE 5.0 on PHP 8.1 with MySQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocommerce'
+          application-version: '5.0'
+          edition: 'community'
+          dbms: 'mysql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCommerce EE 5.0 on PHP 8.1 with PostgreSQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocommerce'
+          application-version: '5.0'
+          edition: 'enterprise'
+          dbms: 'postgresql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 0
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    -   name: Build for OroCommerce EE 5.0 on PHP 8.1 with MySQL
+        uses: gplanchat/github-action-kloud-build@master
+        with:
+          php-version: '8.1'
+          application: 'orocommerce'
+          application-version: '5.0'
+          edition: 'enterprise'
+          dbms: 'mysql'
+          with-blackfire: 1
+          with-xdebug: 1
+          push: 0
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build for Marello CE 2.0 on PHP 7.1 with PostgreSQL
       uses: gplanchat/github-action-kloud-build@master
       with:

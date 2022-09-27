@@ -57,5 +57,13 @@ final class OroPlatformCommunityEditionRepository implements EditionRepositoryIn
             '>=7.4 <8.0',
             '>=7.4 <=8.0',
         );
+
+        yield new Edition(
+            'oroplatform',
+            '5.0',
+            'ce',
+            '>=8.1',
+            '>=8.1',
+        );
     }
 }
